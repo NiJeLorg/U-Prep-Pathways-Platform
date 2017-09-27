@@ -17,9 +17,13 @@
   },
   "homepage": "https://github.com/NiJeLorg/U-Prep-Pathways-Platform#readme",
   "dependencies": {
+    "body-parser": "^1.18.2",
     "dotenv": "^4.0.0",
     "express": "^4.15.4",
-    "morgan": "^1.8.2"
+    "morgan": "^1.8.2",
+    "pg": "^7.3.0",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^4.11.1"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
