@@ -58,4 +58,4 @@ typings/
 .env
 
 # the public folder that contains the static files
-public/
+/public/
