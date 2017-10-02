@@ -14,6 +14,6 @@
         "dialect": "postgresql"
     },
     "production": {
-        "use_env_variable": "postgres://zqknyssm:OSDJSdWAodvl9Zk4cNt7K0J39FmB90Nl@stampy.db.elephantsql.com:5432/zqknyssm"
+        "use_env_variable": "DATABASE_URL"
     }
 }
