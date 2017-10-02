@@ -4,7 +4,8 @@
   "description": "This repository holds NiJeL's work with the University Preparatory Academy in Detroit, MI on the U Prep Pathways Platform",
   "main": "index.js",
   "scripts": {
-    "dev": "webpack-dev-server"
+    "prestart": "sequelize db:migrate",
+    "start": "nodemon ./bin/www"
   },
   "repository": {
     "type": "git",

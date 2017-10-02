@@ -1,0 +1,19 @@
+{
+    "development": {
+        "username": "TeddyOtieno",
+        "password": "otino@sol@",
+        "database": "uprep",
+        "host": "localhost",
+        "dialect": "postgresql"
+    },
+    "test": {
+        "username": "TeddyOtieno",
+        "password": "otino@sol@",
+        "database": "uprep-test",
+        "host": "localhost",
+        "dialect": "postgresql"
+    },
+    "production": {
+        "use_env_variable": "postgres://zqknyssm:OSDJSdWAodvl9Zk4cNt7K0J39FmB90Nl@stampy.db.elephantsql.com:5432/zqknyssm"
+    }
+}
