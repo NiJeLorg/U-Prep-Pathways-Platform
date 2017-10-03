@@ -7,7 +7,6 @@ const express = require('express'),
     bodyParser = require('body-parser'),
     path = require('path'),
     c = console,
-
     sequelize = require('./server/config/db.js'),
     app = express();
 
@@ -27,15 +26,20 @@ app.use(bodyParser.urlencoded({
     extended: false
 }));
 
+// serve static files
+app.use(express.static(path.resolve('./public')));
+
 require('./server/routes')(app);
 
 // Setup a default catch-all route that sends back a welcome message in JSON format.
-app.get('*', (req, res) => res.status(200).send({
-    message: 'Welcome to the app!',
-}));
+app.get('*', (req, res) => {
+    res.sendFile('index.html', {
+        root: './public'
+    });
+});
 
-
-// serve static files
-app.use(express.static('public'));
+app.listen(process.env.PORT || 3000, () => {
+    c.log('server listening on port ' + process.env.PORT || 3000);
+});
 
 module.exports = app;
