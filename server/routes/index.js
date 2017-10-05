@@ -1,16 +1,22 @@
-const usersController = require('../controllers').users,
+const express = require('express'),
+    apiRouter = express.Router(),
+    usersController = require('../controllers').users,
     groupsController = require('../controllers').groups;
 
 module.exports = (app) => {
-    app.get('/api', (req, res) => res.status(200).send({
-        message: 'Welcome to U-Prep-Pathways-Platform API!',
+
+    apiRouter.get('/', (req, res) => res.status(200).send({
+        message: 'Welcome to U-Prep-Pathways-Platform API!'
     }));
 
-    app.post('/api/groups', groupsController.create);
-    app.get('/api/groups', groupsController.list);
+    app.use('/api', apiRouter);
 
-    app.post('/api/groups/:groupId/users', usersController.create);
-    app.get('/api/groups/:groupId/users', usersController.list);
+    apiRouter.route('/groups')
+        .get(groupsController.list)
+        .post(groupsController.create);
 
+    apiRouter.route('/groups/:groupId/users')
+        .get(usersController.list)
+        .post(usersController.create);
 
 };

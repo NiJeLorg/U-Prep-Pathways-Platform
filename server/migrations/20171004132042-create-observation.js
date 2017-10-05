@@ -1,14 +1,29 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Observation_Clusters', {
+    return queryInterface.createTable('Observations', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      name: {
+      crew_name: {
+        type: Sequelize.STRING
+      },
+      content: {
+        type: Sequelize.STRING
+      },
+      teacher: {
+        type: Sequelize.STRING
+      },
+      student: {
+        type: Sequelize.STRING
+      },
+      conclusions: {
+        type: Sequelize.STRING
+      },
+      context: {
         type: Sequelize.STRING
       },
       createdAt: {
@@ -22,6 +37,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Observation_Clusters');
+    return queryInterface.dropTable('Observations');
   }
 };

@@ -1,6 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  var Observation_Cluster = sequelize.define('Observation_Cluster', {
+  var Observation_cluster = sequelize.define('Observation_cluster', {
     name: DataTypes.STRING
   }, {
     classMethods: {
@@ -9,5 +9,5 @@ module.exports = (sequelize, DataTypes) => {
       }
     }
   });
-  return Observation_Cluster;
+  return Observation_cluster;
 };

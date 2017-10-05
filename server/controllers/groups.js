@@ -4,7 +4,6 @@ User = require('../models').User;
 
 module.exports = {
   create(req, res) {
-    console.log(req.body)
     return Group
       .create({
         name: req.body.name,
