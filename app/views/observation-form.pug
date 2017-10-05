@@ -28,7 +28,7 @@ form(ng-submit='goToClustersObservedView()')
     p.title Student
     p.sub-title(ng-if='observation.observationKind === "Crew"') Role in Crew
     p.sub-title(ng-if='observation.observationKind === "Lesson"') Role in Instruction
-    p.label What are the students doing? What are teh students saying?
+    p.label What are the students doing? What are the students saying?
     textarea(name="", cols="50", rows="10" ng-model='form.student' required)
   .form-group
     p.title Conclusions
