@@ -10,12 +10,12 @@ const express = require('express'),
     sequelize = require('./server/config/db.js'),
     app = express();
 
-// connect to the db
-sequelize.authenticate().then(() => {
-    c.log("Connection has been established successfully!");
-}).catch((err) => {
-    c.log('Unable to connect to the database', err);
-});
+// // connect to the db
+// sequelize.authenticate().then(() => {
+//     c.log("Connection has been established successfully!");
+// }).catch((err) => {
+//     c.log('Unable to connect to the database', err);
+// });
 
 // log all requests to the console
 app.use(morgan('dev'));
