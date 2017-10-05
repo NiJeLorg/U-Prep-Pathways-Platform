@@ -1,3 +1,4 @@
+'use strict';
 let env = process.env.NODE_ENV || 'development';
 if (env === 'development') {
     require('dotenv').load();
@@ -27,14 +28,14 @@ app.use(bodyParser.urlencoded({
 }));
 
 // serve static files
-app.use(express.static(path.resolve('./public')));
+app.use(express.static('public'));
 
 require('./server/routes')(app);
 
 // Setup a default catch-all route that sends back a welcome message in JSON format.
 app.get('*', (req, res) => {
     res.sendFile('index.html', {
-        root: './public'
+        root: 'public'
     });
 });
 
