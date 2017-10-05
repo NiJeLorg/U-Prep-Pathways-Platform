@@ -1,0 +1,9 @@
+.pick-observation-kind
+  h2.sub-title {{observation.school}}
+  h3.sub-sub-title {{observation.observationType}}
+  h3.sub-sub-title {{observation.grade}}
+  h3.sub-sub-title {{observation.teacher}}
+  h3.sub-sub-title {{observation.subject}}
+  h1.title Pick Observation Kind
+  .buttons-group
+    button(ng-repeat='kind in data.observationKind' ng-click='pickObservationKind(kind)') {{kind}}

@@ -46,7 +46,6 @@ module.exports = {
           as: 'groupId',
         },
       },
-
     });
   },
   down: (queryInterface, Sequelize) => {
