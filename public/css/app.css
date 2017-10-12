@@ -94,11 +94,12 @@ main {
     margin-bottom: 20px; }
 
 form {
-  padding: 20px 0;
+  padding: 0 0 20px 0;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: center; }
+  align-items: center;
+  border-top: 1px solid #e6e6e6; }
   form .form-group {
     margin-bottom: 30px;
     display: flex;
@@ -114,6 +115,11 @@ form {
       padding: 0; }
     form .form-group .label {
       text-align: center; }
+
+.upload-media button {
+  margin: 30px;
+  padding: 0;
+  background: none; }
 
 @media (max-width: 450px) {
   main .center-content {
