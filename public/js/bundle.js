@@ -209,21 +209,24 @@ var _scoreObservation = __webpack_require__(27);
 
 var _scoreObservation2 = _interopRequireDefault(_scoreObservation);
 
-var _DataService = __webpack_require__(28);
+var _showObservation = __webpack_require__(28);
+
+var _showObservation2 = _interopRequireDefault(_showObservation);
+
+var _DataService = __webpack_require__(29);
 
 var _DataService2 = _interopRequireDefault(_DataService);
 
-var _TestData = __webpack_require__(29);
+var _TestData = __webpack_require__(30);
 
 var _TestData2 = _interopRequireDefault(_TestData);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var uprepApp = _angular2.default.module('uprepApp', [_angularjs2.default, _angularMaterial2.default, _ngFileUpload2.default, "firebase"]);
 // load controllers and services
+var uprepApp = _angular2.default.module('uprepApp', [_angularjs2.default, _angularMaterial2.default, _ngFileUpload2.default, "firebase"]);
 
-
-uprepApp.controller('HomeCtrl', _home2.default).controller('NewObservationCtrl', _newObservation2.default).controller('ScoreObservationCtrl', _scoreObservation2.default).service('DataService', _DataService2.default).service('TestData', _TestData2.default);
+uprepApp.controller('HomeCtrl', _home2.default).controller('NewObservationCtrl', _newObservation2.default).controller('ScoreObservationCtrl', _scoreObservation2.default).controller('ShowObservationCtrl', _showObservation2.default).service('DataService', _DataService2.default).service('TestData', _TestData2.default);
 
 uprepApp.config(['$stateProvider', '$httpProvider', '$urlRouterProvider', '$locationProvider', function ($stateProvider, $httpProvider, $urlRouterProvider, $locationProvider) {
 
@@ -261,12 +264,24 @@ uprepApp.config(['$stateProvider', '$httpProvider', '$urlRouterProvider', '$loca
     url: '/clusters-observed',
     templateUrl: 'views/clusters-observed.html'
   }).state('scoreObservation', {
-    url: '/show-observation',
+    url: '/score-observation',
     controller: 'ScoreObservationCtrl',
-    templateUrl: 'views/score-observation.html'
-  }).state('scoreObservation.teacher', {
+    templateUrl: 'views/pick-school.html'
+  }).state('scoreObservation.grade', {
     url: '/pick-grade',
+    templateUrl: 'views/pick-grade.html'
+  }).state('scoreObservation.teacher', {
+    url: '/pick-teacher',
     templateUrl: 'views/pick-teacher.html'
+  }).state('scoreObservation.scoreBase', {
+    url: '/score-base',
+    templateUrl: 'views/score-base.html'
+  }).state('scoreObservation.element', {
+    url: '/pick-element',
+    templateUrl: 'views/pick-element.html'
+  }).state('scoreObservation.component', {
+    url: '/pick-component',
+    templateUrl: 'views/pick-component.html'
   });
 
   $locationProvider.html5Mode(true);
@@ -91586,10 +91601,14 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 var HomeCtrl = function HomeCtrl($scope, $rootScope, $state, $firebaseObject, $firebaseArray, DataService, TestData) {
+
   $scope.observations = DataService;
 
   $scope.observations.$loaded(function () {
     $scope.savedObservations = $scope.observations;
+    $scope.savedObservations.map(function (observation, index) {
+      observation.readableDate = new Date(observation.createdAt).toString();
+    });
   });
 
   $scope.observationType = function (type) {
@@ -91598,12 +91617,12 @@ var HomeCtrl = function HomeCtrl($scope, $rootScope, $state, $firebaseObject, $f
     } else {
       $state.go('scoreObservation');
     }
+    $rootScope.observationType = type;
   };
 
   $scope.showObservation = function (observation) {
     $state.go('showObservation', {
-      id: observation.$id,
-      observation: observation
+      id: observation.$id
     });
   };
 };
@@ -91620,11 +91639,14 @@ exports.default = HomeCtrl;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-var NewObservationCtrl = function NewObservationCtrl($scope, $state, TestData) {
+var NewObservationCtrl = function NewObservationCtrl($scope, $state, TestData, DataService, Upload) {
 
     // initialize an empty observation object
     $scope.observation = {};
+    $scope.observations = DataService;
     $scope.data = TestData;
+    $scope.form = {};
+    var viewTransition = ['school', 'grade', 'teacher', 'subject', 'observationKind'];
 
     $scope.pickSchool = function (school) {
         $scope.observation.school = school;
@@ -91651,9 +91673,44 @@ var NewObservationCtrl = function NewObservationCtrl($scope, $state, TestData) {
         $state.go('newObservation.observationForm');
     };
 
-    $scope.goToClustersObservedView = function () {
+    $scope.goToClustersObservedView = function (file) {
         $scope.observation.form = $scope.form;
+        Upload.base64DataUrl(file).then(function (base64Urls) {
+            if (file) {
+                $scope.observation.photo = base64Urls;
+            }
+        });
         $state.go('newObservation.clustersObserved');
+    };
+
+    $scope.changeTeacher = function () {
+        $scope.observation.createdAt = new Date().toISOString();
+        $scope.observations.$add($scope.observation);
+        // $state.go('pickTeacher');
+    };
+
+    $scope.changeObservation = function () {
+        $scope.observation.createdAt = new Date().toISOString();
+        $scope.observations.$add($scope.observation);
+        $state.go('newObservation.observationKind');
+    };
+
+    $scope.changeSubject = function () {
+        $scope.observation.createdAt = new Date().toISOString();
+        $scope.observations.$add($scope.observation);
+        $state.go('newObservation.subject');
+    };
+
+    $scope.changeTeacher = function () {
+        $scope.observation.createdAt = new Date().toISOString();
+        $scope.observations.$add($scope.observation);
+        $state.go('newObservation.teacher');
+    };
+
+    $scope.changeSchool = function () {
+        $scope.observation.createdAt = new Date().toISOString();
+        $scope.observations.$add($scope.observation);
+        $state.go('newObservation.school');
     };
 };
 
@@ -91674,14 +91731,31 @@ var ScoreObservationCtrl = function ScoreObservationCtrl($scope, $state, TestDat
 
     $scope.observation = {};
 
+    $scope.pickSchool = function (school) {
+        $scope.observation.school = school;
+        $state.go('scoreObservation.grade');
+    };
+
     $scope.pickGrade = function (grade) {
         $scope.observation.grade = grade;
         $state.go('scoreObservation.teacher');
     };
 
-    $scope.scoreBasedOn = function (score) {
-        $scope.scoreBase = score;
+    $scope.pickTeacher = function (teacher) {
+        $scope.observation.teacher = teacher;
         $state.go('scoreObservation.scoreBase');
+    };
+
+    $scope.pickScoreBase = function (score) {
+        $scope.observation.scoreBase = score;
+        if (score === 'Score by elements') {
+            $state.go('scoreObservation.element');
+        }
+    };
+
+    $scope.pickElement = function (element) {
+        $scope.observation.element = element;
+        $state.go('scoreObservation.component');
     };
 };
 
@@ -91697,9 +91771,27 @@ exports.default = ScoreObservationCtrl;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+var ShowObservationCtrl = function ShowObservationCtrl($scope, $rootScope, $state, $stateParams, TestData, DataService) {
+    var observations = DataService;
+    $scope.observation = observations.$getRecord($stateParams.id);
+    console.log($scope.observation, 'observation');
+};
+
+exports.default = ShowObservationCtrl;
+
+/***/ }),
+/* 29 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
 var DataService = function DataService($firebaseArray) {
     // create a reference to the database location where we will store our data
-    var ref = firebase.database().ref('uprep-9ddf0');
+    var ref = firebase.database().ref('/observations');
 
     return $firebaseArray(ref);
 };
@@ -91707,7 +91799,7 @@ var DataService = function DataService($firebaseArray) {
 exports.default = DataService;
 
 /***/ }),
-/* 29 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -91722,7 +91814,29 @@ var TestData = function TestData($firebaseArray) {
         grades: ['Kindergarten', '1st grade', '2nd grade', '3rd grade', '4th grade', '5th grade'],
         teachers: ['Mr.Martin', 'Ms.Andrews', 'Ms.Ng', 'Mr.Schnider', 'Ms.Peterson', 'Mr.Underhill'],
         subjects: ['Math', 'Science', 'English', 'Gym', 'Art', 'Music'],
+        scoreBase: ['Score based on clusters observed', 'Score by elements'],
         observationKind: ['Crew', 'Lesson', 'Other type of observation'],
+        elements: [{
+            name: 'Culture of High Expectations',
+            components: [{
+                name: 'College Bound',
+                indicators: ['Grading', 'College-Going Culture', 'High Quality Work', 'Timeliness and Preparation']
+            }, {
+                name: 'Character',
+                indicators: ['Citizenship', 'Visible Environment', 'Internalizing Routines and Procedures', 'Crew', 'Leveraging Crew']
+            }, {
+                name: 'Student Ownership',
+                indicators: ['Self-Evaluation', 'Student-Led Conferences', 'Portfolio Passages']
+            }]
+        }, {
+            name: 'Demanding Curriculum'
+        }, {
+            name: 'Engaging Instruction'
+        }, {
+            name: 'Rigorous Assessments'
+        }, {
+            name: 'Shared Leadership'
+        }],
         clustersObserved: {
             learningTargets: false,
             standards: false,
