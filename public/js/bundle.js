@@ -224,7 +224,9 @@ var _TestData2 = _interopRequireDefault(_TestData);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // load controllers and services
-var uprepApp = _angular2.default.module('uprepApp', [_angularjs2.default, _angularMaterial2.default, _ngFileUpload2.default, "firebase"]);
+_angular2.default.module('star-rating', []).directive('starRating', starRating);
+
+var uprepApp = _angular2.default.module('uprepApp', [_angularjs2.default, _angularMaterial2.default, _ngFileUpload2.default, 'star-rating', 'firebase']);
 
 uprepApp.controller('HomeCtrl', _home2.default).controller('NewObservationCtrl', _newObservation2.default).controller('ScoreObservationCtrl', _scoreObservation2.default).controller('ShowObservationCtrl', _showObservation2.default).service('DataService', _DataService2.default).service('TestData', _TestData2.default);
 
@@ -283,9 +285,67 @@ uprepApp.config(['$stateProvider', '$httpProvider', '$urlRouterProvider', '$loca
     url: '/pick-component',
     templateUrl: 'views/pick-component.html'
   });
-
   $locationProvider.html5Mode(true);
 }]);
+
+function starRating() {
+  var directive = {
+    restrict: 'EA',
+    scope: {
+      'value': '=value',
+      'max': '=max',
+      'hover': '=hover',
+      'isReadonly': '=isReadonly'
+    },
+    link: linkFunc,
+    template: '<span ng-class="{isReadonly: isReadonly}">' + '<i ng-class="renderObj" ' + 'ng-repeat="renderObj in renderAry" ' + 'ng-click="setValue($index)" ' + 'ng-mouseenter="changeValue($index, changeOnHover )" >' + '</i>' + '</span>',
+    replace: true
+  };
+  return directive;
+}
+
+function linkFunc(scope, element, attrs, ctrl) {
+  if (scope.max === undefined) scope.max = 5; // default
+  function renderValue() {
+    scope.renderAry = [];
+    for (var i = 0; i < scope.max; i++) {
+      if (i < scope.value) {
+        scope.renderAry.push({
+          'fa fa-star fa-2x': true
+        });
+      } else {
+        scope.renderAry.push({
+          'fa fa-star-o fa-2x': true
+        });
+      }
+    }
+  }
+
+  scope.setValue = function (index) {
+    if (!scope.isReadonly && scope.isReadonly !== undefined) {
+      scope.value = index + 1;
+    }
+  };
+
+  scope.changeValue = function (index) {
+    if (scope.hover) {
+      scope.setValue(index);
+    } else {
+      // !scope.changeOnhover && scope.changeOnhover != undefined
+    }
+  };
+
+  scope.$watch('value', function (newValue, oldValue) {
+    if (newValue) {
+      renderValue();
+    }
+  });
+  scope.$watch('max', function (newValue, oldValue) {
+    if (newValue) {
+      renderValue();
+    }
+  });
+}
 
 /***/ }),
 /* 5 */
@@ -91726,8 +91786,13 @@ exports.default = NewObservationCtrl;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-var ScoreObservationCtrl = function ScoreObservationCtrl($scope, $state, TestData) {
+var ScoreObservationCtrl = function ScoreObservationCtrl($scope, $state, $mdDialog, TestData) {
     $scope.data = TestData;
+
+    $scope.isReadonly = false;
+    $scope.changeOnHover = false;
+    $scope.maxValue = 4;
+    $scope.ratingValue = 0;
 
     $scope.observation = {};
 
@@ -91755,7 +91820,17 @@ var ScoreObservationCtrl = function ScoreObservationCtrl($scope, $state, TestDat
 
     $scope.pickElement = function (element) {
         $scope.observation.element = element;
+        console.log($scope.observation, 'yoo');
         $state.go('scoreObservation.component');
+    };
+
+    $scope.setRatingForIndicator = function (indicator, rating) {
+        console.log(indicator, rating);
+    };
+
+    $scope.showLevelInformationForIndicatorDialog = function (ev, indicator) {
+        $mdDialog.show($mdDialog.alert().parent(angular.element(document.body)).clickOutsideToClose(true).title(indicator).textContent('Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.'));
+        console.log(indicator, 'yoo');
     };
 };
 
@@ -91774,7 +91849,6 @@ Object.defineProperty(exports, "__esModule", {
 var ShowObservationCtrl = function ShowObservationCtrl($scope, $rootScope, $state, $stateParams, TestData, DataService) {
     var observations = DataService;
     $scope.observation = observations.$getRecord($stateParams.id);
-    console.log($scope.observation, 'observation');
 };
 
 exports.default = ShowObservationCtrl;
@@ -91818,6 +91892,7 @@ var TestData = function TestData($firebaseArray) {
         observationKind: ['Crew', 'Lesson', 'Other type of observation'],
         elements: [{
             name: 'Culture of High Expectations',
+            color: '#f0c143',
             components: [{
                 name: 'College Bound',
                 indicators: ['Grading', 'College-Going Culture', 'High Quality Work', 'Timeliness and Preparation']
@@ -91829,13 +91904,17 @@ var TestData = function TestData($firebaseArray) {
                 indicators: ['Self-Evaluation', 'Student-Led Conferences', 'Portfolio Passages']
             }]
         }, {
-            name: 'Demanding Curriculum'
+            name: 'Demanding Curriculum',
+            color: '#e49043'
         }, {
-            name: 'Engaging Instruction'
+            name: 'Engaging Instruction',
+            color: '#48818d'
         }, {
-            name: 'Rigorous Assessments'
+            name: 'Rigorous Assessments',
+            color: '#6751a4'
         }, {
-            name: 'Shared Leadership'
+            name: 'Shared Leadership',
+            color: '#6ca654'
         }],
         clustersObserved: {
             learningTargets: false,

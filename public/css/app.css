@@ -133,6 +133,24 @@ form {
     .components .title h6 {
       text-decoration: underline; }
 
+.indicators .group .label-group {
+  display: flex;
+  align-items: center; }
+  .indicators .group .label-group label {
+    margin-left: 5px;
+    margin-right: 15px; }
+  .indicators .group .label-group i {
+    cursor: pointer; }
+
+.indicators .group .star-rating-group {
+  padding: 10px 0; }
+
+.element-button-group {
+  border-top: 1px solid #929292; }
+  .element-button-group button {
+    color: #fff;
+    margin: 20px; }
+
 .show-observation {
   padding: 30px; }
   .show-observation .group-container {
@@ -147,6 +165,22 @@ form {
   .show-observation .form-container {
     border-top: 1px solid #C2C2C2; }
 
+.fa-star-o {
+  color: #FF7700; }
+
+.fa-star {
+  color: #FFDD00;
+  -webkit-text-stroke-width: 2px;
+  -webkit-text-stroke-color: #FF7700; }
+
+.isReadonly .fa-star-o {
+  color: #000000; }
+
+.isReadonly .fa-star {
+  color: #DCDCDC;
+  -webkit-text-stroke-width: 2px;
+  -webkit-text-stroke-color: #000000; }
+
 @media (max-width: 450px) {
   main .center-content {
     width: 100%;
@@ -159,4 +193,6 @@ form {
   .clusters-observed {
     padding-left: 20px; }
   .saved-observation-container .saved-observation {
-    width: 50%; } }
+    width: 50%; }
+  .show-observation .group {
+    flex-basis: 100%; } }
