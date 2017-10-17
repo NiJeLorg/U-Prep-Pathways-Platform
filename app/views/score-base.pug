@@ -1,0 +1,7 @@
+.pick-score
+    h2.sub-title {{observation.school}}
+    h3.sub-sub-title {{observationType}}
+    h3.sub-sub-title {{observation.grade}}
+    h3.sub-sub-title {{observation.teacher}}
+    .buttons-group
+        button(ng-repeat='score in data.scoreBase' ng-click='pickScoreBase(score)') {{score}}

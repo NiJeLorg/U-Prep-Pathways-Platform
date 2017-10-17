@@ -1,0 +1,45 @@
+.show-observation
+    h1.title OBSERVATION
+    .group-container
+        .group
+            h2 SCHOOL
+            p {{observation.school}}
+        .group
+            h2 GRADE
+            p {{observation.grade}}
+        .group
+            h2 TEACHER
+            p {{observation.teacher}}
+        .group
+            h2 SUBJECT
+            p {{observation.subject}}
+        .group
+            h2 OBSERVATION KIND
+            p {{observation.observationKind}}
+        .group
+            h2 TIME OF OBSERVATION
+            p {{observation.readableDate}}
+    .form-container.group-container
+        .group
+            h2 EVIDENCE ATTACHED
+            img(src='{{observation.photo}}')
+        .group(ng-if='observation.form.crewName')
+            h2 CREW NAME
+            p {{observation.form.crewName}}
+        .group(ng-if='observation.form.context')
+            h2 CONTEXT
+            p {{observation.form.context}}
+        .group(ng-if='observation.form.content')
+            h2 CONTENT
+            p {{observation.form.content}}
+        .group(ng-if='observation.form.teacher')
+            h2 TEACHER
+            p {{observation.form.teacher}}
+        .group(ng-if='observation.form.student')
+            h2 STUDENT
+            p {{observation.form.student}}
+        .group(ng-if='observation.form.conclusions')
+            h2 CONCLUSIONS
+            p {{observation.form.conclusions}}
+
+
