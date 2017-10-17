@@ -2,22 +2,23 @@
     h2.sub-title {{observation.school}}
     h3.sub-sub-title {{observationType}}
     h3.sub-sub-title {{observation.element.name}}
-    .components(ng-repeat='component in observation.element.components')
+    .components(ng-repeat="component in observation.element.components")
         .title
             h6 {{component.name}}
         .inidicators-group
-            .indicators(ng-repeat='indicator in component.indicators')
+            .indicators(ng-repeat="indicator in component.indicators")
                 .group
-                    .label-group()
-                        input(type='checkbox' for='{{indicator}}')
+                    .label-group
+                        input(type="checkbox", for="{{indicator}}")
                         label {{indicator}}
-                        i.fa.fa-question-circle(ng-click='showLevelInformationForIndicatorDialog($event, indicator)')
+                        i.fa.fa-question-circle(ng-click="showLevelInformationForIndicatorDialog($event, indicator)")
                     .star-rating-group
-                        star-rating(max='maxValue' value='ratingValue' hover='changeOnHover' is-readonly='isReadonly' ng-click='setRatingForIndicator(indicator, ratingValue)')
+                        star-rating(max="maxValue", value="ratingValue", hover="changeOnHover", is-readonly="isReadonly", ng-click="setRatingForIndicator(indicator, ratingValue)")
     .element-button-group
-        button(ng-repeat='element in data.elements' ng-show='element.name != observation.element.name' ng-style='{"background-color": element.color}') {{element.name}}
+        button(ng-repeat="element in data.elements", ng-show="element.name != observation.element.name", ng-style='{"background-color": element.color}') {{element.name}}
         button Make observations at this school
         button Select another school
+
 
 
 

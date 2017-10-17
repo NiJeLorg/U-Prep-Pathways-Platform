@@ -3,31 +3,27 @@
 import uiRouter from '@uirouter/angularjs';
 import angular from 'angular';
 import ngMaterial from 'angular-material';
-import angulaFire from 'angularfire'
+import ngFileUpload from 'ng-file-upload';
+import angulaFire from 'angularfire';
 // load controllers and services
 import HomeCtrl from './controllers/home';
-import PickSchoolCtrl from './controllers/pickSchool';
-import PickGradeCtrl from './controllers/pickGrade';
-import PickTeacherCtrl from './controllers/pickTeacher';
-import PickSubjectCtrl from './controllers/pickSubject';
-import PickObservationKindCtrl from './controllers/pickObservationKind';
-import ObservationFormCtrl from './controllers/observationForm';
-import ClustersObservedCtrl from './controllers/clustersObserved';
+import NewObservationCtrl from './controllers/newObservation';
+import ScoreObservationCtrl from './controllers/scoreObservation';
+import ShowObservationCtrl from './controllers/showObservation'
 import DataService from './services/DataService';
 import TestData from './services/TestData';
 
 
-const uprepApp = angular.module('uprepApp', [uiRouter, ngMaterial, "firebase"]);
+angular.module('star-rating', [])
+  .directive('starRating', starRating);
+
+const uprepApp = angular.module('uprepApp', [uiRouter, ngMaterial, ngFileUpload, angulaFire, 'star-rating', 'firebase']);
 
 uprepApp
   .controller('HomeCtrl', HomeCtrl)
-  .controller('PickSchoolCtrl', PickSchoolCtrl)
-  .controller('PickGradeCtrl', PickGradeCtrl)
-  .controller('PickTeacherCtrl', PickTeacherCtrl)
-  .controller('PickSubjectCtrl', PickSubjectCtrl)
-  .controller('PickObservationKindCtrl', PickObservationKindCtrl)
-  .controller('ObservationFormCtrl', ObservationFormCtrl)
-  .controller('ClustersObservedCtrl', ClustersObservedCtrl)
+  .controller('NewObservationCtrl', NewObservationCtrl)
+  .controller('ScoreObservationCtrl', ScoreObservationCtrl)
+  .controller('ShowObservationCtrl', ShowObservationCtrl)
   .service('DataService', DataService)
   .service('TestData', TestData);
 
@@ -37,48 +33,115 @@ uprepApp.config(['$stateProvider', '$httpProvider',
     // For any unmatched url, redirect to home
     $urlRouterProvider.otherwise('/');
 
-    $stateProvider
-      .state('home', {
-        url: '/',
-        controller: 'HomeCtrl',
-        templateUrl: 'views/home.html'
-      })
-      .state('pickSchool', {
-        url: '/pick-school',
-        controller: 'PickSchoolCtrl',
-        templateUrl: 'views/pick-school.html'
-      })
-      .state('pickGrade', {
-        url: '/pick-grade',
-        controller: 'PickGradeCtrl',
-        templateUrl: 'views/pick-grade.html'
-      })
-      .state('pickTeacher', {
-        url: '/pick-teacher',
-        controller: 'PickTeacherCtrl',
-        templateUrl: 'views/pick-teacher.html'
-      })
-      .state('pickSubject', {
-        url: '/pick-subject',
-        controller: 'PickSubjectCtrl',
-        templateUrl: 'views/pick-subject.html'
-      })
-      .state('pickObservationKind', {
-        url: '/pick-observation-kind',
-        controller: 'PickObservationKindCtrl',
-        templateUrl: 'views/pick-observation-kind.html'
-      })
-      .state('observationForm', {
-        url: '/observation-form',
-        controller: 'ObservationFormCtrl',
-        templateUrl: 'views/observation-form.html'
-      })
-      .state('clustersObserved', {
-        url: '/clusters-observed',
-        controller: 'ClustersObservedCtrl',
-        templateUrl: 'views/clusters-observed.html'
-      });
-
+    $stateProvider.state('home', {
+      url: '/',
+      controller: 'HomeCtrl',
+      templateUrl: 'views/home.html'
+    }).state('showObservation', {
+      url: '/show-observation/:id',
+      controller: 'ShowObservationCtrl',
+      templateUrl: 'views/show-observation.html'
+    }).state('newObservation', {
+      url: '/pick-observation',
+      controller: 'NewObservationCtrl',
+      templateUrl: 'views/pick-school.html'
+    }).state('newObservation.grade', {
+      url: '/pick-grade',
+      templateUrl: 'views/pick-grade.html'
+    }).state('newObservation.teacher', {
+      url: '/pick-teacher',
+      templateUrl: 'views/pick-teacher.html'
+    }).state('newObservation.subject', {
+      url: '/pick-subject',
+      templateUrl: 'views/pick-subject.html'
+    }).state('newObservation.observationKind', {
+      url: '/pick-observation-kind',
+      templateUrl: 'views/pick-observation-kind.html'
+    }).state('newObservation.observationForm', {
+      url: '/observation-form',
+      templateUrl: 'views/observation-form.html'
+    }).state('newObservation.clustersObserved', {
+      url: '/clusters-observed',
+      templateUrl: 'views/clusters-observed.html'
+    }).state('scoreObservation', {
+      url: '/score-observation',
+      controller: 'ScoreObservationCtrl',
+      templateUrl: 'views/pick-school.html'
+    }).state('scoreObservation.grade', {
+      url: '/pick-grade',
+      templateUrl: 'views/pick-grade.html'
+    }).state('scoreObservation.teacher', {
+      url: '/pick-teacher',
+      templateUrl: 'views/pick-teacher.html'
+    }).state('scoreObservation.scoreBase', {
+      url: '/score-base',
+      templateUrl: 'views/score-base.html'
+    }).state('scoreObservation.element', {
+      url: '/pick-element',
+      templateUrl: 'views/pick-element.html'
+    }).state('scoreObservation.component', {
+      url: '/pick-component',
+      templateUrl: 'views/pick-component.html'
+    });
     $locationProvider.html5Mode(true);
   }
 ]);
+
+function starRating() {
+  var directive = {
+    restrict: 'EA',
+    scope: {
+      'value': '=value',
+      'max': '=max',
+      'hover': '=hover',
+      'isReadonly': '=isReadonly'
+    },
+    link: linkFunc,
+    template: '<span ng-class="{isReadonly: isReadonly}">' + '<i ng-class="renderObj" ' + 'ng-repeat="renderObj in renderAry" ' + 'ng-click="setValue($index)" ' + 'ng-mouseenter="changeValue($index, changeOnHover )" >' + '</i>' + '</span>',
+    replace: true
+  };
+  return directive;
+}
+
+function linkFunc(scope, element, attrs, ctrl) {
+  if (scope.max === undefined) scope.max = 5; // default
+  function renderValue() {
+    scope.renderAry = [];
+    for (var i = 0; i < scope.max; i++) {
+      if (i < scope.value) {
+        scope.renderAry.push({
+          'fa fa-star fa-2x': true
+        });
+      } else {
+        scope.renderAry.push({
+          'fa fa-star-o fa-2x': true
+        });
+      }
+    }
+  }
+
+  scope.setValue = function (index) {
+    if (!scope.isReadonly && scope.isReadonly !== undefined) {
+      scope.value = index + 1;
+    }
+  };
+
+  scope.changeValue = function (index) {
+    if (scope.hover) {
+      scope.setValue(index);
+    } else {
+      // !scope.changeOnhover && scope.changeOnhover != undefined
+    }
+  };
+
+  scope.$watch('value', function (newValue, oldValue) {
+    if (newValue) {
+      renderValue();
+    }
+  });
+  scope.$watch('max', function (newValue, oldValue) {
+    if (newValue) {
+      renderValue();
+    }
+  });
+}

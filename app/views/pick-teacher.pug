@@ -1,0 +1,8 @@
+.pick-teacher
+    p {{name}}
+    h2.sub-title {{observation.school}}
+    h3.sub-sub-title {{observationType}}
+    h3.sub-sub-title {{observation.grade}}
+    h1.title Who's the teacher?
+    .buttons-group
+        button(ng-repeat="teacher in data.teachers", ng-click="pickTeacher(teacher)") {{teacher}}

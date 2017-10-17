@@ -1,0 +1,14 @@
+.observations
+    section
+        h1.title Observations
+        .observations-buttons
+            button.huge-button(ng-click="observationType('Making Observations')") Start a new observation
+            button.huge-button(ng-click="observationType('Scoring based on observations')") Score based on observation
+    section
+        h1.title My Observations
+        .saved-observation-container
+            .saved-observation(ng-repeat="observation in savedObservations", ng-click="showObservation(observation)", style="cursor:pointer;")
+                p {{observation.observationKind}} Observation
+                span {{observation.grade}},  
+                span {{observation.teacher}}
+                p {{observation.readableDate}}
