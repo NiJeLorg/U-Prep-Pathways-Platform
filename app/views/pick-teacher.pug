@@ -5,4 +5,4 @@
     h3.sub-sub-title {{observation.grade}}
     h1.title Who's the teacher?
     .buttons-group
-        button(ng-repeat="teacher in data.teachers", ng-click="pickTeacher(teacher)") {{teacher}}
+        button(ng-repeat="teacher in data.teachers", ng-click="storeObservationProperty('teacher', teacher)") {{teacher}}

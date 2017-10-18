@@ -3,4 +3,4 @@
     h2.sub-title {{observationType}}
     h1.title What School?
     .buttons-group
-        button(ng-repeat="school in data.schools", ng-click="pickSchool(school)") {{school}}
+        button(ng-repeat="school in data.schools", ng-click="storeObservationProperty('school', school)") {{school}}

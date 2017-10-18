@@ -15,29 +15,36 @@ form(name="observation-form")
     .form-group(ng-if='observation.observationKind === "Crew"')
         p.title Crew Name
         input(type="text", placeholder="Crew Name", ng-model="form.crewName")
-    .form-group(ng-if='observation.observationKind === "Lesson"')
-        p.title Context
-        p.label What? Number of Peope? Time Spent? etc.
-        textarea(name="", cols="50", rows="10", ng-model="form.context")
     .form-group
         p.title Content
-        p.sub-title(ng-if='observation.observationKind === "Lesson"') Level and Complexity
+        p(ng-if='observation.observationKind === "Lesson"') Level and Complexity
         p.label(ng-if='observation.observationKind === "Crew"') What's the crew working on? Is there a theme/goal/focus?
         p.label(ng-if='observation.observationKind === "Lesson"') What is the task at hand? What are the targets and standards?
         textarea(name="", cols="50", rows="10", ng-model="form.content")
     .form-group
         p.title Teacher
-        p.sub-title Knowledge and Skill
+        p Knowledge and Skill
         p.label What is the teacher doing? What is the teacher saying?
         textarea(name="", cols="50", rows="10", ng-model="form.teacher")
     .form-group
         p.title Student
-        p.sub-title(ng-if='observation.observationKind === "Crew"') Role in Crew
-        p.sub-title(ng-if='observation.observationKind === "Lesson"') Role in Instruction
+        p(ng-if='observation.observationKind === "Crew"') Role in Crew
+        p(ng-if='observation.observationKind === "Lesson"') Role in Instruction
         p.label What are the students doing? What are the students saying?
         textarea(name="", cols="50", rows="10", ng-model="form.student")
     .form-group
         p.title Conclusions
         p.label Best when... Better if...
         textarea(name="", cols="50", rows="10", ng-model="form.conclusions")
-    button(type="submit", ng-click="goToClustersObservedView(file)") SUBMIT
+    .form-group(ng-if='observation.observationKind === "Lesson"')
+        p.title How many students are in the class?
+        input(type='text' ng-model='form.noOfStudents')
+    .form-group(ng-if='observation.observationKind === "Lesson"')
+        p.title How much time did you spend observing?
+        select(ng-model='form.timeSpentObserving')
+            option(value='0 - 15 minutes') 0-15 minutes
+            option(value='15 - 30 minutes') 15 - 30 minutes
+            option(value='30 - 45 minutes') 30 - 45 minutes
+            option(value='45 minutes - 1 hour') 45 minutes - 1 hour
+            option(value='More than 1 hour') More than 1 hour
+    button(type="submit", ng-click="goToClustersObservedView(file)") NEXT

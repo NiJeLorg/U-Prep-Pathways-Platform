@@ -1,31 +1,22 @@
 .clusters-observed
     h1.title Clusters Observed
-    md-switch(ng-model="clustersObserved.learningTargets") Learning Targets
-    md-switch(ng-model="clustersObserved.standards") Standards
-    md-switch(ng-model="clustersObserved.planning") Planning
-    md-switch(ng-model="clustersObserved.instruction") Instruction
-    md-switch(ng-model="clustersObserved.tasks") Tasks
-    md-switch(ng-model="clustersObserved.interactionsAndBehaviors") Interactions and Behaviors
-    md-switch(ng-model="clustersObserved.crew") Crew
-    md-switch(ng-model="clustersObserved.reflectivePractices") Reflective Practices
-    md-switch(ng-model="clustersObserved.professionalCollaboration") Professional Collaboration
-    md-switch(ng-model="clustersObserved.useOfData") Use of Data
-    md-switch(ng-model="clustersObserved.policiesAndProcedures") Policies and Procedures
-    md-switch(ng-model="clustersObserved.trust") Trust
-    md-switch(ng-model="clustersObserved.growthPlans") Growth Plans
-    .observationSubmission
-    button(ng-click="changeObservation()")
-        | Change
-        span  the type of observation for this teacher
-    button(ng-click="changeSubject()")
-        | Change
-        span  the subject for this teacher
-    button(ng-click="changeTeacher()")
-        | Observe
-        span  another teacher in this grade
-    button(disabled="disabled")
-        | Score
-        span  based on observations
-    button(ng-click="changeSchool")
-        | Select  
-        span another school
+    .group
+        .switch(ng-repeat='(key, value) in data.clustersObserved')
+            md-switch(ng-model="clustersObserved.learningTargets") {{key}}
+            i.fa.fa-question-circle.fa-2x(ng-click='clusterModal($event, key)')
+        button.publish-observation-btn(ng-click='publishObservation()') Publish Observation
+    //- button(ng-click="changeObservation()")
+    //-     | Change
+    //-     span  the type of observation for this teacher
+    //- button(ng-click="changeSubject()")
+    //-     | Change
+    //-     span  the subject for this teacher
+    //- button(ng-click="changeTeacher()")
+    //-     | Observe
+    //-     span  another teacher in this grade
+    //- button(disabled="disabled")
+    //-     | Score
+    //-     span  based on observations
+    //- button(ng-click="changeSchool")
+    //-     | Select  
+    //-     span another school

@@ -1,38 +1,20 @@
 'use strict';
 
-const NewObservationCtrl = ($scope, $state, TestData, DataService, Upload) => {
+const NewObservationCtrl = ($scope, $state, TestData, DataService, Upload, $mdDialog) => {
 
     // initialize an empty observation object
     $scope.observation = {};
     $scope.observations = DataService;
     $scope.data = TestData;
     $scope.form = {};
-    const viewTransition = ['school', 'grade', 'teacher', 'subject', 'observationKind'];
+    const viewTransition = ['school', 'grade', 'teacher', 'subject', 'observationKind', 'observationForm'];
 
-    $scope.pickSchool = (school) => {
-        $scope.observation.school = school;
-        $state.go('newObservation.grade');
+    $scope.storeObservationProperty = (property, value) => {
+        $scope.observation[property] = value;
+        let nextViewIndex = viewTransition.indexOf(property) + 1;
+        $state.go(('newObservation.' + viewTransition[nextViewIndex]));
     };
 
-    $scope.pickGrade = (grade) => {
-        $scope.observation.grade = grade;
-        $state.go('newObservation.teacher');
-    };
-
-    $scope.pickTeacher = (teacher) => {
-        $scope.observation.teacher = teacher;
-        $state.go('newObservation.subject');
-    };
-
-    $scope.pickSubject = (subject) => {
-        $scope.observation.subject = subject;
-        $state.go('newObservation.observationKind');
-    };
-
-    $scope.pickObservationKind = (kind) => {
-        $scope.observation.observationKind = kind;
-        $state.go('newObservation.observationForm');
-    };
 
     $scope.goToClustersObservedView = (file) => {
         $scope.observation.form = $scope.form;
@@ -44,35 +26,50 @@ const NewObservationCtrl = ($scope, $state, TestData, DataService, Upload) => {
         $state.go('newObservation.clustersObserved');
     };
 
-    $scope.changeTeacher = () => {
-        $scope.observation.createdAt = new Date().toISOString();
+    $scope.publishObservation = () => {
         $scope.observations.$add($scope.observation);
-        // $state.go('pickTeacher');
+         $state.go('home');
     };
 
-    $scope.changeObservation = () => {
-        $scope.observation.createdAt = new Date().toISOString();
-        $scope.observations.$add($scope.observation);
-        $state.go('newObservation.observationKind');
+    $scope.clusterModal = (ev, clusterName)=> {
+        $mdDialog.show(
+            $mdDialog.alert()
+            .parent(angular.element(document.body))
+            .clickOutsideToClose(true)
+            .title(clusterName)
+            .textContent('Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.')
+        );
     };
 
-    $scope.changeSubject = () => {
-        $scope.observation.createdAt = new Date().toISOString();
-        $scope.observations.$add($scope.observation);
-        $state.go('newObservation.subject');
-    }
+    // $scope.changeTeacher = () => {
+    //     $scope.observation.createdAt = new Date().toISOString();
+    //     $scope.observations.$add($scope.observation);
+    //     // $state.go('pickTeacher');
+    // };
 
-    $scope.changeTeacher = () => {
-        $scope.observation.createdAt = new Date().toISOString();
-        $scope.observations.$add($scope.observation);
-        $state.go('newObservation.teacher');
-    }
+    // $scope.changeObservation = () => {
+    //     $scope.observation.createdAt = new Date().toISOString();
+    //
+    //     $state.go('newObservation.observationKind');
+    // };
 
-    $scope.changeSchool = () => {
-        $scope.observation.createdAt = new Date().toISOString();
-        $scope.observations.$add($scope.observation);
-        $state.go('newObservation.school');
-    };
+    // $scope.changeSubject = () => {
+    //     $scope.observation.createdAt = new Date().toISOString();
+    //     $scope.observations.$add($scope.observation);
+    //     $state.go('newObservation.subject');
+    // }
+
+    // $scope.changeTeacher = () => {
+    //     $scope.observation.createdAt = new Date().toISOString();
+    //     $scope.observations.$add($scope.observation);
+    //     $state.go('newObservation.teacher');
+    // }
+
+    // $scope.changeSchool = () => {
+    //     $scope.observation.createdAt = new Date().toISOString();
+    //     $scope.observations.$add($scope.observation);
+    //     $state.go('newObservation.school');
+    // };
 };
 
 export default NewObservationCtrl;
