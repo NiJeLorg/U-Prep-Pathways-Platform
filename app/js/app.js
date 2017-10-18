@@ -5,6 +5,7 @@ import angular from 'angular';
 import ngMaterial from 'angular-material';
 import ngFileUpload from 'ng-file-upload';
 import angulaFire from 'angularfire';
+
 // load controllers and services
 import HomeCtrl from './controllers/home';
 import NewObservationCtrl from './controllers/newObservation';
@@ -17,7 +18,7 @@ import TestData from './services/TestData';
 angular.module('star-rating', [])
   .directive('starRating', starRating);
 
-const uprepApp = angular.module('uprepApp', [uiRouter, ngMaterial, ngFileUpload, angulaFire, 'star-rating', 'firebase']);
+const uprepApp = angular.module('uprepApp', [uiRouter, ngMaterial, ngFileUpload, angulaFire,   'star-rating', 'firebase']);
 
 uprepApp
   .controller('HomeCtrl', HomeCtrl)

@@ -1,10 +1,13 @@
+import moment from 'moment';
+
+
 const HomeCtrl = ($scope, $rootScope, $state, $firebaseObject, $firebaseArray, DataService, TestData) => {
     $scope.observations = DataService;
 
     $scope.observations.$loaded(function () {
         $scope.savedObservations = $scope.observations;
         $scope.savedObservations.map(function (observation, index) {
-            observation.readableDate = new Date(observation.createdAt).toString();
+            observation.readableDate = moment(observation.createdAt).format('MMMM Do YYYY, h:mm:ss a')
         });
     });
 
