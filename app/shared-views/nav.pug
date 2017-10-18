@@ -1,3 +1,8 @@
-nav
-    i.fa.fa-bars.fa-2x
-    img(src='assets/UPrep_Logo_small.png' style='cursor:pointer' ui-sref='home')
+nav(ng-controller='NavCtrl')
+    .group
+        img(src='assets/UPrep_Logo_small.png' style='cursor:pointer' ui-sref='home')
+        i(ng-click="isCollapsed = !isCollapsed").fa.fa-bars.fa-2x
+    .dropdown(uib-collapse='isCollapsed')
+        p(ui-sref='newObservation') Start a new observation
+        p(ui-sref='scoreObservation') Score based on observation
+

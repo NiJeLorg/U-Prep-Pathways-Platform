@@ -5,23 +5,25 @@ import angular from 'angular';
 import ngMaterial from 'angular-material';
 import ngFileUpload from 'ng-file-upload';
 import angulaFire from 'angularfire';
+import uiBootstrap from 'angular-ui-bootstrap';
 
 // load controllers and services
 import HomeCtrl from './controllers/home';
+import NavCtrl from './controllers/nav';
 import NewObservationCtrl from './controllers/newObservation';
 import ScoreObservationCtrl from './controllers/scoreObservation';
 import ShowObservationCtrl from './controllers/showObservation'
 import DataService from './services/DataService';
 import TestData from './services/TestData';
 
-
 angular.module('star-rating', [])
   .directive('starRating', starRating);
 
-const uprepApp = angular.module('uprepApp', [uiRouter, ngMaterial, ngFileUpload, angulaFire,   'star-rating', 'firebase']);
+const uprepApp = angular.module('uprepApp', [uiRouter, ngMaterial, ngFileUpload, angulaFire,   uiBootstrap, 'star-rating', 'firebase']);
 
 uprepApp
   .controller('HomeCtrl', HomeCtrl)
+  .controller('NavCtrl', NavCtrl)
   .controller('NewObservationCtrl', NewObservationCtrl)
   .controller('ScoreObservationCtrl', ScoreObservationCtrl)
   .controller('ShowObservationCtrl', ShowObservationCtrl)
@@ -38,7 +40,8 @@ uprepApp.config(['$stateProvider', '$httpProvider',
       url: '/',
       controller: 'HomeCtrl',
       templateUrl: 'views/home.html'
-    }).state('showObservation', {
+    })
+    .state('showObservation', {
       url: '/show-observation/:id',
       controller: 'ShowObservationCtrl',
       templateUrl: 'views/show-observation.html'
