@@ -14,6 +14,7 @@
                         i.fa.fa-question-circle(ng-click="showLevelInformationForIndicatorDialog($event, indicator)")
                     .star-rating-group
                         star-rating(max="maxValue", value="ratingValue", hover="changeOnHover", is-readonly="isReadonly", ng-click="setRatingForIndicator(indicator, ratingValue)")
+                        i.fa.fa-plus-circle.fa-2x
     .element-button-group
         button(ng-repeat="element in data.elements", ng-show="element.name != observation.element.name", ng-style='{"background-color": element.color}') {{element.name}}
         button Make observations at this school

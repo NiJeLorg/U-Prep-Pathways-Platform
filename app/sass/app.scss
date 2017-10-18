@@ -3,13 +3,16 @@ $color_2: #FF7700;
 $color_3: #FFDD00;
 $color_4: #000000;
 $color_5: #DCDCDC;
-$font_family_1: 'Raleway', sans-serif;
+$font_family_1: 'Raleway',
+sans-serif;
 $border_color_1: #bfbfbf;
-
+@import 'utility';
 * {
 	margin: 0;
 	font-family: $font_family_1;
+	outline: none;
 }
+
 nav {
 	height: 80px;
 	box-shadow: 0px 0px 50px #b1b1b1;
@@ -26,6 +29,7 @@ nav {
 		margin-left: 40px;
 	}
 }
+
 .title {
 	font-size: 32px;
 	text-align: center;
@@ -34,26 +38,31 @@ nav {
 	width: 100%;
 	border-bottom: 1px solid #C2C2C2;
 }
+
 .sub-title {
 	text-align: center;
 	padding: 10px;
 }
+
 .sub-sub-title {
 	text-align: center;
 	padding: 5px;
 }
+
 button {
 	padding: 20px;
 	border-radius: 4px;
 	border: none;
 	cursor: pointer;
 }
+
 .huge-button {
 	background: #671f5a;
 	color: $color_1;
 	font-weight: 700;
 	margin: 40px 20px;
 }
+
 main {
 	display: flex;
 	flex-direction: column;
@@ -73,6 +82,7 @@ main {
 		}
 	}
 }
+
 .buttons-group {
 	width: 80%;
 	margin: 0 auto;
@@ -87,16 +97,19 @@ main {
 		margin-top: 40px;
 	}
 }
+
 .clusters-observed {
 	border-bottom: 1px solid #C2C2C2;
 	padding-left: 40px;
 }
+
 .observationSubmission {
 	padding: 20px;
 	button {
 		margin: 20px;
 	}
 }
+
 .saved-observation-container {
 	display: flex;
 	flex-direction: column;
@@ -110,6 +123,7 @@ main {
 		margin-bottom: 20px;
 	}
 }
+
 form {
 	padding: 0 0 20px 0;
 	display: flex;
@@ -141,6 +155,7 @@ form {
 		}
 	}
 }
+
 .upload-media {
 	button {
 		margin: 30px;
@@ -148,6 +163,7 @@ form {
 		background: none;
 	}
 }
+
 .components {
 	border-top: 1px solid #929292;
 	padding: 30px;
@@ -160,6 +176,7 @@ form {
 		}
 	}
 }
+
 .indicators {
 	.group {
 		.label-group {
@@ -178,6 +195,7 @@ form {
 		}
 	}
 }
+
 .element-button-group {
 	border-top: 1px solid #929292;
 	button {
@@ -185,6 +203,7 @@ form {
 		margin: 20px;
 	}
 }
+
 .show-observation {
 	padding: 30px;
 	.group-container {
@@ -203,14 +222,17 @@ form {
 		border-top: 1px solid #C2C2C2;
 	}
 }
+
 .fa-star-o {
 	color: $color_2;
 }
+
 .fa-star {
 	color: $color_3;
 	-webkit-text-stroke-width: 2px;
 	-webkit-text-stroke-color: #FF7700;
 }
+
 .isReadonly {
 	.fa-star-o {
 		color: $color_4;
@@ -221,6 +243,16 @@ form {
 		-webkit-text-stroke-color: #000000;
 	}
 }
+
+.filter-observation {
+	padding: 20px;
+	display: flex;
+	justify-content: flex-end;
+	input {
+		width: 30%;
+	}
+}
+
 @media (max-width: 450px) {
 	main {
 		.center-content {

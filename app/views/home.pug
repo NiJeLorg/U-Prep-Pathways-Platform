@@ -6,8 +6,10 @@
             button.huge-button(ng-click="observationType('Scoring based on observations')") Score based on observation
     section
         h1.title My Observations
+        .filter-observation
+            input(type='text' ng-model='searchText' placeholder='Filter Observations')
         .saved-observation-container
-            .saved-observation(ng-repeat="observation in savedObservations", ng-click="showObservation(observation)", style="cursor:pointer;")
+            .saved-observation(ng-repeat="observation in savedObservations | filter:searchText", ng-click="showObservation(observation)", style="cursor:pointer;")
                 p {{observation.observationKind}} Observation
                 span {{observation.grade}},  
                 span {{observation.teacher}}
