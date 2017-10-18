@@ -7,12 +7,18 @@ const NewObservationCtrl = ($scope, $state, TestData, DataService, Upload, $mdDi
     $scope.observations = DataService;
     $scope.data = TestData;
     $scope.form = {};
-    const viewTransition = ['school', 'grade', 'teacher', 'subject', 'observationKind', 'observationForm'];
+    const viewTransition = ['school', 'grade', 'teacher', 'observationKind', 'observationForm'];
 
     $scope.storeObservationProperty = (property, value) => {
         $scope.observation[property] = value;
         let nextViewIndex = viewTransition.indexOf(property) + 1;
-        $state.go(('newObservation.' + viewTransition[nextViewIndex]));
+        if (property === 'observationKind' && value === 'Lesson') {
+            $state.go('newObservation.subject');
+        } else if (property === "subject") {
+            $state.go('newObservation.observationForm');
+        } else {
+            $state.go(('newObservation.' + viewTransition[nextViewIndex]));
+        }
     };
 
 
@@ -28,10 +34,10 @@ const NewObservationCtrl = ($scope, $state, TestData, DataService, Upload, $mdDi
 
     $scope.publishObservation = () => {
         $scope.observations.$add($scope.observation);
-         $state.go('home');
+        $state.go('home');
     };
 
-    $scope.clusterModal = (ev, clusterName)=> {
+    $scope.clusterModal = (ev, clusterName) => {
         $mdDialog.show(
             $mdDialog.alert()
             .parent(angular.element(document.body))
