@@ -2,7 +2,7 @@
 
 import moment from 'moment';
 
-const HomeCtrl = ($scope, $rootScope, $state, $firebaseObject, $firebaseArray, DataService, TestData) => {
+const HomeCtrl = ($scope, $rootScope, $state, DataService) => {
 
     DataService.$loaded((obj) => {
         obj.map((observation, index) => {
