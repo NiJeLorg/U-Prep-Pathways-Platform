@@ -33,6 +33,7 @@ const NewObservationCtrl = ($scope, $state, TestData, DataService, Upload, $mdDi
     };
 
     $scope.publishObservation = () => {
+        $scope.observation.createdAt = firebase.database.ServerValue.TIMESTAMP;
         $scope.observations.$add($scope.observation);
         $state.go('home');
     };
@@ -45,6 +46,30 @@ const NewObservationCtrl = ($scope, $state, TestData, DataService, Upload, $mdDi
             .title(clusterName)
             .textContent('Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.')
         );
+    };
+
+    $scope.filterGrades = (school) => {
+        console.log(school);
+
+        // var schoolLevels = [{
+        //     schools: ['UPSM ELEMENTARY', 'ELLEN THOMPSON ELEMENTARY', 'MARK MURRAY ELEMENTARY'],
+        //     grades: ['Kindergarten', '1st Grade', '2nd Grade', '3rd Grade', '5th Grade']
+        // }, {
+        //     schools: ['UPA MIDDLE', 'UPSM MIDDLE'],
+        //     grades: ['6th Grade', '7th Grade', '8th Grade']
+        // }, {
+        //     schools: ['UPA HIGH', 'UPSM HIGH'],
+        //     grades: ['9th Grade', '10th Grade', '11th Grade', '12th Grade']
+        // }];
+        // schoolLevels.filter((key, index) => {
+        //     key.schools.map((prop) => {
+        //         if ($scope.observation.school === prop) {
+        //             key.grades.map((grade) => {
+        //                 return grade;
+        //             })
+        //         }
+        //     })
+        // });
     };
 
     // $scope.changeTeacher = () => {

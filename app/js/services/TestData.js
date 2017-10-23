@@ -2,7 +2,7 @@
 const TestData = () => {
     return {
         schools: ['UPSM ELEMENTARY', 'ELLEN THOMPSON ELEMENTARY', 'MARK MURRAY ELEMENTARY', 'UPA MIDDLE', 'UPSM MIDDLE', 'UPA HIGH', 'UPSM HIGH'],
-        grades: ['Kindergarten', '1st grade', '2nd grade', '3rd grade', '4th grade', '5th grade'],
+        grades: ['Kindergarten', '1st grade', '2nd grade', '3rd grade', '4th grade', '5th grade', '6th Grade', '7th Grade', '8th Grade', '9th Grade', '10th Grade', '11th Grade', '12th Grade'],
         teachers: ['Mr.Martin', 'Ms.Andrews', 'Ms.Ng', 'Mr.Schnider', 'Ms.Peterson', 'Mr.Underhill'],
         subjects: ['Math', 'Science', 'English', 'Gym', 'Art', 'Music'],
         scoreBase: ['Score based on clusters observed', 'Score by elements'],
