@@ -32,13 +32,14 @@ app.use(express.static('public'));
 
 require('./server/routes')(app);
 
-// Setup a default catch-all route that sends back a welcome message in JSON format.
-app.get('*', (req, res) => {
+// Setup a default catch-all route that sends back the index.html page
+app.all('*', (req, res) => {
     res.sendFile('index.html', {
         root: 'public'
     });
 });
 
+// Start the server
 app.listen(process.env.PORT || 3000, () => {
     c.log('server listening on port ' + process.env.PORT || 3000);
 });
