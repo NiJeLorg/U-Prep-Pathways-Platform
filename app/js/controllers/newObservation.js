@@ -4,10 +4,11 @@ const NewObservationCtrl = ($scope, $state, TestData, DataService, Upload, $mdDi
 
     // initialize an empty observation object
     $scope.observation = {};
-    $scope.observations = DataService;
     $scope.data = TestData;
     $scope.form = {};
     const viewTransition = ['school', 'grade', 'teacher', 'observationKind', 'observationForm'];
+
+    // stuff to be saved and moved to the next view //
 
     $scope.storeObservationProperty = (property, value) => {
         $scope.observation[property] = value;
@@ -34,7 +35,7 @@ const NewObservationCtrl = ($scope, $state, TestData, DataService, Upload, $mdDi
 
     $scope.publishObservation = () => {
         $scope.observation.createdAt = firebase.database.ServerValue.TIMESTAMP;
-        $scope.observations.$add($scope.observation);
+        DataService.$add($scope.observation);
         $state.go('home');
     };
 
