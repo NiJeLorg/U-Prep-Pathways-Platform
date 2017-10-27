@@ -4,4 +4,4 @@
     h3.sub-sub-title {{observation.grade}}
     h3.sub-sub-title {{observation.teacher}}
     .buttons-group
-        button(ng-repeat='score in data.scoreBase' ng-click='pickScoreBase(score)') {{score}}
+        button(ng-repeat='score in data.scoreBase' ng-click="scoreObservation('scoreBase', score)" ui-sref='scoreObservation.element') {{score}}

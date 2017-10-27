@@ -1,26 +1,39 @@
+'use strict';
+
 const ScoreObservationCtrl = ($scope, $state, $mdDialog, TestData) => {
+
     $scope.data = TestData;
+    $scope.observation = {};
 
     $scope.isReadonly = false;
     $scope.changeOnHover = false;
     $scope.maxValue = 4;
     $scope.ratingValue = 0;
 
-    $scope.observation = {};
-
-    $scope.pickSchool = (school) => {
-        $scope.observation.school = school;
-        $state.go('scoreObservation.grade');
+    $scope.recordObservation = (key, value) => {
+        $scope.observation[key] = value;
+        // console.log(key, 'key');
+        // if (key === 'teacher') {
+        //     $state.go('scoreObservation.scoreBase');
+        // }
     };
 
-    $scope.pickGrade = (grade) => {
-        $scope.observation.grade = grade;
-        $state.go('scoreObservation.teacher');
-    };
-
-    $scope.pickTeacher = (teacher) => {
-        $scope.observation.teacher = teacher;
-        $state.go('scoreObservation.scoreBase');
+    $scope.filterGrades = (grade) => {
+        const levelGrades = {
+            elementary: ['Kindergarten', '1st Grade', '2nd Grade', '3rd Grade', '4th Grade', '5th Grade'],
+            middle: ['6th Grade', '7th Grade', '8th Grade'],
+            high: ['9th Grade', '10th Grade', '11th Grade', '12th Grade']
+        };
+        let schoolLevel = $scope.observation.school.split(' ').pop().toLowerCase();
+        for (let prop in levelGrades) {
+            if (prop == schoolLevel) {
+                for (let i = 0; i < levelGrades[prop].length; i++) {
+                    if (levelGrades[schoolLevel][i] == grade) {
+                        return true;
+                    }
+                }
+            }
+        }
     };
 
     $scope.pickScoreBase = (score) => {
@@ -32,11 +45,10 @@ const ScoreObservationCtrl = ($scope, $state, $mdDialog, TestData) => {
 
     $scope.pickElement = (element) => {
         $scope.observation.element = element;
-        console.log($scope.observation, 'yoo');
         $state.go('scoreObservation.component');
     };
 
-    $scope.setRatingForIndicator = (indicator, rating)=> {
+    $scope.setRatingForIndicator = (indicator, rating) => {
         console.log(indicator, rating);
     };
 

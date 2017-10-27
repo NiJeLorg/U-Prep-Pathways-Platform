@@ -5,4 +5,4 @@
     h3.sub-sub-title {{observation.teacher}}
     h1.title Pick Subject
     .buttons-group
-        button(ng-repeat="subject in data.subjects", ng-click="storeObservationProperty('subject', subject)") {{subject}}
+        button(ng-repeat="subject in data.subjects", ng-click="recordObservation('subject', subject)" ui-sref='newObservation.observationForm') {{subject}}

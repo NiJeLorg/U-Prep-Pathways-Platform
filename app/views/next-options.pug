@@ -1,0 +1,19 @@
+h2.title Select Next Options
+.buttons-group
+    button(ng-click="changeObservation()")
+        | Review
+        span  this observation
+    button(ng-click="changeObservation()")
+        | Make
+        span a new observation for {{observation.teacher}}, in {{observation.grade}}, {{observation.subject}}
+    button(ng-click="changeSubject()")
+        | Make
+        span  a new observation for {{observation.teacher}}, in {{observation.grade}}, different subject
+    button(ng-click="changeTeacher()")
+        | Observe
+        span  another teacher in this grade
+    button(ui-sref='scoreObservation')
+        | Score
+        span  based on observations
+    button(ui-sref='home')
+        | Home

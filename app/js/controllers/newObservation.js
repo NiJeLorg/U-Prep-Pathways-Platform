@@ -6,19 +6,15 @@ const NewObservationCtrl = ($scope, $state, TestData, DataService, Upload, $mdDi
     $scope.observation = {};
     $scope.data = TestData;
     $scope.form = {};
-    const viewTransition = ['school', 'grade', 'teacher', 'observationKind', 'observationForm'];
 
-    // stuff to be saved and moved to the next view //
-
-    $scope.storeObservationProperty = (property, value) => {
-        $scope.observation[property] = value;
-        let nextViewIndex = viewTransition.indexOf(property) + 1;
-        if (property === 'observationKind' && value === 'Lesson') {
-            $state.go('newObservation.subject');
-        } else if (property === "subject") {
-            $state.go('newObservation.observationForm');
-        } else {
-            $state.go(('newObservation.' + viewTransition[nextViewIndex]));
+    $scope.recordObservation = (key, value) => {
+        $scope.observation[key] = value;
+        if (key === 'observationKind') {
+            if (value === 'Crew') {
+                $state.go('newObservation.observationForm');
+            } else {
+                $state.go('newObservation.subject');
+            }
         }
     };
 
@@ -36,7 +32,7 @@ const NewObservationCtrl = ($scope, $state, TestData, DataService, Upload, $mdDi
     $scope.publishObservation = () => {
         $scope.observation.createdAt = firebase.database.ServerValue.TIMESTAMP;
         DataService.$add($scope.observation);
-        $state.go('home');
+        $state.go('newObservation.nextOptions');
     };
 
     $scope.clusterModal = (ev, clusterName) => {
@@ -47,30 +43,6 @@ const NewObservationCtrl = ($scope, $state, TestData, DataService, Upload, $mdDi
             .title(clusterName)
             .textContent('Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.')
         );
-    };
-
-    $scope.filterGrades = (school) => {
-        console.log(school);
-
-        // var schoolLevels = [{
-        //     schools: ['UPSM ELEMENTARY', 'ELLEN THOMPSON ELEMENTARY', 'MARK MURRAY ELEMENTARY'],
-        //     grades: ['Kindergarten', '1st Grade', '2nd Grade', '3rd Grade', '5th Grade']
-        // }, {
-        //     schools: ['UPA MIDDLE', 'UPSM MIDDLE'],
-        //     grades: ['6th Grade', '7th Grade', '8th Grade']
-        // }, {
-        //     schools: ['UPA HIGH', 'UPSM HIGH'],
-        //     grades: ['9th Grade', '10th Grade', '11th Grade', '12th Grade']
-        // }];
-        // schoolLevels.filter((key, index) => {
-        //     key.schools.map((prop) => {
-        //         if ($scope.observation.school === prop) {
-        //             key.grades.map((grade) => {
-        //                 return grade;
-        //             })
-        //         }
-        //     })
-        // });
     };
 
     // $scope.changeTeacher = () => {

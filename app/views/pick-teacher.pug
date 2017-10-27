@@ -4,5 +4,8 @@
     h3.sub-sub-title {{observationType}}
     h3.sub-sub-title {{observation.grade}}
     h1.title Who's the teacher?
-    .buttons-group
-        button(ng-repeat="teacher in data.teachers", ng-click="storeObservationProperty('teacher', teacher)") {{teacher}}
+    .buttons-group(ng-if='observationType === "Making Observations"')
+        button(ng-repeat="teacher in data.teachers", ng-click="recordObservation('teacher', teacher)" ui-sref='newObservation.observationKind') {{teacher}}
+    .buttons-group(ng-if='observationType === "Scoring based on observations"')
+        button(ng-repeat="teacher in data.teachers", ng-click="recordObservation('teacher', teacher)" ui-sref='scoreObservation.scoreBase') {{teacher}}
+

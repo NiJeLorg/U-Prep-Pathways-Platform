@@ -2,5 +2,7 @@
     p {{name}}
     h2.sub-title {{observationType}}
     h1.title What School?
-    .buttons-group
-        button(ng-repeat="school in data.schools", ng-click="storeObservationProperty('school', school)") {{school}}
+    .buttons-group(ng-if='observationType === "Making Observations"')
+        button(ng-repeat="school in data.schools", ng-click="recordObservation('school', school)" ui-sref='newObservation.grade') {{school}}
+    .buttons-group(ng-if='observationType === "Scoring based on observations"')
+        button(ng-repeat="school in data.schools", ng-click="recordObservation('school', school)" ui-sref='scoreObservation.grade') {{school}}

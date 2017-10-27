@@ -6,4 +6,4 @@
     h3.sub-sub-title {{observation.subject}}
     h1.title Pick Observation Kind
     .buttons-group
-        button(ng-repeat="kind in data.observationKind", ng-click="storeObservationProperty('observationKind', kind)") {{kind}}
+        button(ng-repeat="kind in data.observationKind", ng-click="recordObservation('observationKind', kind)") {{kind}}

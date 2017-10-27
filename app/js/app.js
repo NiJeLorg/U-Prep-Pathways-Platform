@@ -67,6 +67,9 @@ uprepApp.config(['$stateProvider', '$httpProvider',
     }).state('newObservation.clustersObserved', {
       url: '/clusters-observed',
       templateUrl: 'views/clusters-observed.html'
+    }).state('newObservation.nextOptions', {
+      url: '/next-options',
+      templateUrl: 'views/next-options.html'
     }).state('scoreObservation', {
       url: '/score-observation',
       controller: 'ScoreObservationCtrl',
