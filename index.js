@@ -35,7 +35,7 @@ require('./server/routes')(app);
 // Setup a default catch-all route that sends back the index.html page
 app.all('*', (req, res) => {
     res.sendFile('index.html', {
-        root: 'public'
+        root: './public'
     });
 });
 
