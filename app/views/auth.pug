@@ -1,0 +1,13 @@
+.auth-view
+    .singup-form(ng-if='!registeredUser')
+        h2 Sign-Up
+        form(ng-submit='signup(signup.user)')
+            input(type='text' name='email' ng-model='signup.user.email' placeholder='E-mail' ng-required)
+            input(type='password' name='password' ng-model='signup.user.password' placeholder='Password' required)
+            input(type='submit')
+    .login-form(ng-if='registeredUser')
+        h2 Login
+        form(ng-submit='login(login.user)')
+            input(type='text' name='email' ng-model='login.user.email' placeholder='E-mail' required)
+            input(type='password' name='password' ng-model='login.user.password' placeholder='Password' required)
+            input(type='submit')

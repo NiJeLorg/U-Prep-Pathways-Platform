@@ -3,6 +3,6 @@
     h3.sub-sub-title {{observationType}}
     h1.title What grade?
     .buttons-group(ng-if='observationType === "Making Observations"')
-        button(ng-repeat="grade in data.grades", ng-click="recordObservation('grade', grade)" ui-sref='newObservation.teacher') {{grade}}
+        button(ng-repeat="grade in data.grades | filter:filterGrades()", ng-click="recordObservation('grade', grade.grade)" ui-sref='newObservation.teacher') {{grade.grade}}
     .buttons-group(ng-if='observationType === "Scoring based on observations"')
-        button(ng-repeat="grade in data.grades", ng-click="recordObservation('grade', grade)" ui-sref='scoreObservation.teacher' ng-if='filterGrades(grade)') {{grade}}
+        button(ng-repeat="grade in data.grades | filter:filterGrades()", ng-click="recordObservation('grade', grade.grade)" ui-sref='scoreObservation.teacher' ) {{grade.grade}}

@@ -2,7 +2,48 @@
 const TestData = () => {
     return {
         schools: ['UPSM ELEMENTARY', 'ELLEN THOMPSON ELEMENTARY', 'MARK MURRAY ELEMENTARY', 'UPA MIDDLE', 'UPSM MIDDLE', 'UPA HIGH', 'UPSM HIGH'],
-        grades: ['Kindergarten', '1st grade', '2nd grade', '3rd grade', '4th grade', '5th grade', '6th Grade', '7th Grade', '8th Grade', '9th Grade', '10th Grade', '11th Grade', '12th Grade'],
+        grades: [{
+                grade: 'Kindergarten',
+                level: 'Elementary'
+            },
+            {
+                grade: '1st grade',
+                level: 'Elementary'
+            }, {
+                grade: '2nd grade',
+                level: 'Elementary'
+            }, {
+                grade: '3rd grade',
+                level: 'Elementary'
+            }, {
+                grade: '4th grade',
+                level: 'Elementary'
+            }, {
+                grade: '5th grade',
+                level: 'Elementary'
+            }, {
+                grade: '6th Grade',
+                level: 'Middle'
+            }, {
+                grade: '7th Grade',
+                level: 'Middle'
+            }, {
+                grade: '8th Grade',
+                level: 'Middle'
+            }, {
+                grade: '9th Grade',
+                level: 'High'
+            }, {
+                grade: '10th Grade',
+                level: 'High'
+            }, {
+                grade: '11th Grade',
+                level: 'High'
+            }, {
+                grade: '12th Grade',
+                level: 'High'
+            }
+        ],
         teachers: ['Mr.Martin', 'Ms.Andrews', 'Ms.Ng', 'Mr.Schnider', 'Ms.Peterson', 'Mr.Underhill'],
         subjects: ['Math', 'Science', 'English', 'Gym', 'Art', 'Music'],
         scoreBase: ['Score based on clusters observed', 'Score by elements'],

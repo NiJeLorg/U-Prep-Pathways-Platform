@@ -12,28 +12,10 @@ const ScoreObservationCtrl = ($scope, $state, $mdDialog, TestData) => {
 
     $scope.recordObservation = (key, value) => {
         $scope.observation[key] = value;
-        // console.log(key, 'key');
-        // if (key === 'teacher') {
-        //     $state.go('scoreObservation.scoreBase');
-        // }
     };
 
     $scope.filterGrades = (grade) => {
-        const levelGrades = {
-            elementary: ['Kindergarten', '1st Grade', '2nd Grade', '3rd Grade', '4th Grade', '5th Grade'],
-            middle: ['6th Grade', '7th Grade', '8th Grade'],
-            high: ['9th Grade', '10th Grade', '11th Grade', '12th Grade']
-        };
-        let schoolLevel = $scope.observation.school.split(' ').pop().toLowerCase();
-        for (let prop in levelGrades) {
-            if (prop == schoolLevel) {
-                for (let i = 0; i < levelGrades[prop].length; i++) {
-                    if (levelGrades[schoolLevel][i] == grade) {
-                        return true;
-                    }
-                }
-            }
-        }
+        return $scope.observation.school.split(' ').pop().toLowerCase();
     };
 
     $scope.pickScoreBase = (score) => {
