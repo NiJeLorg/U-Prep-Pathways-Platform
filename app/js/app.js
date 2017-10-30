@@ -36,7 +36,7 @@ uprepApp.config(['$stateProvider', '$httpProvider',
   '$urlRouterProvider', '$locationProvider', ($stateProvider, $httpProvider, $urlRouterProvider, $locationProvider) => {
 
     // For any unmatched url, redirect to home
-    $urlRouterProvider.otherwise('/');
+    $urlRouterProvider.otherwise('/home');
 
     $stateProvider.state('home', {
         url: '/home',
