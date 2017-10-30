@@ -28,7 +28,7 @@ app.use(bodyParser.urlencoded({
 }));
 
 // serve static files
-app.use(express.static('public'));
+app.use(express.static(path.resolve('./public')));
 
 require('./server/routes')(app);
 
