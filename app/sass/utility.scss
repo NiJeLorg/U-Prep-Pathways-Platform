@@ -3,3 +3,17 @@ input[type='text'] {
     border-radius: 4px;
 }
 
+button {
+    background: none;
+}
+
+.title-group {
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #C2C2C2;
+    justify-content: center;
+    .title {
+        width: initial;
+        border: none;
+    }
+}
