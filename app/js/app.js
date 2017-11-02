@@ -96,7 +96,11 @@ uprepApp.config(['$stateProvider', '$httpProvider',
       }).state('scoreObservation.component', {
         url: '/pick-component',
         templateUrl: 'views/pick-component.html'
+      }).state('update-observation', {
+        url: '/update-observation',
+        templateUrl: 'views/update-observation.html'
       });
+
     $locationProvider.html5Mode(true);
   }
 ]);
