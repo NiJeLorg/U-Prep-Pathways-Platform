@@ -1,65 +1,65 @@
-//- .show-observation
-//-     .title-group
-//-         h1.title OBSERVATION
-//-         button(title='Edit Observation' ng-click='editObservation()')
-//-             i.fa.fa-pencil-square-o.fa-2x
-//-     .group-container
-//-         .group
-//-             h2 SCHOOL
-//-             p {{observation.school}}
-//-         .group
-//-             h2 GRADE
-//-             p {{observation.grade}}
-//-         .group
-//-             h2 TEACHER
-//-             p {{observation.teacher}}
-//-         .group
-//-             h2 SUBJECT
-//-             p {{observation.subject}}
-//-         .group
-//-             h2 OBSERVATION KIND
-//-             p {{observation.observationKind}}
-//-         .group
-//-             h2 TIME OF OBSERVATION
-//-             p {{observation.readableDate}}
-//-     .form-container.group-container
-//-         .group
-//-             h2 PHOTOS  & VIDEOS
-//-             img(src='{{observation.photo}}')
-//-         .group(ng-if='observation.form.crewName')
-//-             h2 CREW NAME
-//-             p {{observation.form.crewName}}
-//-         .group(ng-if='observation.form.context')
-//-             h2 CONTEXT
-//-             p {{observation.form.context}}
-//-         .group(ng-if='observation.form.content')
-//-             h2 CONTENT
-//-             p {{observation.form.content}}
-//-         .group(ng-if='observation.form.teacher')
-//-             h2 TEACHER
-//-             p {{observation.form.teacher}}
-//-         .group(ng-if='observation.form.student')
-//-             h2 STUDENT
-//-             p {{observation.form.student}}
-//-         .group(ng-if='observation.form.conclusions')
-//-             h2 CONCLUSIONS
-//-             p {{observation.form.conclusions}}
-.edit-observation
+.show-observation(ng-show='!toggleEditObservation')
+    .title-group
+        h1.title OBSERVATION
+        button(title='Edit Observation' ng-click='editObservation()')
+            i.fa.fa-pencil-square-o.fa-2x
+    .group-container
+        .group
+            h2 SCHOOL
+            p {{observation.school}}
+        .group
+            h2 GRADE
+            p {{observation.grade}}
+        .group
+            h2 TEACHER
+            p {{observation.teacher}}
+        .group
+            h2 SUBJECT
+            p {{observation.subject}}
+        .group
+            h2 OBSERVATION KIND
+            p {{observation.observationKind}}
+        .group
+            h2 TIME OF OBSERVATION
+            p {{observation.readableDate}}
+    .form-container.group-container
+        .group
+            h2 PHOTOS  & VIDEOS
+            img(src='{{observation.photo}}')
+        .group(ng-if='observation.form.crewName')
+            h2 CREW NAME
+            p {{observation.form.crewName}}
+        .group(ng-if='observation.form.context')
+            h2 CONTEXT
+            p {{observation.form.context}}
+        .group(ng-if='observation.form.content')
+            h2 CONTENT
+            p {{observation.form.content}}
+        .group(ng-if='observation.form.teacher')
+            h2 TEACHER
+            p {{observation.form.teacher}}
+        .group(ng-if='observation.form.student')
+            h2 STUDENT
+            p {{observation.form.student}}
+        .group(ng-if='observation.form.conclusions')
+            h2 CONCLUSIONS
+            p {{observation.form.conclusions}}
+.edit-observation(ng-show='toggleEditObservation')
     .title Edit Observation
-    form
+    form(ng-submit='editObservation(editedObservation)')
         .form-group
             p.title School
-            input(type='text' placeholder='School')
+            input(type='text' placeholder='School' ng-model='editedObservation.school')
         .form-group
             p.title Grade
-            input(type='text' placeholder='Grade')
+            input(type='text' placeholder='Grade' ng-model='editedObservation.grade')
         .form-group
             p.title Teacher
-            input(type='text' placeholder='Teacher')
+            input(type='text' placeholder='Teacher' ng-model='editedObservation.teacher')
         .form-group
             p.title Observation Kind
-            input(type='text' placeholder='Observation Kind')
+            input(type='text' placeholder='Observation Kind' ng-model='editedObservation.observationKind')
         .form-group
             p.title Subject
-            input(type='text' placeholder='Subject')
-
+            input(type='text' placeholder='Subject' ng-model='editedObservation.subject')
+        input(type='submit')
