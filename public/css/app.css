@@ -3,7 +3,8 @@ input[type='text'] {
   border-radius: 4px; }
 
 button {
-  background: none; }
+  background: none;
+  border-radius: 4px; }
 
 .title {
   font-size: 32px;
@@ -11,7 +12,8 @@ button {
   padding: 15px 0;
   font-weight: 900;
   width: 100%;
-  border-bottom: 1px solid #C2C2C2; }
+  border-bottom: 1px solid #C2C2C2;
+  text-transform: uppercase; }
 
 .title-group {
   display: flex;
@@ -21,6 +23,14 @@ button {
   .title-group .title {
     width: initial;
     border: none; }
+
+.primary-button {
+  background: #671f5a;
+  color: #fff; }
+
+.submit-button {
+  background: #2ecc98;
+  color: #fff; }
 
 .auth-view h2 {
   text-align: center; }
@@ -78,12 +88,6 @@ button {
   border: none;
   cursor: pointer; }
 
-.huge-button {
-  background: #671f5a;
-  color: #fff;
-  font-weight: 700;
-  margin: 40px 20px; }
-
 main {
   display: flex;
   flex-direction: column;
@@ -95,9 +99,13 @@ main {
     overflow: scroll;
     padding: 20px 0;
     padding-bottom: 60px; }
-  main .observations .observations-buttons {
-    display: flex;
-    justify-content: center; }
+
+.observations-buttons {
+  display: flex;
+  justify-content: center;
+  padding: 20px; }
+  .observations-buttons button {
+    margin: 0 20px; }
 
 .buttons-group {
   width: 80%;
@@ -107,8 +115,6 @@ main {
   align-items: center;
   justify-content: center; }
   .buttons-group button {
-    background: #671f5a;
-    color: #fff;
     margin: 0 30px;
     margin-top: 40px; }
 

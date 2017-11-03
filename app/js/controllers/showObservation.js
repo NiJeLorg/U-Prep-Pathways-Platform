@@ -13,7 +13,8 @@ const ShowObservationCtrl = ($scope, $rootScope, $state, $stateParams, TestData,
     };
 
     $scope.submitEditedObservation = (obj) => {
-        console.log(obj);
+        console.log('here');
+        $scope.toggleEditObservation = false;
     };
 };
 
