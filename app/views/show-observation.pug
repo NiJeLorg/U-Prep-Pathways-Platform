@@ -45,8 +45,11 @@
             h2 CONCLUSIONS
             p {{observation.form.conclusions}}
 .edit-observation(ng-show='toggleEditObservation')
-    .title Edit Observation
-    form(ng-submit='editObservation(editedObservation)')
+    .title-group
+        h1.title EDIT OBSERVATION
+        button(title='Cancel Editing Observation' ng-click='cancelEditingObservation()')
+            i.fa.fa-times-circle-o.fa-2x
+    form(ng-submit='submitEditedObservation(editedObservation)')
         .form-group
             p.title School
             input(type='text' placeholder='School' ng-model='editedObservation.school')
