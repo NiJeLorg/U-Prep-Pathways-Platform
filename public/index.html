@@ -1,9 +1,0 @@
-<html ng-app="uprepApp"><head><base href="/"/><title>U-Prep Pathways Platform</title><meta charset="utf-8"/><meta name="viewport" content="width=device-width"/><link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"/><link href="https://cdnjs.cloudflare.com/ajax/libs/angular-material/1.1.4/angular-material.min.css" rel="stylesheet"/><link href="https://fonts.googleapis.com/css?family=Raleway:300,400,700,900" rel="stylesheet"/><link rel="stylesheet" href="css/app.css"/><script src="https://use.fontawesome.com/e6dd17dee1.js"></script></head><body ng-cloak="ng-cloak"><main><nav ng-controller="NavCtrl"><div class="group"><img src="assets/UPrep_Logo_small.png" style="cursor:pointer;" ui-sref="home"/><i class="fa fa-bars fa-2x" ng-click="isCollapsed = !isCollapsed"></i></div><div class="dropdown" uib-collapse="isCollapsed"><p ui-sref="newObservation">Start a new observation</p><p ui-sref="scoreObservation">Score based on observation</p></div></nav><div class="center-content ui-view"></div></main><footer><script src="https://www.gstatic.com/firebasejs/4.5.0/firebase.js"></script><script>var config = {
-    apiKey: "AIzaSyCEkglYYfqMX2eQM5wuWZTFw5rW2ltFI5k",
-    authDomain: "uprep-9ddf0.firebaseapp.com",
-    databaseURL: "https://uprep-9ddf0.firebaseio.com",
-    projectId: "uprep-9ddf0",
-    storageBucket: "",
-    messagingSenderId: "438250291385"
-};
-firebase.initializeApp(config);</script><script src="js/bundle.js"></script></footer></body></html>
