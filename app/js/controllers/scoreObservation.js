@@ -5,10 +5,9 @@ const ScoreObservationCtrl = ($scope, $state, $mdDialog, TestData) => {
     $scope.data = TestData;
     $scope.observation = {};
 
+    $scope.rate = 7;
+    $scope.max = 4;
     $scope.isReadonly = false;
-    $scope.changeOnHover = false;
-    $scope.maxValue = 4;
-    $scope.ratingValue = 0;
 
     $scope.recordObservation = (key, value) => {
         $scope.observation[key] = value;
@@ -42,7 +41,6 @@ const ScoreObservationCtrl = ($scope, $state, $mdDialog, TestData) => {
             .title(indicator)
             .textContent('Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.')
         );
-        console.log(indicator, 'yoo');
     };
 };
 

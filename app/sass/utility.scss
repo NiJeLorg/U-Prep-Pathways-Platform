@@ -7,6 +7,11 @@ button {
     background: none;
 }
 
+.align-elements-vertically {
+    display: flex;
+    align-items: center;
+}
+
 .title {
     font-size: 32px;
     text-align: center;
@@ -25,4 +30,14 @@ button {
         width: initial;
         border: none;
     }
+}
+
+.glyphicon-star,
+.glyphicon-star-empty {
+    font-size: 24px;
+    margin-right: 5px;
+}
+
+.glyphicon-star {
+    color: #ff9900;
 }

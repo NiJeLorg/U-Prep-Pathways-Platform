@@ -1,9 +1,31 @@
+* {
+  margin: 0;
+  font-family: 'Raleway', sans-serif;
+  outline: none;
+  box-sizing: border-box; }
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0; }
+
+label, input[type=checkbox] {
+  margin: 0; }
+
 input[type='text'] {
   padding: 10px;
   border-radius: 4px; }
 
 button {
   background: none; }
+
+.align-elements-vertically {
+  display: flex;
+  align-items: center; }
 
 .title {
   font-size: 32px;
@@ -22,6 +44,14 @@ button {
     width: initial;
     border: none; }
 
+.glyphicon-star,
+.glyphicon-star-empty {
+  font-size: 24px;
+  margin-right: 5px; }
+
+.glyphicon-star {
+  color: #ff9900; }
+
 .auth-view h2 {
   text-align: center; }
 
@@ -30,15 +60,6 @@ button {
   padding: 10px;
   margin: 10px 0;
   border-radius: 4px; }
-
-* {
-  margin: 0;
-  font-family: "Raleway", sans-serif;
-  outline: none;
-  box-sizing: border-box; }
-
-h1, h2, h3, h4, h5, h6, p {
-  margin: 0; }
 
 nav {
   padding: 20px 30px;
@@ -174,24 +195,17 @@ form {
 .components {
   border-top: 1px solid #929292;
   padding: 30px; }
-  .components .title {
-    display: flex;
-    align-items: center;
-    border: none; }
-    .components .title h6 {
-      text-decoration: underline; }
-
-.indicators .group .label-group {
-  display: flex;
-  align-items: center; }
-  .indicators .group .label-group label {
-    margin-left: 5px;
-    margin-right: 15px; }
-  .indicators .group .label-group i {
-    cursor: pointer; }
-
-.indicators .group .star-rating-group {
-  padding: 10px 0; }
+  .components h3 {
+    padding: 10px 0;
+    text-decoration: underline; }
+  .components .indicator {
+    padding: 5px 0; }
+    .components .indicator input {
+      margin-right: 5px; }
+    .components .indicator label {
+      margin-right: 10px;
+      font-size: 18px;
+      font-weight: normal; }
 
 .element-button-group {
   border-top: 1px solid #929292; }
@@ -212,22 +226,6 @@ form {
       margin-bottom: 10px; }
   .show-observation .form-container {
     border-top: 1px solid #C2C2C2; }
-
-.fa-star-o {
-  color: #FF7700; }
-
-.fa-star {
-  color: #FFDD00;
-  -webkit-text-stroke-width: 2px;
-  -webkit-text-stroke-color: #FF7700; }
-
-.isReadonly .fa-star-o {
-  color: #000000; }
-
-.isReadonly .fa-star {
-  color: #DCDCDC;
-  -webkit-text-stroke-width: 2px;
-  -webkit-text-stroke-color: #000000; }
 
 .filter-observation {
   padding: 20px;
