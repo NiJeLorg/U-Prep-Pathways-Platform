@@ -1,8 +1,9 @@
 .pick-subject
-    h2.sub-title {{observation.school}}
-    h3.sub-sub-title {{observationType}}
-    h3.sub-sub-title {{observation.grade}}
-    h3.sub-sub-title {{observation.teacher}}
+    .tit
+    h2.secondary-title {{observation.school}}
+    h3.secondary-title {{observationType}}
+    h3.secondary-title {{observation.grade}}
+    h3.secondary-title {{observation.teacher}}
     h1.title Pick Subject
     .buttons-group
         button.primary-button(ng-repeat="subject in data.subjects", ng-click="recordObservation('subject', subject)" ui-sref='newObservation.observationForm') {{subject}}

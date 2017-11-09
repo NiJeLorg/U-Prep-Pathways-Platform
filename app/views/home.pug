@@ -1,11 +1,13 @@
 .observations
     section
-        h1.title Observations
+        .titles-container
+            h1.title Observations
         .observations-buttons
             button.primary-button(ng-click="observationType('Making Observations')" ui-sref='newObservation') Start a new observation
             button.primary-button(ng-click="observationType('Scoring based on observations')" ui-sref='scoreObservation') Score based on observation
     section
-        h1.title My Observations
+        .titles-container
+            h1.title My Observations
         .filter-observation
             input(type='text' ng-model='searchText' placeholder='Filter Observations')
         .saved-observation-container

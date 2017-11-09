@@ -1,7 +1,7 @@
 .pick-school.ui-view
-    p {{name}}
-    h2.sub-title {{observationType}}
-    h1.title What School?
+    .titles-container
+        h2.secondary-title {{observationType}}
+        h1.title What School?
     .buttons-group(ng-if='observationType === "Making Observations"')
         button.primary-button(ng-repeat="school in data.schools", ng-click="recordObservation('school', school)" ui-sref='newObservation.grade') {{school}}
     .buttons-group(ng-if='observationType === "Scoring based on observations"')

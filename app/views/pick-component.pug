@@ -1,7 +1,7 @@
 .pick-component
-    h2.sub-title {{observation.school}}
-    h3.sub-sub-title {{observationType}}
-    h3.sub-sub-title {{observation.element.name}}
+    h2.secondary-title {{observation.school}}
+    h3.secondary-title {{observationType}}
+    h3.secondary-title {{observation.element.name}}
     .components(ng-repeat="component in observation.element.components")
         h3 {{component.name}}
         .indicators(ng-repeat="indicator in component.indicators")

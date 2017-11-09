@@ -13,6 +13,7 @@ const ScoreObservationCtrl = ($scope, $state, $mdDialog, TestData) => {
 
     $scope.selectIndicator = (ev, indicator) => {
         if (ev.target.checked) {
+            $scope.observation.indicator = indicator;
             indicatorRatings.push({
                 indicator: indicator
             });

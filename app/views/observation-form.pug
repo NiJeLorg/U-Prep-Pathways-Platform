@@ -1,9 +1,10 @@
-h2.sub-title {{observation.school}}
-h3.sub-sub-title {{observationType}}
-h3.sub-sub-title {{observation.grade}}
-h3.sub-sub-title {{observation.teacher}}
-h3.sub-sub-title {{observation.subject}}
-h3.sub-sub-title {{observation.observationKind}} Observation
+.titles-container
+    h2.secondary-title {{observation.school}}
+    h2.secondary-title {{observationType}}
+    h2.secondary-title {{observation.grade}}
+    h2.secondary-title {{observation.teacher}}
+    h2.secondary-title {{observation.subject}}
+    h2.secondary-title {{observation.observationKind}} Observation
 form(name="observation-form")
     .upload-media
         button(ngf-select="ngf-select", ng-model="file", name="file", ngf-pattern="'image/*'", ngf-accept="'image/*'", ngf-max-size="5MB", ngf-resize="{width:150, height: auto}")
