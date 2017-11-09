@@ -5,7 +5,6 @@ input[type='text'] {
 
 button {
     background: none;
-    border-radius: 4px;
 }
 
 .title {
@@ -15,7 +14,6 @@ button {
     font-weight: 900;
     width: 100%;
     border-bottom: 1px solid #C2C2C2;
-    text-transform: uppercase;
 }
 
 .title-group {
@@ -27,14 +25,4 @@ button {
         width: initial;
         border: none;
     }
-}
-
-.primary-button {
-    background: #671f5a;
-    color: #fff;
-}
-
-.submit-button {
-    background: #2ecc98;
-    color: #fff;
 }

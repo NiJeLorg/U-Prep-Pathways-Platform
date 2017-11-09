@@ -66,6 +66,5 @@ gulp.task('watch', () => {
 
 
 gulp.task('build', ['pug2html', 'sass2css', 'bundleJS']);
-gulp.task('heroku:production', ['build']);
 
 gulp.task('default', ['nodemon', 'build', 'watch']);

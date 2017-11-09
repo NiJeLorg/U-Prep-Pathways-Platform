@@ -4,7 +4,6 @@
   "description": "This repository holds NiJeL's work with the University Preparatory Academy in Detroit, MI on the U Prep Pathways Platform",
   "main": "index.js",
   "scripts": {
-    "build": "gulp heroku:production",
     "start": "node index.js"
   },
   "repository": {
@@ -34,7 +33,9 @@
     "pg": "^7.3.0",
     "pg-hstore": "^2.3.2",
     "sequelize": "^4.13.2",
-    "sequelize-cli": "^3.0.0",
+    "sequelize-cli": "^3.0.0"
+  },
+  "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-loader": "^7.1.2",
     "babel-preset-env": "^1.6.0",
