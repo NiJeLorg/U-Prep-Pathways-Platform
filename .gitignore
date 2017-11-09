@@ -57,4 +57,7 @@ typings/
 # dotenv environment variables file
 .env
 .vscode
-/public
+
+# ignore public directory
+public/*
+!public/assets/
