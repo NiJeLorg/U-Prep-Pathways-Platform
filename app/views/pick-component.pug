@@ -6,12 +6,12 @@
         h3 {{component.name}}
         .indicators(ng-repeat="indicator in component.indicators")
             .indicator.align-elements-vertically
-                input(type="checkbox", for="{{indicator}}")
+                input(type="checkbox", for="{{indicator}}" ng-click='selectIndicator($event, indicator)')
                 label {{indicator}}
                 i.fa.fa-question-circle(ng-click="showLevelInformationForIndicatorDialog($event, indicator)")
             .indicator-rating
-                span(uib-rating ng-model='rate' max='max' read-only='isReadonly')
-                i.fa.fa-plus-circle.fa-2x
+                span(uib-rating ng-model='rate' max='max' read-only='indicator.isReadonly || true')
+                i.fa.fa-plus-circle.fa-2x(ui-sref='scoreObservation.attachEvidence')
 
 
     .element-button-group

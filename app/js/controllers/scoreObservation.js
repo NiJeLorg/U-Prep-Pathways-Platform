@@ -5,9 +5,23 @@ const ScoreObservationCtrl = ($scope, $state, $mdDialog, TestData) => {
     $scope.data = TestData;
     $scope.observation = {};
 
-    $scope.rate = 7;
+    // rating variables
+    $scope.rate = 0;
     $scope.max = 4;
-    $scope.isReadonly = false;
+    let indicatorRatings = [];
+
+
+    $scope.selectIndicator = (ev, indicator) => {
+        if (ev.target.checked) {
+            indicatorRatings.push({
+                indicator: indicator
+            });
+        } else {
+            indicatorRatings.splice(indicatorRatings.indexOf(indicator), 1);
+        }
+        console.log($scope.observation);
+    };
+
 
     $scope.recordObservation = (key, value) => {
         $scope.observation[key] = value;
