@@ -11,7 +11,7 @@
                 i.fa.fa-question-circle(ng-click="showLevelInformationForIndicatorDialog($event, indicator)")
             .indicator-rating
                 span(uib-rating ng-model='rate' max='max' read-only='indicator.isReadonly || true')
-                i.fa.fa-plus-circle.fa-2x(ui-sref='scoreObservation.attachEvidence')
+                i.fa.fa-plus-circle.fa-2x(ng-click='attachEvidence(component, indicator)')
 
 
     .element-button-group

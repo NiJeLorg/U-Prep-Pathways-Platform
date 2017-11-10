@@ -1,6 +1,8 @@
 'use strict';
 
-const ScoreObservationCtrl = ($scope, $state, $mdDialog, TestData) => {
+import moment from 'moment';
+
+const ScoreObservationCtrl = ($scope, $state, $mdDialog, TestData, DataService) => {
 
     $scope.data = TestData;
     $scope.observation = {};
@@ -13,15 +15,27 @@ const ScoreObservationCtrl = ($scope, $state, $mdDialog, TestData) => {
 
     $scope.selectIndicator = (ev, indicator) => {
         if (ev.target.checked) {
-            $scope.observation.indicator = indicator;
             indicatorRatings.push({
                 indicator: indicator
             });
         } else {
             indicatorRatings.splice(indicatorRatings.indexOf(indicator), 1);
         }
-        console.log($scope.observation);
     };
+
+    $scope.attachEvidence = (component, indicator) => {
+        $state.go('scoreObservation.attachEvidence');
+        $scope.observation.component = component.name;
+        $scope.observation.indicator = indicator;
+    };
+
+    DataService.$loaded((obj) => {
+        obj.map((observation, index) => {
+            observation.readableDate = moment(observation.createdAt).format('MMMM Do YYYY, h:mm:ss a');
+        });
+        $scope.observations = obj;
+    });
+
 
 
     $scope.recordObservation = (key, value) => {
@@ -45,7 +59,7 @@ const ScoreObservationCtrl = ($scope, $state, $mdDialog, TestData) => {
     };
 
     $scope.setRatingForIndicator = (indicator, rating) => {
-        console.log(indicator, rating);
+        $scope.indicatorRating = rating;
     };
 
     $scope.showLevelInformationForIndicatorDialog = (ev, indicator) => {

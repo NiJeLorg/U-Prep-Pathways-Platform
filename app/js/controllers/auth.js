@@ -9,7 +9,7 @@ const AuthCtrl = ($scope, $state, $firebaseAuth) => {
                 localStorage.setItem('token', user.uid);
                 $scope.registeredUser = true;
             }).catch((err) => {
-                console.log(err, 'ERR');
+                console.error(err, 'ERR');
             });
     };
 
