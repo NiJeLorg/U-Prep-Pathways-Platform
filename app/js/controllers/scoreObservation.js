@@ -7,7 +7,7 @@ const ScoreObservationCtrl = ($scope, $state, $mdDialog, TestData, DataService) 
     $scope.data = TestData;
     $scope.observation = {};
 
-    // rating variables
+    // global rating variables
     $scope.rate = 0;
     $scope.max = 4;
     let indicatorRatings = [];
@@ -35,7 +35,6 @@ const ScoreObservationCtrl = ($scope, $state, $mdDialog, TestData, DataService) 
         });
         $scope.observations = obj;
     });
-
 
 
     $scope.recordObservation = (key, value) => {
