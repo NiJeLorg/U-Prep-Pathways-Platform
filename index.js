@@ -8,7 +8,7 @@ const express = require('express'),
     bodyParser = require('body-parser'),
     path = require('path'),
     c = console,
-    sequelize = require('./server/config/db.js'),
+    // sequelize = require('./server/config/db.js'),
     app = express();
 
 // // connect to the db
@@ -30,7 +30,7 @@ app.use(bodyParser.urlencoded({
 // serve static files
 app.use(express.static(path.resolve('./public')));
 
-require('./server/routes')(app);
+// require('./server/routes')(app);
 
 // Setup a default catch-all route that sends back the index.html page
 app.get('*', (req, res) => {
