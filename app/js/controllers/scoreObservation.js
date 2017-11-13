@@ -13,15 +13,38 @@ const ScoreObservationCtrl = ($scope, $state, $mdDialog, TestData, DataService) 
     let indicatorRatings = [];
 
 
-    $scope.selectIndicator = (ev, indicator) => {
-        if (ev.target.checked) {
-            indicatorRatings.push({
-                indicator: indicator
-            });
+    $scope.rateIndicator = (indicator, rating) => {
+        const obj = {
+            indicator: indicator,
+            rating: rating
+        };
+        if (!checkIfObjectExistsInArray(indicatorRatings, obj, 'indicator')) {
+            indicatorRatings.push(obj);
         } else {
-            indicatorRatings.splice(indicatorRatings.indexOf(indicator), 1);
+            updateObjectInArray(indicatorRatings, obj, 'indicator')
         }
     };
+
+    function checkIfObjectExistsInArray(arr, obj, objectProperty) {
+        let state = false;
+        if (arr.length > 0) {
+            arr.forEach((elem, index) => {
+                if (elem[objectProperty] === obj[objectProperty]) {
+                    state = true;
+                }
+            });
+        }
+        return state;
+    }
+
+    function updateObjectInArray(arr, obj, objectProperty) {
+        arr.forEach((elem, index) => {
+            if (elem[objectProperty] === obj[objectProperty]) {
+                arr[index] = obj;
+            }
+        });
+    }
+
 
     $scope.attachEvidence = (component, indicator) => {
         $state.go('scoreObservation.attachEvidence');
@@ -29,12 +52,7 @@ const ScoreObservationCtrl = ($scope, $state, $mdDialog, TestData, DataService) 
         $scope.observation.indicator = indicator;
     };
 
-    DataService.$loaded((obj) => {
-        obj.map((observation, index) => {
-            observation.readableDate = moment(observation.createdAt).format('MMMM Do YYYY, h:mm:ss a');
-        });
-        $scope.observations = obj;
-    });
+
 
 
     $scope.recordObservation = (key, value) => {
@@ -70,6 +88,13 @@ const ScoreObservationCtrl = ($scope, $state, $mdDialog, TestData, DataService) 
             .textContent('Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry\'s standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.')
         );
     };
+
+    DataService.$loaded((obj) => {
+        obj.map((observation, index) => {
+            observation.readableDate = moment(observation.createdAt).format('MMMM Do YYYY, h:mm:ss a');
+        });
+        $scope.observations = obj;
+    });
 };
 
 export default ScoreObservationCtrl;

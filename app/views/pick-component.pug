@@ -6,11 +6,11 @@
         h3 {{component.name}}
         .indicators(ng-repeat="indicator in component.indicators")
             .indicator.align-elements-vertically
-                input(type="checkbox", for="{{indicator}}" ng-click='selectIndicator($event, indicator)' ng-model='item.checked')
+                input(type="checkbox", for="{{indicator}}" ng-model='item.checked')
                 label {{indicator}}
                 i.fa.fa-question-circle(ng-click="showLevelInformationForIndicatorDialog($event, indicator)")
             .indicator-rating(ng-show='item.checked')
-                span(uib-rating ng-model='rate' max='max' read-only='!item.checked')
+                span(uib-rating ng-model='rate' max='max' read-only='!item.checked' on-leave='rateIndicator(indicator, rate)')
                 i.fa.fa-plus-circle.fa-2x(ng-click='attachEvidence(component, indicator)')
     .element-button-group
         button(ng-repeat="element in data.elements", ng-show="element.name != observation.element.name", ng-style='{"background-color": element.color}') {{element.name}}
