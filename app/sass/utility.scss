@@ -64,3 +64,36 @@ button {
     color: #fff;
 }
 
+section {
+    padding: 30px;
+}
+
+.observation-form {
+    padding: 20px 0;
+    .attach-evidence-button {
+        display: flex;
+        align-items: center;
+        i {
+            margin-right: 10px;
+        }
+    }
+    .form-group {
+        padding: 10px 0;
+        display: flex;
+        flex-direction: column;
+        h2 {
+            font-weight: bold;
+        }
+        p {
+            font-size: 21px;
+        }
+    }
+}
+
+.next-steps-buttons-group {
+    button {
+        background: #848484;
+        margin: 10px;
+        color: #fff;
+    }
+}

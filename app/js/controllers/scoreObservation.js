@@ -2,10 +2,11 @@
 
 import moment from 'moment';
 
-const ScoreObservationCtrl = ($scope, $state, $mdDialog, TestData, DataService) => {
+const ScoreObservationCtrl = ($scope, $state, $mdDialog, TestData, DataService, $firebaseObject) => {
 
     $scope.data = TestData;
     $scope.observation = {};
+    $scope.observation.ratingGroup = {};
 
     // global rating variables
     $scope.rate = 0;
@@ -23,6 +24,7 @@ const ScoreObservationCtrl = ($scope, $state, $mdDialog, TestData, DataService) 
         } else {
             updateObjectInArray(indicatorRatings, obj, 'indicator');
         }
+        // $scope.observation.indicatorRatings = indicatorRatings;
     };
 
     $scope.cancelIndicatorRating = (state, indicator) => {
@@ -59,14 +61,17 @@ const ScoreObservationCtrl = ($scope, $state, $mdDialog, TestData, DataService) 
         });
     }
 
-
-    $scope.attachEvidence = (component, indicator) => {
-        $state.go('scoreObservation.attachEvidence');
-        $scope.observation.component = component.name;
-        $scope.observation.indicator = indicator;
+    $scope.attachEvidenceForObservation = (observation) => {
+        $scope.selectedObservation = observation;
+        $state.go('scoreObservation.attachEvidenceObservation');
     };
 
-
+    $scope.attachEvidence = (component, indicator) => {
+        $scope.observation.ratingGroup.component = component.name;
+        $scope.observation.ratingGroup.indicator = indicator;
+        $scope.observation.ratingGroup.indicatorRatings = indicatorRatings;
+        $state.go('scoreObservation.attachEvidence');
+    };
 
 
     $scope.recordObservation = (key, value) => {
@@ -86,6 +91,7 @@ const ScoreObservationCtrl = ($scope, $state, $mdDialog, TestData, DataService) 
 
     $scope.pickElement = (element) => {
         $scope.observation.element = element;
+        $scope.observation.ratingGroup.element = element.name;
         $state.go('scoreObservation.component');
     };
 

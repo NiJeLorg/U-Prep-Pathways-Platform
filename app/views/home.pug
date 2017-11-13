@@ -11,7 +11,7 @@
         .filter-observation
             input(type='text' ng-model='searchText' placeholder='Filter Observations')
         .saved-observation-container
-            .saved-observation(ng-repeat="observation in observations | orderBy: '-createdAt' | filter:searchText ", ng-click="showObservation(observation)", style="cursor:pointer;")
+            .saved-observation(ng-repeat="observation in observations | orderBy: '-createdAt' | filter:searchText ", ng-click="showObservation(observation)", style="cursor:pointer; display: flex; flex-direction: column; padding: 20px")
                 p {{observation.observationKind}} Observation
                 span {{observation.grade}},  
                 span {{observation.teacher}}

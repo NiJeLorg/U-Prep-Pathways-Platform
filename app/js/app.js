@@ -97,11 +97,13 @@ uprepApp.config(['$stateProvider', '$httpProvider',
       }).state('scoreObservation.attachEvidence', {
         url: '/attach-evidence',
         templateUrl: 'views/attach-evidence.html'
-      })
-      .state('update-observation', {
+      }).state('scoreObservation.attachEvidenceObservation', {
+        url: '/attach-evidence-observation',
+        templateUrl: 'views/attach-evidence-observation.html'
+      }).state('update-observation', {
         url: '/update-observation',
         templateUrl: 'views/update-observation.html'
-      })
+      });
 
     $locationProvider.html5Mode(true);
   }

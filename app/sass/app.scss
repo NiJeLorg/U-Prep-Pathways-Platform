@@ -96,7 +96,9 @@ main {
 	justify-content: center;
 	button {
 		margin: 0 30px;
+		background: #662259;
 		margin-top: 40px;
+		color: #fff;
 	}
 }
 
@@ -212,6 +214,8 @@ form {
 
 .element-button-group {
 	border-top: 1px solid #929292;
+	display: flex;
+	justify-content: center;
 	button {
 		color: $color_1;
 		margin: 20px;
