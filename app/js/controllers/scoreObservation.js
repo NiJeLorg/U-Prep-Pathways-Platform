@@ -21,7 +21,13 @@ const ScoreObservationCtrl = ($scope, $state, $mdDialog, TestData, DataService) 
         if (!checkIfObjectExistsInArray(indicatorRatings, obj, 'indicator')) {
             indicatorRatings.push(obj);
         } else {
-            updateObjectInArray(indicatorRatings, obj, 'indicator')
+            updateObjectInArray(indicatorRatings, obj, 'indicator');
+        }
+    };
+
+    $scope.cancelIndicatorRating = (state, indicator) => {
+        if (!state) {
+            removeObjectFromArray(indicatorRatings, indicator, 'indicator');
         }
     };
 
@@ -41,6 +47,14 @@ const ScoreObservationCtrl = ($scope, $state, $mdDialog, TestData, DataService) 
         arr.forEach((elem, index) => {
             if (elem[objectProperty] === obj[objectProperty]) {
                 arr[index] = obj;
+            }
+        });
+    }
+
+    function removeObjectFromArray(arr, propertyValue, objectProperty) {
+        arr.map((elem, index) => {
+            if (elem[objectProperty] === propertyValue) {
+                arr.splice(index, 1);
             }
         });
     }

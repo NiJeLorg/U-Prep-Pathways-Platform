@@ -6,7 +6,7 @@
         h3 {{component.name}}
         .indicators(ng-repeat="indicator in component.indicators")
             .indicator.align-elements-vertically
-                input(type="checkbox", for="{{indicator}}" ng-model='item.checked')
+                input(type="checkbox", for="{{indicator}}" ng-model='item.checked' ng-click='cancelIndicatorRating(item.checked, indicator)')
                 label {{indicator}}
                 i.fa.fa-question-circle(ng-click="showLevelInformationForIndicatorDialog($event, indicator)")
             .indicator-rating(ng-show='item.checked')
