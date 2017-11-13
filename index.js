@@ -30,7 +30,7 @@ app.use(bodyParser.urlencoded({
 // serve static files
 app.use(express.static(path.resolve('./public')));
 
-require('./server/routes')(app);
+// require('./server/routes')(app);
 
 // Setup a default catch-all route that sends back the index.html page
 app.get('*', (req, res) => {
