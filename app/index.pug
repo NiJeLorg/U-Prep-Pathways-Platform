@@ -10,9 +10,9 @@ html(ng-app='uprepApp')
         link(rel='stylesheet' href='css/app.css')
         script(src="https://use.fontawesome.com/e6dd17dee1.js")
     body(ng-cloak)
+        include shared-views/nav
         main
-            include shared-views/nav
-            .center-content.ui-view
+            .ui-view
         footer
             script(src='https://www.gstatic.com/firebasejs/4.5.0/firebase.js')
             script.

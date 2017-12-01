@@ -1,3 +1,58 @@
+.page-title {
+    padding: 20px 0;
+    color: $uprep-grey;
+}
+
+.body-text {
+    font-size: 20px;
+    color: $uprep-grey;
+}
+
+.center-elements-vertically {
+    display: flex;
+    align-items: center;
+}
+
+nav {
+    background: $uprep-purple;
+    padding: 20px 30px;
+    justify-content: space-between;
+    .logo-title {
+        img {
+            width: 80px;
+            height: auto;
+        }
+        .nav-title {
+            color: #fff;
+            font-weight: bold;
+            font-size: 24px;
+        }
+    }
+    .menu-settings {
+        button {
+            color: #fff;
+            background: $light-button;
+            padding: 10px 20px;
+            font-size: 18px;
+            margin-right: 20px;
+        }
+        button:hover {
+            background: $light-button-hover;
+        }
+        button:active {
+            background: $light-button-pressed;
+        }
+        .settings {
+            cursor: pointer;
+        }
+        .settings:hover {
+            color: $light-button-hover;
+        }
+    }
+}
+
+
+
 // TYPOGRAPHY CONSIDERATIONS //
 .title {
     font-size: 32px;
