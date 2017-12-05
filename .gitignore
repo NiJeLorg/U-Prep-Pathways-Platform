@@ -61,3 +61,5 @@ typings/
 # ignore public directory
 public/*
 !public/assets/
+
+.idea
