@@ -1,7 +1,7 @@
-.show-observation(ng-show='!toggleEditObservation')
+.show-observation
     .title-group
         h1.title OBSERVATION
-        button(title='Edit Observation' ng-click='editObservation()')
+        button(title='Edit Observation')
             i.fa.fa-pencil-square-o.fa-2x
     .group-container
         .group
@@ -44,25 +44,5 @@
         .group(ng-if='observation.form.conclusions')
             h2 CONCLUSIONS
             p {{observation.form.conclusions}}
-.edit-observation(ng-show='toggleEditObservation')
-    .title-group
-        h1.title EDIT OBSERVATION
-        button(title='Cancel Editing Observation' ng-click='cancelEditingObservation()')
-            i.fa.fa-times-circle-o.fa-2x
-    form(ng-submit='submitEditedObservation(editedObservation)')
-        .form-group
-            p.title School
-            input(type='text' placeholder='School' ng-model='editedObservation.school')
-        .form-group
-            p.title Grade
-            input(type='text' placeholder='Grade' ng-model='editedObservation.grade')
-        .form-group
-            p.title Teacher
-            input(type='text' placeholder='Teacher' ng-model='editedObservation.teacher')
-        .form-group
-            p.title Observation Kind
-            input(type='text' placeholder='Observation Kind' ng-model='editedObservation.observationKind')
-        .form-group
-            p.title Subject
-            input(type='text' placeholder='Subject' ng-model='editedObservation.subject')
-        input(type='submit')
+
+

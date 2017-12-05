@@ -60,6 +60,12 @@ button {
 	cursor: pointer;
 }
 
+.huge-button {
+	background: #671f5a;
+	color: $color_1;
+	font-weight: 700;
+	margin: 40px 20px;
+}
 
 main {
 	display: flex;
@@ -74,16 +80,10 @@ main {
 		padding-bottom: 60px;
 	}
 	.observations {
-
-	}
-}
-
-.observations-buttons {
-	display: flex;
-	justify-content: center;
-	padding: 20px;
-	button {
-		margin: 0 20px;
+		.observations-buttons {
+			display: flex;
+			justify-content: center;
+		}
 	}
 }
 
@@ -95,6 +95,8 @@ main {
 	align-items: center;
 	justify-content: center;
 	button {
+		background: #671f5a;
+		color: $color_1;
 		margin: 0 30px;
 		background: #662259;
 		margin-top: 40px;

@@ -7,4 +7,4 @@
         h2.secondary-title {{observation.subject}}
         h1.title Pick Observation Kind
     .buttons-group
-        button.primary-button(ng-repeat="kind in data.observationKind", ng-click="recordObservation('observationKind', kind)") {{kind}}
+        button(ng-repeat="kind in data.observationKind", ng-click="recordObservation('observationKind', kind)") {{kind}}

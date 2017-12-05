@@ -8,7 +8,7 @@ const express = require('express'),
     bodyParser = require('body-parser'),
     path = require('path'),
     c = console,
-    sequelize = require('./server/config/db.js'),
+    // sequelize = require('./server/config/db.js'),
     app = express();
 
 // // connect to the db
