@@ -62,3 +62,4 @@ typings/
 # ignore public directory
 public/*
 !public/assets/
+/server/config/config.json

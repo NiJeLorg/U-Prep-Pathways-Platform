@@ -1,42 +1,41 @@
 'use strict';
+
 module.exports = {
     up: (queryInterface, Sequelize) => {
-        return queryInterface.createTable('observations', {
+        return queryInterface.createTable('observation_evidence', {
             id: {
                 allowNull: false,
                 autoIncrement: true,
                 primaryKey: true,
-                type: Sequelize.INTEGER //TODO Consider changing to using UUID
+                type: Sequelize.INTEGER
             },
             name: {
                 type: Sequelize.STRING
             },
-            description: {
+            link: {
                 type: Sequelize.STRING
             },
-            createdAt: {
-                allowNull: false,
-                type: Sequelize.DATE
-            },
-            updatedAt: {
-                allowNull: false,
-                type: Sequelize.DATE
-            },
-            observation_type_id: {
+            media_type_id: {
                 type: Sequelize.INTEGER,
                 allowNull: false,
                 references: {
-                    model: 'observation_types',
+                    model: 'media_types',
                     key: 'id'
                 }
             },
-            user_id: {
+            observation_id: {
                 type: Sequelize.INTEGER,
-                allowNull: false
+                allowNull: false,
+                references: {
+                    model: 'observations',
+                    key: 'id'
+                }
             }
         });
+
     },
+
     down: (queryInterface, Sequelize) => {
-        return queryInterface.dropTable('observations');
+        return queryInterface.dropTable('observation_evidence');
     }
 };
