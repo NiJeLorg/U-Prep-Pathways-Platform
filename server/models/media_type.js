@@ -1,9 +1,9 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-    let MediaType = sequelize.define('MediaType', {
+    let MediaType = sequelize.define('media_type', {
         name: DataTypes.STRING
     }, {
-        classMethods: {}
+        underscored: true
     });
     return MediaType;
 };

@@ -1,14 +1,16 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  var Element = sequelize.define('Element', {
-    name: DataTypes.STRING,
-    description: DataTypes.STRING
-  });
-  Element.associate = (models) => {
-    Element.hasMany(models.Component, {
-      foreignKey: 'elementId',
-      as: 'components',
+    let Element = sequelize.define('element', {
+        name: DataTypes.STRING,
+        description: DataTypes.STRING
+    }, {
+        underscored: true
     });
-  };
-  return Element;
+    Element.associate = (models) => {
+        Element.hasMany(models.Component, {
+            foreignKey: 'element_id',
+            as: 'components',
+        });
+    };
+    return Element;
 };

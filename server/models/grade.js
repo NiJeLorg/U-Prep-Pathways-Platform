@@ -1,13 +1,9 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  var Grade = sequelize.define('Grade', {
-    name: DataTypes.STRING
-  }, {
-    classMethods: {
-      associate: function(models) {
-        // associations can be defined here
-      }
-    }
-  });
-  return Grade;
+    let Grade = sequelize.define('grade', {
+        name: DataTypes.STRING
+    }, {
+        underscored: true
+    });
+    return Grade;
 };
