@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Components', {
+    return queryInterface.createTable('components', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -14,26 +14,26 @@ module.exports = {
       description: {
         type: Sequelize.STRING
       },
-      createdAt: {
+      created_at: {
         allowNull: false,
         type: Sequelize.DATE
       },
-      updatedAt: {
+      updated_at: {
         allowNull: false,
         type: Sequelize.DATE
       },
-      elementId: {
+       element_id: {
         type: Sequelize.INTEGER,
         onDelete: 'CASCADE',
         references: {
-          model: 'Elements',
+          model: 'elements',
           key: 'id',
-          as: 'elementId',
+          as: 'element_id',
         },
       },
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Components');
+    return queryInterface.dropTable('components');
   }
 };
