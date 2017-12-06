@@ -5,11 +5,11 @@ module.exports = (sequelize, DataTypes) => {
     }, {
         underscored: true
     });
-    District.associate = (models) => {
-        District.hasMany(models.School, {
-            foreignKey: 'district_id',
-            as: 'schools',
-        });
-    };
+    // District.associate = (models) => {
+    //     District.hasMany(models.school, {
+    //         foreignKey: 'districtId',
+    //         as: 'schools',
+    //     });
+    // };
     return District;
 };

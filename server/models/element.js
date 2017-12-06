@@ -6,11 +6,11 @@ module.exports = (sequelize, DataTypes) => {
     }, {
         underscored: true
     });
-    Element.associate = (models) => {
-        Element.hasMany(models.Component, {
-            foreignKey: 'element_id',
-            as: 'components',
-        });
-    };
+    // Element.associate = (models) => {
+    //     Element.hasMany(models.Component, {
+    //         foreignKey: 'element_id',
+    //         as: 'components',
+    //     });
+    // };
     return Element;
 };

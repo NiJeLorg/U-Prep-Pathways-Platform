@@ -6,11 +6,11 @@ module.exports = (sequelize, DataTypes) => {
             allowNull: false,
         },
     }, {underscored: true});
-    Group.associate = (models) => {
-        Group.hasMany(models.User, {
-            foreignKey: 'groupId',
-            as: 'users',
-        });
-    };
+    // Group.associate = (models) => {
+    //     Group.hasMany(models.user, {
+    //         foreignKey: 'groupId',
+    //         as: 'users',
+    //     });
+    // };
     return Group;
 };

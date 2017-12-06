@@ -6,11 +6,11 @@ module.exports = (sequelize, DataTypes) => {
     }, {underscored: true});
 
     Indicator.associate = (models) => {
-        Indicator.hasMany(models.Level, {
+        Indicator.hasMany(models.level, {
             foreignKey: 'indicator_id',
             as: 'levels',
         });
-        Indicator.belongsTo(models.Component, {
+        Indicator.belongsTo(models.component, {
             foreignKey: 'component_id',
             onDelete: 'CASCADE',
         });

@@ -5,11 +5,11 @@ module.exports = (sequelize, DataTypes) => {
         description: DataTypes.STRING
     }, {underscored: true});
 
-    Observation.associate = (models) => {
-        Observation.belongsTo(models.ObservationType, {
-            foreignKey: 'observation_type_id',
-            onDelete: 'CASCADE',
-        });
-    };
+    // Observation.associate = (models) => {
+    //     Observation.belongsTo(models.observation_type, {
+    //         foreignKey: 'observation_type_id',
+    //         onDelete: 'CASCADE',
+    //     });
+    // };
     return Observation;
 };

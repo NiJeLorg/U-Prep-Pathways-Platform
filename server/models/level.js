@@ -5,7 +5,7 @@ module.exports = (sequelize, DataTypes) => {
         description: DataTypes.STRING
     }, {underscored: true});
     Level.associate = (models) => {
-        Level.belongsTo(models.Indicator, {
+        Level.belongsTo(models.indicator, {
             foreignKey: 'indicator_id',
             onDelete: 'CASCADE',
         });
