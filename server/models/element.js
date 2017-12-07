@@ -2,7 +2,7 @@
 module.exports = (sequelize, DataTypes) => {
     let Element = sequelize.define('element', {
         name: DataTypes.STRING,
-        description: DataTypes.STRING
+        description: DataTypes.TEXT
     }, {
         underscored: true
     });

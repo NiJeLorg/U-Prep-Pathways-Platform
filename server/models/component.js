@@ -2,7 +2,7 @@
 module.exports = (sequelize, DataTypes) => {
     let Component = sequelize.define('component', {
         name: DataTypes.STRING,
-        description: DataTypes.STRING
+        description: DataTypes.TEXT
     }, {
         underscored: true
     });

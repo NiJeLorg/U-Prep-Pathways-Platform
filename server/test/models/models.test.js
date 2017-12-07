@@ -6,11 +6,14 @@ describe('Testing Model Associations For Master Tables', () => {
             .then(async () => {
                 const element = await db.element.create({name: 'Culture of  High Expectations'});
                 const component = await db.component.create({name: 'Character'});
-                const indicator = await db.indicator.create({name: 'crew'})
+                const indicator = await db.indicator.create({name: 'crew'});
+                const level1 = await db.level.create({name: 'level 1'});
+                const level2 = await db.level.create({name: 'level 2'});
                 await element.addComponent(component);
                 await component.addIndicator(indicator);
+                await indicator.addLevels(level1, {through: {description: "level up to 1"}});
+                await indicator.addLevels(level2, {through: {description: "level up to 2"}});
                 done();
-
             })
             .catch((error) => {
                 done(error);
@@ -27,5 +30,8 @@ describe('Testing Model Associations For Master Tables', () => {
         const indicators = await component.getIndicators();
         expect(indicators.length).to.equal(1);
         expect(indicators[0].name).to.equal('crew');
+        const indicator =  await db.indicator.findById(indicators[0].id);
+        const levels = await  indicator.getLevels();
+        expect(levels.length).to.equal(2);
     });
 });

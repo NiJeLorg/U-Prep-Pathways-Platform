@@ -2,11 +2,12 @@
 module.exports = (sequelize, DataTypes) => {
     let Level = sequelize.define('level', {
         name: DataTypes.STRING,
-        description: DataTypes.STRING
+        description: DataTypes.TEXT
     }, {underscored: true});
     Level.associate = (models) => {
-        Level.belongsTo(models.indicator, {
-            foreignKey: 'indicator_id',
+        Level.belongsToMany(models.indicator, {
+            foreignKey: 'level_id',
+            through: models.indicator_level,
             onDelete: 'CASCADE',
         });
     };
