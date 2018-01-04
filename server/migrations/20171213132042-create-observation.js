@@ -33,7 +33,23 @@ module.exports = {
             user_id: {
                 type: Sequelize.INTEGER,
                 allowNull: false
-            }
+            },
+            teacher_id: {
+                type: Sequelize.INTEGER,
+                allowNull: false
+            },
+            grade_id: {
+                type: Sequelize.INTEGER,
+                allowNull: false
+            },
+            subject_id: {
+                type: Sequelize.INTEGER,
+                allowNull: false
+            },
+            school_id: {
+                type: Sequelize.INTEGER,
+                allowNull: false
+            },
         });
     },
     down: (queryInterface, Sequelize) => {

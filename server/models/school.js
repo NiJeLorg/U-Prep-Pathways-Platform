@@ -9,6 +9,10 @@ module.exports = (sequelize, DataTypes) => {
             foreignKey: 'school_id',
             as: 'teachers',
         });
+        School.hasMany(models.observation, {
+            foreignKey: 'school_id',
+            as: 'observations',
+        });
         School.belongsTo(models.district, {
             foreignKey: 'district_id',
         });
