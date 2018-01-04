@@ -1,6 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-    let Teacher = sequelize.define('Teacher', {
+    let Teacher = sequelize.define('teacher', {
         name: DataTypes.STRING
     });
     Teacher.associate = (models) => {
