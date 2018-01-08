@@ -1,15 +1,8 @@
-nav.center-elements-vertically(ng-controller='NavCtrl')
-    .logo-title.center-elements-vertically(ui-sref='home')
-        img(src='assets/uprep-logo.svg' alt='uprep logo')
-        .nav-title UPrep Pathways Platform
-    .menu-settings.center-elements-vertically
-        button MENU
-        img.settings(src='assets/settings-icon.svg' alt='settings icon')
-
-    //- .group
-    //-     img(src='assets/UPrep_Logo_small.png' style='cursor:pointer' ui-sref='home')
-    //-     i(ng-click="isCollapsed = !isCollapsed").fa.fa-bars.fa-2x
-    //- .dropdown(uib-collapse='isCollapsed')
-    //-     p(ui-sref='newObservation') Start a new observation
-    //-     p(ui-sref='scoreObservation') Score based on observation
+.c-nav.l-flex-space-between(ng-controller='NavCtrl')
+    .c-nav__logo-title.l-flex
+        img.logo(src='assets/uprep-logo.svg' alt='uprep logo')
+        h2.title UPrep Pathways Platform
+    .c-nav__menu-settings.l-flex
+        button.menu MENU
+        img.settings(src='assets/icons/settings-icon.svg' alt='settings icon')
 

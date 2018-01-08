@@ -11,7 +11,7 @@ const HomeCtrl = ($scope, $rootScope, $state, DataService) => {
     } else {
         DataService.$loaded((obj) => {
             obj.map((observation, index) => {
-                observation.readableDate = moment(observation.createdAt).format('MMMM Do YYYY, h:mm:ss a');
+                observation.readableDate = moment(observation.createdAt).format('MM/DD/YYYY');
             });
             $scope.observations = obj;
         });

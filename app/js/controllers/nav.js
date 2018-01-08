@@ -1,5 +1,5 @@
 const NavCtrl = ($scope) => {
-    $scope.isCollapsed = true;
+    // $scope.isCollapsed = true;
 };
 
 export default NavCtrl;
