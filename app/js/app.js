@@ -41,17 +41,21 @@ uprepApp.config(['$stateProvider', '$httpProvider',
         controller: 'HomeCtrl',
         templateUrl: 'views/home.html'
       })
-      .state('chooseSchool', {
+      .state('school', {
         url: '/school',
         templateUrl: 'views/school.html'
       })
-      .state('chooseObservationKind', {
+      .state('observationKind', {
         url:'/observation-kind',
         templateUrl: 'views/observation-kind.html'
       })
-      .state('chooseObservationInputs', {
+      .state('observationInputs', {
         url: '/observation-inputs',
         templateUrl: 'views/observation-inputs.html'
+      })
+      .state('observationForm', {
+        url: '/observation-form',
+        templateUrl: 'views/observation-form.html'
       });
       // .state('newObservation.grade', {
       //   url: '/pick-grade',

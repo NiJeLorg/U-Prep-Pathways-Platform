@@ -1,8 +1,14 @@
 .c-nav.l-flex-space-between(ng-controller='NavCtrl')
-    .c-nav__logo-title.l-flex
+    .c-nav__logo-title.l-flex.ul-cursor-pointer(ui-sref='home')
         img.logo(src='assets/uprep-logo.svg' alt='uprep logo')
         h2.title UPrep Pathways Platform
-    .c-nav__menu-settings.l-flex
-        button.menu MENU
-        img.settings(src='assets/icons/settings-icon.svg' alt='settings icon')
+    .c-nav__links.l-flex
+        .c-menu
+            button.menu.ul-cursor-pointer(ng-click='toggleMenuDropdown()') MENU
+            .c-menu-dropdown(ng-show='isMenuDropdownVisible')
+                a(href='#') Pathways
+                a(href='#') Getting Started
+                a(href='#') How Am I Doing?
+        .c-settings
+            img.ul-cursor-pointer.settings(src='assets/icons/settings-icon.svg' alt='settings icon')
 
