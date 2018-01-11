@@ -1,9 +1,0 @@
-.pick-grade
-    .titles-container
-        h2.secondary-title {{observation.school}}
-        h2.secondary-title {{observationType}}
-        h1.title What grade?
-    .buttons-group(ng-if='observationType === "Making Observations"')
-        button.primary-button(ng-repeat="grade in data.grades | filter:filterGrades()", ng-click="recordObservation('grade', grade.grade)" ui-sref='newObservation.teacher') {{grade.grade}}
-    .buttons-group(ng-if='observationType === "Scoring based on observations"')
-        button.primary-button(ng-repeat="grade in data.grades | filter:filterGrades()", ng-click="recordObservation('grade', grade.grade)" ui-sref='scoreObservation.teacher' ) {{grade.grade}}

@@ -4,15 +4,4 @@ html(ng-app='uprepApp')
         include shared-views/nav
         ui-view(ng-cloak)
         footer
-            script(src='https://www.gstatic.com/firebasejs/4.5.0/firebase.js')
-            script.
-                var config = {
-                    apiKey: "AIzaSyCEkglYYfqMX2eQM5wuWZTFw5rW2ltFI5k",
-                    authDomain: "uprep-9ddf0.firebaseapp.com",
-                    databaseURL: "https://uprep-9ddf0.firebaseio.com",
-                    projectId: "uprep-9ddf0",
-                    storageBucket: "",
-                    messagingSenderId: "438250291385"
-                };
-                firebase.initializeApp(config);
             script(src='js/bundle.js')

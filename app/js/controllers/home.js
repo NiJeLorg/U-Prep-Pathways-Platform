@@ -2,7 +2,7 @@
 
 import moment from 'moment';
 
-const HomeCtrl = ($scope, $rootScope, $state, DataService) => {
+const HomeCtrl = ($scope, $rootScope, $state) => {
 
     $scope.observations = [{
         observationKind: 'Lesson',
