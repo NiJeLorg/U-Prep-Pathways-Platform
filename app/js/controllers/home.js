@@ -4,28 +4,32 @@ import moment from 'moment';
 
 const HomeCtrl = ($scope, $rootScope, $state, DataService) => {
 
-    // check if token extsts
-    let token = localStorage.getItem('token');
-    if (!token) {
-        $state.go('auth');
-    } else {
-        DataService.$loaded((obj) => {
-            obj.map((observation, index) => {
-                observation.readableDate = moment(observation.createdAt).format('MM/DD/YYYY');
-            });
-            $scope.observations = obj;
-        });
+    $scope.observations = [{
+        observationKind: 'Lesson',
+        readableDate: '11/13/2017',
+        grade: 'Kindergarten',
+        school: 'UPSM ELEMENTARY',
+        teacher: 'Mr.Martin'
+    }, {
+        observationKind: 'Crew',
+        readableDate: '11/13/2017',
+        school: 'ELLEN THOMPSON ELEMENTARY',
+        teacher: 'Ms.Andrews'
+    }, {
+        observationKind: 'Lesson',
+        readableDate: '11/13/2017',
+        school: 'UPSM ELEMENTARY',
+        subject: 'English',
+        teacher: 'Ms.Andrews'
+    }, {
+        grade: '1st grade',
+        observationKind: 'Lesson',
+        readableDate: '11/13/2017',
+        school: 'ELLEN THOMPSON ELEMENTARY',
+        subject: 'Science',
+        teacher: 'Ms.Andrews'
+    }];
 
-        $scope.observationType = function (type) {
-            $rootScope.observationType = type;
-        };
-
-        $scope.showObservation = function (observation) {
-            $state.go('showObservation', {
-                id: observation.$id
-            });
-        };
-    }
 };
 
 export default HomeCtrl;
