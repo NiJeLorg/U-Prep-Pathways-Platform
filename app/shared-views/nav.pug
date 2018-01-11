@@ -5,10 +5,16 @@
     .c-nav__links.l-flex
         .c-menu
             button.menu.ul-cursor-pointer(ng-click='toggleMenuDropdown()') MENU
-            .c-menu-dropdown(ng-show='isMenuDropdownVisible')
+            .c-dropdown.c-dropdown--menu
                 a(href='#') Pathways
                 a(href='#') Getting Started
                 a(href='#') How Am I Doing?
         .c-settings
-            img.ul-cursor-pointer.settings(src='assets/icons/settings-icon.svg' alt='settings icon')
+            img.ul-cursor-pointer.settings(src='assets/icons/settings-icon.svg' alt='settings icon' ng-click='toggleSettingsDropdown()')
+            .c-dropdown.c-dropdown--settings
+                .l-flex
+                    img(src='assets/icons/profile-photo.svg')
+                    a(href='#') Account
+                a(href='#') Log Out
+
 
