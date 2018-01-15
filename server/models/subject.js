@@ -1,9 +1,10 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  let ObservationCluster = sequelize.define('observation_cluster', {
+  let Subject = sequelize.define('Subject', {
     name: DataTypes.STRING
   }, {
     underscored: true
+
   });
-  return ObservationCluster;
+  return Subject;
 };

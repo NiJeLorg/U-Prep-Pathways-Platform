@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Evidence_Types', {
+    return queryInterface.createTable('elements', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -11,17 +11,20 @@ module.exports = {
       name: {
         type: Sequelize.STRING
       },
-      createdAt: {
+      description: {
+        type: Sequelize.TEXT
+      },
+      created_at: {
         allowNull: false,
         type: Sequelize.DATE
       },
-      updatedAt: {
+      updated_at: {
         allowNull: false,
         type: Sequelize.DATE
       }
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Evidence_Types');
+    return queryInterface.dropTable('elements');
   }
 };

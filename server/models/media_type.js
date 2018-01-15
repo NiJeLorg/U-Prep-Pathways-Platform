@@ -1,9 +1,9 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-    let Grade = sequelize.define('grade', {
+    let MediaType = sequelize.define('media_type', {
         name: DataTypes.STRING
     }, {
         underscored: true
     });
-    return Grade;
+    return MediaType;
 };
