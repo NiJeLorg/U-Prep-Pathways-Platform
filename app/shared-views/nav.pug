@@ -1,8 +1,20 @@
-nav(ng-controller='NavCtrl')
-    .group
-        img(src='assets/UPrep_Logo_small.png' style='cursor:pointer' ui-sref='home')
-        i(ng-click="isCollapsed = !isCollapsed").fa.fa-bars.fa-2x
-    .dropdown(uib-collapse='isCollapsed')
-        p(ui-sref='newObservation') Start a new observation
-        p(ui-sref='scoreObservation') Score based on observation
+.c-nav.l-flex-space-between(ng-controller='NavCtrl')
+    .c-nav__logo-title.l-flex.ul-cursor-pointer(ui-sref='home')
+        img.logo(src='assets/uprep-logo.svg' alt='uprep logo')
+        h2.title UPrep Pathways Platform
+    .c-nav__links.l-flex
+        .c-menu
+            button.menu.ul-cursor-pointer(ng-click='toggleMenuDropdown()') MENU
+            .c-dropdown.c-dropdown--menu
+                a(href='#') Pathways
+                a(href='#') Getting Started
+                a(href='#') How Am I Doing?
+        .c-settings
+            img.ul-cursor-pointer.settings(src='assets/icons/settings-icon.svg' alt='settings icon' ng-click='toggleSettingsDropdown()')
+            .c-dropdown.c-dropdown--settings
+                .l-flex
+                    img(src='assets/icons/profile-photo.svg')
+                    a(href='#') Account
+                a(href='#') Log Out
+
 
