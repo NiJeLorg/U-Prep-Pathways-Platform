@@ -8,13 +8,14 @@ import ngFileUpload from 'ng-file-upload';
 // load controllers and services
 import HomeCtrl from './controllers/home';
 import NavCtrl from './controllers/nav';
-
+import MakeObservationCtrl from './controllers/make-observation';
 
 const uprepApp = angular.module('uprepApp', [uiRouter, ngFileUpload]);
 
 uprepApp
   .controller('NavCtrl', NavCtrl)
-  .controller('HomeCtrl', HomeCtrl);
+  .controller('HomeCtrl', HomeCtrl)
+  .controller('MakeObservationCtrl', MakeObservationCtrl);
 
 uprepApp.config(['$stateProvider', '$httpProvider',
   '$urlRouterProvider', '$locationProvider', ($stateProvider, $httpProvider, $urlRouterProvider, $locationProvider) => {
@@ -29,18 +30,22 @@ uprepApp.config(['$stateProvider', '$httpProvider',
       })
       .state('school', {
         url: '/school',
+        controller: 'MakeObservationCtrl',
         templateUrl: 'views/school.html'
       })
       .state('observationKind', {
-        url:'/observation-kind',
+        url: '/observation-kind',
+        controller: 'MakeObservationCtrl',
         templateUrl: 'views/observation-kind.html'
       })
       .state('observationInputs', {
         url: '/observation-inputs',
+        controller: 'MakeObservationCtrl',
         templateUrl: 'views/observation-inputs.html'
       })
       .state('observationForm', {
         url: '/observation-form',
+        controller: 'MakeObservationCtrl',
         templateUrl: 'views/observation-form.html'
       });
     $locationProvider.html5Mode(true);
