@@ -1,51 +1,73 @@
-.titles-container
-    h2.secondary-title {{observation.school}}
-    h2.secondary-title {{observationType}}
-    h2.secondary-title {{observation.grade}}
-    h2.secondary-title {{observation.teacher}}
-    h2.secondary-title {{observation.subject}}
-    h2.secondary-title {{observation.observationKind}} Observation
-form(name="observation-form")
-    .upload-media
-        button(ngf-select="ngf-select", ng-model="file", name="file", ngf-pattern="'image/*'", ngf-accept="'image/*'", ngf-max-size="5MB", ngf-resize="{width:150, height: auto}")
-            i.fa.fa-camera.fa-3x
-        button
-            i.fa.fa-video-camera.fa-3x
-    .thumbnails
-        img(ngf-thumbnail="file || '/thumb.jpg'")
-    .form-group(ng-if='observation.observationKind === "Crew"')
-        p.title Crew Name
-        input(type="text", placeholder="Crew Name", ng-model="form.crewName")
-    .form-group
-        p.title Content
-        p(ng-if='observation.observationKind === "Lesson"') Level and Complexity
-        p.label(ng-if='observation.observationKind === "Crew"') What's the crew working on? Is there a theme/goal/focus?
-        p.label(ng-if='observation.observationKind === "Lesson"') What is the task at hand? What are the targets and standards?
-        textarea(name="", cols="50", rows="10", ng-model="form.content")
-    .form-group
-        p.title Teacher
-        p Knowledge and Skill
-        p.label What is the teacher doing? What is the teacher saying?
-        textarea(name="", cols="50", rows="10", ng-model="form.teacher")
-    .form-group
-        p.title Student
-        p(ng-if='observation.observationKind === "Crew"') Role in Crew
-        p(ng-if='observation.observationKind === "Lesson"') Role in Instruction
-        p.label What are the students doing? What are the students saying?
-        textarea(name="", cols="50", rows="10", ng-model="form.student")
-    .form-group
-        p.title Conclusions
-        p.label Best when... Better if...
-        textarea(name="", cols="50", rows="10", ng-model="form.conclusions")
-    .form-group(ng-if='observation.observationKind === "Lesson"')
-        p.title How many students are in the class?
-        input(type='text' ng-model='form.noOfStudents')
-    .form-group(ng-if='observation.observationKind === "Lesson"')
-        p.title How much time did you spend observing?
-        select(ng-model='form.timeSpentObserving')
-            option(value='0 - 15 minutes') 0-15 minutes
-            option(value='15 - 30 minutes') 15 - 30 minutes
-            option(value='30 - 45 minutes') 30 - 45 minutes
-            option(value='45 minutes - 1 hour') 45 minutes - 1 hour
-            option(value='More than 1 hour') More than 1 hour
-    button(type="submit", ng-click="goToClustersObservedView(file)") NEXT
+.ul-padding-30
+    .ul-padding-30
+        .c-view-all-observations-header
+            img.ul-cursor-pointer(src='assets/icons/back-icon.svg' ui-sref='home')
+            p VIEW ALL OBSERVATIONS
+        .c-observation-observation-form
+            .c-observation-observation-form__details
+                h3 Lesson Observation
+                span.grade-color 1st Grade
+                span.teacher-color Ms. Ng
+                span.subject-color English
+                p CREATED 12/16/17 AT 5:00PM
+            .c-observation-observation-form__actions
+                button Saved
+                button Submit
+                img(src='assets/icons/settings-small-icon.svg')
+                img(src='assets/icons/duplicate-icon.svg')
+                img(src='assets/icons/delete-icon.svg')
+
+        .c-observation-form-input-group.ul-margin-bottom-20
+            h2 Observation Description
+            p What's the theme/goal/focus?
+            textarea
+        .c-observation-form-input-group.ul-margin-bottom-20
+            h2 Attachments
+            p Add photos, videos, word documents, or pdf's to your observation
+            .c-attachments-holder
+                .c-attachment-holder__add-attachment.c-attachment-holder__attachment
+                    img(src='assets/icons/add-icon.svg')
+                .c-attachment-holder__attachment
+        .c-observation-form-input-group
+            h2 Teacher: Knowledge and Skill
+            p What is the teacher doing? What is the teacher saying?
+            textarea
+        .c-observation-form-input-group.ul-margin-bottom-20
+            h2 Students: Behavior
+            p What are the students doing? What are the students saying?
+            textarea
+        .c-observation-form-input-group.ul-margin-bottom-20
+            h2 Conclusions
+            p Best when... Better if...
+            textarea
+        .c-clusters-observed-group
+            .c-radio-group.l-flex.ul-margin-bottom-20
+                p Learning Targets
+                input(type='radio' name='learning targets')
+                input(type='radio' name='learning targets')
+            .c-radio-group.l-flex.ul-margin-bottom-20
+                p Standards
+                input(type='radio' name='standards')
+                input(type='radio' name='standards')
+            .c-radio-group.l-flex.ul-margin-bottom-20
+                p Planning
+                input(type='radio' name='planning')
+                input(type='radio' name='planning')
+            .c-radio-group.l-flex.ul-margin-bottom-20
+                p Instruction
+                input(type='radio' name='instruction')
+                input(type='radio' name='instruction')
+            .c-radio-group.l-flex.ul-margin-bottom-20
+                p Tasks
+                input(type='radio' name='tasks')
+                input(type='radio' name='tasks')
+            .c-radio-group.l-flex.ul-margin-bottom-20
+                p Interaction and Behaviors
+                input(type='radio' name='interaction and behaviors')
+                input(type='radio' name='interaction and behaviors')
+        .submit-buttons-holder
+            button.saved-button Saved
+            button.submit-button Submit
+
+
+
