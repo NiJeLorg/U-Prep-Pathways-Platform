@@ -8,6 +8,9 @@ const express = require('express'),
     bodyParser = require('body-parser'),
     path = require('path'),
     c = console,
+    swaggerUi = require('swagger-ui-express'),
+    YAML = require('yamljs'),
+    swaggerDocument = YAML.load('./server/swagger/swagger.yaml'),
     // sequelize = require('./server/config/db.js'),
     app = express();
 
@@ -29,6 +32,8 @@ app.use(bodyParser.urlencoded({
 
 // serve static files
 app.use(express.static(path.resolve('./public')));
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // require('./server/routes')(app);
 
