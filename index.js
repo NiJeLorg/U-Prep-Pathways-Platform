@@ -8,34 +8,23 @@ const express = require('express'),
     bodyParser = require('body-parser'),
     path = require('path'),
     c = console,
-    swaggerUi = require('swagger-ui-express'),
-    YAML = require('yamljs'),
-    swaggerDocument = YAML.load('./server/swagger/swagger.yaml'),
-    // sequelize = require('./server/config/db.js'),
+    routes = require('./server/routes/index'),
     app = express();
 
-// // connect to the db
-// sequelize.authenticate().then(() => {
-//     c.log("Connection has been established successfully!");
-// }).catch((err) => {
-//     c.log('Unable to connect to the database', err);
-// });
 
 // log all requests to the console
 app.use(morgan('dev'));
 
 // parse incoming requests data
 app.use(bodyParser.json());
+
+
 app.use(bodyParser.urlencoded({
     extended: false
 }));
-
+routes(app);
 // serve static files
 app.use(express.static(path.resolve('./public')));
-
-app.use('/api/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-
-// require('./server/routes')(app);
 
 // Setup a default catch-all route that sends back the index.html page
 app.get('*', (req, res) => {
@@ -45,8 +34,10 @@ app.get('*', (req, res) => {
 });
 
 // Start the server
+console.log(process.env.PORT);
 app.listen(process.env.PORT || 3000, () => {
     c.log('server listening on port ' + process.env.PORT || 3000);
+    // console.log(app._router.stack);
 });
 
 module.exports = app;
