@@ -33,7 +33,7 @@ app.use(bodyParser.urlencoded({
 // serve static files
 app.use(express.static(path.resolve('./public')));
 
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use('/api/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 // require('./server/routes')(app);
 
