@@ -6,7 +6,7 @@
   "scripts": {
     "start": "gulp serve",
     "test": "mocha --recursive server/test/",
-    "build": "gulp",
+    "build": "gulp"
   },
   "repository": {
     "type": "git",
