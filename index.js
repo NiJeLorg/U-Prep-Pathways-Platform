@@ -1,14 +1,15 @@
 'use strict';
+import express from 'express';
+import bodyParser from 'body-parser';
+import path from 'path';
+import routes from './server/routes/index';
+import morgan from 'morgan';
+
 let env = process.env.NODE_ENV || 'development';
 if (env === 'development') {
     require('dotenv').load();
 }
-const express = require('express'),
-    morgan = require('morgan'),
-    bodyParser = require('body-parser'),
-    path = require('path'),
-    c = console,
-    routes = require('./server/routes/index'),
+const c = console,
     app = express();
 
 

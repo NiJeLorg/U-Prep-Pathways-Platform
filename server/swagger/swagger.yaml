@@ -96,7 +96,7 @@ paths:
       tags:
       - "schools"
       summary: "Get list of schools"
-      description: "Multiple status values can be provided with comma separated strings"
+      description: "Fetches a list of schools without any nested properties"
       operationId: "getSchools"
       produces:
       - "application/json"
@@ -115,7 +115,7 @@ paths:
       tags:
       - "schools"
       summary: "Finds a school using its Id"
-      description: "Multiple status values can be provided with comma separated strings"
+      description: "Fetches a school using its Id including nested properties such as the grades available in the school"
       operationId: "findSchoolById"
       produces:
       - "application/json"
@@ -141,7 +141,7 @@ paths:
       tags:
       - "observation_types"
       summary: "Get list of observation types"
-      description: "Multiple status values can be provided with comma separated strings"
+      description: "Gets a list of the different observation types"
       operationId: "getObservationTypes"
       produces:
       - "application/json"
@@ -160,7 +160,8 @@ paths:
       tags:
       - "grades"
       summary: "Finds a grade using its id"
-      description: "Multiple status values can be provided with comma separated strings"
+      description: "Fetches details for a particular grade using its Id including nested properties such as all the
+      22eeeeesdddteachers for that particular grade"
       operationId: "findGradeById"
       produces:
       - "application/json"
