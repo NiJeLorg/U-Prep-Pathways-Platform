@@ -57,7 +57,9 @@ gulp.task('babel', () =>
     gulp.src([...paths.server, '!gulpfile.babel.js'], {base: '.'})
         .pipe(plugins.newer('dist'))
         .pipe(plugins.sourcemaps.init())
-        .pipe(plugins.babel())
+        .pipe(plugins.babel({
+            presets: ['es2015', 'stage-2']
+        }))
         .pipe(plugins.sourcemaps.write('.', {
             includeContent: false,
             sourceRoot(file) {
