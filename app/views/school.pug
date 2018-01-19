@@ -14,11 +14,5 @@
             h2 Step 1: Choose a School
             p.ul-margin-bottom-20 Below is a list of schools you are able to observe
             .c-buttons-holder
-                button.ul-margin-bottom-20.upsm-school(ui-sref='observationKind') UPSM Elementary
-                button.ul-margin-bottom-20.upsm-school UPSM Middle
-                button.ul-margin-bottom-20.non-upsm-school Ellen-Thompson Elementary
-                button.ul-margin-bottom-20.non-upsm-school UPA High
-                button.ul-margin-bottom-20.non-upsm-school Mark-Murray Elementary
-                button.ul-margin-bottom-20.upsm-school UPSM High
-                button.ul-margin-bottom-20.non-upsm-school UPA Middle
+                button.ul-margin-bottom-20(ng-repeat='school in checkTypeOfSchool(school)' ui-sref='observationKind' ng-class="{'upsm-school': true }") {{school}}
 

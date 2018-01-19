@@ -18,8 +18,8 @@
   },
   "homepage": "https://github.com/NiJeLorg/U-Prep-Pathways-Platform#readme",
   "dependencies": {
-    "@uirouter/angularjs": "^1.0.7",
-    "angular": "^1.6.6",
+    "@uirouter/angularjs": "1.0.7",
+    "angular": "1.6.6",
     "babel-cli": "^6.26.0",
     "babel-loader": "^7.1.2",
     "babel-preset-env": "^1.6.0",

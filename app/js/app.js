@@ -9,13 +9,18 @@ import ngFileUpload from 'ng-file-upload';
 import HomeCtrl from './controllers/home';
 import NavCtrl from './controllers/nav';
 import MakeObservationCtrl from './controllers/make-observation';
+import TestData from './test-data/test-data';
+import DataService from './services/data';
+
 
 const uprepApp = angular.module('uprepApp', [uiRouter, ngFileUpload]);
 
 uprepApp
   .controller('NavCtrl', NavCtrl)
   .controller('HomeCtrl', HomeCtrl)
-  .controller('MakeObservationCtrl', MakeObservationCtrl);
+  .controller('MakeObservationCtrl', MakeObservationCtrl)
+  .service('TestData', TestData)
+  .service('DataService', DataService);
 
 uprepApp.config(['$stateProvider', '$httpProvider',
   '$urlRouterProvider', '$locationProvider', ($stateProvider, $httpProvider, $urlRouterProvider, $locationProvider) => {
