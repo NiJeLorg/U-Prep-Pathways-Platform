@@ -1,6 +1,7 @@
 const MakeObservationCtrl = ($scope, TestData) => {
 
     // fetch data
+    console.log(TestData, 'test-data');
     $scope.schools = TestData.schools;
 
 

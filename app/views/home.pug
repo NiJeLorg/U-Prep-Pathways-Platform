@@ -34,9 +34,9 @@
                     p {{observation.readableDate}}
                 .c-observation__details
                     h3 {{observation.observationKind}}
-                    span.grade-color {{observation.grade}}
-                    span.teacher-color {{observation.teacher}}
-                    span.subject-color {{observation.subject}}
+                    span.grade-color(ng-if='observation.grade') {{observation.grade}}
+                    span.teacher-color(ng-if='observation.teacher') {{observation.teacher}}
+                    span.subject-color(ng-if='observation.subject') {{observation.subject}}
                 .c-observation__actions.l-flex-flex-end
                     img(src='assets/icons/edit-icon.svg')
                     img(src='assets/icons/duplicate-icon.svg')

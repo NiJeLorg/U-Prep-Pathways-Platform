@@ -1,26 +1,33 @@
 'use strict';
 
-import uiRouter from '@uirouter/angularjs';
 import angular from 'angular';
+import uiRouter from '@uirouter/angularjs';
+import ngResource from 'angular-resource';
 import ngFileUpload from 'ng-file-upload';
 
 
-// load controllers and services
+// load controllers
 import HomeCtrl from './controllers/home';
 import NavCtrl from './controllers/nav';
 import MakeObservationCtrl from './controllers/make-observation';
+
+// load services
 import TestData from './test-data/test-data';
-import DataService from './services/data';
+import SchoolService from './services/school-service';
+import ObservationTypeService from './services/observationType-service';
+import GradeService from './services/grade-service.js';
+import TeacherService from './services/teacher-service.js';
+import ObservationService from './services/observationType-service';
 
 
-const uprepApp = angular.module('uprepApp', [uiRouter, ngFileUpload]);
+
+const uprepApp = angular.module('uprepApp', [uiRouter, ngFileUpload, ngResource]);
 
 uprepApp
   .controller('NavCtrl', NavCtrl)
   .controller('HomeCtrl', HomeCtrl)
   .controller('MakeObservationCtrl', MakeObservationCtrl)
-  .service('TestData', TestData)
-  .service('DataService', DataService);
+  .service('TestData', TestData);
 
 uprepApp.config(['$stateProvider', '$httpProvider',
   '$urlRouterProvider', '$locationProvider', ($stateProvider, $httpProvider, $urlRouterProvider, $locationProvider) => {
