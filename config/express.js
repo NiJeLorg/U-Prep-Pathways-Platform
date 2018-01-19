@@ -33,7 +33,7 @@ app.use(cors());
 app.use(express.static(path.resolve('./public')));
 
 // Setup a default catch-all route that sends back the index.html page
-app.get('*', (req, res) => {
+app.get('/', (req, res) => {
     res.sendFile('index.html', {root: './public'});
 });
 // mount all routes on /api path
