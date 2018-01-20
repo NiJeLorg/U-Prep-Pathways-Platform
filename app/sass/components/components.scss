@@ -69,6 +69,12 @@
     }
 }
 
+.is-disabled {
+    background: none;
+    color: $light-grey;
+    font-weight: bold;
+}
+
 .c-triangle-breadcrumb {
     list-style: none;
     overflow: hidden;
@@ -143,7 +149,32 @@
         }
     }
 }
-
+.c-score {
+    background: #fff;
+    border-radius: 4px;
+    margin-bottom: 30px;
+    .c-score__date {
+        color: #808285;
+        flex-basis: 20%;
+    }
+    .c-score__details {
+        flex-basis: 60%;
+        h3 {
+            font-weight: bold;
+            margin-top: 0;
+            color: $purple;
+        }
+        span {
+            margin-right: 10px;
+        }
+    }
+    .c-score__actions {
+        flex-basis: 20%;
+        img {
+            margin-left: 15px;
+        }
+    }
+}
 .c-observation-form-input-group {
     background: #f5f5f6;
     padding: 50px 40px 40px 40px;

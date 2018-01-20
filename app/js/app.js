@@ -9,13 +9,15 @@ import ngFileUpload from 'ng-file-upload';
 import HomeCtrl from './controllers/home';
 import NavCtrl from './controllers/nav';
 import MakeObservationCtrl from './controllers/make-observation';
+import MakeScoreCtrl from './controllers/make-score';
 
 const uprepApp = angular.module('uprepApp', [uiRouter, ngFileUpload]);
 
 uprepApp
   .controller('NavCtrl', NavCtrl)
   .controller('HomeCtrl', HomeCtrl)
-  .controller('MakeObservationCtrl', MakeObservationCtrl);
+  .controller('MakeObservationCtrl', MakeObservationCtrl)
+  .controller('MakeScoreCtrl', MakeScoreCtrl);
 
 uprepApp.config(['$stateProvider', '$httpProvider',
   '$urlRouterProvider', '$locationProvider', ($stateProvider, $httpProvider, $urlRouterProvider, $locationProvider) => {
@@ -47,6 +49,26 @@ uprepApp.config(['$stateProvider', '$httpProvider',
         url: '/observation-form',
         controller: 'MakeObservationCtrl',
         templateUrl: 'views/observation-form.html'
+      })
+      .state('score', {
+        url:'/score',
+        controller: 'MakeScoreCtrl',
+        templateUrl:'views/score.html'
+      })
+      .state('teacher', {
+        url:'/teacher',
+        controller: 'MakeScoreCtrl',
+        templateUrl:'views/teacher.html'
+      })
+      .state('scoreDetails', {
+        url:'/score-details',
+        controller: 'MakeScoreCtrl',
+        templateUrl:'views/score-details.html'
+      })
+      .state('scoreForm', {
+        url:'/score-form',
+        controller: 'MakeScoreCtrl',
+        templateUrl:'views/score-form.html'
       });
     $locationProvider.html5Mode(true);
   }
