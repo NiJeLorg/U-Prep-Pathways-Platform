@@ -1,23 +1,25 @@
+import {grade} from './../models';
+
 function get(req, res){
-    res.statusCode = 200;
-    return res.json({
-        "data": [
-            {"id": 1, "name": "Grade 1"},
-            {"id": 2, "name": "Grade 2"},
-            {"id": 3, "name": "Grade 3"},
-            {"id": 4, "name": "Grade 4"},
-            {"id": 5, "name": "Grade 5"},
-            {"id": 6, "name": "Grade 6"},
-            {"id": 7, "name": "Grade 7"}
-        ]
-    });
+    return grade
+        .all()
+        .then(grades => res.status(200).send({"data": grades}))
+        .catch(error => res.status(400).send(error));
+
 }
 
 function load(req, res, next, id){
-    res.statusCode = 200;
-    return res.json({
-        "data": {"id": 1, "name": "Grade 1"}
-    });
+    return grade
+        .findById(req.params.gradeId,)
+        .then((grade) => {
+            if (!grade) {
+                return res.status(404).send({
+                    message: 'Grade Not Found',
+                });
+            }
+            return res.status(200).send({"data": grade});
+        })
+        .catch((error) => res.status(400).send(error));
 }
 
 export default {get, load};
