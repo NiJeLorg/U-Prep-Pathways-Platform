@@ -9,8 +9,7 @@ router.route('/')
 
 router.route('/:observationId')
 /** GET /api/observations/:observationId - Get observation */
-    .get(observationCtrl.load);
+    .get(observationCtrl.get);
 /** Load observation when API with observationId route parameter is hit */
 router.param('observationId', observationCtrl.load);
-export default router;
 export default router;

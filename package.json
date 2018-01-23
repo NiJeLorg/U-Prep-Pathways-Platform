@@ -37,6 +37,7 @@
     "helmet": "^3.9.0",
     "http-status": "^1.0.1",
     "joi": "^13.1.1",
+    "lodash": "^4.17.4",
     "method-override": "^2.3.10",
     "mocha": "^4.1.0",
     "moment": "^2.20.1",
