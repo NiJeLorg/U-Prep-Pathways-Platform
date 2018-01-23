@@ -10,5 +10,6 @@ router.route('/')
 router.route('/:teacherId')
 /** GET /api/grades/:gradeId - Get grade */
     .get(teacherCtrl.load);
-
+/** Load user when API with userId route parameter is hit */
+router.param('teacherId', teacherCtrl.load);
 export default router;

@@ -1,10 +1,17 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  let Subject = sequelize.define('Subject', {
-    name: DataTypes.STRING
-  }, {
-    underscored: true
+    let Subject = sequelize.define('subject', {
+        name: DataTypes.STRING
+    }, {
+        underscored: true
 
-  });
-  return Subject;
+    });
+    Subject.associate = (models) => {
+        Subject.belongsToMany(models.teacher, {
+            foreignKey: 'subject_id',
+            through: models.subject_teacher,
+            as: 'teachers'
+        });
+    };
+    return Subject;
 };

@@ -1,9 +1,8 @@
 'use strict';
-
 module.exports = {
     up: (queryInterface, Sequelize) => {
-        return queryInterface.createTable('grade_subject_teachers', {
-            subject_id: {
+        return queryInterface.createTable('grade_teachers', {
+            teacher_id: {
                 allowNull: false,
                 type: Sequelize.INTEGER
             },
@@ -11,14 +10,17 @@ module.exports = {
                 type: Sequelize.INTEGER,
                 allowNull: false,
             },
-            teacher_id: {
-                type: Sequelize.INTEGER,
+            created_at: {
                 allowNull: false,
+                type: Sequelize.DATE
             },
+            updated_at: {
+                allowNull: false,
+                type: Sequelize.DATE
+            }
         });
     },
-
     down: (queryInterface, Sequelize) => {
-        return queryInterface.dropTable('grade_subject_teachers');
+        return queryInterface.dropTable('grade_teachers');
     }
 };

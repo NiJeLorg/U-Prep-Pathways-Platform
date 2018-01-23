@@ -5,5 +5,14 @@ module.exports = (sequelize, DataTypes) => {
     }, {
         underscored: true
     });
+
+    Grade.associate = (models) => {
+        Grade.belongsToMany(models.teacher, {
+            foreignKey: 'grade_id',
+            through: models.grade_teacher,
+            as: 'teachers'
+        });
+
+    };
     return Grade;
 };

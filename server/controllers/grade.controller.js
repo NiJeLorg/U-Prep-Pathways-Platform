@@ -1,6 +1,6 @@
-import {grade} from './../models';
+import {grade, teacher} from './../models';
 
-function get(req, res){
+function get(req, res) {
     return grade
         .all()
         .then(grades => res.status(200).send({"data": grades}))
@@ -8,9 +8,16 @@ function get(req, res){
 
 }
 
-function load(req, res, next, id){
+function load(req, res, next, id) {
     return grade
-        .findById(req.params.gradeId,)
+        .findById(req.params.gradeId, {
+            include: [{
+                required: false,
+                model: teacher,
+                as: 'teachers',
+                where: {school_id: 2}
+            }],
+        })
         .then((grade) => {
             if (!grade) {
                 return res.status(404).send({
