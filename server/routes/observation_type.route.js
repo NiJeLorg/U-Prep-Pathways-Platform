@@ -4,12 +4,12 @@ import observationTypeCtrl from './../controllers/observation_type.controller';
 const router = express.Router();
 
 router.route('/')
-/** Get /api/grades - Get list of grades*/
+/** Get /api/observation_types - Get list of observation types*/
     .get(observationTypeCtrl.get);
 
 router.route('/:observationTypeId')
-/** GET /api/grades/:gradeId - Get grade */
+/** GET /api/observation_types/:observationTypeId - Get observation type */
     .get(observationTypeCtrl.load);
-/** Load user when API with userId route parameter is hit */
+/** Load observation type when API with observationTypeId route parameter is hit */
 router.param('observationTypeId', observationTypeCtrl.load);
 export default router;

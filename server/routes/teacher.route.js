@@ -4,12 +4,12 @@ import teacherCtrl from './../controllers/teacher.controller';
 const router = express.Router();
 
 router.route('/')
-/** Get /api/grades - Get list of grades*/
+/** Get /api/teachers - Get list of teachers*/
     .get(teacherCtrl.get);
 
 router.route('/:teacherId')
-/** GET /api/grades/:gradeId - Get grade */
+/** GET /api/teachers/:teacherId - Get teacher */
     .get(teacherCtrl.load);
-/** Load user when API with userId route parameter is hit */
+/** Load teacher when API with teacherId route parameter is hit */
 router.param('teacherId', teacherCtrl.load);
 export default router;
