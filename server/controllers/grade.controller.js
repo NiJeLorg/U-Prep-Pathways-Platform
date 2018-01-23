@@ -3,7 +3,7 @@ import {grade, teacher} from './../models';
 function get(req, res) {
     return grade
         .all()
-        .then(grades => res.sendOk(grades))
+        .then(grades => res.sendData(grades))
         .catch(error => res.sendBadRequest(error));
 
 }
@@ -22,9 +22,9 @@ function load(req, res, next, id) {
             if (!grade) {
                 return res.sendNotFound();
             }
-            return res.sendOk(grade);
+            return res.sendData(grade);
         })
-        .catch((error) => res.status(400).send(error));
+        .catch((error) => res.sendBadRequest());
 }
 
 export default {get, load};

@@ -3,8 +3,8 @@ import {observation_type} from './../models';
 function get(req, res){
     return observation_type
         .all()
-        .then(observation_types => res.status(200).send({"data": observation_types}))
-        .catch(error => res.status(400).send(error));
+        .then(observation_types => res.sendData(observation_types))
+        .catch(error => res.sendBadRequest(error));
 
 }
 
@@ -13,13 +13,11 @@ function load(req, res, next, id){
         .findById(req.params.observationTypeId)
         .then((observation_type) => {
             if (!school) {
-                return res.status(404).send({
-                    message: 'Observaton Type Not Found',
-                });
+                return res.sendNotFound();
             }
-            return res.status(200).send({"data": observation_type});
+            return res.sendData(observation_type);
         })
-        .catch((error) => res.status(400).send(error));
+        .catch((error) => res.sendBadRequest());
 }
 
 export default {get, load};

@@ -3,8 +3,8 @@ import {school, grade} from './../models';
 function get(req, res){
     return school
         .all()
-        .then(schools => res.status(200).send({"data": schools}))
-        .catch(error => res.status(400).send(error));
+        .then(schools => res.sendData(schools))
+        .catch(error => res.sendBadRequest());
 
 }
 
@@ -15,13 +15,11 @@ function load(req, res, next, id){
         })
         .then((school) => {
             if (!school) {
-                return res.status(404).send({
-                    message: 'School Not Found',
-                });
+                return res.sendNotFound();
             }
-            return res.status(200).send({"data": school});
+            return res.sendData(school);
         })
-        .catch((error) => res.status(400).send(error));
+        .catch((error) => res.sendBadRequest());
 }
 
 export default {get, load};
