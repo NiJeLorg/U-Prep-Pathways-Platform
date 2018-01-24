@@ -63252,7 +63252,11 @@ exports.default = MakeObservationCtrl;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-var MakeScoreCtrl = function MakeScoreCtrl() {};
+var MakeScoreCtrl = function MakeScoreCtrl($scope) {
+
+  $scope.indicators = ['Grading', 'College-Going Culture', 'High Quality Work', 'Timeliness and Preparation'];
+  $scope.toggleAccordion = true;
+};
 
 exports.default = MakeScoreCtrl;
 
