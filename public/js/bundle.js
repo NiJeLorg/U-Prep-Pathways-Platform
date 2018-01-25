@@ -16086,6 +16086,18 @@ uprepApp.config(['$stateProvider', '$httpProvider', '$urlRouterProvider', '$loca
     url: '/score-form',
     controller: 'MakeScoreCtrl',
     templateUrl: 'views/score-form.html'
+  }).state('scoreLevels', {
+    url: '/score-levels',
+    controller: 'MakeScoreCtrl',
+    templateUrl: 'views/score-levels-modal.html'
+  }).state('attachEvidence', {
+    url: '/attach-evidence',
+    controller: 'MakeScoreCtrl',
+    templateUrl: 'views/attach-evidence-modal.html'
+  }).state('notesEvidence', {
+    url: '/notes-evidence',
+    controller: 'MakeScoreCtrl',
+    templateUrl: 'views/notes-evidence-modal.html'
   });
   $locationProvider.html5Mode(true);
 }]);
@@ -63252,10 +63264,11 @@ exports.default = MakeObservationCtrl;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-var MakeScoreCtrl = function MakeScoreCtrl($scope) {
+var MakeScoreCtrl = function MakeScoreCtrl($scope, $rootScope) {
 
   $scope.indicators = ['Grading', 'College-Going Culture', 'High Quality Work', 'Timeliness and Preparation'];
   $scope.toggleAccordion = true;
+  $rootScope.hideit = true;
 };
 
 exports.default = MakeScoreCtrl;

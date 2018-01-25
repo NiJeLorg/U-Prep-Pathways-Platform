@@ -1,0 +1,28 @@
+.c-modal
+    h2 Attach Evidence for 
+        span.heading-blue Grading
+    img(src='assets/icons/x-icon.svg')
+    .c-modal__addnote
+        h3 Add Note to Indicator Score
+    .c-modal__accordion(ng-class="{'c-modal__accordion-collapsed': !toggleAccordion}" )
+        .c-modal__accordion-header(ng-click="toggleAccordion = !toggleAccordion")
+            .c-modal-note__details__date
+                p 9/16/17
+                p 9:00 am
+            .c-modal-note__details__observation
+                h3 Lesson observation
+                span.grade-color 1st Grade
+                span.teacher-color Ms. Ng
+                span.subject-color English
+        .c-modal__accordion-content
+            .c-modal__accordion-content-attachment
+                h2 Attachments
+                img(src="http://via.placeholder.com/250x250")
+                img(src="http://via.placeholder.com/250x250")
+            .c-modal__accordion-content-details
+                h2 Teacher : Knowledge and skill
+                .c-modal__accordion-content-details-notes
+                    p.
+                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod 
+                        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                        quis nostrud exercitation ullamco laboris nisinuli.
