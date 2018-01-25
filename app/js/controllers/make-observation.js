@@ -1,19 +1,23 @@
-const MakeObservationCtrl = ($scope, TestData) => {
-
-    // fetch data
-    console.log(TestData, 'test-data');
-    $scope.schools = TestData.schools;
+const MakeObservationCtrl = ($scope, $state, SchoolService, ObservationTypeService) => {
 
 
-
-    // mainipulate data
-    $scope.checkTypeOfSchool = (school) => {
-        // console.log(school, 'school');
+    $scope.cancelObservation = () => {
+        $scope.observation = {};
+        $state.go('home');
     };
 
+    // fetch data
+    SchoolService.fetchSchools((err, res) => {
+        if (err) {
+            console.error(err);
+        }
+        $scope.schools = res.data.data;
+    });
 
+    ObservationTypeService.get((res) => {
+        $scope.observationTypes = res.data;
+    });
 
-    $scope.observation = {};
 };
 
 export default MakeObservationCtrl;

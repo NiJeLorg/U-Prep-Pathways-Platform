@@ -4,10 +4,10 @@ const SchoolService = ($resource, $http) => {
         id: '@id'
     });
 
-    obj.fetchAllSchools = (cb) => {
-        $http.get('/schools').success(function (res) {
+    obj.fetchSchools = (cb) => {
+        $http.get('https://dev-uprep.nijel.org/api/schools').then((res) => {
             cb(null, res);
-        }).error(function (err) {
+        }, (err) => {
             cb(err);
         });
     };

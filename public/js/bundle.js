@@ -16038,35 +16038,31 @@ var _makeObservation = __webpack_require__(132);
 
 var _makeObservation2 = _interopRequireDefault(_makeObservation);
 
-var _testData = __webpack_require__(133);
-
-var _testData2 = _interopRequireDefault(_testData);
-
-var _schoolService = __webpack_require__(134);
+var _schoolService = __webpack_require__(133);
 
 var _schoolService2 = _interopRequireDefault(_schoolService);
 
-var _observationTypeService = __webpack_require__(135);
+var _observationTypeService = __webpack_require__(134);
 
 var _observationTypeService2 = _interopRequireDefault(_observationTypeService);
 
-var _gradeService = __webpack_require__(136);
+var _gradeService = __webpack_require__(135);
 
 var _gradeService2 = _interopRequireDefault(_gradeService);
 
-var _teacherService = __webpack_require__(137);
+var _teacherService = __webpack_require__(136);
 
 var _teacherService2 = _interopRequireDefault(_teacherService);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// load services
+// load controllers
 var uprepApp = _angular2.default.module('uprepApp', [_angularjs2.default, _ngFileUpload2.default, _angularResource2.default]);
 
-// load controllers
+// load services
 
 
-uprepApp.controller('NavCtrl', _nav2.default).controller('HomeCtrl', _home2.default).controller('MakeObservationCtrl', _makeObservation2.default).service('TestData', _testData2.default);
+uprepApp.controller('NavCtrl', _nav2.default).controller('HomeCtrl', _home2.default).controller('MakeObservationCtrl', _makeObservation2.default).service('SchoolService', _schoolService2.default).service('ObservationTypeService', _observationTypeService2.default);
 
 uprepApp.config(['$stateProvider', '$httpProvider', '$urlRouterProvider', '$locationProvider', function ($stateProvider, $httpProvider, $urlRouterProvider, $locationProvider) {
 
@@ -64107,18 +64103,24 @@ exports.default = NavCtrl;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-var MakeObservationCtrl = function MakeObservationCtrl($scope, TestData) {
+var MakeObservationCtrl = function MakeObservationCtrl($scope, $state, SchoolService, ObservationTypeService) {
 
-    // fetch data
-    console.log(TestData, 'test-data');
-    $scope.schools = TestData.schools;
-
-    // mainipulate data
-    $scope.checkTypeOfSchool = function (school) {
-        // console.log(school, 'school');
+    $scope.cancelObservation = function () {
+        $scope.observation = {};
+        $state.go('home');
     };
 
-    $scope.observation = {};
+    // fetch data
+    SchoolService.fetchSchools(function (err, res) {
+        if (err) {
+            console.error(err);
+        }
+        $scope.schools = res.data.data;
+    });
+
+    ObservationTypeService.get(function (res) {
+        $scope.observationTypes = res.data;
+    });
 };
 
 exports.default = MakeObservationCtrl;
@@ -64133,13 +64135,24 @@ exports.default = MakeObservationCtrl;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-var TestData = function TestData() {
-    return {
-        schools: ['UPSM Middle', 'Ellen-Thompson Elementary', 'UPA High', 'Mark-Murray Elementary', 'UPSM High', 'UPA Middle']
+var SchoolService = function SchoolService($resource, $http) {
+
+    var obj = $resource('api/schools/:id', {
+        id: '@id'
+    });
+
+    obj.fetchSchools = function (cb) {
+        $http.get('https://dev-uprep.nijel.org/api/schools').then(function (res) {
+            cb(null, res);
+        }, function (err) {
+            cb(err);
+        });
     };
+
+    return obj;
 };
 
-exports.default = TestData;
+exports.default = SchoolService;
 
 /***/ }),
 /* 134 */
@@ -64151,38 +64164,9 @@ exports.default = TestData;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-var SchoolService = function SchoolService($resource, $http) {
-
-    var obj = $resource('api/schools/:id', {
-        id: '@id'
-    });
-
-    obj.fetchAllSchools = function (cb) {
-        $http.get('/schools').success(function (res) {
-            cb(null, res);
-        }).error(function (err) {
-            cb(err);
-        });
-    };
-
-    return obj;
-};
-
-exports.default = SchoolService;
-
-/***/ }),
-/* 135 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
 var ObservationTypeService = function ObservationTypeService($resource, $http) {
 
-    var obj = $resource('api/observation_types');
+    var obj = $resource('https://dev-uprep.nijel.org/api/observation_types');
 
     return obj;
 };
@@ -64190,7 +64174,7 @@ var ObservationTypeService = function ObservationTypeService($resource, $http) {
 exports.default = ObservationTypeService;
 
 /***/ }),
-/* 136 */
+/* 135 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -64219,7 +64203,7 @@ var GradeService = function GradeService($resource, $http) {
 exports.default = GradeService;
 
 /***/ }),
-/* 137 */
+/* 136 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

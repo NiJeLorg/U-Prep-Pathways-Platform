@@ -1,6 +1,6 @@
 const ObservationTypeService = ($resource, $http) => {
 
-    let obj = $resource('api/observation_types');
+    let obj = $resource('https://dev-uprep.nijel.org/api/observation_types');
 
     return obj;
 };

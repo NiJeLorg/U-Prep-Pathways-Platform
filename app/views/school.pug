@@ -1,7 +1,7 @@
 .ul-padding-30
     .l-flex-space-between.ul-border-bottom
         h1 Make A New Observation
-        img(src='assets/icons/x-icon.svg')
+        img.ul-cursor-pointer(src='assets/icons/x-icon.svg' ng-click='cancelObservation()')
     .ul-padding-30
         ul.c-triangle-breadcrumb.ul-margin-bottom-20
             li.c-triangle-breadcrumb__item
@@ -14,5 +14,9 @@
             h2 Step 1: Choose a School
             p.ul-margin-bottom-20 Below is a list of schools you are able to observe
             .c-buttons-holder
-                button.ul-margin-bottom-20(ng-repeat='school in schools' ui-sref='observationKind' ng-class="{'upsm-school': true }") {{school}}
+                span(ng-repeat= 'school in schools')
+                    button.ul-margin-bottom-20(ui-sref='observationKind') {{school.name}}
+
+
+
 

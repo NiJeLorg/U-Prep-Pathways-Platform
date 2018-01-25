@@ -12,7 +12,6 @@ import NavCtrl from './controllers/nav';
 import MakeObservationCtrl from './controllers/make-observation';
 
 // load services
-import TestData from './test-data/test-data';
 import SchoolService from './services/school-service';
 import ObservationTypeService from './services/observationType-service';
 import GradeService from './services/grade-service.js';
@@ -27,7 +26,8 @@ uprepApp
   .controller('NavCtrl', NavCtrl)
   .controller('HomeCtrl', HomeCtrl)
   .controller('MakeObservationCtrl', MakeObservationCtrl)
-  .service('TestData', TestData);
+  .service('SchoolService', SchoolService)
+  .service('ObservationTypeService', ObservationTypeService);
 
 uprepApp.config(['$stateProvider', '$httpProvider',
   '$urlRouterProvider', '$locationProvider', ($stateProvider, $httpProvider, $urlRouterProvider, $locationProvider) => {
