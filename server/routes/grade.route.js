@@ -1,7 +1,7 @@
 import express from 'express';
 import gradeCtrl from './../controllers/grade.controller';
 
-const router = express.Router();
+const router = express.Router({mergeParams: true});
 
 router.route('/')
     /** Get /api/grades - Get list of grades*/

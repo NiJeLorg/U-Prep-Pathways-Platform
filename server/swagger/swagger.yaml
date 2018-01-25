@@ -62,13 +62,12 @@ info:
 
 
 # during dev, should point to your local machine
-host: localhost:3001
+host: dev-uprep.nijel.org
 # basePath prefixes all resource paths
 basePath: /api/
 #
 schemes:
   # tip: remove http to make production-grade
-  - http
   - https
 # format of bodies a client can send (Content-Type)
 consumes:
@@ -136,6 +135,134 @@ paths:
                 type: "array"
                 items:
                   $ref: "#/definitions/School"
+  /schools/{id}/grades:
+    get:
+      tags:
+      - "schools"
+      summary: "Gets all grades belonging to a particular school"
+      description: "Using the id of the school resource we will fetch all the grades available for that particular school"
+      operationId: "findGradesBySchool"
+      produces:
+      - "application/json"
+      parameters:
+        - name: id
+          in: path
+          description: ID of school
+          required: true
+          type: integer
+          format: int64
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              data:
+                type: "array"
+                items:
+                  $ref: "#/definitions/Grade"
+  /schools/{schoolId}/grades/{gradeId}:
+    get:
+      tags:
+      - "schools"
+      summary: "Gets details of a grade belonging to a particular school"
+      description: "This will return the grade including nested properties such as all teachers that teach that grade"
+      operationId: "findGradeBySchool"
+      produces:
+      - "application/json"
+      parameters:
+        - name: schoolId
+          in: path
+          description: ID of school
+          required: true
+          type: integer
+          format: int64
+        - name: gradeId
+          in: path
+          description: ID of grade
+          required: true
+          type: integer
+          format: int64
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              data:
+                type: "array"
+                items:
+                  $ref: "#/definitions/Grade"
+  /schools/{schoolId}/grades/{gradeId}/teachers:
+    get:
+      tags:
+      - "schools"
+      summary: "Gets all the teachers teaching a particular grade at a particular school"
+      description: "This will return the grade including nested properties such as all teachers that teach that grade"
+      operationId: "findGradeTeachersBySchool"
+      produces:
+      - "application/json"
+      parameters:
+        - name: schoolId
+          in: path
+          description: ID of school
+          required: true
+          type: integer
+          format: int64
+        - name: gradeId
+          in: path
+          description: ID of grade
+          required: true
+          type: integer
+          format: int64
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              data:
+                type: "array"
+                items:
+                  $ref: "#/definitions/Teacher"
+  /schools/{schoolId}/grades/{gradeId}/teachers/{teacherId}:
+    get:
+      tags:
+      - "schools"
+      summary: "Gets all the details for a particular teacher teaching a particular grade at a particular school"
+      description: "This will return the teacher details including the subjects they teach that particular grade"
+      operationId: "findGradeTeacherBySchool"
+      produces:
+      - "application/json"
+      parameters:
+        - name: schoolId
+          in: path
+          description: ID of school
+          required: true
+          type: integer
+          format: int64
+        - name: gradeId
+          in: path
+          description: ID of grade
+          required: true
+          type: integer
+          format: int64
+        - name: teacherId
+          in: path
+          description: ID of teacher
+          required: true
+          type: integer
+          format: int64
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              data:
+                type: "array"
+                items:
+                  $ref: "#/definitions/Teacher"
   /observation_types:
     get:
       tags:
@@ -155,20 +282,19 @@ paths:
               type: "array"
               items:
                 $ref: "#/definitions/ObservationType"
-  /grades/{id}:
+  /grades:
     get:
       tags:
       - "grades"
-      summary: "Finds a grade using its id"
-      description: "Fetches details for a particular grade using its Id including nested properties such as all the
-      22eeeeesdddteachers for that particular grade"
-      operationId: "findGradeById"
+      summary: "Gets list of available grades"
+      description: "Gets the full list of available grades which can be filtered using the school id"
+      operationId: "getGrades"
       produces:
       - "application/json"
       parameters:
-      - name: id
-        in: path
-        description: ID of grade
+      - name: schoolId
+        in: query
+        description: ID of school
         type: integer
         required: true
       responses:
@@ -181,12 +307,73 @@ paths:
                 type: "array"
                 items:
                   $ref: "#/definitions/Grade"
+  /grades/{id}:
+    get:
+      tags:
+      - "grades"
+      summary: "Finds a grade using its id"
+      description: "Fetches details for a particular grade.If the schoolId is passed then the grade object loaded will include a list of teachers for that particular grade"
+      operationId: "findGradeById"
+      produces:
+      - "application/json"
+      parameters:
+      - name: id
+        in: path
+        description: ID of grade
+        type: integer
+        required: true
+      - name: schoolId
+        in: query
+        description: ID of school
+        type: integer
+        required: true
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              data:
+                type: "array"
+                items:
+
+                  $ref: "#/definitions/Grade"
+  /teachers:
+    get:
+      tags:
+      - "teachers"
+      summary: "Get list of available teachers"
+      description: "Gets a list of teachers which can be filtered down by passing both the schoolId and gradeId"
+      operationId: "getTeachers"
+      produces:
+      - "application/json"
+      parameters:
+      - name: schoolId
+        in: query
+        description: ID of school
+        type: integer
+        required: false
+      - name: gradeId
+        in: query
+        description: ID of grade
+        type: integer
+        required: false
+      responses:
+        200:
+         description: OK
+         schema:
+           type: object
+           properties:
+             data:
+              type: "array"
+              items:
+                $ref: "#/definitions/Teacher"
   /teachers/{id}:
     get:
       tags:
       - "teachers"
       summary: "Finds a teacher using their id"
-      description: "Multiple status values can be provided with comma separated strings"
+      description: "Gets details for a particular teacher. If the schoolId and gradeId are passed the api will return the teacher object together with the subjects they teach for that particular grade"
       operationId: "findTeacherById"
       produces:
       - "application/json"
@@ -196,6 +383,15 @@ paths:
         description: ID of teacher
         type: integer
         required: true
+      - name: schoolId
+        in: query
+        description: ID of school
+        type: integer
+        required: false
+      - name: gradeId
+        in: query
+        description: ID of grade
+        type: integer
       responses:
         200:
          description: OK

@@ -1,7 +1,7 @@
 import express from 'express';
 import teacherCtrl from './../controllers/teacher.controller';
 
-const router = express.Router();
+const router = express.Router({mergeParams: true});
 
 router.route('/')
 /** Get /api/teachers - Get list of teachers*/

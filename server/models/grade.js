@@ -12,6 +12,11 @@ module.exports = (sequelize, DataTypes) => {
             through: models.grade_teacher,
             as: 'teachers'
         });
+        Grade.belongsToMany(models.school, {
+            foreignKey: 'grade_id',
+            through: models.grade_school,
+            as: 'schools'
+        });
 
     };
     return Grade;

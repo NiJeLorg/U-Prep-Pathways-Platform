@@ -14,7 +14,9 @@ router.get('/health-check', (req, res) => res.send('OK'));
 
 router.use('/schools', schoolRoutes);
 router.use('/grades', gradeRoutes);
+router.use('/schools/:schoolId/grades', gradeRoutes);
 router.use('/teachers', teacherRoutes);
+router.use('/schools/:schoolId/grades/:gradeId/teachers', teacherRoutes);
 router.use('/observations', observationRoutes);
 router.use('/observation_types', observationTypeRoutes);
 router.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
