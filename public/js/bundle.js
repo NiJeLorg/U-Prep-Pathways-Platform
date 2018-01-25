@@ -64110,6 +64110,13 @@ var MakeObservationCtrl = function MakeObservationCtrl($scope, $state, SchoolSer
         $state.go('home');
     };
 
+    $scope.checkIfSchoolIsUPSM = function (school) {
+        if (school.includes('UPSM')) {
+            return true;
+        }
+        return false;
+    };
+
     // fetch data
     SchoolService.fetchSchools(function (err, res) {
         if (err) {

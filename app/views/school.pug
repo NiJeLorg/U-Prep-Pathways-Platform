@@ -15,8 +15,5 @@
             p.ul-margin-bottom-20 Below is a list of schools you are able to observe
             .c-buttons-holder
                 span(ng-repeat= 'school in schools')
-                    button.ul-margin-bottom-20(ui-sref='observationKind') {{school.name}}
-
-
-
+                    button.ul-margin-bottom-20(ui-sref='observationKind' ng-class="(checkIfSchoolIsUPSM(school.name) ? 'upsm-school' : 'non-upsm-school')") {{school.name}}
 

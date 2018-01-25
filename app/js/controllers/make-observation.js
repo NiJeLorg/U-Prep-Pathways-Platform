@@ -6,6 +6,13 @@ const MakeObservationCtrl = ($scope, $state, SchoolService, ObservationTypeServi
         $state.go('home');
     };
 
+    $scope.checkIfSchoolIsUPSM = (school) => {
+        if (school.includes('UPSM')) {
+            return true;
+        }
+        return false;
+    };
+
     // fetch data
     SchoolService.fetchSchools((err, res) => {
         if (err) {
