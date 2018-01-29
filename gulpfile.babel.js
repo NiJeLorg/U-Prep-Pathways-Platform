@@ -4,6 +4,7 @@ import path from 'path';
 import del from 'del';
 import runSequence from 'run-sequence';
 import browserSync from 'browser-sync';
+import webpack from 'webpack-stream';
 
 
 const plugins = gulpLoadPlugins();
@@ -42,7 +43,7 @@ gulp.task('sass2css', () => {
 
 // Clean up dist and coverage directory
 gulp.task('clean', () =>
-    del.sync(['dist/**', 'dist/.*','public/**', 'public/.*', 'coverage/**', '!dist', '!coverage', '!public'])
+    del.sync(['dist/**', 'dist/.*','public/**', 'public/.*', 'coverage/**', '!dist', '!coverage', '!public', '!public/assets','!public/assets/**'])
 );
 
 // Copy non-js files to dist
@@ -52,6 +53,12 @@ gulp.task('copy', () =>
         .pipe(gulp.dest('dist'))
 );
 
+gulp.task('bundleJS', () => {
+    gulp.src(paths.entryJs)
+        .pipe(webpack(require('./webpack.config')))
+        .pipe(gulp.dest(paths.public + '/js'))
+        .pipe(browserSync.stream());
+});
 // Compile ES6 to ES5 and copy to dist
 gulp.task('babel', () =>
     gulp.src([...paths.server, '!gulpfile.babel.js'], {base: '.'})
@@ -70,7 +77,7 @@ gulp.task('babel', () =>
 );
 
 // Start server with restart on file changes
-gulp.task('nodemon', ['copy', 'babel', 'sass2css', 'pug2html'], () =>
+gulp.task('nodemon', ['copy', 'babel','bundleJS', 'sass2css', 'pug2html'], () =>
     plugins.nodemon({
         script: path.join('dist', 'index.js'),
         ext: 'js',
@@ -85,6 +92,6 @@ gulp.task('serve', ['clean'], () => runSequence('nodemon'));
 // default task: clean dist, compile js files and copy non-js files.
 gulp.task('default', ['clean'], () => {
     runSequence(
-        ['copy', 'babel', 'sass2css', 'pug2html']
+        ['copy', 'babel', 'bundleJS', 'sass2css', 'pug2html']
     );
 });
