@@ -26,7 +26,9 @@ router.route('/:observationId')
 /** GET /api/observations/:observationId - Get observation */
     .get(observationCtrl.get)
 /** POST /api/observations/:observationId - Save observation */
-    .put(upload.array('attachments', 100), observationCtrl.update);
+    .put(upload.array('attachments', 100), observationCtrl.update)
+    /** DELETE /api/observations/:observationId - Delete observation */
+    .delete(observationCtrl.remove);
 /** Load observation when API with observationId route parameter is hit */
 router.param('observationId', observationCtrl.load);
 export default router;
