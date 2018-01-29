@@ -1,4 +1,4 @@
-import {observation_type} from './../models';
+import {observation_type, observation_type_property} from './../models';
 
 function get(req, res){
     return observation_type
@@ -9,10 +9,13 @@ function get(req, res){
 }
 
 function load(req, res, next, id){
-    return observation_types
-        .findById(req.params.observationTypeId)
+    return observation_type
+        .findById(req.params.observationTypeId,
+            {
+                include: [{model: observation_type_property, as: 'observation_type_properties',  required: false}]
+            })
         .then((observation_type) => {
-            if (!school) {
+            if (!observation_type) {
                 return res.sendNotFound();
             }
             return res.sendData(observation_type);

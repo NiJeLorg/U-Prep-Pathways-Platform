@@ -35,19 +35,19 @@ module.exports = {
             },
             user_id: {
                 type: Sequelize.INTEGER,
-                allowNull: false
+                allowNull: true
             },
             teacher_id: {
                 type: Sequelize.INTEGER,
-                allowNull: false
+                allowNull: true
             },
             grade_id: {
                 type: Sequelize.INTEGER,
-                allowNull: false
+                allowNull: true
             },
             subject_id: {
                 type: Sequelize.INTEGER,
-                allowNull: false
+                allowNull: true
             },
             school_id: {
                 type: Sequelize.INTEGER,

@@ -12,13 +12,13 @@ import routes from './../server/routes/index.route';
 import config from './config';
 import APIError from './../server/helpers/APIError';
 import path from 'path';
+import multer from 'multer';
 
 const app = express();
 
 if (config.env === 'development') {
     app.use(logger('dev'));
 }
-
 // parse body params and attache them to req.body
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -32,6 +32,7 @@ app.use(helmet());
 app.use(cors());
 // serve static files
 app.use(express.static(path.resolve('./public')));
+app.use('/uploads', express.static(path.resolve('./uploads')));
 
 // Setup a default catch-all route that sends back the index.html page
 app.get('/', (req, res) => {
