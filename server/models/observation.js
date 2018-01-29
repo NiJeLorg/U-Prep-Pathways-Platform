@@ -9,6 +9,10 @@ module.exports = (sequelize, DataTypes) => {
         Observation.belongsTo(models.observation_type, {
             foreignKey: 'observation_type_id',
         });
+        Observation.hasMany(models.observation_evidence, {
+            foreignKey: 'observation_id',
+            as: 'attachments'
+        });
     };
 
     return Observation;

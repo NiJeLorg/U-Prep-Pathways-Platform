@@ -11,6 +11,10 @@ module.exports = (sequelize, DataTypes) => {
             foreignKey: 'observation_type_id',
             as: 'observations'
         });
+        ObservationType.hasMany(models.observation_type_property, {
+            foreignKey: 'observation_type_id',
+            as: 'observation_type_properties'
+        });
     };
     return ObservationType;
 };
