@@ -13,20 +13,14 @@
         div
             h2 Step 3: Provide More Details about your Observation
             .c-select-group.ul-margin-bottom-20
-                select.grade-color
-                    option Grade
-                    option Grade
-                    option Grade
+                select.grade-color(ng-model='grade' ng-change='recordGrade()')
+                    option(ng-repeat='grade in grades' value='{{grade}}') {{grade.name}}
             .c-select-group.ul-margin-bottom-20
-                select.teacher-color
-                    option Teacher
-                    option Teacher
-                    option Teacher
+                select.teacher-color(ng-model='teacher' ng-change='recordTeacher()' ng-disabled='disableTeacherSelect')
+                    option(ng-repeat='teacher in teachers' value='{{teacher}}') {{teacher.name}}
             .c-select-group.ul-margin-bottom-20
-                select.subject-color
-                    option Subject
-                    option Subject
-                    option Subject
+                select.subject-color(ng-model='subject' ng-change='recordSubject()' ng-disabled='disableSubjectSelect')
+                    option(ng-repeat='subject in subjects' value='{{subject}}') {{subject.name}}
         button(ui-sref='observationForm') Done
 
 

@@ -1,20 +1,14 @@
 const GradeService = ($resource, $http) => {
 
-    let obj = $resource('api/grades/:id', {
+    const obj = $resource('https://dev-uprep.nijel.org/api/schools/:id/grades', {
         id: '@id'
+    }, {
+        'query': {
+            method: 'GET'
+        }
     });
-
-    obj.fetchAllGrades = (cb) => {
-        $http.get('api/schools').success(function (res) {
-            cb(null, res);
-        }).error(function (err) {
-            cb(err);
-        });
-    };
 
     return obj;
 };
 
 export default GradeService;
-
-

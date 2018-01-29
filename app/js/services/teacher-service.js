@@ -1,15 +1,21 @@
 const TeacherService = ($resource, $http) => {
 
-    let obj = $resource('api/teachers/:id', {
-        id: '@id'
+    let obj = $resource('https://dev-uprep.nijel.org/api/schools/:schoolId/grades/:gradeId/teachers', {
+        schoolId: '@schoolId',
+        gradeId: '@gradeId'
+    }, {
+        'query': {
+            method: 'GET'
+        }
     });
 
-    obj.fetchAllTeachers = (cb) => {
-        $http.get('api/teachers').success(function (res) {
-            cb(null, res);
-        }).error(function (err) {
-            cb(err);
-        });
+    obj.fetchTeacher = (teacherId, schoolId, gradeId, cb) => {
+        $http.get(('https://dev-uprep.nijel.org/api/teachers/' + teacherId) + '?schoolId=' + schoolId + '&gradeId=' + gradeId)
+            .then((res) => {
+                cb(null, res);
+            }, (err) => {
+                cb(err);
+            });
     };
 
     return obj;

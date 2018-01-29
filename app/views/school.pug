@@ -14,6 +14,6 @@
             h2 Step 1: Choose a School
             p.ul-margin-bottom-20 Below is a list of schools you are able to observe
             .c-buttons-holder
-                span(ng-repeat= 'school in schools')
-                    button.ul-margin-bottom-20(ui-sref='observationKind' ng-class="(checkIfSchoolIsUPSM(school.name) ? 'upsm-school' : 'non-upsm-school')") {{school.name}}
+                span(ng-repeat='school in schools')
+                    button.ul-margin-bottom-20(ng-class="(checkIfSchoolIsUPSM(school.name) ? 'upsm-school' : 'non-upsm-school')" ng-click='recordSchool(school)') {{school.name}}
 

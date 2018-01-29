@@ -15,5 +15,5 @@
             l.flex
                 p.ul-margin-bottom-20 What kind of observation are you going to do? #[strong For more details see] #[a.c-link(href='#') Observation Types] #[img(src='assets/icons/question-mark.svg')]
             .c-buttons-holder
-                button.ul-margin-bottom-20(ng-repeat='observationType in observationTypes' ui-sref='observationInputs') {{observationType.name}}
+                div.ul-margin-bottom-20(ng-repeat='observationType in observationTypes' ng-click='recordObservationType(observationType)') {{observationType.name}}
 
