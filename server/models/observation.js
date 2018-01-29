@@ -11,7 +11,9 @@ module.exports = (sequelize, DataTypes) => {
         });
         Observation.hasMany(models.observation_evidence, {
             foreignKey: 'observation_id',
-            as: 'attachments'
+            as: 'attachments',
+            onDelete: 'CASCADE',
+            hooks: true
         });
     };
 

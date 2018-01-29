@@ -13,7 +13,7 @@ function list(req, res) {
 
 function load(req, res, next, id) {
     return observation
-        .findById(req.params.obserationId)
+        .findById(req.params.observationId)
         .then((observation) => {
             if (!observation) {
                 return res.sendNotFound();
@@ -46,7 +46,7 @@ function update(req, res, next) {
  */
 function remove(req, res, next) {
     const observation = req.observation;
-    observation.remove()
+    observation.destroy()
         .then(deletedObservation => res.sendData(deletedObservation))
         .catch(e => next(e));
 }
