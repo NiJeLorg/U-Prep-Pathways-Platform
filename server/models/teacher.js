@@ -1,13 +1,15 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  var Teacher = sequelize.define('Teacher', {
-    name: DataTypes.STRING
-  });
-  Teacher.associate = (models) => {
-    Teacher.belongsTo(models.School, {
-      foreignKey: 'schoolId',
-      onDelete: 'CASCADE',
+    let Teacher = sequelize.define('teacher', {
+        name: DataTypes.STRING
     });
-  };
-  return Teacher;
+    Teacher.associate = (models) => {
+        Teacher.belongsTo(models.school, {
+            foreignKey: 'school_id',
+        });
+        Teacher.hasMany(models.observation, {
+            foreignKey: 'teacher_id',
+        });
+    };
+    return Teacher;
 };

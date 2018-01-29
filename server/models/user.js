@@ -9,11 +9,11 @@ module.exports = (sequelize, DataTypes) => {
       bio: DataTypes.STRING,
       profile_pic: DataTypes.STRING
   });
-  User.associate = (models) => {
-    User.belongsTo(models.Group, {
-      foreignKey: 'groupId',
-      onDelete: 'CASCADE',
-    });
-  };
+  // User.associate = (models) => {
+  //   User.belongsTo(models.group, {
+  //     foreignKey: 'groupId',
+  //     onDelete: 'CASCADE',
+  //   });
+  // };
   return User;
 };

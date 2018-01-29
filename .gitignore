@@ -60,3 +60,9 @@ typings/
 .idea
 
 # ignore public directory
+public/*
+!public/assets/
+/server/config/config.json
+
+# Babel ES6 compiles files
+dist

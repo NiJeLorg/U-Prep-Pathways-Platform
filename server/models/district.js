@@ -1,13 +1,15 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  var District = sequelize.define('District', {
-    name: DataTypes.STRING
-  });
-  District.associate = (models) => {
-    District.hasMany(models.School, {
-      foreignKey: 'districtId',
-      as: 'schools',
+    let District = sequelize.define('district', {
+        name: DataTypes.STRING,
+    }, {
+        underscored: true
     });
-  };
-  return District;
+    District.associate = (models) => {
+        District.hasMany(models.school, {
+            foreignKey: 'district_id',
+            as: 'schools',
+        });
+    };
+    return District;
 };
