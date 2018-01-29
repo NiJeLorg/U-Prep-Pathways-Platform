@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="20px" height="20px" viewBox="0 0 20 20" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>Shape</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Dashboard" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-582.000000, -520.000000)">
+        <g id="ic_border_color_24px" transform="translate(577.000000, 520.000000)" fill="#808285" fill-rule="nonzero">
+            <path d="M21.174092,8.23702397 L16.762976,3.82590795 L5,15.588884 L5,20 L9.41111601,20 L21.174092,8.23702397 Z M24.655933,4.75518306 C25.114689,4.296427 25.114689,3.55535951 24.655933,3.09660344 L21.9033966,0.344067049 C21.4446405,-0.114689016 20.703573,-0.114689016 20.2448169,0.344067049 L17.9392736,2.64961035 L22.3503896,7.06072636 L24.655933,4.75518306 Z" id="Shape"></path>
+        </g>
+    </g>
+</svg>
