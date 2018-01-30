@@ -429,13 +429,60 @@ paths:
           name: body
           description: "Observation data that needs to be saved"
           schema:
-            $ref: "#/definitions/Observation"
+            type: object
+            required:
+              - school_id
+              - observation_type_id
+              - user_id
+            properties:
+              id:
+                type: integer
+                format: int64
+              name:
+                type: string
+              description:
+                type: string
+              school_id:
+                type: integer
+                required: true
+                format: int64
+              grade_id:
+                type: integer
+                format: int64
+              subject_id:
+                type: integer
+                format: int64
+              user_id:
+                type: integer
+                format: int64
+              teacher_id:
+                type: integer
+                format: int64
+              observation_type_id:
+                type: integer
+                format: int64
+              status:
+                type: integer
+                format: int64
+              attachments:
+                type: array
+                items:
+                  $ref: "#/definitions/Image"
       responses:
         201:
           description: OK
 
 # complex objects have schema definitions
 definitions:
+  Image:
+    type: object
+    properties:
+      width:
+        type: integer
+      height:
+        type: integer
+      url:
+        type: string
   School:
     type: "object"
     properties:
