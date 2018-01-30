@@ -3,11 +3,11 @@
     p Is a new tool to help teachers observe in classrooms and to make work pathways for improvement. Take a sentence or two to explain what is being done here. #[a.c-link(href='#') Watch a tutorial here].
     .make-observation-score.l-flex
         button(ui-sref='school') Make New Observation
-        button Make New Score
+        button(ui-sref='score') Make New Score
     .c-list-observations
         header
-            button.c-round-breadcrumb VIEW OBSERVATIONS
-            button.c-round-breadcrumb VIEW SCORES
+            button.c-round-breadcrumb(ng-class="{'is-disabled': page == 'scored'}" ng-click="page='observed'") VIEW OBSERVATIONS
+            button.c-round-breadcrumb(ng-class="{'is-disabled': page == 'observed'}" ng-click="page='scored'") VIEW SCORES
         main
             .l-flex.ul-margin-top-bottom-30
                 .input-group.c-input-text-group.l-flex
@@ -28,7 +28,7 @@
                             option English
                             option Maths
                             option Science
-            .c-observation.l-flex-space-between.ul-padding-30(ng-repeat='observation in observations')
+            .c-observation.l-flex-space-between.ul-padding-30(ng-show="page === 'observed'" ng-repeat='observation in observations')
                 .c-observation__date
                     p Created
                     p {{observation.readableDate}}
@@ -41,3 +41,15 @@
                     img(src='assets/icons/edit-icon.svg')
                     img(src='assets/icons/duplicate-icon.svg')
                     img(src='assets/icons/delete-icon.svg')
+            .c-score.l-flex-space-between.ul-padding-30(ng-show="page === 'scored'" ng-repeat='score in scores')
+                .c-score__date
+                    p Created
+                    p {{score.readableDate}}
+                .c-score__details
+                    h3 {{score.scoreName}}
+                    span.teacher-color {{score.scoreKind}}: {{score.scoreTime}}
+                .c-score__actions.l-flex-flex-end
+                    img(src='assets/icons/edit-icon.svg')
+                    img(src='assets/icons/duplicate-icon.svg')
+                    img(src='assets/icons/delete-icon.svg')
+        
