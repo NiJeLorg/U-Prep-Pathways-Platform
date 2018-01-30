@@ -7,7 +7,7 @@ module.exports = {
             test: /\.js$/,
             loader: 'babel-loader',
             options: {
-                presets: ['env']
+                presets: ['env', 'es2015']
             },
             exclude: /node_modules/
         }]
