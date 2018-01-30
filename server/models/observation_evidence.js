@@ -2,7 +2,7 @@
 import path from 'path';
 import fs from 'fs';
 module.exports = (sequelize, DataTypes) => {
-    let ObservationEvidence = sequelize.define('observation_evidence', {
+    const ObservationEvidence = sequelize.define('observation_evidence', {
         name: DataTypes.STRING,
         link: DataTypes.STRING,
     }, {
@@ -26,5 +26,6 @@ module.exports = (sequelize, DataTypes) => {
             foreignKey: 'media_type_id',
         });
     };
+
     return ObservationEvidence;
 };

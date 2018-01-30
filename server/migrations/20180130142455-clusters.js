@@ -1,23 +1,15 @@
 'use strict';
 module.exports = {
     up: (queryInterface, Sequelize) => {
-        return queryInterface.createTable('clusters_observed', {
+        return queryInterface.createTable('clusters', {
             id: {
                 allowNull: false,
                 autoIncrement: true,
                 primaryKey: true,
                 type: Sequelize.INTEGER
             },
-            observation_id: {
-                type: Sequelize.INTEGER,
-                allowNull: false,
-                references: {
-                    model: 'observations',
-                    key: 'id'
-                }
-            },
-            clusters: {
-                type: Sequelize.ARRAY(Sequelize.INTEGER)
+            name: {
+                type: Sequelize.STRING
             },
             created_at: {
                 allowNull: false,
@@ -30,6 +22,6 @@ module.exports = {
         });
     },
     down: (queryInterface, Sequelize) => {
-        return queryInterface.dropTable('clusters_observed');
+        return queryInterface.dropTable('clusters');
     }
 };

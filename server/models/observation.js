@@ -1,6 +1,6 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-    let Observation = sequelize.define('observation', {
+    const Observation = sequelize.define('observation', {
         name: DataTypes.STRING,
         description: DataTypes.TEXT
     }, {underscored: true});
@@ -21,6 +21,12 @@ module.exports = (sequelize, DataTypes) => {
         Observation.belongsTo(models.grade, {
             foreignKey: 'grade_id',
         });
+        Observation.belongsToMany(models.cluster, {
+            foreignKey: 'observation_id',
+            through: models.observation_cluster,
+            as: 'clusters',
+            onDelete: 'CASCADE'
+        });
 
         Observation.hasMany(models.observation_evidence, {
             foreignKey: 'observation_id',
@@ -29,6 +35,5 @@ module.exports = (sequelize, DataTypes) => {
             hooks: true
         });
     };
-
     return Observation;
 };
