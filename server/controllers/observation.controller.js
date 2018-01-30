@@ -93,7 +93,7 @@ function create(req, res, next) {
             subject_id: req.body.subject_id,
             grade_id: req.body.grade_id,
             school_id: req.body.school_id,
-            user_id: req.body.user_id,
+            user_id: req.body.user_id || 1,
             observation_type_id: req.body.observation_type_id,
             attachments: generateAttachments(req)
         }, {
