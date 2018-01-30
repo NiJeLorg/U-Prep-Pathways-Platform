@@ -6,14 +6,18 @@ function get(req, res) {
 
 function list(req, res) {
     return observation
-        .all()
+        .all({
+            include: ['school', 'teacher', 'grade', 'observation_type']
+        })
         .then(observations => res.sendData(observations))
         .catch(error => res.sendBadRequest());
 }
 
 function load(req, res, next, id) {
     return observation
-        .findById(req.params.observationId)
+        .findById(req.params.observationId, {
+            include: ['attachments', 'school', 'teacher', 'grade', 'observation_type']
+        })
         .then((observation) => {
             if (!observation) {
                 return res.sendNotFound();
@@ -36,7 +40,16 @@ function update(req, res, next) {
     observation.attachments = generateAttachments(req);
     observation.status = req.body.status;
     observation.save()
-        .then(savedObseravtion => res.sendData(savedObseravtion))
+        .then((savedObseravtion) => {
+        let attachments = generateAttachments(req, savedObseravtion);
+        if (attachments.length > 0){
+            observation_evidence.bulkCreate(attachments).then(() => {
+                res.sendData(savedObseravtion)
+            }).catch(e => next(e));
+        }else{
+            res.sendData(savedObseravtion)
+        }
+    })
         .catch(e => next(e));
 }
 
@@ -51,14 +64,18 @@ function remove(req, res, next) {
         .catch(e => next(e));
 }
 
-function generateAttachments(req){
+function generateAttachments(req, observation){
     let attachments = [];
     if(req.files) {
         req.files.forEach((file) => {
-            attachments.push({
+            let item = {
                 name: file.filename,
                 link: file.path
-            })
+            };
+            if(observation){
+                item['observation_id'] = observation.id;
+            }
+            attachments.push(item)
         });
 
     }
