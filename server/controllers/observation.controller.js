@@ -7,7 +7,7 @@ function get(req, res) {
 function list(req, res) {
     return observation
         .all({
-            include: ['school', 'teacher', 'grade', 'observation_type']
+            include: ['school', 'subject', 'teacher', 'grade', 'observation_type']
         })
         .then(observations => res.sendData(observations))
         .catch(error => res.sendBadRequest());
@@ -16,7 +16,7 @@ function list(req, res) {
 function load(req, res, next, id) {
     return observation
         .findById(req.params.observationId, {
-            include: ['attachments', 'school', 'teacher', 'grade', 'observation_type']
+            include: ['attachments', 'subject', 'school', 'teacher', 'grade', 'observation_type']
         })
         .then((observation) => {
             if (!observation) {
@@ -37,6 +37,10 @@ function update(req, res, next) {
     const observation = req.observation;
     observation.name = req.body.name;
     observation.description = req.body.description;
+    observation.teacher_id = req.body.teacher_id;
+    observation.grade_id = req.body.grade_id;
+    observation.school_id = req.body.school_id;
+    observation.subject_id = req.body.subject_id;
     observation.attachments = generateAttachments(req);
     observation.status = req.body.status;
     observation.save()

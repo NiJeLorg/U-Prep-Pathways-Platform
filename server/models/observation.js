@@ -15,6 +15,9 @@ module.exports = (sequelize, DataTypes) => {
         Observation.belongsTo(models.teacher, {
             foreignKey: 'teacher_id',
         });
+        Observation.belongsTo(models.subject, {
+            foreignKey: 'subject_id',
+        });
         Observation.belongsTo(models.grade, {
             foreignKey: 'grade_id',
         });
