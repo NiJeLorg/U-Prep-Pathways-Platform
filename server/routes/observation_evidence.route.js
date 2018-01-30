@@ -6,5 +6,5 @@ router.route('/:observationEvidenceId')
 /** DELETE /api/observation_evidences/:observationEvidenceId - Delete observationEvidence */
     .delete(observationEvidenceCtrl.remove);
 /** Load observationEvidence when API with observationEvidenceId route parameter is hit */
-router.param('observationId', observationEvidenceCtrl.load);
+router.param('observationEvidenceId', observationEvidenceCtrl.load);
 export default router;
