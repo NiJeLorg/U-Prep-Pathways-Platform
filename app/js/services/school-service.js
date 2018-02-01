@@ -1,6 +1,6 @@
 const SchoolService = ($resource, $http) => {
 
-    let obj = $resource('api/schools/:id', {
+    let obj = $resource('https://dev-uprep.nijel.org/api/schools/:id', {
         id: '@id'
     });
 

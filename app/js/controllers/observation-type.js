@@ -1,6 +1,6 @@
 'use strict';
 
-const ObservationTypeCtrl = ($scope, $state, ObservationTypeService, ObservationFactory) => {
+const ObservationTypeCtrl = ($scope, ObservationTypeService, ObservationFactory) => {
 
     // fetch data
     ObservationTypeService.get((res) => {
@@ -9,7 +9,6 @@ const ObservationTypeCtrl = ($scope, $state, ObservationTypeService, Observation
 
     $scope.recordObservationType = (observationType) => {
         ObservationFactory['observationType'] = observationType;
-        $state.go('observationInputs');
     };
 
 };

@@ -1,35 +1,41 @@
 'use strict';
+const HomeCtrl = ($scope, $state, ObservationService, SchoolService) => {
 
-import moment from 'moment';
 
-const HomeCtrl = ($scope, $rootScope, $state) => {
+    let observationToBeDeleted;
 
-    $scope.observations = [{
-        observationKind: 'Lesson',
-        readableDate: '11/13/2017',
-        grade: 'Kindergarten',
-        school: 'UPSM ELEMENTARY',
-        teacher: 'Mr.Martin'
-    }, {
-        observationKind: 'Crew',
-        readableDate: '11/13/2017',
-        school: 'ELLEN THOMPSON ELEMENTARY',
-        teacher: 'Ms.Andrews'
-    }, {
-        observationKind: 'Lesson',
-        readableDate: '11/13/2017',
-        school: 'UPSM ELEMENTARY',
-        subject: 'English',
-        teacher: 'Ms.Andrews'
-    }, {
-        grade: '1st grade',
-        observationKind: 'Lesson',
-        readableDate: '11/13/2017',
-        school: 'ELLEN THOMPSON ELEMENTARY',
-        subject: 'Science',
-        teacher: 'Ms.Andrews'
-    }];
+    // fetch data
+    ObservationService.fetchObservations((err, res) => {
+        if (!err) {
+            $scope.observations = res.data.data;
+        } else {
+            console.error(err, 'ERROR');
+        }
+    });
 
+    $scope.openModal = (observation) => {
+        angular.element(document.getElementsByClassName('delete-observation-modal')).css('display', 'flex');
+        observationToBeDeleted = observation;
+    };
+
+    $scope.closeModal = () => {
+        angular.element(document.getElementsByClassName('delete-observation-modal')).css('display', 'none');
+    };
+
+    $scope.deleteObservation = () => {
+        ObservationService.remove({
+            id: observationToBeDeleted.id
+        }, (res) => {
+            angular.element(document.getElementsByClassName('delete-observation-modal')).css('display', 'none');
+            $state.reload();
+        });
+    };
+
+    $scope.editObservation = (observation) => {
+        $state.go('observationForm', {
+            obj: observation
+        });
+    };
 };
 
 export default HomeCtrl;

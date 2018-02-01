@@ -5,9 +5,9 @@
     .ul-padding-30
         ul.c-triangle-breadcrumb.ul-margin-bottom-20
             li.c-triangle-breadcrumb__item
-                a.c-triangle-breadcrumb__link(href='#') SCHOOL
+                a.c-triangle-breadcrumb__link(href='#') {{observation.school.name}}
             li.c-triangle-breadcrumb__item
-                a.c-triangle-breadcrumb__link(href='#') TYPE
+                a.c-triangle-breadcrumb__link(href='#') {{observation.observationType.name}}
             li.c-triangle-breadcrumb__item
                 a.c-triangle-breadcrumb__link(href='#') DETAILS
         div
@@ -21,7 +21,8 @@
             .c-select-group.ul-margin-bottom-20
                 select.subject-color(ng-model='subject' ng-change='recordSubject()' ng-disabled='disableSubjectSelect')
                     option(ng-repeat='subject in subjects' value='{{subject}}') {{subject.name}}
-        button(ui-sref='observationForm') Done
+        p.ul-error(ng-if='errorMessage') {{errorMessage}}
+        button(ng-click='createObservation()') Done
 
 
 

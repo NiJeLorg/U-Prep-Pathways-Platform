@@ -2,7 +2,7 @@ import observationFactory from "../factories/observation-factory";
 
 'use strict';
 
-const ObservationInputsCtrl = ($scope, GradeService, TeacherService, ObservationFactory) => {
+const ObservationInputsCtrl = ($scope, $state, GradeService, $rootScope, TeacherService, ObservationService, ObservationFactory) => {
 
     // fetch data
     GradeService.query({
@@ -37,7 +37,7 @@ const ObservationInputsCtrl = ($scope, GradeService, TeacherService, Observation
             if (!err) {
                 $scope.subjects = res.data.data.subjects;
             } else {
-                console.log(err, 'errr');
+                console.error(err, 'errr');
             }
         });
 
@@ -48,14 +48,32 @@ const ObservationInputsCtrl = ($scope, GradeService, TeacherService, Observation
 
     $scope.recordSubject = () => {
         ObservationFactory['subject'] = JSON.parse($scope.subject);
-
-        console.log(ObservationFactory, 'observe');
-    }
+    };
 
 
+    $scope.createObservation = () => {
 
-
-
+        if (ObservationFactory.grade && ObservationFactory.teacher && ObservationFactory.subject) {
+            ObservationService.createObservation({
+                school_id: ObservationFactory.school.id,
+                grade_id: ObservationFactory.grade.id,
+                subject_id: ObservationFactory.subject.id,
+                teacher_id: ObservationFactory.teacher.id,
+                observation_type_id: ObservationFactory.observationType.id
+            }, (err, res) => {
+                if (!err) {
+                    ObservationService.query({
+                        id: res.data.data.id
+                    }, (res) => {
+                        $rootScope.observation = res.data;
+                        $state.go('observationForm')
+                    });
+                }
+            });
+        } else {
+            $scope.errorMessage = 'Make sure you select all the necessary fields'
+        }
+    };
 
 };
 

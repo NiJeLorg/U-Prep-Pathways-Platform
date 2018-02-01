@@ -1,6 +1,8 @@
 'use strict';
 
-const SchoolCtrl = ($scope, $state, SchoolService, ObservationFactory) => {
+const SchoolCtrl = ($scope, $state, $rootScope, SchoolService, ObservationFactory) => {
+
+    $rootScope.observation = ObservationFactory;
 
     // fetch data
     SchoolService.fetchSchools((err, res) => {

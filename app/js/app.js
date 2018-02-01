@@ -17,10 +17,11 @@ import ObservationFormCtrl from './controllers/observation-form';
 // load services
 import SchoolService from './services/school-service';
 import ObservationTypeService from './services/observationType-service';
-import GradeService from './services/grade-service.js';
-import TeacherService from './services/teacher-service.js';
+import GradeService from './services/grade-service';
+import TeacherService from './services/teacher-service';
 import SubjectService from './services/subject-service';
-import ObservationService from './services/observationType-service';
+import ObservationService from './services/observation-service';
+import UtilService from './services/utilities-service';
 import ObservationFactory from './factories/observation-factory';
 
 
@@ -33,12 +34,14 @@ uprepApp
   .controller('SchoolCtrl', SchoolCtrl)
   .controller('ObservationTypeCtrl', ObservationTypeCtrl)
   .controller('ObservationInputsCtrl', ObservationInputsCtrl)
-  .controller('ObservationForm', ObservationFormCtrl)
+  .controller('ObservationFormCtrl', ObservationFormCtrl)
   .service('SchoolService', SchoolService)
   .service('ObservationTypeService', ObservationTypeService)
   .service('GradeService', GradeService)
   .service('TeacherService', TeacherService)
   .service('SubjectService', SubjectService)
+  .service('ObservationService', ObservationService)
+  .service('UtilService', UtilService)
   .factory('ObservationFactory', ObservationFactory);
 
 uprepApp.config(['$stateProvider', '$httpProvider',
@@ -60,7 +63,7 @@ uprepApp.config(['$stateProvider', '$httpProvider',
       .state('observationType', {
         url: '/observation-type',
         controller: 'ObservationTypeCtrl',
-        templateUrl: 'views/observation-kind.html'
+        templateUrl: 'views/observation-type.html'
       })
       .state('observationInputs', {
         url: '/observation-inputs',
@@ -70,7 +73,10 @@ uprepApp.config(['$stateProvider', '$httpProvider',
       .state('observationForm', {
         url: '/observation-form',
         controller: 'ObservationFormCtrl',
-        templateUrl: 'views/observation-form.html'
+        templateUrl: 'views/observation-form.html',
+        params: {
+          obj: null
+        }
       });
     $locationProvider.html5Mode(true);
   }
