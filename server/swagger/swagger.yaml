@@ -282,6 +282,7 @@ paths:
               type: "array"
               items:
                 $ref: "#/definitions/ObservationType"
+
   /grades:
     get:
       tags:
@@ -402,6 +403,83 @@ paths:
               type: "array"
               items:
                 $ref: "#/definitions/Teacher"
+  /teachers/{id}/subjects:
+      get:
+        tags:
+        - "subjects"
+        summary: "Finds the subjects a particular teacher teaches"
+        description: "Gets a list of subjects taught by a particular teacher"
+        operationId: "findTeacherById"
+        produces:
+        - "application/json"
+        parameters:
+        - name: id
+          in: path
+          description: ID of teacher
+          type: integer
+          required: true
+        responses:
+          200:
+           description: OK
+           schema:
+             type: object
+             properties:
+               data:
+                type: "array"
+                items:
+                  $ref: "#/definitions/Subject"
+  /subjects:
+      get:
+        tags:
+        - "subjects"
+        summary: "Get list of subjects"
+        description: "Fetches a list of subjects without any nested properties. The list can be filtered using the teacher id"
+        operationId: "getSubjects"
+        produces:
+        - "application/json"
+        parameters:
+          - name: teacherId
+            in: body
+            description: ID of teacher
+            required: false
+            type: integer
+            format: int64
+        responses:
+          200:
+            description: OK
+            schema:
+              type: object
+              properties:
+                data:
+                  type: "array"
+                  items:
+                    $ref: "#/definitions/Subject"
+  /subjects/{id}:
+      get:
+        tags:
+        - "subjects"
+        summary: "Finds a subject using its Id"
+        description: "Fetch a subject using its Id "
+        operationId: "findSubjectById"
+        produces:
+        - "application/json"
+        parameters:
+          - name: id
+            in: path
+            description: ID of subject to fetch
+            required: true
+            type: integer
+            format: int64
+        responses:
+          200:
+            description: OK
+            schema:
+              type: object
+              properties:
+                data:
+                  type: "array"
+                  items:
+                    $ref: "#/definitions/Subject"
   /observation_evidences/{id}:
     delete:
       summary: "Deletes an observation evidence from the database"
