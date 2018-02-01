@@ -1,59 +1,46 @@
 import {grade, teacher, school} from './../models';
 
-function get(req, res) {
-    let schoolId = req.params.schoolId || req.query.schoolId;
-    if (schoolId){
-        getGradeSchools(schoolId, res);
-    }else{
-        getGrades(req, res)
+const get = async (req, res) => {
+    res.sendData(req.grade);
+};
+const load = async (req, res, next, id) => {
+    const gradeObj = await grade
+        .findById(id, getIncludes(req));
+    if (!gradeObj) {
+        return res.sendNotFound();
     }
+    req.grade = gradeObj;
+    return next();
+};
+const list = async (req, res) => {
+    const grades = await grade.findAll(getIncludes(req));
+    res.sendData(grades);
+};
 
-}
-
-function getGradeSchools(schoolId, res){
-    return grade.findAll({
-        attributes : ['id', 'name'],
-        include: [{
+const getIncludes = (req) => {
+    const schoolId =  req.params.schoolId || req.query.schoolId;
+    const gradeId = req.params.gradeId;
+    let includes = {attributes : ['id', 'name']};
+    if(schoolId && gradeId === undefined){
+        includes.include = [{
             attributes: [],
             required: true,
             model: school,
             as: 'schools',
             where: {id: schoolId}
-        }],
-    })
-        .then(grades => res.sendData(grades))
-        .catch(error => res.sendBadRequest(error));
-}
-
-function getGrades(req, res){
-    return grade.findAll({ attributes : ['id', 'name']})
-        .then(grades => res.sendData(grades))
-        .catch(error => res.sendBadRequest(error));
-}
-
-function load(req, res, next, id) {
-    let schoolId = req.params.schoolId || req.query.schoolId;
-    let includes = {};
-    if (schoolId){
-        includes = {
-            include: [{
-                attributes: ['id', 'name'],
-                required: false,
-                model: teacher,
-                as: 'teachers',
-                where: {school_id: schoolId}
-            }],
-        }
+        }];
+    }else if(schoolId && gradeId){
+        includes.include = [{
+            attributes: ['id', 'name'],
+            required: false,
+            model: teacher,
+            as: 'teachers',
+            where: {school_id: schoolId}
+        }];
     }
-    return grade
-        .findById(req.params.gradeId, includes)
-        .then((grade) => {
-            if (!grade) {
-                return res.sendNotFound();
-            }
-            return res.sendData(grade)  ;
-        })
-        .catch((error) => res.sendBadRequest());
-}
+    return includes;
+};
 
-export default {get, load};
+
+
+export default {get, load, list};

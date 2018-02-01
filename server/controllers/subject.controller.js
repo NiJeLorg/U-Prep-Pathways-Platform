@@ -10,7 +10,7 @@ const get = async (req, res) => {
  * @returns {subject}
  */
 const load = async (req, res, next, id) => {
-    const subjectObj = await subject.findById(req.params.subjectId, getIncludes(req));
+    const subjectObj = await subject.findById(id, getIncludes(req));
     if (!subjectObj) {
         return res.sendNotFound();
     }
