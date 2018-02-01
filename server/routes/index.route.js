@@ -1,6 +1,7 @@
 import express from 'express';
 import gradeRoutes from './grade.route';
 import schoolRoutes from './school.route';
+import subjectRoutes from './subject.route';
 import teacherRoutes from './teacher.route';
 import observationRoutes from './observation.route';
 import observationTypeRoutes from './observation_type.route';
@@ -19,6 +20,8 @@ router.use('/grades', gradeRoutes);
 router.use('/schools/:schoolId/grades', gradeRoutes);
 router.use('/teachers', teacherRoutes);
 router.use('/schools/:schoolId/grades/:gradeId/teachers', teacherRoutes);
+router.use('/teachers/:teacherId/subjects', subjectRoutes);
+router.use('/subjects', subjectRoutes);
 router.use('/observations', observationRoutes);
 router.use('/observation_clusters', observationClusterRoutes);
 router.use('/observation_evidences', observationEvidenceRoutes);

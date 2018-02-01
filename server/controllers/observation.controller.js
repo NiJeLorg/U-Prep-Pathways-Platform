@@ -4,9 +4,9 @@ import Sequelize from 'sequelize';
 
 const Op = Sequelize.Op;
 
-function get(req, res) {
-    return res.sendData(req.observation);
-}
+const get = async (req, res) => {
+    res.sendData(req.observation);
+};
 
 /**
  * Gets List of Observations
