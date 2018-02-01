@@ -1,7 +1,7 @@
 import express from 'express';
 import subjectCtrl from './../controllers/subject.controller';
 import asyncHandler from 'express-async-handler';
-const router = express.Router();
+const router = express.Router({mergeParams: true});
 
 router.route('/')
 /** Get /api/observations - Get list of observations*/
