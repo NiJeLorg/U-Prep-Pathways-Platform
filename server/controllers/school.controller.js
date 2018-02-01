@@ -1,25 +1,26 @@
 import {school, grade} from './../models';
 
-function get(req, res){
-    return school
-        .all()
-        .then(schools => res.sendData(schools))
-        .catch(error => res.sendBadRequest());
+const get = async (req, res) => {
+    res.sendData(req.school);
+};
+const list = async (req, res) => {
+    const schools = await school.findAll();
+    res.sendData(schools);
+};
+const load = async (req, res, next, id) => {
+    const schoolObj = await school
+        .findById(id, getIncludes(req));
+    if (!schoolObj) {
+        return res.sendNotFound();
+    }
+    req.school = schoolObj;
+    return next();
+};
 
-}
+const getIncludes = (req) => {
+    return {
+        include: ['grades'],
+    }
+};
 
-function load(req, res, next, id){
-    return school
-        .findById(req.params.schoolId, {
-            include: ['grades'],
-        })
-        .then((school) => {
-            if (!school) {
-                return res.sendNotFound();
-            }
-            return res.sendData(school);
-        })
-        .catch((error) => res.sendBadRequest());
-}
-
-export default {get, load};
+export default {get, load, list};
