@@ -3,6 +3,7 @@ import observationCtrl from './../controllers/observation.controller';
 import path from 'path';
 import multer from 'multer';
 import crypto from 'crypto';
+import asyncHandler from 'express-async-handler';
 const router = express.Router();
 const storage = multer.diskStorage({
     destination: function(req, file, callback) {
@@ -19,16 +20,16 @@ const storage = multer.diskStorage({
 const upload = multer({ storage : storage });
 router.route('/')
 /** Get /api/observations - Get list of observations*/
-    .get(observationCtrl.list)
-    .post(upload.array('attachments', 100), observationCtrl.create);
+    .get(asyncHandler(observationCtrl.list))
+    .post(upload.array('attachments', 100), asyncHandler(observationCtrl.create));
 
 router.route('/:observationId')
 /** GET /api/observations/:observationId - Get observation */
-    .get(observationCtrl.get)
+    .get(asyncHandler(observationCtrl.get))
 /** POST /api/observations/:observationId - Save observation */
-    .put(upload.array('attachments', 100), observationCtrl.update)
+    .put(upload.array('attachments', 100), asyncHandler(observationCtrl.update))
     /** DELETE /api/observations/:observationId - Delete observation */
-    .delete(observationCtrl.remove);
+    .delete(asyncHandler(observationCtrl.remove));
 /** Load observation when API with observationId route parameter is hit */
-router.param('observationId', observationCtrl.load);
+router.param('observationId', asyncHandler(observationCtrl.load));
 export default router;

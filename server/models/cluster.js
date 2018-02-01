@@ -5,5 +5,11 @@ module.exports = (sequelize, DataTypes) => {
     }, {
         underscored: true
     });
+    Cluster.associate = (models) => {
+        Cluster.belongsToMany(models.observation, {
+            foreignKey: 'cluster_id',
+            through: models.observation_cluster
+    });
+    };
     return Cluster;
 };

@@ -1,39 +1,48 @@
-import {school, observation, observation_evidence} from './../models';
+"use strict";
+import {school, observation, observation_evidence, observation_cluster} from './../models';
+import Sequelize from 'sequelize';
+
+const Op = Sequelize.Op;
 
 function get(req, res) {
     return res.sendData(req.observation);
 }
 
-function list(req, res) {
-    return observation
+/**
+ * Gets List of Observations
+ * @returns {observations}
+ */
+const list = async (req, res) => {
+    const observations =  await observation
         .all({
-            include: ['school', 'subject', 'teacher', 'grade', 'observation_type']
-        })
-        .then(observations => res.sendData(observations))
-        .catch(error => res.sendBadRequest());
-}
+            include: ['school', 'clusters', 'subject', 'teacher', 'grade', 'observation_type']
+        });
+    res.sendData(observations)
+};
 
-function load(req, res, next, id) {
-    return observation
+/**
+ * Loads an existing observation based on its ID
+ * @returns {observation}
+ */
+const load = async (req, res, next, id) => {
+    const observationObj = await observation
         .findById(req.params.observationId, {
-            include: ['attachments', 'subject', 'school', 'teacher', 'grade', 'observation_type']
-        })
-        .then((observation) => {
-            if (!observation) {
-                return res.sendNotFound();
-            }
-            req.observation = observation;
-            return next();
-        })
-        .catch((error) => res.sendBadRequest());
+            include: ['attachments', 'subject', 'school', 'teacher', 'grade', 'observation_type', 'clusters']
+        });
+    if (!observationObj) {
+        return res.sendNotFound();
+    }
+    req.observation = observationObj;
+    return next();
+};
 
-}
 
 /**
  * Update existing observation
  * @returns {observation}
  */
-function update(req, res, next) {
+
+const update = async (req, res, next) => {
     const observation = req.observation;
     observation.name = req.body.name;
     observation.description = req.body.description;
@@ -43,40 +52,46 @@ function update(req, res, next) {
     observation.subject_id = req.body.subject_id;
     observation.attachments = generateAttachments(req);
     observation.status = req.body.status;
-    observation.save()
-        .then((savedObseravtion) => {
-        let attachments = generateAttachments(req, savedObseravtion);
-        if (attachments.length > 0){
-            observation_evidence.bulkCreate(attachments).then(() => {
-                res.sendData(savedObseravtion)
-            }).catch(e => next(e));
-        }else{
-            res.sendData(savedObseravtion)
-        }
-    })
-        .catch(e => next(e));
-}
+    const savedObseravtion = await observation.save();
+    const attachments = generateAttachments(req, savedObseravtion);
+    await observation_evidence.bulkCreate(attachments);
+    await observation_cluster.destroy({
+        where: {observation_id: observation.id, cluster_id: {[Op.notIn]: req.body.cluster_ids}}
+    });
+
+    const existing_observed_cluster = observation.clusters.map(cluster => cluster.id);
+    const new_observed_clusters = req.body.cluster_ids.map((cluster_id) => {
+        if (!(existing_observed_cluster != undefined && existing_observed_cluster.includes(cluster_id)))
+            return {"observation_id": observation.id, "cluster_id": cluster_id}
+    });
+    await observation_cluster.bulkCreate(new_observed_clusters);
+    res.sendData(savedObseravtion)
+};
+
 
 /**
  * Delete observation.
  * @returns {observation}
  */
-function remove(req, res, next) {
+const remove = async (req, res, next) => {
     const observation = req.observation;
-    observation.destroy()
-        .then(deletedObservation => res.sendData(deletedObservation))
-        .catch(e => next(e));
-}
+    let deletedObservation = await observation.destroy();
+    res.sendData(deletedObservation)
+};
 
-function generateAttachments(req, observation){
+/**
+ * Generates array of attachment objects
+ * @returns {attachments}
+ */
+function generateAttachments(req, observation) {
     let attachments = [];
-    if(req.files) {
+    if (req.files) {
         req.files.forEach((file) => {
             let item = {
                 name: file.filename,
                 link: file.path
             };
-            if(observation){
+            if (observation) {
                 item['observation_id'] = observation.id;
             }
             attachments.push(item)
@@ -86,9 +101,12 @@ function generateAttachments(req, observation){
     return attachments;
 }
 
-function create(req, res, next) {
-
-    return observation
+/**
+ * Saves a new observation
+ * @returns {observation}
+ */
+const create = async (req, res, next) => {
+    const observation = await observation
         .create({
             name: req.body.name,
             description: req.body.description,
@@ -102,10 +120,9 @@ function create(req, res, next) {
             attachments: generateAttachments(req)
         }, {
             include: [{model: observation_evidence, as: "attachments"}]
-        })
-        .then(observation => res.sendData(observation))
-        .catch(error => res.sendBadRequest(error));
+        });
+    res.sendData(observation);
 
-}
+};
 
 export default {get, load, create, list, update, remove};
