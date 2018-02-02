@@ -236,10 +236,14 @@ select {
 .c-attachments-holder {
   display: flex; }
   .c-attachments-holder .c-attachment-holder__add-attachment {
-    background: #681c5b; }
+    background: #681c5b;
+    margin-right: 20px; }
   .c-attachments-holder .c-attachment-holder__attachment {
     width: 130px;
     height: 110px;
+    background-size: 100%;
+    background-position: center center;
+    margin-right: 20px;
     border-radius: 4px;
     display: flex;
     justify-content: center;

@@ -2,7 +2,7 @@ import observationFactory from "../factories/observation-factory";
 
 'use strict';
 
-const ObservationInputsCtrl = ($scope, $state, GradeService, $rootScope, TeacherService, ObservationService, ObservationFactory) => {
+const ObservationInputsCtrl = ($scope, $state, GradeService, $rootScope, UtilService, TeacherService, ObservationService, ObservationFactory) => {
 
     // fetch data
     GradeService.query({
@@ -74,6 +74,11 @@ const ObservationInputsCtrl = ($scope, $state, GradeService, $rootScope, Teacher
             $scope.errorMessage = 'Make sure you select all the necessary fields'
         }
     };
+
+    $scope.cancelObservation = () => {
+        UtilService.cancelObservation(ObservationFactory);
+    };
+
 
 };
 

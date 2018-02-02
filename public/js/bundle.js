@@ -47858,6 +47858,7 @@ var HomeCtrl = function HomeCtrl($scope, $state, ObservationService, SchoolServi
     ObservationService.fetchObservations(function (err, res) {
         if (!err) {
             $scope.observations = res.data.data;
+            console.log($scope.observations, 'observations');
         } else {
             console.error(err, 'ERROR');
         }
@@ -47937,7 +47938,7 @@ exports.default = NavCtrl;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-var SchoolCtrl = function SchoolCtrl($scope, $state, $rootScope, SchoolService, ObservationFactory) {
+var SchoolCtrl = function SchoolCtrl($scope, $state, $rootScope, UtilService, SchoolService, ObservationFactory) {
 
     $rootScope.observation = ObservationFactory;
 
@@ -47960,6 +47961,10 @@ var SchoolCtrl = function SchoolCtrl($scope, $state, $rootScope, SchoolService, 
         ObservationFactory['school'] = school;
         $state.go('observationType');
     };
+
+    $scope.cancelObservation = function () {
+        UtilService.cancelObservation(ObservationFactory);
+    };
 };
 
 exports.default = SchoolCtrl;
@@ -47974,7 +47979,7 @@ exports.default = SchoolCtrl;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-var ObservationTypeCtrl = function ObservationTypeCtrl($scope, ObservationTypeService, ObservationFactory) {
+var ObservationTypeCtrl = function ObservationTypeCtrl($scope, UtilService, ObservationTypeService, ObservationFactory) {
 
     // fetch data
     ObservationTypeService.get(function (res) {
@@ -47983,6 +47988,10 @@ var ObservationTypeCtrl = function ObservationTypeCtrl($scope, ObservationTypeSe
 
     $scope.recordObservationType = function (observationType) {
         ObservationFactory['observationType'] = observationType;
+    };
+
+    $scope.cancelObservation = function () {
+        UtilService.cancelObservation(ObservationFactory);
     };
 };
 
@@ -48007,7 +48016,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 'use strict';
 
-var ObservationInputsCtrl = function ObservationInputsCtrl($scope, $state, GradeService, $rootScope, TeacherService, ObservationService, ObservationFactory) {
+var ObservationInputsCtrl = function ObservationInputsCtrl($scope, $state, GradeService, $rootScope, UtilService, TeacherService, ObservationService, ObservationFactory) {
 
     // fetch data
     GradeService.query({
@@ -48076,6 +48085,10 @@ var ObservationInputsCtrl = function ObservationInputsCtrl($scope, $state, Grade
             $scope.errorMessage = 'Make sure you select all the necessary fields';
         }
     };
+
+    $scope.cancelObservation = function () {
+        UtilService.cancelObservation(ObservationFactory);
+    };
 };
 
 exports.default = ObservationInputsCtrl;
@@ -48090,7 +48103,7 @@ exports.default = ObservationInputsCtrl;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-var ObservationFormCtrl = function ObservationFormCtrl($scope, $state, $stateParams, Upload, GradeService, TeacherService, ObservationService, UtilService, ObservationFactory) {
+var ObservationFormCtrl = function ObservationFormCtrl($scope, $state, $stateParams, $timeout, Upload, GradeService, TeacherService, ObservationService, UtilService, ObservationFactory) {
 
     // load passed observation object
     if ($stateParams.obj) {
@@ -48108,10 +48121,28 @@ var ObservationFormCtrl = function ObservationFormCtrl($scope, $state, $statePar
 
     $scope.uploadFiles = function (files, errFiles) {
         $scope.files = files;
+        console.log($scope.files, 'looo');
+
         $scope.errFiles = errFiles;
+
         angular.forEach(files, function (file) {
             file.upload = Upload.upload({
-                url: ''
+                url: 'https://dev-uprep.nijel.org/api/observations/' + $scope.observation.id,
+                method: 'PUT',
+                data: {
+                    attachments: file
+                }
+            });
+
+            file.upload.then(function (res) {
+                console.log(res, 'response');
+                $timeout(function () {
+                    file.result = res.data;
+                });
+            }, function (res) {
+                if (res.status > 0) {
+                    $scope.errMessage = res.status + ': ' + res.data;
+                }
             });
         });
     };
@@ -48375,7 +48406,7 @@ exports.default = ObservationService;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-var UtilService = function UtilService() {
+var UtilService = function UtilService($state) {
     var obj = {};
 
     obj.openModal = function (elementClassName) {
@@ -48384,6 +48415,11 @@ var UtilService = function UtilService() {
 
     obj.closeModal = function (elementClassName) {
         angular.element(document.getElementsByClassName(elementClassName)).css('display', 'none');
+    };
+
+    obj.cancelObservation = function (observation) {
+        observation = {};
+        $state.go('home');
     };
 
     return obj;

@@ -1,6 +1,6 @@
 'use strict';
 
-const SchoolCtrl = ($scope, $state, $rootScope, SchoolService, ObservationFactory) => {
+const SchoolCtrl = ($scope, $state, $rootScope, UtilService, SchoolService, ObservationFactory) => {
 
     $rootScope.observation = ObservationFactory;
 
@@ -22,6 +22,10 @@ const SchoolCtrl = ($scope, $state, $rootScope, SchoolService, ObservationFactor
     $scope.recordSchool = (school) => {
         ObservationFactory['school'] = school;
         $state.go('observationType');
+    };
+
+    $scope.cancelObservation = () => {
+        UtilService.cancelObservation(ObservationFactory);
     };
 
 };

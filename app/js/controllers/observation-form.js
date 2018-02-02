@@ -20,26 +20,30 @@ const ObservationFormCtrl = ($scope, $state, $stateParams, $timeout, Upload, Gra
 
     $scope.uploadFiles = (files, errFiles) => {
         $scope.files = files;
+        console.log($scope.files, 'looo');
+
         $scope.errFiles = errFiles;
+
         angular.forEach(files, (file) => {
             file.upload = Upload.upload({
                 url: ('https://dev-uprep.nijel.org/api/observations/' + $scope.observation.id),
+                method: 'PUT',
                 data: {
-                    file: file
+                    attachments: file
                 }
             });
 
             file.upload.then((res) => {
+                console.log(res, 'response');
                 $timeout(() => {
                     file.result = res.data;
-                })
+                });
             }, (res) => {
                 if (res.status > 0) {
                     $scope.errMessage = res.status + ': ' + res.data;
                 }
             });
         });
-
     };
 
     $scope.updateTeachersBasedOnSelectedGrade = () => {

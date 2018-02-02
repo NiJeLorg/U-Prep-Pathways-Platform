@@ -8,6 +8,7 @@ const HomeCtrl = ($scope, $state, ObservationService, SchoolService) => {
     ObservationService.fetchObservations((err, res) => {
         if (!err) {
             $scope.observations = res.data.data;
+            console.log($scope.observations, 'observations');
         } else {
             console.error(err, 'ERROR');
         }
