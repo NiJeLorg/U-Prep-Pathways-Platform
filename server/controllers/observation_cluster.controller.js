@@ -1,44 +1,35 @@
 import {observation_cluster} from './../models';
 
-function list(req, res){
-    return observation_cluster
-        .all()
-        .then(observation_clusters => res.sendData(observation_clusters))
-        .catch(error => res.sendBadRequest());
 
-}
-
-function get(req, res) {
+const get = async (req, res) => {
     return res.sendData(req.observation_cluster);
-}
-
-function create(req, res) {
-    return observation_cluster
+};
+const list = async (req, res) => {
+    const observationClusters = await observation_cluster.all();
+    res.sendData(observationClusters);
+};
+const create = async (req, res) => {
+    const observationClusterObj = await observation_cluster
         .create({
-           observation_id: req.body.observation_id,
-           cluster_id: req.body.cluster_id,
-        })
-        .then(observation_cluster => res.sendData(observation_cluster))
-        .catch(error => res.sendBadRequest(error));
-}
-
-function remove(req, res) {
+            observation_id: req.body.observation_id,
+            cluster_id: req.body.cluster_id,
+        });
+    res.sendData(observationClusterObj);
+};
+const load = async (req, res, next, id) => {
+    const observationClusterObj = await observation_clusters
+        .findById(req.params.observationClusterId);
+    if (!observationClusterObj) {
+        return res.sendNotFound();
+    }
+    req.observation_cluster = observationClusterObj;
+    return next();
+};
+const remove = async (req, res) => {
     const observation_cluster = req.observation_cluster;
-    observation_cluster.destroy()
-        .then(deletedObservationCluster => res.sendData(deletedObservationCluster))
-        .catch(e => next(e));
-}
-function load(req, res, next, id){
-    return observation_clusters
-        .findById(req.params.observationClusterId)
-        .then((observation_cluster) => {
-            if (!observation_cluster) {
-                return res.sendNotFound();
-            }
-            req.observation_cluster = observation_cluster;
-            return next();
-        })
-        .catch((error) => res.sendBadRequest());
-}
+    const deletedObservationCluster = observation_cluster.destroy();
+    res.sendData(deletedObservationCluster);
+};
+
 
 export default {get, load, list, create, remove};

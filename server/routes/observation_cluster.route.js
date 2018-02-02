@@ -1,13 +1,14 @@
 import express from 'express';
 import observationClusterCtrl from './../controllers/observation_cluster.controller';
+import asyncHandler from 'express-async-handler';
 const router = express.Router();
 router.route('/')
 /** Get /api/observations - Get list of observation clusters*/
-    .get(observationClusterCtrl.list);
+    .get(asyncHandler(observationClusterCtrl.list));
 
 router.route('/:observationClusterId')
 /** GET /api/observations/:observationClusterId - Get observation cluster */
-    .get(observationClusterCtrl.get);
+    .get(asyncHandler(observationClusterCtrl.get));
 
-router.param('observationClusterId', observationClusterCtrl.load);
+router.param('observationClusterId', asyncHandler(observationClusterCtrl.load));
 export default router;
