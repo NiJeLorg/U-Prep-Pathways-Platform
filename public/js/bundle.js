@@ -161,7 +161,11 @@ var _observationService = __webpack_require__(21);
 
 var _observationService2 = _interopRequireDefault(_observationService);
 
-var _utilitiesService = __webpack_require__(22);
+var _attachmentService = __webpack_require__(22);
+
+var _attachmentService2 = _interopRequireDefault(_attachmentService);
+
+var _utilitiesService = __webpack_require__(23);
 
 var _utilitiesService2 = _interopRequireDefault(_utilitiesService);
 
@@ -171,13 +175,15 @@ var _observationFactory2 = _interopRequireDefault(_observationFactory);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var uprepApp = _angular2.default.module('uprepApp', [_angularjs2.default, _ngFileUpload2.default, _angularResource2.default]);
+
 // load services
 
 
 // load controllers
-var uprepApp = _angular2.default.module('uprepApp', [_angularjs2.default, _ngFileUpload2.default, _angularResource2.default]);
 
-uprepApp.controller('NavCtrl', _nav2.default).controller('HomeCtrl', _home2.default).controller('SchoolCtrl', _school2.default).controller('ObservationTypeCtrl', _observationType2.default).controller('ObservationInputsCtrl', _observationInputs2.default).controller('ObservationFormCtrl', _observationForm2.default).service('SchoolService', _schoolService2.default).service('ObservationTypeService', _observationTypeService2.default).service('GradeService', _gradeService2.default).service('TeacherService', _teacherService2.default).service('SubjectService', _subjectService2.default).service('ObservationService', _observationService2.default).service('UtilService', _utilitiesService2.default).factory('ObservationFactory', _observationFactory2.default);
+
+uprepApp.controller('NavCtrl', _nav2.default).controller('HomeCtrl', _home2.default).controller('SchoolCtrl', _school2.default).controller('ObservationTypeCtrl', _observationType2.default).controller('ObservationInputsCtrl', _observationInputs2.default).controller('ObservationFormCtrl', _observationForm2.default).service('SchoolService', _schoolService2.default).service('ObservationTypeService', _observationTypeService2.default).service('GradeService', _gradeService2.default).service('TeacherService', _teacherService2.default).service('SubjectService', _subjectService2.default).service('ObservationService', _observationService2.default).service('AttachmentService', _attachmentService2.default).service('UtilService', _utilitiesService2.default).factory('ObservationFactory', _observationFactory2.default);
 
 uprepApp.config(['$stateProvider', '$httpProvider', '$urlRouterProvider', '$locationProvider', function ($stateProvider, $httpProvider, $urlRouterProvider, $locationProvider) {
 
@@ -48103,7 +48109,7 @@ exports.default = ObservationInputsCtrl;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-var ObservationFormCtrl = function ObservationFormCtrl($scope, $state, $stateParams, $timeout, Upload, GradeService, TeacherService, ObservationService, UtilService, ObservationFactory) {
+var ObservationFormCtrl = function ObservationFormCtrl($scope, $state, $stateParams, $timeout, Upload, GradeService, TeacherService, ObservationService, AttachmentService, UtilService, ObservationFactory) {
 
     // load passed observation object
     if ($stateParams.obj) {
@@ -48123,25 +48129,25 @@ var ObservationFormCtrl = function ObservationFormCtrl($scope, $state, $statePar
         $scope.files = files;
         $scope.errFiles = errFiles;
 
-        // angular.forEach(files, (file) => {
-        //     file.upload = Upload.upload({
-        //         url: ('https://dev-uprep.nijel.org/api/observations/' + $scope.observation.id),
-        //         method: 'PUT',
-        //         data: {
-        //             attachments: file
-        //         }
-        //     });
+        angular.forEach(files, function (file) {
+            file.upload = Upload.upload({
+                url: 'https://dev-uprep.nijel.org/api/observations/' + $scope.observation.id,
+                method: 'PUT',
+                data: {
+                    attachments: file
+                }
+            });
 
-        //     file.upload.then((res) => {
-        //         $timeout(() => {
-        //             file.result = res.data;
-        //         });
-        //     }, (res) => {
-        //         if (res.status > 0) {
-        //             $scope.errMessage = res.status + ': ' + res.data;
-        //         }
-        //     });
-        // });
+            file.upload.then(function (res) {
+                $timeout(function () {
+                    file.result = res.data;
+                });
+            }, function (res) {
+                if (res.status > 0) {
+                    $scope.errMessage = res.status + ': ' + res.data;
+                }
+            });
+        });
     };
 
     $scope.updateTeachersBasedOnSelectedGrade = function () {
@@ -48182,26 +48188,34 @@ var ObservationFormCtrl = function ObservationFormCtrl($scope, $state, $statePar
         }, function (res) {
             UtilService.closeModal('edit-observation-modal');
         }, function (err) {
-            console.error(err, 'ERROR');
             UtilService.closeModal('edit-observation-modal');
         });
     };
 
     $scope.submitObservation = function () {
         ObservationService.update({
+            id: $scope.observation.id
+        }, {
             description: $scope.observation.description
         }, function (res) {
-            console.log(res, 'res');
+            $state.go('home');
         }, function (err) {
             console.log(err, 'err');
         });
     };
 
     $scope.removeAttachment = function (file) {
+
         $scope.files.forEach(function (elem, index) {
             if (elem.name === file.name) {
                 $scope.files.splice(index, 1);
             }
+        });
+
+        AttachmentService.delete({
+            id: file.id
+        }, function (res) {}, function (err) {
+            console.error(err, 'ERROR');
         });
     };
 
@@ -48403,6 +48417,31 @@ exports.default = ObservationService;
 
 /***/ }),
 /* 22 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var AttachmentService = function AttachmentService($resource, $http) {
+
+    var obj = $resource('https://dev-uprep.nijel.org/api/observation_evidences/:id', {
+        id: '@id'
+    }, {
+        'query': {
+            method: 'GET'
+        }
+    });
+
+    return obj;
+};
+
+exports.default = AttachmentService;
+
+/***/ }),
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

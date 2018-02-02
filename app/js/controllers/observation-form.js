@@ -1,6 +1,6 @@
 'use strict';
 
-const ObservationFormCtrl = ($scope, $state, $stateParams, $timeout, Upload, GradeService, TeacherService, ObservationService, UtilService, ObservationFactory) => {
+const ObservationFormCtrl = ($scope, $state, $stateParams, $timeout, Upload, GradeService, TeacherService, ObservationService, AttachmentService, UtilService, ObservationFactory) => {
 
     // load passed observation object
     if ($stateParams.obj) {
@@ -22,25 +22,25 @@ const ObservationFormCtrl = ($scope, $state, $stateParams, $timeout, Upload, Gra
         $scope.files = files;
         $scope.errFiles = errFiles;
 
-        // angular.forEach(files, (file) => {
-        //     file.upload = Upload.upload({
-        //         url: ('https://dev-uprep.nijel.org/api/observations/' + $scope.observation.id),
-        //         method: 'PUT',
-        //         data: {
-        //             attachments: file
-        //         }
-        //     });
+        angular.forEach(files, (file) => {
+            file.upload = Upload.upload({
+                url: ('https://dev-uprep.nijel.org/api/observations/' + $scope.observation.id),
+                method: 'PUT',
+                data: {
+                    attachments: file
+                }
+            });
 
-        //     file.upload.then((res) => {
-        //         $timeout(() => {
-        //             file.result = res.data;
-        //         });
-        //     }, (res) => {
-        //         if (res.status > 0) {
-        //             $scope.errMessage = res.status + ': ' + res.data;
-        //         }
-        //     });
-        // });
+            file.upload.then((res) => {
+                $timeout(() => {
+                    file.result = res.data;
+                });
+            }, (res) => {
+                if (res.status > 0) {
+                    $scope.errMessage = res.status + ': ' + res.data;
+                }
+            });
+        });
     };
 
     $scope.updateTeachersBasedOnSelectedGrade = () => {
@@ -81,26 +81,36 @@ const ObservationFormCtrl = ($scope, $state, $stateParams, $timeout, Upload, Gra
         }, (res) => {
             UtilService.closeModal('edit-observation-modal');
         }, (err) => {
-            console.error(err, 'ERROR');
             UtilService.closeModal('edit-observation-modal');
         });
     };
 
     $scope.submitObservation = () => {
         ObservationService.update({
+            id: $scope.observation.id
+        }, {
             description: $scope.observation.description
         }, (res) => {
-            console.log(res, 'res');
+            $state.go('home');
         }, (err) => {
             console.log(err, 'err');
         });
     };
 
     $scope.removeAttachment = (file) => {
+
         $scope.files.forEach((elem, index) => {
             if (elem.name === file.name) {
                 $scope.files.splice(index, 1);
             }
+        });
+
+        AttachmentService.delete({
+            id: file.id,
+        }, (res) => {
+
+        }, (err) => {
+            console.error(err, 'ERROR');
         });
     };
 

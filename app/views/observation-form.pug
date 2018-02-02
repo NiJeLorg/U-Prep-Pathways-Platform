@@ -55,6 +55,9 @@
                 div(ng-repeat='file in files')
                     .c-attachment-holder__attachment.ul-cursor-pointer(ngf-thumbnail='file' ngf-size='{quality: 0.9}' ngf-as-background='true')
                         img(src='assets/icons/x-icon-circle.svg' ng-click='removeAttachment(file)')
+                    //- .c-attachment-holder__attachment.ul-cursor-pointer(ng-if='observation.attachments' ng-repeat='attachment in observation.attachments')
+                    //- img(src='{{attachment.link}}')
+
         .c-observation-form-input-group
             h2 Teacher: Knowledge and Skill
             p What is the teacher doing? What is the teacher saying?
