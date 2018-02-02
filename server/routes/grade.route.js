@@ -5,7 +5,7 @@ import asyncHandler from 'express-async-handler';
 const router = express.Router({mergeParams: true});
 
 router.route('/')
-    /** Get /api/grades - Get list of grades*/
+/** Get /api/grades - Get list of grades*/
     .get(asyncHandler(gradeCtrl.list));
 
 router.route('/:gradeId')

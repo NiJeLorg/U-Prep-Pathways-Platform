@@ -1,6 +1,7 @@
 import express from 'express';
 import schoolCtrl from './../controllers/school.controller';
 import asyncHandler from 'express-async-handler';
+
 const router = express.Router();
 
 router.route('/')
