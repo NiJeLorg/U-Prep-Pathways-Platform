@@ -65,6 +65,7 @@ const update = async (req, res, next) => {
         });
         await observation_cluster.bulkCreate(new_observed_clusters);
     }
+    await savedObseravtion.reload();
     res.sendData(savedObseravtion)
 };
 
