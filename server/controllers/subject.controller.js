@@ -24,17 +24,18 @@ const load = async (req, res, next, id) => {
  */
 const list = async (req, res) => {
 
-    const subjects =  await subject.all(getIncludes(req));
+    const subjects = await subject.all(getIncludes(req));
     res.sendData(subjects)
 };
 
 const getIncludes = (req) => {
-    const teacherId =  req.params.teacherId || req.query.teacherId;
+    const teacherId = req.params.teacherId || req.query.teacherId;
     let includes = {};
-    if (teacherId){
+    if (teacherId) {
         includes = {
             include: [
-                {   attributes: [],
+                {
+                    attributes: [],
                     required: true,
                     model: teacher,
                     as: 'teachers',

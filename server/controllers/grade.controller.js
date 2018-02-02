@@ -18,10 +18,10 @@ const list = async (req, res) => {
 };
 
 const getIncludes = (req) => {
-    const schoolId =  req.params.schoolId || req.query.schoolId;
+    const schoolId = req.params.schoolId || req.query.schoolId;
     const gradeId = req.params.gradeId;
-    let includes = {attributes : ['id', 'name']};
-    if(schoolId && gradeId === undefined){
+    let includes = {attributes: ['id', 'name']};
+    if (schoolId && gradeId === undefined) {
         includes.include = [{
             attributes: [],
             required: true,
@@ -29,7 +29,7 @@ const getIncludes = (req) => {
             as: 'schools',
             where: {id: schoolId}
         }];
-    }else if(schoolId && gradeId){
+    } else if (schoolId && gradeId) {
         includes.include = [{
             attributes: ['id', 'name'],
             required: false,
@@ -40,7 +40,6 @@ const getIncludes = (req) => {
     }
     return includes;
 };
-
 
 
 export default {get, load, list};

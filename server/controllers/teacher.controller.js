@@ -4,7 +4,7 @@ const get = async (req, res) => {
     res.sendData(req.teacher);
 };
 const list = async (req, res) => {
-    const teachers =  await teacher.all(getIncludes(req));
+    const teachers = await teacher.all(getIncludes(req));
     res.sendData(teachers)
 };
 const load = async (req, res, next, id) => {
@@ -19,10 +19,12 @@ const load = async (req, res, next, id) => {
 const getIncludes = (req) => {
     const schoolId = req.params.schoolId || req.query.schoolId;
     const gradeId = req.params.gradeId || req.query.gradeId;
-    let includes = {attributes: ['id', 'name'], include:[
-        {model: subject, as: 'subjects', attributes: ['id', 'name']}
-    ]};
-    if (schoolId){
+    let includes = {
+        attributes: ['id', 'name'], include: [
+            {model: subject, as: 'subjects', attributes: ['id', 'name']}
+        ]
+    };
+    if (schoolId) {
         includes.include.push({
             required: true,
             attributes: [],

@@ -13,7 +13,7 @@ const get = async (req, res) => {
  * @returns {observations}
  */
 const list = async (req, res) => {
-    const observations =  await observation
+    const observations = await observation
         .all({
             include: ['school', 'clusters', 'subject', 'teacher', 'grade', 'observation_type']
         });
