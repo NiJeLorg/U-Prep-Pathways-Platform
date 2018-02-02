@@ -43,28 +43,28 @@ const load = async (req, res, next, id) => {
  */
 
 const update = async (req, res, next) => {
-    const observation = req.observation;
+    let observation = req.observation;
     observation.name = req.body.name;
     observation.description = req.body.description;
     observation.teacher_id = req.body.teacher_id;
     observation.grade_id = req.body.grade_id;
     observation.school_id = req.body.school_id;
     observation.subject_id = req.body.subject_id;
-    observation.attachments = generateAttachments(req);
     observation.status = req.body.status;
-    const savedObseravtion = await observation.save();
+    let savedObseravtion = await observation.save();
     const attachments = generateAttachments(req, savedObseravtion);
     await observation_evidence.bulkCreate(attachments);
-    await observation_cluster.destroy({
-        where: {observation_id: observation.id, cluster_id: {[Op.notIn]: req.body.cluster_ids}}
-    });
-
-    const existing_observed_cluster = observation.clusters.map(cluster => cluster.id);
-    const new_observed_clusters = req.body.cluster_ids.map((cluster_id) => {
-        if (!(existing_observed_cluster != undefined && existing_observed_cluster.includes(cluster_id)))
-            return {"observation_id": observation.id, "cluster_id": cluster_id}
-    });
-    await observation_cluster.bulkCreate(new_observed_clusters);
+    if(req.body.cluster_ids){
+        await observation_cluster.destroy({
+            where: {observation_id: observation.id, cluster_id: {[Op.notIn]: req.body.cluster_ids}}
+        });
+        const existing_observed_cluster = observation.clusters.map(cluster => cluster.id);
+        const new_observed_clusters = req.body.cluster_ids.map((cluster_id) => {
+            if (!(existing_observed_cluster != undefined && existing_observed_cluster.includes(cluster_id)))
+                return {"observation_id": observation.id, "cluster_id": cluster_id}
+        });
+        await observation_cluster.bulkCreate(new_observed_clusters);
+    }
     res.sendData(savedObseravtion)
 };
 
@@ -106,7 +106,7 @@ function generateAttachments(req, observation) {
  * @returns {observation}
  */
 const create = async (req, res, next) => {
-    const observation = await observation
+    const observationObj = await observation
         .create({
             name: req.body.name,
             description: req.body.description,
@@ -121,7 +121,7 @@ const create = async (req, res, next) => {
         }, {
             include: [{model: observation_evidence, as: "attachments"}]
         });
-    res.sendData(observation);
+    res.sendData(observationObj);
 
 };
 
