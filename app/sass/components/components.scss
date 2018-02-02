@@ -166,6 +166,12 @@
     .c-attachment-holder__add-attachment {
         background: $purple;
         margin-right: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 130px;
+        height: 110px;
+        border-radius: 4px;
     }
     .c-attachment-holder__attachment {
         width: 130px;
@@ -175,9 +181,21 @@
         margin-right: 20px;
         border-radius: 4px;
         display: flex;
-        justify-content: center;
-        align-items: center;
+        justify-content: flex-end;
+        align-items: flex-start;
+        position: relative;
+        img {
+            position: relative;
+            top: -6px;
+            left: 6px;
+        }
+
+
     }
+    // .c-attachment-holder__cancel-attachment {
+    //     display: flex;
+    //     justify-content: flex-end;
+    // }
 }
 
 .c-clusters-observed-group {

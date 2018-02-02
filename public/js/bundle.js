@@ -48121,30 +48121,27 @@ var ObservationFormCtrl = function ObservationFormCtrl($scope, $state, $statePar
 
     $scope.uploadFiles = function (files, errFiles) {
         $scope.files = files;
-        console.log($scope.files, 'looo');
-
         $scope.errFiles = errFiles;
 
-        angular.forEach(files, function (file) {
-            file.upload = Upload.upload({
-                url: 'https://dev-uprep.nijel.org/api/observations/' + $scope.observation.id,
-                method: 'PUT',
-                data: {
-                    attachments: file
-                }
-            });
+        // angular.forEach(files, (file) => {
+        //     file.upload = Upload.upload({
+        //         url: ('https://dev-uprep.nijel.org/api/observations/' + $scope.observation.id),
+        //         method: 'PUT',
+        //         data: {
+        //             attachments: file
+        //         }
+        //     });
 
-            file.upload.then(function (res) {
-                console.log(res, 'response');
-                $timeout(function () {
-                    file.result = res.data;
-                });
-            }, function (res) {
-                if (res.status > 0) {
-                    $scope.errMessage = res.status + ': ' + res.data;
-                }
-            });
-        });
+        //     file.upload.then((res) => {
+        //         $timeout(() => {
+        //             file.result = res.data;
+        //         });
+        //     }, (res) => {
+        //         if (res.status > 0) {
+        //             $scope.errMessage = res.status + ': ' + res.data;
+        //         }
+        //     });
+        // });
     };
 
     $scope.updateTeachersBasedOnSelectedGrade = function () {
@@ -48197,6 +48194,14 @@ var ObservationFormCtrl = function ObservationFormCtrl($scope, $state, $statePar
             console.log(res, 'res');
         }, function (err) {
             console.log(err, 'err');
+        });
+    };
+
+    $scope.removeAttachment = function (file) {
+        $scope.files.forEach(function (elem, index) {
+            if (elem.name === file.name) {
+                $scope.files.splice(index, 1);
+            }
         });
     };
 

@@ -15,7 +15,6 @@ const ObservationTypeCtrl = ($scope, UtilService, ObservationTypeService, Observ
         UtilService.cancelObservation(ObservationFactory);
     };
 
-
 };
 
 export default ObservationTypeCtrl;
