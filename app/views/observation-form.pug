@@ -13,8 +13,6 @@
             .c-select-group.ul-margin-bottom-20
                 select.subject-color(ng-model='observation.subject' ng-options='subject.name for subject in subjects track by subject.id')
             button(ng-click='editObservation()') Save
-
-
 .c-modal.delete-observation-modal
     .c-modal__modal-content
         .l-flex-flex-end
@@ -51,7 +49,7 @@
             h2 Attachments
             p Add photos, videos, word documents, or pdf's to your observation
             .c-attachments-holder
-                .c-attachment-holder__add-attachment.c-attachment-holder__attachment.ul-cursor-pointer(ngf-select ng-model='file' name='file' accept='image/*' ngf-max-size='2MB' required)
+                .c-attachment-holder__add-attachment.c-attachment-holder__attachment.ul-cursor-pointer(ngf-select='uploadFiles($files, $invalidFiles)' multiple accpet='image/*' accept='image/*' ngf-max-size='2MB' required)
                     img(src='assets/icons/add-icon.svg')
                 img.c-attachment-holder__attachment(ngf-thumbnail='file')
         .c-observation-form-input-group

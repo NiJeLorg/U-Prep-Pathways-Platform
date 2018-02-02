@@ -1,6 +1,6 @@
 'use strict';
 
-const ObservationFormCtrl = ($scope, $state, $stateParams, GradeService, TeacherService, ObservationService, UtilService, ObservationFactory) => {
+const ObservationFormCtrl = ($scope, $state, $stateParams, $timeout, Upload, GradeService, TeacherService, ObservationService, UtilService, ObservationFactory) => {
 
     // load passed observation object
     if ($stateParams.obj) {
@@ -17,6 +17,30 @@ const ObservationFormCtrl = ($scope, $state, $stateParams, GradeService, Teacher
         $scope.grades = res.data;
     });
 
+
+    $scope.uploadFiles = (files, errFiles) => {
+        $scope.files = files;
+        $scope.errFiles = errFiles;
+        angular.forEach(files, (file) => {
+            file.upload = Upload.upload({
+                url: ('https://dev-uprep.nijel.org/api/observations/' + $scope.observation.id),
+                data: {
+                    file: file
+                }
+            });
+
+            file.upload.then((res) => {
+                $timeout(() => {
+                    file.result = res.data;
+                })
+            }, (res) => {
+                if (res.status > 0) {
+                    $scope.errMessage = res.status + ': ' + res.data;
+                }
+            });
+        });
+
+    };
 
     $scope.updateTeachersBasedOnSelectedGrade = () => {
         TeacherService.query({

@@ -48090,7 +48090,7 @@ exports.default = ObservationInputsCtrl;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-var ObservationFormCtrl = function ObservationFormCtrl($scope, $state, $stateParams, GradeService, TeacherService, ObservationService, UtilService, ObservationFactory) {
+var ObservationFormCtrl = function ObservationFormCtrl($scope, $state, $stateParams, Upload, GradeService, TeacherService, ObservationService, UtilService, ObservationFactory) {
 
     // load passed observation object
     if ($stateParams.obj) {
@@ -48105,6 +48105,16 @@ var ObservationFormCtrl = function ObservationFormCtrl($scope, $state, $statePar
     }, function (res) {
         $scope.grades = res.data;
     });
+
+    $scope.uploadFiles = function (files, errFiles) {
+        $scope.files = files;
+        $scope.errFiles = errFiles;
+        angular.forEach(files, function (file) {
+            file.upload = Upload.upload({
+                url: ''
+            });
+        });
+    };
 
     $scope.updateTeachersBasedOnSelectedGrade = function () {
         TeacherService.query({
@@ -48142,7 +48152,6 @@ var ObservationFormCtrl = function ObservationFormCtrl($scope, $state, $statePar
             teacher_id: $scope.observation.teacher.id,
             subject_id: $scope.observation.subject.id
         }, function (res) {
-            console.log(res, 'res');
             UtilService.closeModal('edit-observation-modal');
         }, function (err) {
             console.error(err, 'ERROR');
