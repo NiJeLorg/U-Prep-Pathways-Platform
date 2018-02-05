@@ -12,7 +12,6 @@ import routes from './../server/routes/index.route';
 import config from './config';
 import APIError from './../server/helpers/APIError';
 import path from 'path';
-import multer from 'multer';
 
 const app = express();
 
