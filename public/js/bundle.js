@@ -47870,6 +47870,13 @@ var HomeCtrl = function HomeCtrl($scope, $state, ObservationService, SchoolServi
         }
     });
 
+    SchoolService.fetchSchools(function (err, res) {
+        if (err) {
+            console.error(err);
+        }
+        $scope.schools = res.data.data;
+    });
+
     $scope.openModal = function (observation) {
         angular.element(document.getElementsByClassName('delete-observation-modal')).css('display', 'flex');
         observationToBeDeleted = observation;
@@ -48140,7 +48147,7 @@ var ObservationFormCtrl = function ObservationFormCtrl($scope, $state, $statePar
 
             file.upload.then(function (res) {
                 $timeout(function () {
-                    $scope.observation = res.data.data;
+                    $scope.observation.attachments = res.data.data.attachments;
                 });
             }, function (res) {
                 if (res.status > 0) {

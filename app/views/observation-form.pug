@@ -36,7 +36,7 @@
                 p CREATED {{observation.created_at | date:'short'}}
             .c-observation-observation-form__actions
                 button Saved
-                button Submit
+                button(ng-click='submitObservation()') Submit
                 img.ul-cursor-pointer(src='assets/icons/settings-small-icon.svg' ng-click='openEditObservationModal()')
                 img.ul-cursor-pointer(src='assets/icons/duplicate-icon.svg')
                 img.ul-cursor-pointer(src='assets/icons/delete-icon.svg' ng-click='openDeleteModal()')
