@@ -1,3 +1,13 @@
+.c-modal.delete-observation-modal
+    .c-modal__modal-content
+        span.l-flex-flex-end
+            img.ul-cursor-pointer(src='assets/icons/x-icon.svg' ng-click='closeModal()')
+        h2 Delete This Observation?
+        p This action cannot be reversed
+        .c-buttons-holder
+            button(ng-click='deleteObservation()') Yes
+            button(ng-click='closeModal()') Cancel
+
 .ul-padding-30
     h1 Pathways
     p Is a new tool to help teachers observe in classrooms and to make work pathways for improvement. Take a sentence or two to explain what is being done here. #[a.c-link(href='#') Watch a tutorial here].
@@ -13,7 +23,7 @@
                 .input-group.c-input-text-group.l-flex
                     span
                         img(src='assets/icons/search-icon.svg')
-                    input(type='text' placeholder='Search' name='search')
+                    input(type='text' placeholder='Search' name='search' ng-model='search')
                 .input-group.l-flex
                     p Sort By
                     .c-select-group.l-flex
@@ -28,16 +38,16 @@
                             option English
                             option Maths
                             option Science
-            .c-observation.l-flex-space-between.ul-padding-30(ng-repeat='observation in observations')
+            .c-observation.l-flex-space-between.ul-padding-30(ng-repeat='observation in observations | filter:search')
                 .c-observation__date
                     p Created
-                    p {{observation.readableDate}}
+                    p {{observation.created_at | date: 'shortDate'}}
                 .c-observation__details
-                    h3 {{observation.observationKind}}
-                    span.grade-color {{observation.grade}}
-                    span.teacher-color {{observation.teacher}}
-                    span.subject-color {{observation.subject}}
+                    h3 {{observation.observation_type.name}}
+                    span.grade-color(ng-if='observation.grade.name') {{observation.grade.name}}
+                    span.teacher-color(ng-if='observation.teacher.name') {{observation.teacher.name}}
+                    span.subject-color(ng-if='observation.subject.name') {{observation.subject.name}}
                 .c-observation__actions.l-flex-flex-end
-                    img(src='assets/icons/edit-icon.svg')
-                    img(src='assets/icons/duplicate-icon.svg')
-                    img(src='assets/icons/delete-icon.svg')
+                    img.ul-cursor-pointer(src='assets/icons/edit-icon.svg' ng-click='editObservation(observation)')
+                    img.ul-cursor-pointer(src='assets/icons/duplicate-icon.svg')
+                    img.ul-cursor-pointer(src='assets/icons/delete-icon.svg' ng-click='openModal(observation)')
