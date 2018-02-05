@@ -7,6 +7,7 @@ import observationRoutes from './observation.route';
 import observationTypeRoutes from './observation_type.route';
 import observationEvidenceRoutes from './observation_evidence.route';
 import observationClusterRoutes from './observation_cluster.route';
+import clusterRoutes from './cluster.route';
 import YAML from 'yamljs';
 import swaggerUi from 'swagger-ui-express';
 
@@ -26,6 +27,7 @@ router.use('/observations', observationRoutes);
 router.use('/observation_clusters', observationClusterRoutes);
 router.use('/observation_evidences', observationEvidenceRoutes);
 router.use('/observation_types', observationTypeRoutes);
+router.use('/clusters', clusterRoutes);
 router.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 export default router;
