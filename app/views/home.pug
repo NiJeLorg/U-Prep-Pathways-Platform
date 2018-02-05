@@ -35,9 +35,7 @@
                     p School
                     .c-select-group.l-flex
                         select
-                            option English
-                            option Maths
-                            option Science
+                            option(ng-repeat='school in schools') {{school.name}}
             .c-observation.l-flex-space-between.ul-padding-30(ng-repeat='observation in observations | filter:search')
                 .c-observation__date
                     p Created

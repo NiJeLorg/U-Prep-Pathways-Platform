@@ -34,7 +34,7 @@ const ObservationFormCtrl = ($scope, $state, $stateParams, $timeout, Upload, Gra
 
             file.upload.then((res) => {
                 $timeout(() => {
-                    $scope.observation = res.data.data;
+                    $scope.observation.attachments = res.data.data.attachments;
                 });
             }, (res) => {
                 if (res.status > 0) {

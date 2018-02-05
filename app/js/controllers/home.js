@@ -14,6 +14,13 @@ const HomeCtrl = ($scope, $state, ObservationService, SchoolService) => {
         }
     });
 
+    SchoolService.fetchSchools((err, res) => {
+        if (err) {
+            console.error(err);
+        }
+        $scope.schools = res.data.data;
+    });
+
     $scope.openModal = (observation) => {
         angular.element(document.getElementsByClassName('delete-observation-modal')).css('display', 'flex');
         observationToBeDeleted = observation;
