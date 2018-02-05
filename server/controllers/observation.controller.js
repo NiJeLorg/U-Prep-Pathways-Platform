@@ -15,7 +15,7 @@ const get = async (req, res) => {
 const list = async (req, res) => {
     const observations = await observation
         .all({
-            include: ['attachments', 'school', 'clusters', 'subject', 'teacher', 'grade', 'observation_type']
+            include: ['attachments', 'school', 'clusters', 'subject', 'teacher', 'grade', 'observation_type', 'observation_type_property_data']
         });
     res.sendData(observations)
 };
@@ -27,7 +27,7 @@ const list = async (req, res) => {
 const load = async (req, res, next, id) => {
     const observationObj = await observation
         .findById(req.params.observationId, {
-            include: ['attachments', 'subject', 'school', 'teacher', 'grade', 'observation_type', 'clusters']
+            include: ['attachments', 'subject', 'school', 'teacher', 'grade', 'observation_type', 'clusters', 'observation_type_property_data']
         });
     if (!observationObj) {
         return res.sendNotFound();

@@ -19,7 +19,7 @@ const load = async (req, res, next, id) => {
     return next();
 };
 const list = async (req, res) => {
-    const observationTypes = await observation_type.all();
+    const observationTypes = await observation_type.all({include: ['observation_type_properties']});
     res.sendData(observationTypes);
 };
 
