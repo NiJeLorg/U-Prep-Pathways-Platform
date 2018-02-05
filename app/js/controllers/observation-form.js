@@ -7,6 +7,7 @@ const ObservationFormCtrl = ($scope, $state, $stateParams, $timeout, Upload, Gra
         $scope.observation = $stateParams.obj;
     }
 
+
     let observationToBeDeleted;
 
 
@@ -33,7 +34,7 @@ const ObservationFormCtrl = ($scope, $state, $stateParams, $timeout, Upload, Gra
 
             file.upload.then((res) => {
                 $timeout(() => {
-                    file.result = res.data;
+                    $scope.observation = res.data.data;
                 });
             }, (res) => {
                 if (res.status > 0) {
@@ -97,18 +98,20 @@ const ObservationFormCtrl = ($scope, $state, $stateParams, $timeout, Upload, Gra
         });
     };
 
-    $scope.removeAttachment = (file) => {
+    $scope.removeAttachment = (obj, file) => {
 
-        $scope.files.forEach((elem, index) => {
+        console.log(file, 'file');
+
+        obj.forEach((elem, index) => {
             if (elem.name === file.name) {
-                $scope.files.splice(index, 1);
+               obj.splice(index, 1);
             }
         });
 
         AttachmentService.delete({
             id: file.id,
         }, (res) => {
-
+            console.log(res, 'attachment-delete')
         }, (err) => {
             console.error(err, 'ERROR');
         });

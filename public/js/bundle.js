@@ -48140,7 +48140,7 @@ var ObservationFormCtrl = function ObservationFormCtrl($scope, $state, $statePar
 
             file.upload.then(function (res) {
                 $timeout(function () {
-                    file.result = res.data;
+                    $scope.observation = res.data.data;
                 });
             }, function (res) {
                 if (res.status > 0) {
@@ -48204,17 +48204,21 @@ var ObservationFormCtrl = function ObservationFormCtrl($scope, $state, $statePar
         });
     };
 
-    $scope.removeAttachment = function (file) {
+    $scope.removeAttachment = function (obj, file) {
 
-        $scope.files.forEach(function (elem, index) {
+        console.log(file, 'file');
+
+        obj.forEach(function (elem, index) {
             if (elem.name === file.name) {
-                $scope.files.splice(index, 1);
+                obj.splice(index, 1);
             }
         });
 
         AttachmentService.delete({
             id: file.id
-        }, function (res) {}, function (err) {
+        }, function (res) {
+            console.log(res, 'attachment-delete');
+        }, function (err) {
             console.error(err, 'ERROR');
         });
     };

@@ -44,9 +44,9 @@
                     p {{observation.created_at | date: 'shortDate'}}
                 .c-observation__details
                     h3 {{observation.observation_type.name}}
-                    span.grade-color(ng-if='observation.grade') {{observation.grade.name}}
-                    span.teacher-color(ng-if='observation.teacher') {{observation.teacher.name}}
-                    span.subject-color(ng-if='observation.subject') {{observation.subject.name}}
+                    span.grade-color(ng-if='observation.grade.name') {{observation.grade.name}}
+                    span.teacher-color(ng-if='observation.teacher.name') {{observation.teacher.name}}
+                    span.subject-color(ng-if='observation.subject.name') {{observation.subject.name}}
                 .c-observation__actions.l-flex-flex-end
                     img.ul-cursor-pointer(src='assets/icons/edit-icon.svg' ng-click='editObservation(observation)')
                     img.ul-cursor-pointer(src='assets/icons/duplicate-icon.svg')
