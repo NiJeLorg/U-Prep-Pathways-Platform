@@ -34,6 +34,13 @@ module.exports = (sequelize, DataTypes) => {
             onDelete: 'CASCADE',
             hooks: true
         });
+
+        Observation.hasMany(models.observation_type_property_data, {
+            foreignKey: 'observation_id',
+            as: 'observation_type_property_data',
+            onDelete: 'CASCADE',
+            hooks: true
+        });
     };
     return Observation;
 };
