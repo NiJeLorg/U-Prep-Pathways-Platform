@@ -21,6 +21,7 @@ import GradeService from './services/grade-service';
 import TeacherService from './services/teacher-service';
 import SubjectService from './services/subject-service';
 import ObservationService from './services/observation-service';
+import ClusterService from './services/cluster-service';
 import AttachmentService from './services/attachment-service';
 import UtilService from './services/utilities-service';
 import ObservationFactory from './factories/observation-factory';
@@ -42,6 +43,7 @@ uprepApp
   .service('TeacherService', TeacherService)
   .service('SubjectService', SubjectService)
   .service('ObservationService', ObservationService)
+  .service('ClusterService', ClusterService)
   .service('AttachmentService', AttachmentService)
   .service('UtilService', UtilService)
   .factory('ObservationFactory', ObservationFactory);

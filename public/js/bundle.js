@@ -161,11 +161,15 @@ var _observationService = __webpack_require__(21);
 
 var _observationService2 = _interopRequireDefault(_observationService);
 
-var _attachmentService = __webpack_require__(22);
+var _clusterService = __webpack_require__(22);
+
+var _clusterService2 = _interopRequireDefault(_clusterService);
+
+var _attachmentService = __webpack_require__(23);
 
 var _attachmentService2 = _interopRequireDefault(_attachmentService);
 
-var _utilitiesService = __webpack_require__(23);
+var _utilitiesService = __webpack_require__(24);
 
 var _utilitiesService2 = _interopRequireDefault(_utilitiesService);
 
@@ -175,15 +179,13 @@ var _observationFactory2 = _interopRequireDefault(_observationFactory);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var uprepApp = _angular2.default.module('uprepApp', [_angularjs2.default, _ngFileUpload2.default, _angularResource2.default]);
-
 // load services
 
 
 // load controllers
+var uprepApp = _angular2.default.module('uprepApp', [_angularjs2.default, _ngFileUpload2.default, _angularResource2.default]);
 
-
-uprepApp.controller('NavCtrl', _nav2.default).controller('HomeCtrl', _home2.default).controller('SchoolCtrl', _school2.default).controller('ObservationTypeCtrl', _observationType2.default).controller('ObservationInputsCtrl', _observationInputs2.default).controller('ObservationFormCtrl', _observationForm2.default).service('SchoolService', _schoolService2.default).service('ObservationTypeService', _observationTypeService2.default).service('GradeService', _gradeService2.default).service('TeacherService', _teacherService2.default).service('SubjectService', _subjectService2.default).service('ObservationService', _observationService2.default).service('AttachmentService', _attachmentService2.default).service('UtilService', _utilitiesService2.default).factory('ObservationFactory', _observationFactory2.default);
+uprepApp.controller('NavCtrl', _nav2.default).controller('HomeCtrl', _home2.default).controller('SchoolCtrl', _school2.default).controller('ObservationTypeCtrl', _observationType2.default).controller('ObservationInputsCtrl', _observationInputs2.default).controller('ObservationFormCtrl', _observationForm2.default).service('SchoolService', _schoolService2.default).service('ObservationTypeService', _observationTypeService2.default).service('GradeService', _gradeService2.default).service('TeacherService', _teacherService2.default).service('SubjectService', _subjectService2.default).service('ObservationService', _observationService2.default).service('ClusterService', _clusterService2.default).service('AttachmentService', _attachmentService2.default).service('UtilService', _utilitiesService2.default).factory('ObservationFactory', _observationFactory2.default);
 
 uprepApp.config(['$stateProvider', '$httpProvider', '$urlRouterProvider', '$locationProvider', function ($stateProvider, $httpProvider, $urlRouterProvider, $locationProvider) {
 
@@ -48116,21 +48118,42 @@ exports.default = ObservationInputsCtrl;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-var ObservationFormCtrl = function ObservationFormCtrl($scope, $state, $stateParams, $timeout, Upload, GradeService, TeacherService, ObservationService, AttachmentService, UtilService, ObservationFactory) {
+var ObservationFormCtrl = function ObservationFormCtrl($scope, $state, $stateParams, $timeout, Upload, GradeService, TeacherService, ObservationService, ClusterService, AttachmentService, UtilService, ObservationFactory) {
 
     // load passed observation object
     if ($stateParams.obj) {
         $scope.observation = $stateParams.obj;
     }
 
-    var observationToBeDeleted = void 0;
+    var observationToBeDeleted = void 0,
+        clusters_ids = [];
 
     // fetch data
     GradeService.query({
         id: $scope.observation.school.id
     }, function (res) {
         $scope.grades = res.data;
+    }, function (err) {
+        console.error(err, 'ERROR');
     });
+
+    ClusterService.query(function (res) {
+        $scope.clusters = res.data;
+    }, function (err) {
+        console.errror(err, 'ERROR');
+    });
+
+    $scope.selectCluster = function (value, cluster) {
+        if (value === true) {
+            clusters_ids.push(cluster.id);
+        } else {
+            if (clusters_ids.indexOf(cluster.id) !== -1) {
+                clusters_ids.splice(clusters_ids.indexOf(cluster.id), 1);
+            }
+        }
+
+        console.log(clusters_ids, 'clusterids');
+    };
 
     $scope.uploadFiles = function (files, errFiles) {
         $scope.files = files;
@@ -48201,9 +48224,11 @@ var ObservationFormCtrl = function ObservationFormCtrl($scope, $state, $statePar
 
     $scope.submitObservation = function () {
         ObservationService.update({
-            id: $scope.observation.id
+            id: $scope.observation.id,
+            clusters: []
         }, {
-            description: $scope.observation.description
+            description: $scope.observation.description,
+            clusters: clusters_ids
         }, function (res) {
             $state.go('home');
         }, function (err) {
@@ -48436,6 +48461,31 @@ exports.default = ObservationService;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+var ClusterService = function ClusterService($resource, $http) {
+
+    var obj = $resource('https://dev-uprep.nijel.org/api/clusters/', {
+        id: '@id'
+    }, {
+        'query': {
+            method: 'GET'
+        }
+    });
+
+    return obj;
+};
+
+exports.default = ClusterService;
+
+/***/ }),
+/* 23 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
 var AttachmentService = function AttachmentService($resource, $http) {
 
     var obj = $resource('https://dev-uprep.nijel.org/api/observation_evidences/:id', {
@@ -48452,7 +48502,7 @@ var AttachmentService = function AttachmentService($resource, $http) {
 exports.default = AttachmentService;
 
 /***/ }),
-/* 23 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

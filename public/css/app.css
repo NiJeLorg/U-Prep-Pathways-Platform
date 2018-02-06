@@ -260,10 +260,20 @@ select {
       top: -6px;
       left: 6px; }
 
-.c-clusters-observed-group {
+.c-clusters {
   padding: 50px 40px;
   width: 40%;
   background: #f5f5f6; }
+  .c-clusters .c-clusters__title {
+    padding: 20px 0 30px 0;
+    display: flex;
+    justify-content: space-between; }
+    .c-clusters .c-clusters__title h3 {
+      flex-basis: 77%;
+      margin: 0; }
+    .c-clusters .c-clusters__title span {
+      flex-basis: 23%;
+      display: flex; }
 
 .c-radio-group {
   background: #fff;
