@@ -1,6 +1,6 @@
-const GradeService = ($resource, $http) => {
+const ClusterService = ($resource, $http) => {
 
-    const obj = $resource('https://dev-uprep.nijel.org/api/schools/:id/grades', {
+    let obj = $resource('https://dev-uprep.nijel.org/api/clusters/', {
         id: '@id'
     }, {
         'query': {
@@ -11,4 +11,4 @@ const GradeService = ($resource, $http) => {
     return obj;
 };
 
-export default GradeService;
+export default ClusterService;

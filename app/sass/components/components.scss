@@ -189,19 +189,29 @@
             top: -6px;
             left: 6px;
         }
-
-
-    }
-    // .c-attachment-holder__cancel-attachment {
+    } // .c-attachment-holder__cancel-attachment {
     //     display: flex;
     //     justify-content: flex-end;
     // }
 }
 
-.c-clusters-observed-group {
+.c-clusters {
     padding: 50px 40px;
     width: 40%;
     background: #f5f5f6;
+    .c-clusters__title {
+        padding: 20px 0 30px 0;
+        display: flex;
+        justify-content: space-between;
+        h3 {
+            flex-basis: 77%;
+            margin: 0;
+        }
+        span {
+            flex-basis: 23%;
+            display: flex;
+        }
+    }
 }
 
 .c-radio-group {

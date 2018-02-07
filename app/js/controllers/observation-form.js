@@ -1,23 +1,41 @@
 'use strict';
 
-const ObservationFormCtrl = ($scope, $state, $stateParams, $timeout, Upload, GradeService, TeacherService, ObservationService, AttachmentService, UtilService, ObservationFactory) => {
+const ObservationFormCtrl = ($scope, $state, $stateParams, $timeout, Upload, GradeService, TeacherService, ObservationService, ClusterService, AttachmentService, UtilService, ObservationFactory) => {
 
     // load passed observation object
     if ($stateParams.obj) {
         $scope.observation = $stateParams.obj;
     }
 
-
-    let observationToBeDeleted;
-
+    let observationToBeDeleted, clusters_ids = [];
 
     // fetch data
     GradeService.query({
         id: $scope.observation.school.id
     }, (res) => {
         $scope.grades = res.data;
+    }, (err) => {
+        console.error(err, 'ERROR');
     });
 
+    ClusterService.query((res) => {
+        $scope.clusters = res.data;
+    }, (err) => {
+        console.errror(err, 'ERROR');
+    });
+
+
+    $scope.selectCluster = (value, cluster) => {
+        if (value === true) {
+            clusters_ids.push(cluster.id);
+        } else {
+            if (clusters_ids.indexOf(cluster.id) !== -1) {
+                clusters_ids.splice(clusters_ids.indexOf(cluster.id), 1);
+            }
+        }
+
+        console.log(clusters_ids, 'clusterids');
+    };
 
     $scope.uploadFiles = (files, errFiles) => {
         $scope.files = files;
@@ -88,9 +106,11 @@ const ObservationFormCtrl = ($scope, $state, $stateParams, $timeout, Upload, Gra
 
     $scope.submitObservation = () => {
         ObservationService.update({
-            id: $scope.observation.id
+            id: $scope.observation.id,
+            clusters: []
         }, {
-            description: $scope.observation.description
+            description: $scope.observation.description,
+            clusters: clusters_ids
         }, (res) => {
             $state.go('home');
         }, (err) => {
@@ -104,7 +124,7 @@ const ObservationFormCtrl = ($scope, $state, $stateParams, $timeout, Upload, Gra
 
         obj.forEach((elem, index) => {
             if (elem.name === file.name) {
-               obj.splice(index, 1);
+                obj.splice(index, 1);
             }
         });
 
