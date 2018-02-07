@@ -4,7 +4,7 @@ module.exports = (sequelize, DataTypes) => {
     observation_id: DataTypes.INTEGER,
     cluster_id: DataTypes.INTEGER,
   }, {
-    timestamps: false
+    timestamps: false,
   });
   return ObservationCluster;
 };

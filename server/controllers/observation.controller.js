@@ -1,5 +1,5 @@
 "use strict";
-import {school, observation, observation_evidence, observation_cluster, cluster} from './../models';
+import {school, observation, observation_evidence, observation_cluster, cluster, observation_type, observation_type_property_data} from './../models';
 import Sequelize from 'sequelize';
 
 const Op = Sequelize.Op;
@@ -54,8 +54,8 @@ const update = async (req, res, next) => {
     let savedObseravtion = await observation.save();
     const attachments = generateAttachments(req, savedObseravtion);
     await observation_evidence.bulkCreate(attachments);
-    const cluster_ids = await getClusterIdFromReqBody(req);
-    if(cluster_ids){
+    const cluster_ids = req.body.cluster_ids;
+    if (cluster_ids) {
         await observation_cluster.destroy({
             where: {observation_id: observation.id, cluster_id: {[Op.notIn]: cluster_ids}}
         });
@@ -103,13 +103,28 @@ function generateAttachments(req, observation) {
     return attachments;
 }
 
-const  getClusterIdFromReqBody = async (req) => {
+const getClusterIdFromReqBody = async (req) => {
     const clusters = cluster.all({attributes: ['id'], raw: true});
-    let matchedClusters = clusters.filter((cluster) =>{
+    let matchedClusters = clusters.filter((cluster) => {
         return Object.prototype.hasOwnProperty.call(req.body, `cluster_${cluster.id}`) === true;
     });
-    return matchedClusters.map((cluster)=>{ return cluster.id});
+    return matchedClusters.map((cluster) => {
+        return cluster.id
+    });
 };
+
+const extractDynamicProperties =  (req, pattern) => {
+    return Object.entries(req.body).filter((entry) =>{
+        return entry[0].match(pattern) !== null;
+    });
+}
+const getObservationTypePropertyDataFromReqBody = (req, observationId) => {
+    const propertData = extractDynamicProperties(req, /property_[0-9]+$/);
+    return propertData.map((entry)=>{
+        return {observation_id:observationId, observation_type_property_id: parseInt(entry[0].split('_')[1]), value: entry[1]}
+    });
+};
+
 
 /**
  * Saves a new observation
