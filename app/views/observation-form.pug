@@ -73,10 +73,10 @@
                 span
                     h3 YES
                     h3 NO
-            .c-radio-group.l-flex.ul-margin-bottom-20(ng-repeat='cluster in clusters')
+            .c-radio-group.l-flex.ul-margin-bottom-20(ng-repeat='cluster in clusters track by cluster.id')
                 p {{cluster.name}}
-                input(type='radio' name='{{cluster.name}}' value='true' ng-change='selectCluster(true, cluster)' ng-model='selectedCluster')
-                input(type='radio' name='{{cluster.name}}' value='false' ng-change='selectCluster(false, cluster)' ng-model='selectedCluster')
+                input(type='radio' name='{{cluster.name}}' value='true' ng-change='selectCluster(true, cluster)' ng-model="cluster.selected")
+                input(type='radio' name='{{cluster.name}}' value='false' ng-change='selectCluster(false, cluster)' ng-model="cluster.selected")
         .submit-buttons-holder
             button.saved-button Saved
             button.submit-button(ng-click='submitObservation()') Submit

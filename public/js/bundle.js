@@ -48126,7 +48126,7 @@ var ObservationFormCtrl = function ObservationFormCtrl($scope, $state, $statePar
     }
 
     var observationToBeDeleted = void 0,
-        clusters_ids = [];
+        cluster_ids = [];
 
     // fetch data
     GradeService.query({
@@ -48138,21 +48138,24 @@ var ObservationFormCtrl = function ObservationFormCtrl($scope, $state, $statePar
     });
 
     ClusterService.query(function (res) {
-        $scope.clusters = res.data;
+        $scope.clusters = res.data.map(function (cluster) {
+            cluster.selected = '' + $scope.observation.cluster_ids.includes(cluster.id);
+            return cluster;
+        });
     }, function (err) {
         console.errror(err, 'ERROR');
     });
 
     $scope.selectCluster = function (value, cluster) {
         if (value === true) {
-            clusters_ids.push(cluster.id);
+            if (!$scope.observation.cluster_ids.includes(cluster.id)) $scope.observation.cluster_ids.push(cluster.id);
+            cluster.selected = "true";
         } else {
-            if (clusters_ids.indexOf(cluster.id) !== -1) {
-                clusters_ids.splice(clusters_ids.indexOf(cluster.id), 1);
+            cluster.selected = "false";
+            if ($scope.observation.cluster_ids.indexOf(cluster.id) !== -1) {
+                $scope.observation.cluster_ids.splice($scope.observation.cluster_ids.indexOf(cluster.id), 1);
             }
         }
-
-        console.log(clusters_ids, 'clusterids');
     };
 
     $scope.uploadFiles = function (files, errFiles) {
@@ -48180,6 +48183,9 @@ var ObservationFormCtrl = function ObservationFormCtrl($scope, $state, $statePar
         });
     };
 
+    $scope.isSelectedCluster = function (cluster_id) {
+        return $scope.observation.cluster_ids.includes(cluster_id);
+    };
     $scope.updateTeachersBasedOnSelectedGrade = function () {
         TeacherService.query({
             schoolId: $scope.observation.school.id,
@@ -48224,11 +48230,10 @@ var ObservationFormCtrl = function ObservationFormCtrl($scope, $state, $statePar
 
     $scope.submitObservation = function () {
         ObservationService.update({
-            id: $scope.observation.id,
-            clusters: []
+            id: $scope.observation.id
         }, {
             description: $scope.observation.description,
-            clusters: clusters_ids
+            cluster_ids: $scope.observation.cluster_ids
         }, function (res) {
             $state.go('home');
         }, function (err) {
@@ -48237,9 +48242,6 @@ var ObservationFormCtrl = function ObservationFormCtrl($scope, $state, $statePar
     };
 
     $scope.removeAttachment = function (obj, file) {
-
-        console.log(file, 'file');
-
         obj.forEach(function (elem, index) {
             if (elem.name === file.name) {
                 obj.splice(index, 1);
