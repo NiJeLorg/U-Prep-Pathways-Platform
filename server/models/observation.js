@@ -6,7 +6,11 @@ module.exports = (sequelize, DataTypes) => {
     }, {
         underscored: true,
         getterMethods: {
-            cluster_ids: function (){ return this.clusters.map(cluster => cluster.id) }
+            cluster_ids: function (){
+                if(this.clusters)
+                    return this.clusters.map(cluster => cluster.id);
+                return [];
+            }
         },
     });
     Observation.associate = (models) => {
