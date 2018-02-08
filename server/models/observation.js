@@ -2,7 +2,8 @@
 module.exports = (sequelize, DataTypes) => {
     const Observation = sequelize.define('observation', {
         name: DataTypes.STRING,
-        description: DataTypes.TEXT
+        description: DataTypes.TEXT,
+        status: DataTypes.INTEGER
     }, {
         underscored: true,
         getterMethods: {

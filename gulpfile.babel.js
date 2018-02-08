@@ -80,9 +80,9 @@ gulp.task('babel', () =>
 gulp.task('nodemon', ['copy', 'babel','bundleJS', 'sass2css', 'pug2html'], () =>
     plugins.nodemon({
         script: path.join('dist', 'index.js'),
-        ext: 'js',
+        ext: 'js pug',
         ignore: ['node_modules/**/*.js', 'dist/**/*.js'],
-        tasks: ['copy', 'babel', 'sass2css', 'pug2html']
+        tasks: ['copy', 'babel','bundleJS', 'sass2css', 'pug2html']
     })
 );
 

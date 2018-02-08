@@ -1,6 +1,6 @@
 'use strict';
 
-const ObservationFormCtrl = ($scope, $state, $stateParams, $timeout, Upload, GradeService, TeacherService, ObservationService, ClusterService, AttachmentService, UtilService, ObservationFactory) => {
+const ObservationFormCtrl = ($scope, $state, $stateParams, $timeout, Upload, GradeService, TeacherService, ObservationService, ObservationTypeService, ClusterService, AttachmentService, UtilService, ObservationFactory) => {
 
     // load passed observation object
     if ($stateParams.obj) {
@@ -8,7 +8,15 @@ const ObservationFormCtrl = ($scope, $state, $stateParams, $timeout, Upload, Gra
     }
 
     let observationToBeDeleted, cluster_ids = [];
-
+    console.log("Loading types");
+    ObservationTypeService.get({
+        id: $scope.observation.observation_type_id
+    }, (res) =>{
+        $scope.observation_type_properties = res.data;
+        console.log(res.data, "asdcasdcasdcasdcasdc");
+    }, (err) => {
+        console.error(err, 'ERROR');
+    });
     // fetch data
     GradeService.query({
         id: $scope.observation.school.id
