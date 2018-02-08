@@ -24,13 +24,6 @@
                     span
                         img(src='assets/icons/search-icon.svg')
                     input(type='text' placeholder='Search' name='search' ng-model='search')
-                //- .input-group.l-flex
-                //-     p Sort By
-                //-     .c-select-group.l-flex
-                //-         select
-                //-             option Audi
-                //-             option BMW
-                //-             option Mercedes
                 .input-group.l-flex
                     p School
                     .c-select-group.l-flex
@@ -47,5 +40,5 @@
                     span.subject-color(ng-if='observation.subject.name') {{observation.subject.name}}
                 .c-observation__actions.l-flex-flex-end
                     img.ul-cursor-pointer(src='assets/icons/edit-icon.svg' ng-click='editObservation(observation)')
-                    img.ul-cursor-pointer(src='assets/icons/duplicate-icon.svg')
+                    //- img.ul-cursor-pointer(src='assets/icons/duplicate-icon.svg')
                     img.ul-cursor-pointer(src='assets/icons/delete-icon.svg' ng-click='openModal(observation)')

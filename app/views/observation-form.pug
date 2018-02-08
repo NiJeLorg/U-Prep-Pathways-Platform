@@ -23,7 +23,6 @@
             button(ng-click='deleteObservation()') Yes
             button(ng-click='closeDeleteModal()') Cancel
 .ul-padding-30
-    .ul-padding-30
         .c-view-all-observations-header
             .ul-cursor-pointer.l-flex(ui-sref='home')
                 img.ul-cursor-pointer(src='assets/icons/back-icon.svg')
@@ -38,7 +37,7 @@
             .c-observation-observation-form__actions
                 button(ng-click='submitObservation()') Submit
                 img.ul-cursor-pointer(src='assets/icons/settings-small-icon.svg' ng-click='openEditObservationModal()')
-                img.ul-cursor-pointer(src='assets/icons/duplicate-icon.svg')
+                //- img.ul-cursor-pointer(src='assets/icons/duplicate-icon.svg')
                 img.ul-cursor-pointer(src='assets/icons/delete-icon.svg' ng-click='openDeleteModal()')
 
         .c-observation-form-input-group.ul-margin-bottom-20
