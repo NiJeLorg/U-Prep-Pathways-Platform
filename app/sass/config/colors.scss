@@ -8,6 +8,9 @@ $dark-button-hover: #531648;
 $dark-button-pressed: #531648;
 $light-button-hover: #7d4c74;
 $light-button-pressed: #7d4c74;
+$yellow: #F7F0D2;
+$light-yellow: #FCF9EC;
+$blue: #4DA6DA;
 
 
 .grade-color {
@@ -26,4 +29,8 @@ $light-button-pressed: #7d4c74;
 
 .non-upsm-school {
     background: #ef4060;
+}
+
+.teacher-button {
+    background: #81ba3e;
 }
