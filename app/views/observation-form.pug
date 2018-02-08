@@ -25,8 +25,9 @@
 .ul-padding-30
     .ul-padding-30
         .c-view-all-observations-header
-            img.ul-cursor-pointer(src='assets/icons/back-icon.svg' ui-sref='home')
-            p VIEW ALL OBSERVATIONS
+            .ul-cursor-pointer.l-flex(ui-sref='home')
+                img.ul-cursor-pointer(src='assets/icons/back-icon.svg')
+                p VIEW ALL OBSERVATIONS
         .c-observation-observation-form
             .c-observation-observation-form__details
                 h3 {{observation.observation_type.name}} Observation
