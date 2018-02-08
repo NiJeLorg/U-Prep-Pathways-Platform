@@ -7,7 +7,7 @@ const ObservationFormCtrl = ($scope, $state, $stateParams, $timeout, Upload, Gra
         $scope.observation = $stateParams.obj;
     }
 
-    let observationToBeDeleted, clusters_ids = [];
+    let observationToBeDeleted, cluster_ids = [];
 
     // fetch data
     GradeService.query({
@@ -19,7 +19,10 @@ const ObservationFormCtrl = ($scope, $state, $stateParams, $timeout, Upload, Gra
     });
 
     ClusterService.query((res) => {
-        $scope.clusters = res.data;
+        $scope.clusters = res.data.map((cluster) => {
+            cluster.selected = `${$scope.observation.cluster_ids.includes(cluster.id)}`;
+            return cluster;
+        });
     }, (err) => {
         console.errror(err, 'ERROR');
     });
@@ -27,14 +30,15 @@ const ObservationFormCtrl = ($scope, $state, $stateParams, $timeout, Upload, Gra
 
     $scope.selectCluster = (value, cluster) => {
         if (value === true) {
-            clusters_ids.push(cluster.id);
+            if(!$scope.observation.cluster_ids.includes(cluster.id))
+                $scope.observation.cluster_ids.push(cluster.id);
+            cluster.selected = "true";
         } else {
-            if (clusters_ids.indexOf(cluster.id) !== -1) {
-                clusters_ids.splice(clusters_ids.indexOf(cluster.id), 1);
+            cluster.selected = "false";
+            if ($scope.observation.cluster_ids.indexOf(cluster.id) !== -1) {
+                $scope.observation.cluster_ids.splice($scope.observation.cluster_ids.indexOf(cluster.id), 1);
             }
         }
-
-        console.log(clusters_ids, 'clusterids');
     };
 
     $scope.uploadFiles = (files, errFiles) => {
@@ -62,6 +66,9 @@ const ObservationFormCtrl = ($scope, $state, $stateParams, $timeout, Upload, Gra
         });
     };
 
+    $scope.isSelectedCluster = (cluster_id) => {
+        return $scope.observation.cluster_ids.includes(cluster_id);
+    };
     $scope.updateTeachersBasedOnSelectedGrade = () => {
         TeacherService.query({
             schoolId: $scope.observation.school.id,
@@ -107,10 +114,9 @@ const ObservationFormCtrl = ($scope, $state, $stateParams, $timeout, Upload, Gra
     $scope.submitObservation = () => {
         ObservationService.update({
             id: $scope.observation.id,
-            clusters: []
         }, {
             description: $scope.observation.description,
-            clusters: clusters_ids
+            cluster_ids: $scope.observation.cluster_ids
         }, (res) => {
             $state.go('home');
         }, (err) => {
@@ -119,9 +125,6 @@ const ObservationFormCtrl = ($scope, $state, $stateParams, $timeout, Upload, Gra
     };
 
     $scope.removeAttachment = (obj, file) => {
-
-        console.log(file, 'file');
-
         obj.forEach((elem, index) => {
             if (elem.name === file.name) {
                 obj.splice(index, 1);
@@ -153,5 +156,6 @@ const ObservationFormCtrl = ($scope, $state, $stateParams, $timeout, Upload, Gra
         UtilService.closeModal('delete-observation-modal');
     };
 };
+
 
 export default ObservationFormCtrl;
