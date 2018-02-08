@@ -36,7 +36,6 @@
                 span.subject-color {{observation.subject.name}}
                 p CREATED {{observation.created_at | date:'short'}}
             .c-observation-observation-form__actions
-                button Saved
                 button(ng-click='submitObservation()') Submit
                 img.ul-cursor-pointer(src='assets/icons/settings-small-icon.svg' ng-click='openEditObservationModal()')
                 img.ul-cursor-pointer(src='assets/icons/duplicate-icon.svg')
@@ -79,6 +78,5 @@
                 input(type='radio' name='{{cluster.name}}' value='true' ng-change='selectCluster(true, cluster)' ng-model="cluster.selected")
                 input(type='radio' name='{{cluster.name}}' value='false' ng-change='selectCluster(false, cluster)' ng-model="cluster.selected")
         .submit-buttons-holder
-            button.saved-button Saved
             button.submit-button(ng-click='submitObservation()') Submit
 
