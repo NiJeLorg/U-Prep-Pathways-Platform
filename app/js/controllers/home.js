@@ -41,7 +41,8 @@ const HomeCtrl = ($scope, $state, ObservationService, SchoolService) => {
 
     $scope.editObservation = (observation) => {
         $state.go('observationForm', {
-            obj: observation
+            observationId: observation.id,
+            observation: observation
         });
     };
 };

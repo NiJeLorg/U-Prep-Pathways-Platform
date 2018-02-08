@@ -209,11 +209,15 @@ uprepApp.config(['$stateProvider', '$httpProvider', '$urlRouterProvider', '$loca
     controller: 'ObservationInputsCtrl',
     templateUrl: 'views/observation-inputs.html'
   }).state('observationForm', {
-    url: '/observation-form',
+    url: '/observation-form/:observationId',
     controller: 'ObservationFormCtrl',
     templateUrl: 'views/observation-form.html',
-    params: {
-      obj: null
+    resolve: {
+      observation: function observation($stateParams, ObservationService) {
+        return ObservationService.query({
+          id: $stateParams.observationId
+        }).$promise;
+      }
     }
   });
   $locationProvider.html5Mode(true);
@@ -47899,7 +47903,8 @@ var HomeCtrl = function HomeCtrl($scope, $state, ObservationService, SchoolServi
 
     $scope.editObservation = function (observation) {
         $state.go('observationForm', {
-            obj: observation
+            observationId: observation.id,
+            observation: observation
         });
     };
 };
@@ -48118,17 +48123,14 @@ exports.default = ObservationInputsCtrl;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-var ObservationFormCtrl = function ObservationFormCtrl($scope, $state, $stateParams, $timeout, Upload, GradeService, TeacherService, ObservationService, ClusterService, AttachmentService, UtilService, ObservationFactory) {
-
-    // load passed observation object
-    if ($stateParams.obj) {
-        $scope.observation = $stateParams.obj;
-    }
+var ObservationFormCtrl = function ObservationFormCtrl($scope, $state, $stateParams, $timeout, observation, Upload, GradeService, TeacherService, ObservationService, ClusterService, AttachmentService, UtilService, ObservationFactory) {
 
     var observationToBeDeleted = void 0,
         cluster_ids = [];
+    $scope.observation = observation.data;
 
     // fetch data
+
     GradeService.query({
         id: $scope.observation.school.id
     }, function (res) {
@@ -48228,12 +48230,13 @@ var ObservationFormCtrl = function ObservationFormCtrl($scope, $state, $statePar
         });
     };
 
-    $scope.submitObservation = function () {
+    $scope.submitObservation = function (status) {
         ObservationService.update({
             id: $scope.observation.id
         }, {
             description: $scope.observation.description,
-            cluster_ids: $scope.observation.cluster_ids
+            cluster_ids: $scope.observation.cluster_ids,
+            status: status
         }, function (res) {
             $state.go('home');
         }, function (err) {
@@ -48255,6 +48258,14 @@ var ObservationFormCtrl = function ObservationFormCtrl($scope, $state, $statePar
         }, function (err) {
             console.error(err, 'ERROR');
         });
+    };
+
+    $scope.openSubmitObservationModal = function () {
+        UtilService.openModal('submit-observation-modal');
+    };
+
+    $scope.closeSubmitObservationModal = function () {
+        UtilService.closeModal('submit-observation-modal');
     };
 
     $scope.openEditObservationModal = function () {

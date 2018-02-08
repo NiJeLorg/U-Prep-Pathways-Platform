@@ -75,11 +75,15 @@ uprepApp.config(['$stateProvider', '$httpProvider',
         templateUrl: 'views/observation-inputs.html'
       })
       .state('observationForm', {
-        url: '/observation-form',
+        url: '/observation-form/:observationId',
         controller: 'ObservationFormCtrl',
         templateUrl: 'views/observation-form.html',
-        params: {
-          obj: null
+        resolve: {
+          observation: ($stateParams, ObservationService) => {
+            return ObservationService.query({
+              id: $stateParams.observationId
+            }).$promise;
+          }
         }
       });
     $locationProvider.html5Mode(true);

@@ -5,7 +5,7 @@
         background: $dark-grey;
     }
     main {
-        padding: 20px 20px 30px 20px;
+        padding: 20px 30px 30px 30px;
         background: #eceded;
     }
     .input-group {
@@ -35,15 +35,22 @@
 }
 
 .c-input-text-group {
-    padding: 12px;
-    background: #fff;
-    border: 1px solid #dadbdb;
-    border-radius: 4px;
-    span {
-        margin-right: 5px;
-    }
+    margin-left: 0 !important;
+    position: relative;
     input {
-        border: none;
+        width: 250px;
+        height: 40px;
+        background: rgba(255, 255, 255, 0.80);
+        border: 1px solid rgba(151, 151, 151, 0.20);
+        border-radius: 4px;
+        padding-left: 30px;
+    }
+    input:focus {
+        border: 2px solid #b3bbc3;
+    }
+    span {
+        position: absolute;
+        left: 10px;
     }
 }
 
@@ -64,7 +71,7 @@
     display: flex;
     flex-wrap: wrap;
     button {
-        width: 260px;
+        width: 200px;
         margin-right: 20px;
     }
 }
@@ -123,10 +130,10 @@
     margin-bottom: 30px;
     .c-observation__date {
         color: #808285;
-        flex-basis: 20%;
+        flex-basis: 15%;
     }
     .c-observation__details {
-        flex-basis: 60%;
+        flex-basis: 80%;
         h3 {
             font-weight: bold;
             margin-top: 0;
@@ -136,10 +143,26 @@
             margin-right: 10px;
         }
     }
+    .c-observation__badge {
+        position: relative;
+        flex-basis: 5%;
+        .holder {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            top: -30px;
+            p {
+                font-weight: bold;
+                color: #31a35a;
+            }
+        }
+    }
     .c-observation__actions {
-        flex-basis: 20%;
+        flex-basis: 10%;
         img {
-            margin-left: 15px;
+            margin-left: 25px;
         }
     }
 }

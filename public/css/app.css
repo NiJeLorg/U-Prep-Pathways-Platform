@@ -108,7 +108,7 @@ select {
     padding: 20px;
     background: #d6d7d8; }
   .c-list-observations main {
-    padding: 20px 20px 30px 20px;
+    padding: 20px 30px 30px 30px;
     background: #eceded; }
   .c-list-observations .input-group {
     margin-left: 20px; }
@@ -129,14 +129,20 @@ select {
   margin-right: 20px; }
 
 .c-input-text-group {
-  padding: 12px;
-  background: #fff;
-  border: 1px solid #dadbdb;
-  border-radius: 4px; }
-  .c-input-text-group span {
-    margin-right: 5px; }
+  margin-left: 0 !important;
+  position: relative; }
   .c-input-text-group input {
-    border: none; }
+    width: 250px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(151, 151, 151, 0.2);
+    border-radius: 4px;
+    padding-left: 30px; }
+  .c-input-text-group input:focus {
+    border: 2px solid #b3bbc3; }
+  .c-input-text-group span {
+    position: absolute;
+    left: 10px; }
 
 .c-select-group {
   border: 1px solid #c6c6c6;
@@ -153,7 +159,7 @@ select {
   display: flex;
   flex-wrap: wrap; }
   .c-buttons-holder button {
-    width: 260px;
+    width: 200px;
     margin-right: 20px; }
 
 .c-triangle-breadcrumb {
@@ -205,19 +211,32 @@ select {
   margin-bottom: 30px; }
   .c-observation .c-observation__date {
     color: #808285;
-    flex-basis: 20%; }
+    flex-basis: 15%; }
   .c-observation .c-observation__details {
-    flex-basis: 60%; }
+    flex-basis: 80%; }
     .c-observation .c-observation__details h3 {
       font-weight: bold;
       margin-top: 0;
       color: #681c5b; }
     .c-observation .c-observation__details span {
       margin-right: 10px; }
+  .c-observation .c-observation__badge {
+    position: relative;
+    flex-basis: 5%; }
+    .c-observation .c-observation__badge .holder {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      top: -30px; }
+      .c-observation .c-observation__badge .holder p {
+        font-weight: bold;
+        color: #31a35a; }
   .c-observation .c-observation__actions {
-    flex-basis: 20%; }
+    flex-basis: 10%; }
     .c-observation .c-observation__actions img {
-      margin-left: 15px; }
+      margin-left: 25px; }
 
 .c-observation-form-input-group {
   background: #f5f5f6;

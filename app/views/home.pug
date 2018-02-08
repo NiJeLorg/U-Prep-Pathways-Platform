@@ -28,8 +28,9 @@
                     p School
                     .c-select-group.l-flex
                         select
-                            option(ng-repeat='school in schools') {{school.name}}
-            .c-observation.l-flex-space-between.ul-padding-30(ng-repeat='observation in observations | filter:search')
+                            option(value='' disabled selected ) Select School
+                            option(ng-repeat='school in schools' ng-model='selectedSchool') {{school.name}}
+            .c-observation.l-flex-space-between.ul-padding-30(ng-repeat='observation in observations | filter:search |filter:selectedSchool')
                 .c-observation__date
                     p Created
                     p {{observation.created_at | date: 'shortDate'}}
@@ -38,7 +39,11 @@
                     span.grade-color(ng-if='observation.grade.name') {{observation.grade.name}}
                     span.teacher-color(ng-if='observation.teacher.name') {{observation.teacher.name}}
                     span.subject-color(ng-if='observation.subject.name') {{observation.subject.name}}
+                .c-observation__badge(ng-if='observation.status===1')
+                    .holder
+                        img(src='assets/icons/submitted-badge-icon.svg')
+                        p SUBMITTED
                 .c-observation__actions.l-flex-flex-end
-                    img.ul-cursor-pointer(src='assets/icons/edit-icon.svg' ng-click='editObservation(observation)')
+                    img.ul-cursor-pointer(ng-if='observation.status ===0' src='assets/icons/edit-icon.svg' ng-click='editObservation(observation)')
                     //- img.ul-cursor-pointer(src='assets/icons/duplicate-icon.svg')
                     img.ul-cursor-pointer(src='assets/icons/delete-icon.svg' ng-click='openModal(observation)')
