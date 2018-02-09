@@ -1,0 +1,53 @@
+.ul-padding-30
+    .ul-padding-30
+        .c-view-all-observations-header
+            img.ul-cursor-pointer(src='assets/icons/back-icon.svg' ui-sref='home')
+            p VIEW ALL SCORES
+        .c-observation-observation-form
+            .c-observation-observation-form__details
+                h3 Ms. Ng
+                span.teacher-color Teacher: 1st Score
+                p CREATED ON 12/16/17 AT 5:00PM
+            .c-observation-observation-form__actions
+                    button Saved
+                    button Submit
+                    img(src='assets/icons/settings-small-icon.svg')
+                    img(src='assets/icons/duplicate-icon.svg')
+                    img(src='assets/icons/delete-icon.svg')
+        .c-score-form-input-group.ul-margin-bottom-20
+            h2 
+                span Section 1 of 5: 
+                strong Culture of High Expectations 
+                img(src="assets/icons/question-mark.svg")
+            p Score the teacher from 1-4 stars on the following indicator
+            .c-accordion(ng-class="{'c-accordion-collapsed': !toggleAccordion}" )
+                .c-accordion-header(ng-click="toggleAccordion = !toggleAccordion")
+                    span.accordion-title College Bound 
+                    img(src="assets/icons/question-mark.svg")
+                .c-accordion-content
+                    .c-radio-group.c-accordion-radio-group.l-flex.ul-margin-bottom-20(ng-repeat="indicator in indicators")
+                        p {{indicator}}
+                        label.c-accordion-radio-group-label
+                            input(type='radio' name='{{indicator}}' value='N/A') 
+                            span.radio-label N/A
+                        label.c-accordion-radio-group-label
+                            input(type='radio' name='{{indicator}}' value='0') 
+                            span.radio-label 0
+                        label.c-accordion-radio-group-label
+                            input(type='radio' name='{{indicator}}' value='1') 
+                            span.radio-label 1
+                        label.c-accordion-radio-group-label
+                            input(type='radio' name='{{indicator}}' value='2') 
+                            span.radio-label 2
+                        label.c-accordion-radio-group-label
+                            input(type='radio' name='{{indicator}}' value='3') 
+                            span.radio-label 3
+                        label.c-accordion-radio-group-label
+                            input(type='radio' name='{{indicator}}' value='4') 
+                            span.radio-label 4
+                        .c-accordion-actions
+                            button.c-accordion_actions_button.add
+                            button.c-accordion_actions_button.attach(ng-if="indicator === 'Grading'")
+
+                        
+                        

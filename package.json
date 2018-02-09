@@ -4,8 +4,9 @@
   "description": "This repository holds NiJeL's work with the University Preparatory Academy in Detroit, MI on the U Prep Pathways Platform",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "test": "mocha --recursive server/test/"
+    "start": "gulp serve",
+    "test": "mocha --recursive server/test/",
+    "build": "gulp"
   },
   "repository": {
     "type": "git",
@@ -27,27 +28,55 @@
     "express": "^4.15.4",
     "mocha": "^4.0.1",
     "morgan": "^1.8.2",
-    "ng-file-upload": "^12.2.13",
-    "pg": "^7.4.0",
-    "pg-hstore": "^2.3.2",
-    "sequelize": "^4.13.2",
-    "sequelize-cli": "^3.0.0"
-  },
-  "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-loader": "^7.1.2",
-    "babel-preset-env": "^1.6.0",
-    "browser-sync": "^2.18.13",
     "gulp": "^3.9.1",
     "gulp-nodemon": "^2.2.1",
     "gulp-pug": "^3.3.0",
     "gulp-sass": "^3.1.0",
+    "moment": "^2.20.1",
+    "ng-file-upload": "^12.2.13",
+    "path": "^0.12.7",
+    "pg": "^7.4.1",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^4.31.2",
+    "swagger-ui-express": "^2.0.14",
+    "yamljs": "^0.3.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.2",
+    "babel-plugin-add-module-exports": "^0.2.1",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-es2015": "^6.24.1",
+    "babel-preset-stage-2": "^6.24.1",
+    "browser-sync": "^2.23.5",
+    "del": "^3.0.0",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^7.0.0",
+    "gulp-load-plugins": "^1.5.0",
+    "gulp-nodemon": "^2.0.6",
+    "gulp-pug": "^3.3.0",
+    "gulp-sass": "^3.1.0",
+    "gulp-newer": "^1.1.0",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-util": "^3.0.7",
     "jest": "^21.2.1",
-    "webpack": "^3.6.0",
+    "run-sequence": "^2.2.1",
+    "sequelize-cli": "^3.2.0",
+    "webpack": "^3.10.0",
     "webpack-stream": "^4.0.0"
   },
   "engines": {
     "node": "8.2.1",
     "npm": "5.4.2"
+  },
+  "babel": {
+    "presets": [
+      "es2015",
+      "stage-2"
+    ],
+    "plugins": [
+      "add-module-exports"
+    ]
   }
 }

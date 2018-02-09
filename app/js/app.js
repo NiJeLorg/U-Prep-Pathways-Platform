@@ -25,8 +25,7 @@ import ClusterService from './services/cluster-service';
 import AttachmentService from './services/attachment-service';
 import UtilService from './services/utilities-service';
 import ObservationFactory from './factories/observation-factory';
-
-
+import MakeScoreCtrl from './controllers/make-score';
 
 const uprepApp = angular.module('uprepApp', [uiRouter, ngFileUpload, ngResource]);
 
@@ -46,7 +45,8 @@ uprepApp
   .service('ClusterService', ClusterService)
   .service('AttachmentService', AttachmentService)
   .service('UtilService', UtilService)
-  .factory('ObservationFactory', ObservationFactory);
+  .factory('ObservationFactory', ObservationFactory)
+  .controller('MakeScoreCtrl', MakeScoreCtrl);
 
 uprepApp.config(['$stateProvider', '$httpProvider',
   '$urlRouterProvider', '$locationProvider', ($stateProvider, $httpProvider, $urlRouterProvider, $locationProvider) => {
@@ -85,6 +85,26 @@ uprepApp.config(['$stateProvider', '$httpProvider',
             }).$promise;
           }
         }
+      })
+      .state('score', {
+        url:'/score',
+        controller: 'MakeScoreCtrl',
+        templateUrl:'views/score.html'
+      })
+      .state('teacher', {
+        url:'/teacher',
+        controller: 'MakeScoreCtrl',
+        templateUrl:'views/teacher.html'
+      })
+      .state('scoreDetails', {
+        url:'/score-details',
+        controller: 'MakeScoreCtrl',
+        templateUrl:'views/score-details.html'
+      })
+      .state('scoreForm', {
+        url:'/score-form',
+        controller: 'MakeScoreCtrl',
+        templateUrl:'views/score-form.html'
       });
     $locationProvider.html5Mode(true);
   }

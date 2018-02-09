@@ -1,0 +1,375 @@
+swagger: "2.0"
+info:
+  version: "0.0.1"
+  title: Uprep API
+  description: |
+    ## Structure
+
+    ### The Envelope
+    Every response is contained by an envelope. That is, each response has a
+    predictable set of keys with which you can expect to interact:
+    ```json
+    {
+        "meta": {
+            "code": 200
+        },
+        "data": {
+            ...
+        },
+        "pagination": {
+            "next_url": "...",
+            "next_max_id": "13872296"
+        }
+    }
+    ```
+
+    #### META
+    The meta key is used to communicate extra information about the response to
+    the developer. If all goes well, you'll only ever see a code key with value
+    200. However, sometimes things go wrong, and in that case you might see a
+    response like:
+    ```json
+    {
+        "meta": {
+            "error_type": "OAuthException",
+            "code": 400,
+            "error_message": "..."
+        }
+    }
+    ```
+
+    #### DATA
+    The data key is the meat of the response. It may be a list or dictionary,
+    but either way this is where you'll find the data you requested.
+    #### PAGINATION
+    Sometimes you just can't get enough. For this reason, we've provided a
+    convenient way to access more data in any request for sequential data.
+    Simply call the url in the next_url parameter and we'll respond with the
+    next set of data.
+    ```json
+    {
+        ...
+        "pagination": {
+            "next_url": "https://api.uprep.com/v1/observations?access_token=fb2e77d.47a0479900504cb3ab4a1f626d174d2d&max_id=13872296",
+            "next_max_id": "13872296"
+        }
+    }
+    ```
+    On views where pagination is present, we also support the "count" parameter.
+    Simply set this to the number of items you'd like to receive. Note that the
+    default values should be fine for most applications - but if you decide to
+    increase this number there is a maximum value defined on each endpoint.
+
+
+# during dev, should point to your local machine
+host: localhost:10010
+# basePath prefixes all resource paths
+basePath: /
+#
+schemes:
+  # tip: remove http to make production-grade
+  - http
+  - https
+# format of bodies a client can send (Content-Type)
+consumes:
+  - application/json
+# format of the responses to the client (Accepts)
+produces:
+  - application/json
+tags:
+- name: "schools"
+  description: "Everything about schools"
+- name: "observations"
+  description: "Everything about observations"
+- name: "observation_types"
+  description: "Everything about observation types"
+- name: "grades"
+  description: "Everything about grades"
+- name: "teachers"
+  description: "Everything about teachers"
+- name: "subjects"
+  description: "Everything about subjects"
+
+paths:
+  /schools:
+    get:
+      tags:
+      - "schools"
+      summary: "Get list of schools"
+      description: "Fetches a list of schools without any nested properties"
+      operationId: "getSchools"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              data:
+                type: "array"
+                items:
+                  $ref: "#/definitions/School"
+  /schools/{id}:
+    get:
+      tags:
+      - "schools"
+      summary: "Finds a school using its Id"
+      description: "Fetches a school using its Id including nested properties such as the grades available in the school"
+      operationId: "findSchoolById"
+      produces:
+      - "application/json"
+      parameters:
+        - name: id
+          in: path
+          description: ID of school to fetch
+          required: true
+          type: integer
+          format: int64
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              data:
+                type: "array"
+                items:
+                  $ref: "#/definitions/School"
+  /observation_types:
+    get:
+      tags:
+      - "observation_types"
+      summary: "Get list of observation types"
+      description: "Gets a list of the different observation types"
+      operationId: "getObservationTypes"
+      produces:
+      - "application/json"
+      responses:
+        200:
+         description: OK
+         schema:
+           type: object
+           properties:
+             data:
+              type: "array"
+              items:
+                $ref: "#/definitions/ObservationType"
+  /grades/{id}:
+    get:
+      tags:
+      - "grades"
+      summary: "Finds a grade using its id"
+      description: "Fetches details for a particular grade using its Id including nested properties such as all the
+      22eeeeesdddteachers for that particular grade"
+      operationId: "findGradeById"
+      produces:
+      - "application/json"
+      parameters:
+      - name: id
+        in: path
+        description: ID of grade
+        type: integer
+        required: true
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              data:
+                type: "array"
+                items:
+                  $ref: "#/definitions/Grade"
+  /teachers/{id}:
+    get:
+      tags:
+      - "teachers"
+      summary: "Finds a teacher using their id"
+      description: "Multiple status values can be provided with comma separated strings"
+      operationId: "findTeacherById"
+      produces:
+      - "application/json"
+      parameters:
+      - name: id
+        in: path
+        description: ID of teacher
+        type: integer
+        required: true
+      responses:
+        200:
+         description: OK
+         schema:
+           type: object
+           properties:
+             data:
+              type: "array"
+              items:
+                $ref: "#/definitions/Teacher"
+  /observations:
+    get:
+      tags:
+      - "observations"
+      summary: "Get list of schools"
+      description: "Multiple status values can be provided with comma separated strings"
+      operationId: "getObservations"
+      responses:
+        200:
+         description: OK
+         schema:
+           type: object
+           properties:
+             data:
+              type: "array"
+              items:
+                $ref: "#/definitions/Observation"
+    post:
+      tags:
+        - "observations"
+      summary: "Save observation data"
+      operationId: "saveObservation"
+      parameters:
+        - in: body
+          name: body
+          description: "Observation data that needs to be saved"
+          schema:
+            $ref: "#/definitions/Observation"
+      responses:
+        201:
+          description: OK
+
+# complex objects have schema definitions
+definitions:
+  School:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+      grades:
+        type: "array"
+        items:
+          $ref: "#/definitions/Grade"
+  Teacher:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+      subjects:
+        type: "array"
+        items:
+          $ref: "#/definitions/Subject"
+  Subject:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+  Grade:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+      teachers:
+        type: "array"
+        items:
+          $ref: "#/definitions/Teacher"
+  ObservationType:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+      properties:
+        type: "array"
+        items:
+          $ref: "#/definitions/ObservationTypeProperty"
+  ObservationTypeProperty:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+          format: "int64"
+        name:
+          type: "string"
+        label:
+          type: "string"
+        help_text:
+          type: "string"
+  ObservationEvidence:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+          format: "int64"
+        name:
+          type: "string"
+        link:
+          type: "string"
+  ObservationTypePropertyData:
+        type: "object"
+        properties:
+          observation_id:
+            type: "integer"
+            format: "int64"
+          observation_property_id:
+            type: "integer"
+            format: "int64"
+          value:
+            type: "string"
+  Observation:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+      description:
+        type: "string"
+      created_at:
+        type: "string"
+      updated_at:
+        type: "string"
+      observation_type:
+        $ref: "#/definitions/ObservationType"
+      teacher_id:
+        type: "integer"
+        format: "int64"
+      grade_id:
+        type: "integer"
+        format: "int64"
+      subject_id:
+        type: "integer"
+        format: "int64"
+      school_id:
+        type: "integer"
+        format: "int64"
+      teacher:
+        $ref: "#/definitions/Teacher"
+      subject:
+        $ref: "#/definitions/Subject"
+      school:
+        $ref: "#/definitions/School"
+      grade:
+        $ref: "#/definitions/Grade"
+      attachments:
+        type: "array"
+        items:
+          $ref: "#/definitions/ObservationEvidence"
+      property_data:
+        type: "array"
+        items:
+          $ref: "#/definitions/ObservationTypePropertyData"
