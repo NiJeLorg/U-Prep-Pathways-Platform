@@ -13,6 +13,14 @@ module.exports = (sequelize, DataTypes) => {
             foreignKey: 'observation_type_id',
             as: 'observation_type'
         });
+        ObservationTypeProperty.belongsToMany(models.observation, {
+            foreignKey: 'observation_type_property_id',
+            through: models.observation_type_property_data,
+            onDelete: 'CASCADE',
+            as: 'observations'
+        });
     };
+
+
     return ObservationTypeProperty;
 };

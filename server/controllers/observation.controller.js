@@ -1,5 +1,5 @@
 "use strict";
-import {school, observation, observation_evidence, observation_cluster, cluster, observation_type, observation_type_property_data} from './../models';
+import {school, observation, observation_evidence, observation_cluster, cluster, observation_type, observation_type_property_data, observation_type_property} from './../models';
 import Sequelize from 'sequelize';
 
 const Op = Sequelize.Op;
@@ -15,7 +15,7 @@ const get = async (req, res) => {
 const list = async (req, res) => {
     const observations = await observation
         .all({
-            include: ['attachments', 'school', 'clusters', 'subject', 'teacher', 'grade', 'observation_type', 'observation_type_property_data']
+            include: ['attachments', 'school', 'clusters', 'subject', 'teacher', 'grade', 'observation_type', 'observation_type_property']
         });
     res.sendData(observations)
 };
@@ -27,7 +27,7 @@ const list = async (req, res) => {
 const load = async (req, res, next, id) => {
     const observationObj = await observation
         .findById(req.params.observationId, {
-            include: ['attachments', 'subject', 'school', 'teacher', 'grade', 'observation_type', 'clusters', 'observation_type_property_data']
+            include: ['attachments', 'subject', 'school', 'teacher', 'grade', 'observation_type', 'clusters', 'observation_type_property']
         });
     if (!observationObj) {
         return res.sendNotFound();
@@ -55,6 +55,22 @@ const update = async (req, res, next) => {
     const attachments = generateAttachments(req, savedObseravtion);
     await observation_evidence.bulkCreate(attachments);
     const cluster_ids = req.body.cluster_ids;
+    const observation_type_property_data = req.body.observation_type_property_data;
+    console.log(observation_type_property_data, "TADADADASD");
+    console.log(observation_type_property_data[0]['1'], "TADADADASD");
+
+    //Save property Data
+    if(observation_type_property_data){
+        for(let propertyData of observation_type_property_data){
+            console.log(propertyData);
+            const oType = await observation_type_property.findById(Object.keys(propertyData)[0]);
+            if (oType){
+                await oType.addObservations(observation,{through:{value: Object.values(propertyData)[0]}});
+            }
+
+        }
+    }
+
     if (cluster_ids) {
         await observation_cluster.destroy({
             where: {observation_id: observation.id, cluster_id: {[Op.notIn]: cluster_ids}}
@@ -70,6 +86,9 @@ const update = async (req, res, next) => {
     res.sendData(savedObseravtion)
 };
 
+const saveObservationTypePropertyData = async(data)=>{
+    await observation_type_property_data.bulkCreate(data);
+};
 
 /**
  * Delete observation.

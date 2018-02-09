@@ -2,12 +2,6 @@
 module.exports = {
     up: (queryInterface, Sequelize) => {
         return queryInterface.createTable('observation_type_property_data', {
-            id: {
-                allowNull: false,
-                autoIncrement: true,
-                primaryKey: true,
-                type: Sequelize.INTEGER
-            },
             observation_id: {
                 allowNull: false,
                 type: Sequelize.INTEGER

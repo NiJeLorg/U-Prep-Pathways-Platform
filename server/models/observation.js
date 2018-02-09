@@ -11,6 +11,14 @@ module.exports = (sequelize, DataTypes) => {
                 if(this.clusters)
                     return this.clusters.map(cluster => cluster.id);
                 return [];
+            },
+            observation_type_property_data: function (){
+                if(this.observation_type_property){
+                    return this.observation_type_property.map((property) => {
+                       return  {[property.id]: property.observation_type_property_data.value}
+                    })
+                }
+                return [];
             }
         },
     });
@@ -44,11 +52,13 @@ module.exports = (sequelize, DataTypes) => {
             hooks: true
         });
 
-        Observation.hasMany(models.observation_type_property_data, {
+
+
+        Observation.belongsToMany(models.observation_type_property, {
             foreignKey: 'observation_id',
-            as: 'observation_type_property_data',
+            through: models.observation_type_property_data,
+            as: 'observation_type_property',
             onDelete: 'CASCADE',
-            hooks: true
         });
     };
     return Observation;
