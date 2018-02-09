@@ -32,6 +32,16 @@
             button(ng-click='submitObservation(1)') Submit
             button(ng-click='submitObservation(0)') Save as Draft
             button(ng-click='closeSubmitObservationModal()') Cancel
+.c-modal.submitted-observation-modal
+    .c-modal__modal-content
+        .l-flex
+            .c-modal__badge
+                img(src='assets/icons/submitted-badge-icon.svg')
+            span(style='margin-left: 60px')
+                h2 Thank you for Submitting Your Observation
+                p Your observation will now be used for Scoring.
+
+
 .ul-padding-30
         .c-view-all-observations-header
             .ul-cursor-pointer.l-flex(ui-sref='home')

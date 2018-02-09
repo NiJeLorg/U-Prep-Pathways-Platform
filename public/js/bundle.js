@@ -48238,7 +48238,12 @@ var ObservationFormCtrl = function ObservationFormCtrl($scope, $state, $statePar
             cluster_ids: $scope.observation.cluster_ids,
             status: status
         }, function (res) {
-            $state.go('home');
+            UtilService.closeModal('submit-observation-modal');
+            UtilService.openModal('submitted-observation-modal');
+            $timeout(function () {
+                UtilService.closeModal('submitted-observation-modal');
+                $state.go('home');
+            }, 4000);
         }, function (err) {
             console.log(err, 'err');
         });

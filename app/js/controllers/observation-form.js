@@ -117,7 +117,12 @@ const ObservationFormCtrl = ($scope, $state, $stateParams, $timeout, observation
             cluster_ids: $scope.observation.cluster_ids,
             status: status
         }, (res) => {
-            $state.go('home');
+            UtilService.closeModal('submit-observation-modal');
+            UtilService.openModal('submitted-observation-modal');
+            $timeout(() => {
+                UtilService.closeModal('submitted-observation-modal');
+                $state.go('home');
+            }, 4000);
         }, (err) => {
             console.log(err, 'err');
         });

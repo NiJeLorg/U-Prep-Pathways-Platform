@@ -352,6 +352,10 @@ select {
   overflow: auto;
   background-color: black;
   background-color: rgba(0, 0, 0, 0.4); }
+  .c-modal .c-modal__badge {
+    position: absolute;
+    margin-top: -41px;
+    flex-basis: 10%; }
   .c-modal .c-modal__modal-content {
     margin: auto;
     width: 40%;
