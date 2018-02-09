@@ -60,14 +60,14 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 2);
+/******/ 	return __webpack_require__(__webpack_require__.s = 1);
 /******/ })
 /************************************************************************/
 /******/ ([
 /* 0 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(3);
+__webpack_require__(2);
 module.exports = angular;
 
 
@@ -78,114 +78,101 @@ module.exports = angular;
 "use strict";
 
 
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-var ObservationFactory = function ObservationFactory() {
-
-    var obj = {};
-
-    return obj;
-};
-
-exports.default = ObservationFactory;
-
-/***/ }),
-/* 2 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
 var _angular = __webpack_require__(0);
 
 var _angular2 = _interopRequireDefault(_angular);
 
-var _angularjs = __webpack_require__(4);
+var _angularjs = __webpack_require__(3);
 
 var _angularjs2 = _interopRequireDefault(_angularjs);
 
-var _angularResource = __webpack_require__(6);
+var _angularResource = __webpack_require__(5);
 
 var _angularResource2 = _interopRequireDefault(_angularResource);
 
-var _ngFileUpload = __webpack_require__(8);
+var _ngFileUpload = __webpack_require__(7);
 
 var _ngFileUpload2 = _interopRequireDefault(_ngFileUpload);
 
-var _home = __webpack_require__(10);
+var _home = __webpack_require__(9);
 
 var _home2 = _interopRequireDefault(_home);
 
-var _nav = __webpack_require__(11);
+var _nav = __webpack_require__(10);
 
 var _nav2 = _interopRequireDefault(_nav);
 
-var _school = __webpack_require__(12);
+var _school = __webpack_require__(11);
 
 var _school2 = _interopRequireDefault(_school);
 
-var _observationType = __webpack_require__(13);
+var _observationType = __webpack_require__(12);
 
 var _observationType2 = _interopRequireDefault(_observationType);
 
-var _observationInputs = __webpack_require__(14);
+var _observationInputs = __webpack_require__(13);
 
 var _observationInputs2 = _interopRequireDefault(_observationInputs);
 
-var _observationForm = __webpack_require__(15);
+var _observationForm = __webpack_require__(14);
 
 var _observationForm2 = _interopRequireDefault(_observationForm);
 
-var _schoolService = __webpack_require__(16);
+var _schoolService = __webpack_require__(15);
 
 var _schoolService2 = _interopRequireDefault(_schoolService);
 
-var _observationTypeService = __webpack_require__(17);
+var _observationTypeService = __webpack_require__(16);
 
 var _observationTypeService2 = _interopRequireDefault(_observationTypeService);
 
-var _gradeService = __webpack_require__(18);
+var _gradeService = __webpack_require__(17);
 
 var _gradeService2 = _interopRequireDefault(_gradeService);
 
-var _teacherService = __webpack_require__(19);
+var _teacherService = __webpack_require__(18);
 
 var _teacherService2 = _interopRequireDefault(_teacherService);
 
-var _subjectService = __webpack_require__(20);
+var _subjectService = __webpack_require__(19);
 
 var _subjectService2 = _interopRequireDefault(_subjectService);
 
-var _observationService = __webpack_require__(21);
+var _observationService = __webpack_require__(20);
 
 var _observationService2 = _interopRequireDefault(_observationService);
 
-var _clusterService = __webpack_require__(22);
+var _clusterService = __webpack_require__(21);
 
 var _clusterService2 = _interopRequireDefault(_clusterService);
 
-var _attachmentService = __webpack_require__(23);
+var _attachmentService = __webpack_require__(22);
 
 var _attachmentService2 = _interopRequireDefault(_attachmentService);
 
-var _utilitiesService = __webpack_require__(24);
+var _utilitiesService = __webpack_require__(23);
 
 var _utilitiesService2 = _interopRequireDefault(_utilitiesService);
 
-var _observationFactory = __webpack_require__(1);
+var _observationFactory = __webpack_require__(24);
 
 var _observationFactory2 = _interopRequireDefault(_observationFactory);
 
+var _makeScore = __webpack_require__(25);
+
+var _makeScore2 = _interopRequireDefault(_makeScore);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var uprepApp = _angular2.default.module('uprepApp', [_angularjs2.default, _ngFileUpload2.default, _angularResource2.default]);
 
 // load services
 
 
 // load controllers
-var uprepApp = _angular2.default.module('uprepApp', [_angularjs2.default, _ngFileUpload2.default, _angularResource2.default]);
 
-uprepApp.controller('NavCtrl', _nav2.default).controller('HomeCtrl', _home2.default).controller('SchoolCtrl', _school2.default).controller('ObservationTypeCtrl', _observationType2.default).controller('ObservationInputsCtrl', _observationInputs2.default).controller('ObservationFormCtrl', _observationForm2.default).service('SchoolService', _schoolService2.default).service('ObservationTypeService', _observationTypeService2.default).service('GradeService', _gradeService2.default).service('TeacherService', _teacherService2.default).service('SubjectService', _subjectService2.default).service('ObservationService', _observationService2.default).service('ClusterService', _clusterService2.default).service('AttachmentService', _attachmentService2.default).service('UtilService', _utilitiesService2.default).factory('ObservationFactory', _observationFactory2.default);
+
+uprepApp.controller('NavCtrl', _nav2.default).controller('HomeCtrl', _home2.default).controller('SchoolCtrl', _school2.default).controller('ObservationTypeCtrl', _observationType2.default).controller('ObservationInputsCtrl', _observationInputs2.default).controller('ObservationFormCtrl', _observationForm2.default).service('SchoolService', _schoolService2.default).service('ObservationTypeService', _observationTypeService2.default).service('GradeService', _gradeService2.default).service('TeacherService', _teacherService2.default).service('SubjectService', _subjectService2.default).service('ObservationService', _observationService2.default).service('ClusterService', _clusterService2.default).service('AttachmentService', _attachmentService2.default).service('UtilService', _utilitiesService2.default).factory('ObservationFactory', _observationFactory2.default).controller('MakeScoreCtrl', _makeScore2.default);
 
 uprepApp.config(['$stateProvider', '$httpProvider', '$urlRouterProvider', '$locationProvider', function ($stateProvider, $httpProvider, $urlRouterProvider, $locationProvider) {
 
@@ -219,12 +206,28 @@ uprepApp.config(['$stateProvider', '$httpProvider', '$urlRouterProvider', '$loca
         }).$promise;
       }
     }
+  }).state('score', {
+    url: '/score',
+    controller: 'MakeScoreCtrl',
+    templateUrl: 'views/score.html'
+  }).state('teacher', {
+    url: '/teacher',
+    controller: 'MakeScoreCtrl',
+    templateUrl: 'views/teacher.html'
+  }).state('scoreDetails', {
+    url: '/score-details',
+    controller: 'MakeScoreCtrl',
+    templateUrl: 'views/score-details.html'
+  }).state('scoreForm', {
+    url: '/score-form',
+    controller: 'MakeScoreCtrl',
+    templateUrl: 'views/score-form.html'
   });
   $locationProvider.html5Mode(true);
 }]);
 
 /***/ }),
-/* 3 */
+/* 2 */
 /***/ (function(module, exports) {
 
 /**
@@ -34118,7 +34121,7 @@ $provide.value("$locale", {
 !window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
 
 /***/ }),
-/* 4 */
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -34129,7 +34132,7 @@ $provide.value("$locale", {
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
 (function (global, factory) {
-	 true ? factory(exports, __webpack_require__(0), __webpack_require__(5)) :
+	 true ? factory(exports, __webpack_require__(0), __webpack_require__(4)) :
 	typeof define === 'function' && define.amd ? define(['exports', 'angular', '@uirouter/core'], factory) :
 	(factory((global['@uirouter/angularjs'] = {}),global.angular,global['@uirouter/core']));
 }(this, (function (exports,ng_from_import,core) { 'use strict';
@@ -36138,7 +36141,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 
 /***/ }),
-/* 5 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -44061,20 +44064,20 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 
 /***/ }),
-/* 6 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(7);
+__webpack_require__(6);
 module.exports = 'ngResource';
 
 
 /***/ }),
-/* 7 */
+/* 6 */
 /***/ (function(module, exports) {
 
 /**
- * @license AngularJS v1.6.6
- * (c) 2010-2017 Google, Inc. http://angularjs.org
+ * @license AngularJS v1.6.9
+ * (c) 2010-2018 Google, Inc. http://angularjs.org
  * License: MIT
  */
 (function(window, angular) {'use strict';
@@ -44127,13 +44130,8 @@ function shallowClearAndCopy(src, dst) {
  * @name ngResource
  * @description
  *
- * # ngResource
- *
  * The `ngResource` module provides interaction support with RESTful services
  * via the $resource service.
- *
- *
- * <div doc-module-components="ngResource"></div>
  *
  * See {@link ngResource.$resourceProvider} and {@link ngResource.$resource} for usage.
  */
@@ -44369,13 +44367,13 @@ function shallowClearAndCopy(src, dst) {
  *
  *   - `toJSON`: It returns a simple object without any of the extra properties added as part of
  *     the Resource API. This object can be serialized through {@link angular.toJson} safely
- *     without attaching Angular-specific fields. Notice that `JSON.stringify` (and
+ *     without attaching AngularJS-specific fields. Notice that `JSON.stringify` (and
  *     `angular.toJson`) automatically use this method when serializing a Resource instance
  *     (see [MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify#toJSON%28%29_behavior)).
  *
  * @example
  *
- * # Credit card resource
+ * ### Credit card resource
  *
  * ```js
      // Define CreditCard class
@@ -44420,7 +44418,7 @@ function shallowClearAndCopy(src, dst) {
  *
  * @example
  *
- * # User resource
+ * ### User resource
  *
  * When the data is returned from the server then the object is an instance of the resource type and
  * all of the non-GET methods are available with `$` prefix. This allows you to easily support CRUD
@@ -44461,7 +44459,7 @@ function shallowClearAndCopy(src, dst) {
  *
  * @example
  *
- * # Creating a custom 'PUT' request
+ * ### Creating a custom 'PUT' request
  *
  * In this example we create a custom method on our resource to make a PUT request
  * ```js
@@ -44493,7 +44491,7 @@ function shallowClearAndCopy(src, dst) {
  *
  * @example
  *
- * # Cancelling requests
+ * ### Cancelling requests
  *
  * If an action's configuration specifies that it is cancellable, you can cancel the request related
  * to an instance or collection (as long as it is a result of a "non-instance" call):
@@ -44520,7 +44518,7 @@ function shallowClearAndCopy(src, dst) {
  *
  */
 angular.module('ngResource', ['ng']).
-  info({ angularVersion: '1.6.6' }).
+  info({ angularVersion: '1.6.9' }).
   provider('$resource', function ResourceProvider() {
     var PROTOCOL_AND_IPV6_REGEX = /^https?:\/\/\[[^\]]*][^/]*/;
 
@@ -44925,11 +44923,6 @@ angular.module('ngResource', ['ng']).
           };
         });
 
-        Resource.bind = function(additionalParamDefaults) {
-          var extendedParamDefaults = extend({}, paramDefaults, additionalParamDefaults);
-          return resourceFactory(url, extendedParamDefaults, actions, options);
-        };
-
         return Resource;
       }
 
@@ -44942,14 +44935,14 @@ angular.module('ngResource', ['ng']).
 
 
 /***/ }),
-/* 8 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(9);
+__webpack_require__(8);
 module.exports = 'ngFileUpload';
 
 /***/ }),
-/* 9 */
+/* 8 */
 /***/ (function(module, exports) {
 
 /**!
@@ -47853,7 +47846,7 @@ ngFileUpload.service('UploadExif', ['UploadResize', '$q', function (UploadResize
 
 
 /***/ }),
-/* 10 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -47907,12 +47900,28 @@ var HomeCtrl = function HomeCtrl($scope, $state, ObservationService, SchoolServi
             observation: observation
         });
     };
+    $scope.scores = [{
+        scoreKind: 'Teacher',
+        readableDate: '11/13/2017',
+        scoreName: 'Mr.Martin',
+        scoreTime: '1st Score'
+    }, {
+        scoreKind: 'Teacher',
+        readableDate: '11/13/2017',
+        scoreName: 'Ms.Andrews',
+        scoreTime: '3rd Score'
+    }, {
+        scoreKind: 'Schoolwide',
+        readableDate: '11/13/2017',
+        scoreName: 'Ellen Thompson Elementary',
+        scoreTime: '1st Score'
+    }];
 };
 
 exports.default = HomeCtrl;
 
 /***/ }),
-/* 11 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -47949,7 +47958,7 @@ var NavCtrl = function NavCtrl($scope) {
 exports.default = NavCtrl;
 
 /***/ }),
-/* 12 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -47990,7 +47999,7 @@ var SchoolCtrl = function SchoolCtrl($scope, $state, $rootScope, UtilService, Sc
 exports.default = SchoolCtrl;
 
 /***/ }),
-/* 13 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -48018,7 +48027,7 @@ var ObservationTypeCtrl = function ObservationTypeCtrl($scope, UtilService, Obse
 exports.default = ObservationTypeCtrl;
 
 /***/ }),
-/* 14 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -48027,15 +48036,6 @@ exports.default = ObservationTypeCtrl;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-
-var _observationFactory = __webpack_require__(1);
-
-var _observationFactory2 = _interopRequireDefault(_observationFactory);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-'use strict';
-
 var ObservationInputsCtrl = function ObservationInputsCtrl($scope, $state, GradeService, $rootScope, UtilService, TeacherService, ObservationService, ObservationFactory) {
 
     // fetch data
@@ -48114,7 +48114,7 @@ var ObservationInputsCtrl = function ObservationInputsCtrl($scope, $state, Grade
 exports.default = ObservationInputsCtrl;
 
 /***/ }),
-/* 15 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -48293,7 +48293,7 @@ var ObservationFormCtrl = function ObservationFormCtrl($scope, $state, $statePar
 exports.default = ObservationFormCtrl;
 
 /***/ }),
-/* 16 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -48322,7 +48322,7 @@ var SchoolService = function SchoolService($resource, $http) {
 exports.default = SchoolService;
 
 /***/ }),
-/* 17 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -48341,7 +48341,7 @@ var ObservationTypeService = function ObservationTypeService($resource, $http) {
 exports.default = ObservationTypeService;
 
 /***/ }),
-/* 18 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -48366,7 +48366,7 @@ var GradeService = function GradeService($resource, $http) {
 exports.default = GradeService;
 
 /***/ }),
-/* 19 */
+/* 18 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -48400,7 +48400,7 @@ var TeacherService = function TeacherService($resource, $http) {
 exports.default = TeacherService;
 
 /***/ }),
-/* 20 */
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -48426,7 +48426,7 @@ var SubjectService = function SubjectService($resource, $http) {
 exports.default = SubjectService;
 
 /***/ }),
-/* 21 */
+/* 20 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -48470,7 +48470,7 @@ var ObservationService = function ObservationService($resource, $http) {
 exports.default = ObservationService;
 
 /***/ }),
-/* 22 */
+/* 21 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -48495,7 +48495,7 @@ var ClusterService = function ClusterService($resource, $http) {
 exports.default = ClusterService;
 
 /***/ }),
-/* 23 */
+/* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -48520,7 +48520,7 @@ var AttachmentService = function AttachmentService($resource, $http) {
 exports.default = AttachmentService;
 
 /***/ }),
-/* 24 */
+/* 23 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -48549,6 +48549,43 @@ var UtilService = function UtilService($state) {
 };
 
 exports.default = UtilService;
+
+/***/ }),
+/* 24 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var ObservationFactory = function ObservationFactory() {
+
+    var obj = {};
+
+    return obj;
+};
+
+exports.default = ObservationFactory;
+
+/***/ }),
+/* 25 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var MakeScoreCtrl = function MakeScoreCtrl($scope, $rootScope) {
+
+  $scope.indicators = ['Grading', 'College-Going Culture', 'High Quality Work', 'Timeliness and Preparation'];
+  $scope.toggleAccordion = true;
+};
+
+exports.default = MakeScoreCtrl;
 
 /***/ })
 /******/ ]);

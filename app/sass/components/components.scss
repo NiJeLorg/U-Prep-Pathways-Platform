@@ -267,7 +267,7 @@
 .c-clusters {
     padding: 50px 40px;
     width: 40%;
-    background: #f5f5f6;
+    // background: #f5f5f6;
     @media #{$tablet} {
         width: 60%;
     }
@@ -313,7 +313,7 @@
             margin-bottom: 5px;
         }
         span {
-            margin-right: 10px;
+            margin-right: 20px;
         }
         p {
             margin-top: 5px;
@@ -414,11 +414,11 @@
     margin-left: 10px;
     &.add {
         background-image: url(/assets/icons/add-icon.svg) ;
-    
+
     }
     &.attach {
         background-image: url(/assets/icons/duplicate-icon.svg) ;
-    
+
     }
 }
 
@@ -472,8 +472,6 @@
     .c-modal__addnote {
         margin: 10px;
         background: white;
-        padding:   10px;
-       
     }
 }
 
