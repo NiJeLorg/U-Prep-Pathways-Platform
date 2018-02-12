@@ -1,11 +1,11 @@
-const SchoolService = ($resource, $http) => {
+const SchoolService = (BASE_URL, $resource, $http) => {
 
-    let obj = $resource('https://dev-uprep.nijel.org/api/schools/:id', {
+    let obj = $resource(BASE_URL + '/schools/:id', {
         id: '@id'
     });
 
     obj.fetchSchools = (cb) => {
-        $http.get('https://dev-uprep.nijel.org/api/schools').then((res) => {
+        $http.get(BASE_URL + '/schools').then((res) => {
             cb(null, res);
         }, (err) => {
             cb(err);

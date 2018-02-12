@@ -5,7 +5,6 @@ import uiRouter from '@uirouter/angularjs';
 import ngResource from 'angular-resource';
 import ngFileUpload from 'ng-file-upload';
 
-
 // load controllers
 import HomeCtrl from './controllers/home';
 import NavCtrl from './controllers/nav';
@@ -29,7 +28,10 @@ import MakeScoreCtrl from './controllers/make-score';
 
 const uprepApp = angular.module('uprepApp', [uiRouter, ngFileUpload, ngResource]);
 
+
+let url = 'https://dev-uprep.nijel.org/api/';
 uprepApp
+    .constant('BASE_URL', url)
   .controller('NavCtrl', NavCtrl)
   .controller('HomeCtrl', HomeCtrl)
   .controller('SchoolCtrl', SchoolCtrl)

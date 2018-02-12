@@ -5,7 +5,7 @@ import del from 'del';
 import runSequence from 'run-sequence';
 import browserSync from 'browser-sync';
 import webpack from 'webpack-stream';
-
+import config from './config/config';
 
 const plugins = gulpLoadPlugins();
 const paths = {
@@ -70,7 +70,7 @@ gulp.task('babel', () =>
 
 gulp.task('watch', () => {
     browserSync.init(null, {
-        proxy: 'localhost:3002',
+        proxy: 'localhost:'+config.port,
         port: 5000,
         open: false
     });

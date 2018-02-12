@@ -165,6 +165,7 @@ const create = async (req, res, next) => {
         }, {
             include: [{model: observation_evidence, as: "attachments"}]
         });
+    console.log("Edit Stucc");
     res.sendData(observationObj);
 
 };

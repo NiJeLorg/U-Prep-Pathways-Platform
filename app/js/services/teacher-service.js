@@ -1,6 +1,6 @@
-const TeacherService = ($resource, $http) => {
+const TeacherService = (BASE_URL, $resource, $http) => {
 
-    let obj = $resource('https://dev-uprep.nijel.org/api/schools/:schoolId/grades/:gradeId/teachers', {
+    let obj = $resource(BASE_URL + '/schools/:schoolId/grades/:gradeId/teachers', {
         schoolId: '@schoolId',
         gradeId: '@gradeId'
     }, {
@@ -10,7 +10,7 @@ const TeacherService = ($resource, $http) => {
     });
 
     obj.fetchTeacher = (teacherId, schoolId, gradeId, cb) => {
-        $http.get(('https://dev-uprep.nijel.org/api/teachers/' + teacherId) + '?schoolId=' + schoolId + '&gradeId=' + gradeId)
+        $http.get((BASE_URL+ '/teachers/' + teacherId) + '?schoolId=' + schoolId + '&gradeId=' + gradeId)
             .then((res) => {
                 cb(null, res);
             }, (err) => {

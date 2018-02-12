@@ -5,7 +5,6 @@ const ObservationFormCtrl = ($scope, $state, $stateParams, $timeout, observation
 
     let observationToBeDeleted, cluster_ids = [];
     $scope.observation = observation.data;
-    console.log("Loading types");
     ObservationTypeService.get({
         id: $scope.observation.observation_type_id
     }, (res) =>{
@@ -126,15 +125,11 @@ const ObservationFormCtrl = ($scope, $state, $stateParams, $timeout, observation
     };
 
     $scope.getObservationTypePropertyVal = (id) => {
-        console.log(`TRYINH TO GET ID VAL of ${id} from ${$scope.observation.observation_type_property_data}`);
-        console.log($scope.observation.observation_type_property_data);
-
         const property =$scope.observation.observation_type_property_data.filter((property) => {
             return property[id];
         });
-        console.log("FOUND property");
         console.log(property);
-        if(property){
+        if(property.length > 0){
             return property[0][id];
         }
         return '';
