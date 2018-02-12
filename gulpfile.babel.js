@@ -79,7 +79,7 @@ gulp.task('watch', () => {
     gulp.watch(paths.js, ['bundleJS']);
 });
 
-gulp.task('build', ['pug2html', 'sass2css', 'bundleJS']);
+gulp.task('build', ['pug2html', 'sass2css', 'bundleJS', 'copy', 'babel']);
 
 // Start server with restart on file changes
 gulp.task('nodemon', ['copy', 'babel', 'pug2html', 'sass2css', 'bundleJS'], () =>
