@@ -1,6 +1,6 @@
 'use strict';
 
-const ObservationFormCtrl = ($scope, $state, $stateParams, $timeout, observation, Upload, GradeService, TeacherService, ObservationService, ClusterService, AttachmentService, UtilService, ObservationFactory) => {
+const ObservationFormCtrl = ($scope, $state, $stateParams, $timeout, observation, Upload, GradeService, TeacherService,ObservationTypeService, ObservationService, ClusterService, AttachmentService, UtilService, ObservationFactory) => {
 
 
     let observationToBeDeleted, cluster_ids = [];
