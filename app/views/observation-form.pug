@@ -22,11 +22,31 @@
         .c-buttons-holder
             button(ng-click='deleteObservation()') Yes
             button(ng-click='closeDeleteModal()') Cancel
+.c-modal.submit-observation-modal
+    .c-modal__modal-content
+        .l-flex-flex-end
+            img.ul-cursor-pointer(src='assets/icons/x-icon.svg' ng-click='closeSubmitObservationModal()')
+        h2 Ready to Submit Your Observation?
+        p Once submitted, you will not be able to make any more changes to this observation and it will be used for Scoring.
+        .c-buttons-holder
+            button(ng-click='submitObservation(1)') Submit
+            button(ng-click='submitObservation(0)') Save as Draft
+            button(ng-click='closeSubmitObservationModal()') Cancel
+.c-modal.submitted-observation-modal
+    .c-modal__modal-content
+        .l-flex
+            .c-modal__badge
+                img(src='assets/icons/submitted-badge-icon.svg')
+            span(style='margin-left: 60px')
+                h2 Thank you for Submitting Your Observation
+                p Your observation will now be used for Scoring.
+
+
 .ul-padding-30
-    .ul-padding-30
         .c-view-all-observations-header
-            img.ul-cursor-pointer(src='assets/icons/back-icon.svg' ui-sref='home')
-            p VIEW ALL OBSERVATIONS
+            .ul-cursor-pointer.l-flex(ui-sref='home')
+                img.ul-cursor-pointer(src='assets/icons/back-icon.svg')
+                p VIEW ALL OBSERVATIONS
         .c-observation-observation-form
             .c-observation-observation-form__details
                 h3 {{observation.observation_type.name}} Observation
@@ -35,10 +55,9 @@
                 span.subject-color {{observation.subject.name}}
                 p CREATED {{observation.created_at | date:'short'}}
             .c-observation-observation-form__actions
-                button Saved
-                button(ng-click='submitObservation()') Submit
+                button(ng-click='openSubmitObservationModal()') Submit
                 img.ul-cursor-pointer(src='assets/icons/settings-small-icon.svg' ng-click='openEditObservationModal()')
-                img.ul-cursor-pointer(src='assets/icons/duplicate-icon.svg')
+                //- img.ul-cursor-pointer(src='assets/icons/duplicate-icon.svg')
                 img.ul-cursor-pointer(src='assets/icons/delete-icon.svg' ng-click='openDeleteModal()')
 
         .c-observation-form-input-group.ul-margin-bottom-20
@@ -78,6 +97,5 @@
                 input(type='radio' name='{{cluster.name}}' value='true' ng-change='selectCluster(true, cluster)' ng-model="cluster.selected")
                 input(type='radio' name='{{cluster.name}}' value='false' ng-change='selectCluster(false, cluster)' ng-model="cluster.selected")
         .submit-buttons-holder
-            button.saved-button Saved
-            button.submit-button(ng-click='submitObservation()') Submit
+            button.submit-button(ng-click='openSubmitObservationModal()') Submit
 

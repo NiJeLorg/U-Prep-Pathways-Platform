@@ -25,8 +25,8 @@ import ClusterService from './services/cluster-service';
 import AttachmentService from './services/attachment-service';
 import UtilService from './services/utilities-service';
 import ObservationFactory from './factories/observation-factory';
-
 import MakeScoreCtrl from './controllers/make-score';
+
 const uprepApp = angular.module('uprepApp', [uiRouter, ngFileUpload, ngResource]);
 
 uprepApp
@@ -75,11 +75,15 @@ uprepApp.config(['$stateProvider', '$httpProvider',
         templateUrl: 'views/observation-inputs.html'
       })
       .state('observationForm', {
-        url: '/observation-form',
+        url: '/observation-form/:observationId',
         controller: 'ObservationFormCtrl',
         templateUrl: 'views/observation-form.html',
-        params: {
-          obj: null
+        resolve: {
+          observation: ($stateParams, ObservationService) => {
+            return ObservationService.query({
+              id: $stateParams.observationId
+            }).$promise;
+          }
         }
       })
       .state('score', {

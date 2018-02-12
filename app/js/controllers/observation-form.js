@@ -1,23 +1,13 @@
 'use strict';
 
-const ObservationFormCtrl = ($scope, $state, $stateParams, $timeout, Upload, GradeService, TeacherService, ObservationService, ObservationTypeService, ClusterService, AttachmentService, UtilService, ObservationFactory) => {
+const ObservationFormCtrl = ($scope, $state, $stateParams, $timeout, observation, Upload, GradeService, TeacherService, ObservationService, ClusterService, AttachmentService, UtilService, ObservationFactory) => {
 
-    // load passed observation object
-    if ($stateParams.obj) {
-        $scope.observation = $stateParams.obj;
-    }
 
     let observationToBeDeleted, cluster_ids = [];
-    console.log("Loading types");
-    ObservationTypeService.get({
-        id: $scope.observation.observation_type_id
-    }, (res) =>{
-        $scope.observation_type_properties = res.data;
-        console.log(res.data, "asdcasdcasdcasdcasdc");
-    }, (err) => {
-        console.error(err, 'ERROR');
-    });
+    $scope.observation = observation.data;
+
     // fetch data
+
     GradeService.query({
         id: $scope.observation.school.id
     }, (res) => {
@@ -38,7 +28,7 @@ const ObservationFormCtrl = ($scope, $state, $stateParams, $timeout, Upload, Gra
 
     $scope.selectCluster = (value, cluster) => {
         if (value === true) {
-            if(!$scope.observation.cluster_ids.includes(cluster.id))
+            if (!$scope.observation.cluster_ids.includes(cluster.id))
                 $scope.observation.cluster_ids.push(cluster.id);
             cluster.selected = "true";
         } else {
@@ -119,14 +109,20 @@ const ObservationFormCtrl = ($scope, $state, $stateParams, $timeout, Upload, Gra
         });
     };
 
-    $scope.submitObservation = () => {
+    $scope.submitObservation = (status) => {
         ObservationService.update({
             id: $scope.observation.id,
         }, {
             description: $scope.observation.description,
-            cluster_ids: $scope.observation.cluster_ids
+            cluster_ids: $scope.observation.cluster_ids,
+            status: status
         }, (res) => {
-            $state.go('home');
+            UtilService.closeModal('submit-observation-modal');
+            UtilService.openModal('submitted-observation-modal');
+            $timeout(() => {
+                UtilService.closeModal('submitted-observation-modal');
+                $state.go('home');
+            }, 4000);
         }, (err) => {
             console.log(err, 'err');
         });
@@ -147,6 +143,15 @@ const ObservationFormCtrl = ($scope, $state, $stateParams, $timeout, Upload, Gra
             console.error(err, 'ERROR');
         });
     };
+
+    $scope.openSubmitObservationModal = () => {
+        UtilService.openModal('submit-observation-modal');
+    };
+
+    $scope.closeSubmitObservationModal = () => {
+        UtilService.closeModal('submit-observation-modal');
+    };
+
 
     $scope.openEditObservationModal = () => {
         UtilService.openModal('edit-observation-modal');

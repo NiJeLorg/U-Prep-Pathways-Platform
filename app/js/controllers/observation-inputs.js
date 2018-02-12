@@ -1,5 +1,3 @@
-import observationFactory from "../factories/observation-factory";
-
 'use strict';
 
 const ObservationInputsCtrl = ($scope, $state, GradeService, $rootScope, UtilService, TeacherService, ObservationService, ObservationFactory) => {
