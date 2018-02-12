@@ -5,7 +5,17 @@ const ObservationFormCtrl = ($scope, $state, $stateParams, $timeout, observation
 
     let observationToBeDeleted, cluster_ids = [];
     $scope.observation = observation.data;
-
+    console.log("Loading types");
+    ObservationTypeService.get({
+        id: $scope.observation.observation_type_id
+    }, (res) =>{
+        $scope.observationTypeProperties = res.data.observation_type_properties.map((property) => {
+             property.value = $scope.getObservationTypePropertyVal(property.id);
+             return property;
+        });
+    }, (err) => {
+        console.error(err, 'ERROR');
+    });
     // fetch data
 
     GradeService.query({
@@ -109,13 +119,35 @@ const ObservationFormCtrl = ($scope, $state, $stateParams, $timeout, observation
         });
     };
 
+    $scope.getPropertyData = () =>{
+        return $scope.observationTypeProperties.map((property) => {
+            return {[property.id]: property.value};
+        });
+    };
+
+    $scope.getObservationTypePropertyVal = (id) => {
+        console.log(`TRYINH TO GET ID VAL of ${id} from ${$scope.observation.observation_type_property_data}`);
+        console.log($scope.observation.observation_type_property_data);
+
+        const property =$scope.observation.observation_type_property_data.filter((property) => {
+            return property[id];
+        });
+        console.log("FOUND property");
+        console.log(property);
+        if(property){
+            return property[0][id];
+        }
+        return '';
+    };
+
     $scope.submitObservation = (status) => {
         ObservationService.update({
             id: $scope.observation.id,
         }, {
             description: $scope.observation.description,
             cluster_ids: $scope.observation.cluster_ids,
-            status: status
+            status: status,
+            observation_type_property_data: $scope.getPropertyData()
         }, (res) => {
             UtilService.closeModal('submit-observation-modal');
             UtilService.openModal('submitted-observation-modal');

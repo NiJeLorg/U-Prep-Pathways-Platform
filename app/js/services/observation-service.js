@@ -1,6 +1,6 @@
 const ObservationService = ($resource, $http) => {
 
-    let obj = $resource('https://dev-uprep.nijel.org/api/observations/:id', {
+    let obj = $resource('http://localhost:3001/api/observations/:id', {
         id: '@id'
     }, {
         'query': {
@@ -12,7 +12,7 @@ const ObservationService = ($resource, $http) => {
     });
 
     obj.fetchObservations = (cb) => {
-        $http.get('https://dev-uprep.nijel.org/api/observations')
+        $http.get('http://localhost:3001/api/observations')
             .then((res) => {
                 cb(null, res)
             }, (err) => {
@@ -21,7 +21,7 @@ const ObservationService = ($resource, $http) => {
     };
 
     obj.createObservation = (data, cb) => {
-        $http.post('https://dev-uprep.nijel.org/api/observations', data)
+        $http.post('http://localhost:3001/api/observations', data)
             .then((res) => {
                 cb(null, res);
             }, (err) => {
