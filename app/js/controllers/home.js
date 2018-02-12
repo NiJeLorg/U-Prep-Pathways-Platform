@@ -8,7 +8,6 @@ const HomeCtrl = ($scope, $state, ObservationService, SchoolService) => {
     ObservationService.fetchObservations((err, res) => {
         if (!err) {
             $scope.observations = res.data.data;
-            console.log($scope.observations, 'observations');
         } else {
             console.error(err, 'ERROR');
         }
@@ -42,7 +41,6 @@ const HomeCtrl = ($scope, $state, ObservationService, SchoolService) => {
     $scope.editObservation = (observation) => {
         $state.go('observationForm', {
             observationId: observation.id,
-            observation: observation
         });
     };
     $scope.scores = [{
