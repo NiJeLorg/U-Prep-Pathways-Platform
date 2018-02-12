@@ -92,7 +92,7 @@
     .c-triangle-breadcrumb__link {
         color: #fff;
         text-decoration: none;
-        width: 195px;
+        width: 170px;
         padding: 10px 0 10px 50px;
         background: $light-purple;
         position: relative;
@@ -267,7 +267,7 @@
 .c-clusters {
     padding: 50px 40px;
     width: 40%;
-    // background: #f5f5f6;
+    background: #f5f5f6;
     @media #{$tablet} {
         width: 60%;
     }
@@ -422,58 +422,58 @@
     }
 }
 
-.c-modal {
-    position:relative;
-    margin: 40px;
-    background-color: #FAFAFA;
-    padding: 20px;
-    h2 {
-        font-weight: bold;
-    }
-    img {
-        position: absolute;
-        top: 0;
-        right: 0;
-    }
-    .heading-blue {
-        color: $blue;
-    }
-    h3 {
-        color: $purple;
-        font-weight: bold;
-    }
-    .c-modal__note {
-        background-color: white;
-        padding: 20px;
-        margin: 40px;
-    }
-    .c-modal-note__details {
-        display: flex;
-        padding: 10px;
-        margin-top: 20px;
-    }
-    .c-modal-note__details__date {
-        width: 100px;
-    }
-    .c-modal-note__details__observation {
-        flex-grow: 1;
-    }
-    p {
-        max-width: 512px;
-    }
-    span {
-        margin-right: 20px;
-    }
-    .c-modal-note__attachment {
-        img {
-            position: relative;
-        }
-    }
-    .c-modal__addnote {
-        margin: 10px;
-        background: white;
-    }
-}
+// .c-modal {
+//     position:relative;
+//     margin: 40px;
+//     background-color: #FAFAFA;
+//     padding: 20px;
+//     h2 {
+//         font-weight: bold;
+//     }
+//     img {
+//         position: absolute;
+//         top: 0;
+//         right: 0;
+//     }
+//     .heading-blue {
+//         color: $blue;
+//     }
+//     h3 {
+//         color: $purple;
+//         font-weight: bold;
+//     }
+//     .c-modal__note {
+//         background-color: white;
+//         padding: 20px;
+//         margin: 40px;
+//     }
+//     .c-modal-note__details {
+//         display: flex;
+//         padding: 10px;
+//         margin-top: 20px;
+//     }
+//     .c-modal-note__details__date {
+//         width: 100px;
+//     }
+//     .c-modal-note__details__observation {
+//         flex-grow: 1;
+//     }
+//     p {
+//         max-width: 512px;
+//     }
+//     span {
+//         margin-right: 20px;
+//     }
+//     .c-modal-note__attachment {
+//         img {
+//             position: relative;
+//         }
+//     }
+//     .c-modal__addnote {
+//         margin: 10px;
+//         background: white;
+//     }
+// }
 
 .c-card {
     background: #FFFFFF;
@@ -506,6 +506,7 @@
         border-radius: 2px;
     }
 }
+
 .c-modal__accordion {
     background: #EEEEEF;
     padding: 30px;

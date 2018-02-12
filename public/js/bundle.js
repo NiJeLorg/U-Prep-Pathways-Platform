@@ -47863,7 +47863,6 @@ var HomeCtrl = function HomeCtrl($scope, $state, ObservationService, SchoolServi
     ObservationService.fetchObservations(function (err, res) {
         if (!err) {
             $scope.observations = res.data.data;
-            console.log($scope.observations, 'observations');
         } else {
             console.error(err, 'ERROR');
         }
@@ -47896,8 +47895,7 @@ var HomeCtrl = function HomeCtrl($scope, $state, ObservationService, SchoolServi
 
     $scope.editObservation = function (observation) {
         $state.go('observationForm', {
-            observationId: observation.id,
-            observation: observation
+            observationId: observation.id
         });
     };
     $scope.scores = [{
@@ -48096,8 +48094,9 @@ var ObservationInputsCtrl = function ObservationInputsCtrl($scope, $state, Grade
                     ObservationService.query({
                         id: res.data.data.id
                     }, function (res) {
-                        $rootScope.observation = res.data;
-                        $state.go('observationForm');
+                        $state.go('observationForm', {
+                            observationId: res.data.id
+                        });
                     });
                 }
             });

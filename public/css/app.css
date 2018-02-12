@@ -179,7 +179,7 @@ select {
   .c-triangle-breadcrumb .c-triangle-breadcrumb__link {
     color: #fff;
     text-decoration: none;
-    width: 195px;
+    width: 170px;
     padding: 10px 0 10px 50px;
     background: #9d5f92;
     position: relative;
@@ -323,7 +323,8 @@ select {
 
 .c-clusters {
   padding: 50px 40px;
-  width: 40%; }
+  width: 40%;
+  background: #f5f5f6; }
   @media (min-width: 768px) and (max-width: 1024px) {
     .c-clusters {
       width: 60%; } }
@@ -442,44 +443,6 @@ select {
     background-image: url(/assets/icons/add-icon.svg); }
   .c-accordion_actions_button.attach {
     background-image: url(/assets/icons/duplicate-icon.svg); }
-
-.c-modal {
-  position: relative;
-  margin: 40px;
-  background-color: #FAFAFA;
-  padding: 20px; }
-  .c-modal h2 {
-    font-weight: bold; }
-  .c-modal img {
-    position: absolute;
-    top: 0;
-    right: 0; }
-  .c-modal .heading-blue {
-    color: #4DA6DA; }
-  .c-modal h3 {
-    color: #681c5b;
-    font-weight: bold; }
-  .c-modal .c-modal__note {
-    background-color: white;
-    padding: 20px;
-    margin: 40px; }
-  .c-modal .c-modal-note__details {
-    display: flex;
-    padding: 10px;
-    margin-top: 20px; }
-  .c-modal .c-modal-note__details__date {
-    width: 100px; }
-  .c-modal .c-modal-note__details__observation {
-    flex-grow: 1; }
-  .c-modal p {
-    max-width: 512px; }
-  .c-modal span {
-    margin-right: 20px; }
-  .c-modal .c-modal-note__attachment img {
-    position: relative; }
-  .c-modal .c-modal__addnote {
-    margin: 10px;
-    background: white; }
 
 .c-card {
   background: #FFFFFF;

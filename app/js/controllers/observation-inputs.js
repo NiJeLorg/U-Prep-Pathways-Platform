@@ -63,8 +63,9 @@ const ObservationInputsCtrl = ($scope, $state, GradeService, $rootScope, UtilSer
                     ObservationService.query({
                         id: res.data.data.id
                     }, (res) => {
-                        $rootScope.observation = res.data;
-                        $state.go('observationForm')
+                        $state.go('observationForm', {
+                            observationId: res.data.id
+                        });
                     });
                 }
             });
