@@ -15,32 +15,36 @@ const ObservationInputsCtrl = ($scope, $state, GradeService, $rootScope, UtilSer
 
 
     $scope.recordGrade = () => {
-        ObservationFactory['grade'] = JSON.parse($scope.grade);
+        if($scope.grade){
+            ObservationFactory['grade'] = JSON.parse($scope.grade);
+            TeacherService.query({
+                schoolId: ObservationFactory.school.id,
+                gradeId: ObservationFactory.grade.id
+            }, (res) => {
+                $scope.teachers = res.data;
+            });
 
-        TeacherService.query({
-            schoolId: ObservationFactory.school.id,
-            gradeId: ObservationFactory.grade.id
-        }, (res) => {
-            $scope.teachers = res.data;
-        });
+            // disable teacher select
+            $scope.disableTeacherSelect = false;
+        }
 
-        // disalbe teacher select
-        $scope.disableTeacherSelect = false;
     };
 
     $scope.recordTeacher = () => {
-        ObservationFactory['teacher'] = JSON.parse($scope.teacher);
+        if($scope.teacher){
+            ObservationFactory['teacher'] = JSON.parse($scope.teacher);
+            TeacherService.fetchTeacher(ObservationFactory.teacher.id, ObservationFactory.school.id, ObservationFactory.grade.id, (err, res) => {
+                if (!err) {
+                    $scope.subjects = res.data.data.subjects;
+                } else {
+                    console.error(err, 'errr');
+                }
+            });
 
-        TeacherService.fetchTeacher(ObservationFactory.teacher.id, ObservationFactory.school.id, ObservationFactory.grade.id, (err, res) => {
-            if (!err) {
-                $scope.subjects = res.data.data.subjects;
-            } else {
-                console.error(err, 'errr');
-            }
-        });
+            // disalbe subject select
+            $scope.disableSubjectSelect = false;
+        }
 
-        // disalbe subject select
-        $scope.disableSubjectSelect = false;
     };
 
 
