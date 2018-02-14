@@ -1,6 +1,6 @@
-const ClusterService = ($resource, $http) => {
+const ClusterService = ($resource, $http, BaseUrl) => {
 
-    let obj = $resource('https://dev-uprep.nijel.org/api/clusters/', {
+    let obj = $resource(BaseUrl + 'clusters/', {
         id: '@id'
     }, {
         'query': {

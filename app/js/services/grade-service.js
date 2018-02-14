@@ -1,6 +1,6 @@
-const GradeService = ($resource, $http) => {
+const GradeService = ($resource, $http,BaseUrl) => {
 
-    const obj = $resource('https://dev-uprep.nijel.org/api/schools/:id/grades', {
+    const obj = $resource(BaseUrl + 'schools/:id/grades', {
         id: '@id'
     }, {
         'query': {

@@ -1,6 +1,6 @@
-const ObservationService = ($resource, $http) => {
+const ObservationService = ($resource, $http, BaseUrl) => {
 
-    let obj = $resource('https://dev-uprep.nijel.org/api/observations/:id', {
+    let obj = $resource(BaseUrl + 'observations/:id', {
         id: '@id'
     }, {
         'query': {
@@ -12,7 +12,7 @@ const ObservationService = ($resource, $http) => {
     });
 
     obj.fetchObservations = (cb) => {
-        $http.get('https://dev-uprep.nijel.org/api/observations')
+        $http.get(BaseUrl + 'observations')
             .then((res) => {
                 cb(null, res)
             }, (err) => {
@@ -21,7 +21,7 @@ const ObservationService = ($resource, $http) => {
     };
 
     obj.createObservation = (data, cb) => {
-        $http.post('https://dev-uprep.nijel.org/api/observations', data)
+        $http.post(BaseUrl + 'observations', data)
             .then((res) => {
                 cb(null, res);
             }, (err) => {

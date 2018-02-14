@@ -1,6 +1,6 @@
-const SubjectService = ($resource, $http) => {
+const SubjectService = ($resource, $http, BaseUrl) => {
 
-    let obj = $resource('https://dev-uprep.nijel.org/api/schools/:schoolId/grades/:gradeId/teachers', {
+    let obj = $resource(BaseUrl + 'schools/:schoolId/grades/:gradeId/teachers', {
         schoolId: '@schoolId',
         gradeId: '@gradeId'
     }, {

@@ -1,6 +1,6 @@
-const AttachmentService = ($resource, $http) => {
+const AttachmentService = ($resource, $http, BaseUrl) => {
 
-    let obj = $resource('https://dev-uprep.nijel.org/api/observation_evidences/:id', {
+    let obj = $resource(BaseUrl + 'observation_evidences/:id', {
         id: '@id'
     }, {
         'query': {
