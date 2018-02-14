@@ -1,9 +1,12 @@
 @import 'config/colors';
+@import 'config/media-queries';
 @import 'elements/elements';
 @import 'layout/layout';
 @import 'components/nav';
 @import 'components/components';
 @import 'utilities/utilities';
+
+
 * {
 	font-family: 'Raleway', sans-serif;
 	outline: none;

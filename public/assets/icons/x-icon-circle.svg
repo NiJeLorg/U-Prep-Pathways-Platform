@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="27px" height="27px" viewBox="0 0 27 27" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>Group</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Observation-Dashboard" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-498.000000, -655.000000)">
+        <g id="Group" transform="translate(499.000000, 656.000000)">
+            <circle id="Oval-3-Copy" stroke="#FFFFFF" fill="#9D5F92" cx="12.5" cy="12.5" r="12.5"></circle>
+            <g id="ic/close/white" transform="translate(3.000000, 3.000000)">
+                <g id="ic_close_24px">
+                    <polygon id="Shape" fill="#FFFFFF" fill-rule="nonzero" points="15.8333333 5.34166667 14.6583333 4.16666667 10 8.825 5.34166667 4.16666667 4.16666667 5.34166667 8.825 10 4.16666667 14.6583333 5.34166667 15.8333333 10 11.175 14.6583333 15.8333333 15.8333333 14.6583333 11.175 10"></polygon>
+                    <polygon id="Shape" points="0 0 20 0 20 20 0 20"></polygon>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

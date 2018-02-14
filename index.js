@@ -35,10 +35,8 @@ app.get('*', (req, res) => {
 });
 
 // Start the server
-console.log(process.env.PORT);
 app.listen(process.env.PORT || 3000, () => {
     c.log('server listening on port ' + process.env.PORT || 3000);
-    // console.log(app._router.stack);
 });
 
 module.exports = app;
