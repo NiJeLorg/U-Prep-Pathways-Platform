@@ -1,5 +1,5 @@
 'use strict';
-const HomeCtrl = ($scope, $state, ObservationService, SchoolService) => {
+const HomeCtrl = ($scope, $state, ObservationService, SchoolService, UtilService) => {
 
     let observationToBeDeleted;
 
@@ -19,21 +19,27 @@ const HomeCtrl = ($scope, $state, ObservationService, SchoolService) => {
         $scope.schools = res.data.data;
     });
 
-    $scope.openModal = (observation) => {
-        angular.element(document.getElementsByClassName('delete-observation-modal')).css('display', 'flex');
+    $scope.openModal = (observation) => {      
+        UtilService.openModal('delete-observation-modal');
         observationToBeDeleted = observation;
     };
 
     $scope.closeModal = () => {
-        angular.element(document.getElementsByClassName('delete-observation-modal')).css('display', 'none');
+        UtilService.closeModal('delete-observation-modal');
     };
 
     $scope.deleteObservation = () => {
+        let index;
         ObservationService.remove({
             id: observationToBeDeleted.id
         }, (res) => {
-            angular.element(document.getElementsByClassName('delete-observation-modal')).css('display', 'none');
-            $state.reload();
+            index = $scope.observations.findIndex((elem)=> {
+                if(elem.id == observationToBeDeleted.id) {
+                    return elem;
+                }
+            });        
+            $scope.observations.splice(index, 1);
+            UtilService.closeModal('delete-observation-modal');
         });
     };
 

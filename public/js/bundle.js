@@ -47855,7 +47855,7 @@ ngFileUpload.service('UploadExif', ['UploadResize', '$q', function (UploadResize
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-var HomeCtrl = function HomeCtrl($scope, $state, ObservationService, SchoolService) {
+var HomeCtrl = function HomeCtrl($scope, $state, ObservationService, SchoolService, UtilService) {
 
     var observationToBeDeleted = void 0;
 
@@ -47863,6 +47863,7 @@ var HomeCtrl = function HomeCtrl($scope, $state, ObservationService, SchoolServi
     ObservationService.fetchObservations(function (err, res) {
         if (!err) {
             $scope.observations = res.data.data;
+            console.log($scope.observations, 'yoo');
         } else {
             console.error(err, 'ERROR');
         }
@@ -47876,20 +47877,29 @@ var HomeCtrl = function HomeCtrl($scope, $state, ObservationService, SchoolServi
     });
 
     $scope.openModal = function (observation) {
-        angular.element(document.getElementsByClassName('delete-observation-modal')).css('display', 'flex');
+        UtilService.openModal('delete-observation-modal');
         observationToBeDeleted = observation;
     };
 
     $scope.closeModal = function () {
-        angular.element(document.getElementsByClassName('delete-observation-modal')).css('display', 'none');
+        UtilService.closeModal('delete-observation-modal');
     };
 
     $scope.deleteObservation = function () {
+        var index = void 0;
         ObservationService.remove({
             id: observationToBeDeleted.id
         }, function (res) {
-            angular.element(document.getElementsByClassName('delete-observation-modal')).css('display', 'none');
-            $state.reload();
+            index = $scope.observations.findIndex(function (elem) {
+                if (elem.id == observationToBeDeleted.id) {
+                    return elem;
+                }
+            });
+            $scope.observations.splice(index, 1);
+
+            console.log($scope.observations, 'yooooooooo');
+            UtilService.closeModal('delete-observation-modal');
+            // $state.reload();
         });
     };
 
