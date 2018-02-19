@@ -1,6 +1,6 @@
-const GradeService = ($resource, $http,BaseUrl) => {
+const GradeService = (BASE_URL, $resource, $http) => {
 
-    const obj = $resource(BaseUrl + 'schools/:id/grades', {
+    const obj = $resource(BASE_URL + '/schools/:id/grades', {
         id: '@id'
     }, {
         'query': {

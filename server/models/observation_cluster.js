@@ -1,9 +1,10 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
   let ObservationCluster = sequelize.define('observation_cluster', {
-    name: DataTypes.STRING
+    observation_id: DataTypes.INTEGER,
+    cluster_id: DataTypes.INTEGER,
   }, {
-    underscored: true
+    timestamps: false,
   });
   return ObservationCluster;
 };

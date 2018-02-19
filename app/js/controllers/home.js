@@ -2,6 +2,7 @@
 const HomeCtrl = ($scope, $state, ObservationService, SchoolService, UtilService) => {
 
     let observationToBeDeleted;
+    $scope.page = 'observed';
 
     // fetch data
     ObservationService.fetchObservations((err, res) => {

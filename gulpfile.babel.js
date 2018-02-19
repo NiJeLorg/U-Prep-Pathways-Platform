@@ -5,7 +5,7 @@ import del from 'del';
 import runSequence from 'run-sequence';
 import browserSync from 'browser-sync';
 import webpack from 'webpack-stream';
-
+import config from './config/config';
 
 const plugins = gulpLoadPlugins();
 const paths = {
@@ -70,7 +70,7 @@ gulp.task('babel', () =>
 
 gulp.task('watch', () => {
     browserSync.init(null, {
-        proxy: 'localhost:3000',
+        proxy: 'localhost:'+config.port,
         port: 5000,
         open: false
     });
@@ -79,15 +79,15 @@ gulp.task('watch', () => {
     gulp.watch(paths.js, ['bundleJS']);
 });
 
-gulp.task('build', ['pug2html', 'sass2css', 'bundleJS']);
+gulp.task('build', ['pug2html', 'sass2css', 'bundleJS', 'copy', 'babel']);
 
 // Start server with restart on file changes
-gulp.task('nodemon', ['copy', 'babel'], () =>
+gulp.task('nodemon', ['copy', 'babel', 'pug2html', 'sass2css', 'bundleJS'], () =>
     plugins.nodemon({
         script: path.join('dist', 'index.js'),
         ext: 'js ',
         ignore: ['node_modules/**/*.js', 'dist/**/*.js', 'public/', 'app/'],
-        tasks: ['copy', 'babel' ]
+        tasks: ['copy', 'babel', 'pug2html', 'sass2css', 'bundleJS' ]
     })
 );
 

@@ -1,11 +1,11 @@
-const SchoolService = ($resource, $http, BaseUrl) => {
+const SchoolService = (BASE_URL, $resource, $http) => {
 
-    let obj = $resource(BaseUrl + 'schools/:id', {
+    let obj = $resource(BASE_URL + '/schools/:id', {
         id: '@id'
     });
 
     obj.fetchSchools = (cb) => {
-        $http.get(BaseUrl + 'schools').then((res) => {
+        $http.get(BASE_URL + '/schools').then((res) => {
             cb(null, res);
         }, (err) => {
             cb(err);

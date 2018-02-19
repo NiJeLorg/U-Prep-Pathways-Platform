@@ -1,6 +1,6 @@
-const ClusterService = ($resource, $http, BaseUrl) => {
+const ClusterService = (BASE_URL, $resource, $http) => {
 
-    let obj = $resource(BaseUrl + 'clusters/', {
+    let obj = $resource(BASE_URL+'/clusters/', {
         id: '@id'
     }, {
         'query': {

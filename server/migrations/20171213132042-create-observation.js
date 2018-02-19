@@ -1,4 +1,4 @@
-'use strict';
+ 'use strict';
 module.exports = {
     up: (queryInterface, Sequelize) => {
         return queryInterface.createTable('observations', {
@@ -13,6 +13,10 @@ module.exports = {
             },
             description: {
                 type: Sequelize.STRING
+            },
+            status: {
+                type: Sequelize.INTEGER,
+                defaultValue: 0
             },
             created_at: {
                 allowNull: false,
@@ -32,19 +36,19 @@ module.exports = {
             },
             user_id: {
                 type: Sequelize.INTEGER,
-                allowNull: false
+                allowNull: true
             },
             teacher_id: {
                 type: Sequelize.INTEGER,
-                allowNull: false
+                allowNull: true
             },
             grade_id: {
                 type: Sequelize.INTEGER,
-                allowNull: false
+                allowNull: true
             },
             subject_id: {
                 type: Sequelize.INTEGER,
-                allowNull: false
+                allowNull: true
             },
             school_id: {
                 type: Sequelize.INTEGER,

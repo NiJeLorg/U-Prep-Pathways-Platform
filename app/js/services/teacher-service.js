@@ -1,6 +1,6 @@
-const TeacherService = ($resource, $http, BaseUrl) => {
+const TeacherService = (BASE_URL, $resource, $http) => {
 
-    let obj = $resource(BaseUrl + 'schools/:schoolId/grades/:gradeId/teachers', {
+    let obj = $resource(BASE_URL + '/schools/:schoolId/grades/:gradeId/teachers', {
         schoolId: '@schoolId',
         gradeId: '@gradeId'
     }, {
@@ -10,7 +10,7 @@ const TeacherService = ($resource, $http, BaseUrl) => {
     });
 
     obj.fetchTeacher = (teacherId, schoolId, gradeId, cb) => {
-        $http.get((BaseUrl + 'teachers/' + teacherId) + '?schoolId=' + schoolId + '&gradeId=' + gradeId)
+        $http.get((BASE_URL+ '/teachers/' + teacherId) + '?schoolId=' + schoolId + '&gradeId=' + gradeId)
             .then((res) => {
                 cb(null, res);
             }, (err) => {

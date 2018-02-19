@@ -3,8 +3,13 @@
 const ObservationTypeCtrl = ($scope, UtilService, ObservationTypeService, ObservationFactory) => {
 
     // fetch data
-    ObservationTypeService.get((res) => {
-        $scope.observationTypes = res.data;
+
+    ObservationTypeService.fetchObservationTypes((err, res) => {
+        if (!err) {
+            $scope.observationTypes = res.data.data;
+        } else {
+            console.error(err, 'ERROR');
+        }
     });
 
     $scope.recordObservationType = (observationType) => {

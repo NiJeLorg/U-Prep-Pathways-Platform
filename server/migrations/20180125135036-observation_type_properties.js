@@ -1,41 +1,36 @@
 'use strict';
-
 module.exports = {
     up: (queryInterface, Sequelize) => {
-        return queryInterface.createTable('observation_evidence', {
+        return queryInterface.createTable('observation_type_properties', {
             id: {
                 allowNull: false,
                 autoIncrement: true,
                 primaryKey: true,
                 type: Sequelize.INTEGER
             },
-            name: {
+            label: {
                 type: Sequelize.STRING
             },
-            link: {
+            label_meta: {
                 type: Sequelize.STRING
             },
-            media_type_id: {
-                type: Sequelize.INTEGER,
-                allowNull: false,
-                references: {
-                    model: 'media_types',
-                    key: 'id'
-                }
+            help_text: {
+                type: Sequelize.TEXT
             },
-            observation_id: {
+            observation_type_id: {
                 type: Sequelize.INTEGER,
+            },
+            created_at: {
                 allowNull: false,
-                references: {
-                    model: 'observations',
-                    key: 'id'
-                }
+                type: Sequelize.DATE
+            },
+            updated_at: {
+                allowNull: false,
+                type: Sequelize.DATE
             }
         });
-
     },
-
     down: (queryInterface, Sequelize) => {
-        return queryInterface.dropTable('observation_evidence');
+        return queryInterface.dropTable('observation_type_properties');
     }
 };

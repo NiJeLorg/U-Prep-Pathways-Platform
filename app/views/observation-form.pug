@@ -73,19 +73,10 @@
                 .c-attachment-holder__attachment.ul-cursor-pointer(style='background-size: 100%' ng-if='observation.attachments' ng-repeat='attachment in observation.attachments' ng-style="{background: 'url(https://dev-uprep.nijel.org/{{attachment.link}})'}")
                       img(src='assets/icons/x-icon-circle.svg' ng-click='removeAttachment(observation.attachments, attachment)')
 
-
-        .c-observation-form-input-group
-            h2 Teacher: Knowledge and Skill
-            p What is the teacher doing? What is the teacher saying?
-            textarea
-        .c-observation-form-input-group.ul-margin-bottom-20
-            h2 Students: Behavior
-            p What are the students doing? What are the students saying?
-            textarea
-        .c-observation-form-input-group.ul-margin-bottom-20
-            h2 Conclusions
-            p Best when... Better if...
-            textarea
+        .c-observation-form-input-group.ul-margin-bottom-20(ng-repeat='observationTypeProperty in observationTypeProperties')
+            h2 {{observationTypeProperty.label}}: {{observationTypeProperty.label_meta}}
+            p {{observationTypeProperty.help_text}}
+            textarea(name='property_{{observationTypeProperty.id}}' ng-model="observationTypeProperty.value")
         .c-clusters
             .c-clusters__title
                 h3 Clusters Observed

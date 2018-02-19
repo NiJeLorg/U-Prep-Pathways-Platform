@@ -1,6 +1,6 @@
-const ObservationService = ($resource, $http, BaseUrl) => {
+const ObservationService = (BASE_URL,$resource, $http) => {
 
-    let obj = $resource(BaseUrl + 'observations/:id', {
+    let obj = $resource(BASE_URL+'/observations/:id', {
         id: '@id'
     }, {
         'query': {
@@ -12,7 +12,7 @@ const ObservationService = ($resource, $http, BaseUrl) => {
     });
 
     obj.fetchObservations = (cb) => {
-        $http.get(BaseUrl + 'observations')
+        $http.get(BASE_URL+ '/observations')
             .then((res) => {
                 cb(null, res)
             }, (err) => {
@@ -21,7 +21,7 @@ const ObservationService = ($resource, $http, BaseUrl) => {
     };
 
     obj.createObservation = (data, cb) => {
-        $http.post(BaseUrl + 'observations', data)
+        $http.post(BASE_URL+ '/observations', data)
             .then((res) => {
                 cb(null, res);
             }, (err) => {
