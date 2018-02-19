@@ -38,6 +38,7 @@ uprepApp
   .controller('ObservationTypeCtrl', ObservationTypeCtrl)
   .controller('ObservationInputsCtrl', ObservationInputsCtrl)
   .controller('ObservationFormCtrl', ObservationFormCtrl)
+  .controller('MakeScoreCtrl', MakeScoreCtrl)  
   .service('SchoolService', SchoolService)
   .service('ObservationTypeService', ObservationTypeService)
   .service('GradeService', GradeService)
@@ -48,7 +49,7 @@ uprepApp
   .service('AttachmentService', AttachmentService)
   .service('UtilService', UtilService)
   .factory('ObservationFactory', ObservationFactory)
-  .controller('MakeScoreCtrl', MakeScoreCtrl);
+  .constant('BaseUrl', 'https://dev-uprep.nijel.org/api/')
 
 uprepApp.config(['$stateProvider', '$httpProvider',
   '$urlRouterProvider', '$locationProvider', ($stateProvider, $httpProvider, $urlRouterProvider, $locationProvider) => {

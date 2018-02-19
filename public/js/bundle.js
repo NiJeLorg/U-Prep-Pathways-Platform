@@ -172,7 +172,7 @@ var uprepApp = _angular2.default.module('uprepApp', [_angularjs2.default, _ngFil
 // load controllers
 
 
-uprepApp.controller('NavCtrl', _nav2.default).controller('HomeCtrl', _home2.default).controller('SchoolCtrl', _school2.default).controller('ObservationTypeCtrl', _observationType2.default).controller('ObservationInputsCtrl', _observationInputs2.default).controller('ObservationFormCtrl', _observationForm2.default).service('SchoolService', _schoolService2.default).service('ObservationTypeService', _observationTypeService2.default).service('GradeService', _gradeService2.default).service('TeacherService', _teacherService2.default).service('SubjectService', _subjectService2.default).service('ObservationService', _observationService2.default).service('ClusterService', _clusterService2.default).service('AttachmentService', _attachmentService2.default).service('UtilService', _utilitiesService2.default).factory('ObservationFactory', _observationFactory2.default).controller('MakeScoreCtrl', _makeScore2.default);
+uprepApp.controller('NavCtrl', _nav2.default).controller('HomeCtrl', _home2.default).controller('SchoolCtrl', _school2.default).controller('ObservationTypeCtrl', _observationType2.default).controller('ObservationInputsCtrl', _observationInputs2.default).controller('ObservationFormCtrl', _observationForm2.default).controller('MakeScoreCtrl', _makeScore2.default).service('SchoolService', _schoolService2.default).service('ObservationTypeService', _observationTypeService2.default).service('GradeService', _gradeService2.default).service('TeacherService', _teacherService2.default).service('SubjectService', _subjectService2.default).service('ObservationService', _observationService2.default).service('ClusterService', _clusterService2.default).service('AttachmentService', _attachmentService2.default).service('UtilService', _utilitiesService2.default).factory('ObservationFactory', _observationFactory2.default).constant('BaseUrl', 'https://dev-uprep.nijel.org/api/');
 
 uprepApp.config(['$stateProvider', '$httpProvider', '$urlRouterProvider', '$locationProvider', function ($stateProvider, $httpProvider, $urlRouterProvider, $locationProvider) {
 
@@ -47855,7 +47855,7 @@ ngFileUpload.service('UploadExif', ['UploadResize', '$q', function (UploadResize
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-var HomeCtrl = function HomeCtrl($scope, $state, ObservationService, SchoolService) {
+var HomeCtrl = function HomeCtrl($scope, $state, ObservationService, SchoolService, UtilService) {
 
     var observationToBeDeleted = void 0;
 
@@ -47863,6 +47863,7 @@ var HomeCtrl = function HomeCtrl($scope, $state, ObservationService, SchoolServi
     ObservationService.fetchObservations(function (err, res) {
         if (!err) {
             $scope.observations = res.data.data;
+            console.log($scope.observations, 'yoo');
         } else {
             console.error(err, 'ERROR');
         }
@@ -47876,20 +47877,29 @@ var HomeCtrl = function HomeCtrl($scope, $state, ObservationService, SchoolServi
     });
 
     $scope.openModal = function (observation) {
-        angular.element(document.getElementsByClassName('delete-observation-modal')).css('display', 'flex');
+        UtilService.openModal('delete-observation-modal');
         observationToBeDeleted = observation;
     };
 
     $scope.closeModal = function () {
-        angular.element(document.getElementsByClassName('delete-observation-modal')).css('display', 'none');
+        UtilService.closeModal('delete-observation-modal');
     };
 
     $scope.deleteObservation = function () {
+        var index = void 0;
         ObservationService.remove({
             id: observationToBeDeleted.id
         }, function (res) {
-            angular.element(document.getElementsByClassName('delete-observation-modal')).css('display', 'none');
-            $state.reload();
+            index = $scope.observations.findIndex(function (elem) {
+                if (elem.id == observationToBeDeleted.id) {
+                    return elem;
+                }
+            });
+            $scope.observations.splice(index, 1);
+
+            console.log($scope.observations, 'yooooooooo');
+            UtilService.closeModal('delete-observation-modal');
+            // $state.reload();
         });
     };
 
@@ -48301,14 +48311,14 @@ exports.default = ObservationFormCtrl;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-var SchoolService = function SchoolService($resource, $http) {
+var SchoolService = function SchoolService($resource, $http, BaseUrl) {
 
-    var obj = $resource('https://dev-uprep.nijel.org/api/schools/:id', {
+    var obj = $resource(BaseUrl + 'schools/:id', {
         id: '@id'
     });
 
     obj.fetchSchools = function (cb) {
-        $http.get('https://dev-uprep.nijel.org/api/schools').then(function (res) {
+        $http.get(BaseUrl + 'schools').then(function (res) {
             cb(null, res);
         }, function (err) {
             cb(err);
@@ -48330,9 +48340,9 @@ exports.default = SchoolService;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-var ObservationTypeService = function ObservationTypeService($resource, $http) {
+var ObservationTypeService = function ObservationTypeService($resource, $http, BaseUrl) {
 
-    var obj = $resource('https://dev-uprep.nijel.org/api/observation_types');
+    var obj = $resource(BaseUrl + 'observation_types');
 
     return obj;
 };
@@ -48349,9 +48359,9 @@ exports.default = ObservationTypeService;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-var GradeService = function GradeService($resource, $http) {
+var GradeService = function GradeService($resource, $http, BaseUrl) {
 
-    var obj = $resource('https://dev-uprep.nijel.org/api/schools/:id/grades', {
+    var obj = $resource(BaseUrl + 'schools/:id/grades', {
         id: '@id'
     }, {
         'query': {
@@ -48374,9 +48384,9 @@ exports.default = GradeService;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-var TeacherService = function TeacherService($resource, $http) {
+var TeacherService = function TeacherService($resource, $http, BaseUrl) {
 
-    var obj = $resource('https://dev-uprep.nijel.org/api/schools/:schoolId/grades/:gradeId/teachers', {
+    var obj = $resource(BaseUrl + 'schools/:schoolId/grades/:gradeId/teachers', {
         schoolId: '@schoolId',
         gradeId: '@gradeId'
     }, {
@@ -48386,7 +48396,7 @@ var TeacherService = function TeacherService($resource, $http) {
     });
 
     obj.fetchTeacher = function (teacherId, schoolId, gradeId, cb) {
-        $http.get('https://dev-uprep.nijel.org/api/teachers/' + teacherId + '?schoolId=' + schoolId + '&gradeId=' + gradeId).then(function (res) {
+        $http.get(BaseUrl + 'teachers/' + teacherId + '?schoolId=' + schoolId + '&gradeId=' + gradeId).then(function (res) {
             cb(null, res);
         }, function (err) {
             cb(err);
@@ -48408,9 +48418,9 @@ exports.default = TeacherService;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-var SubjectService = function SubjectService($resource, $http) {
+var SubjectService = function SubjectService($resource, $http, BaseUrl) {
 
-    var obj = $resource('https://dev-uprep.nijel.org/api/schools/:schoolId/grades/:gradeId/teachers', {
+    var obj = $resource(BaseUrl + 'schools/:schoolId/grades/:gradeId/teachers', {
         schoolId: '@schoolId',
         gradeId: '@gradeId'
     }, {
@@ -48434,9 +48444,9 @@ exports.default = SubjectService;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-var ObservationService = function ObservationService($resource, $http) {
+var ObservationService = function ObservationService($resource, $http, BaseUrl) {
 
-    var obj = $resource('https://dev-uprep.nijel.org/api/observations/:id', {
+    var obj = $resource(BaseUrl + 'observations/:id', {
         id: '@id'
     }, {
         'query': {
@@ -48448,7 +48458,7 @@ var ObservationService = function ObservationService($resource, $http) {
     });
 
     obj.fetchObservations = function (cb) {
-        $http.get('https://dev-uprep.nijel.org/api/observations').then(function (res) {
+        $http.get(BaseUrl + 'observations').then(function (res) {
             cb(null, res);
         }, function (err) {
             cb(err);
@@ -48456,7 +48466,7 @@ var ObservationService = function ObservationService($resource, $http) {
     };
 
     obj.createObservation = function (data, cb) {
-        $http.post('https://dev-uprep.nijel.org/api/observations', data).then(function (res) {
+        $http.post(BaseUrl + 'observations', data).then(function (res) {
             cb(null, res);
         }, function (err) {
             cb(err);
@@ -48478,9 +48488,9 @@ exports.default = ObservationService;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-var ClusterService = function ClusterService($resource, $http) {
+var ClusterService = function ClusterService($resource, $http, BaseUrl) {
 
-    var obj = $resource('https://dev-uprep.nijel.org/api/clusters/', {
+    var obj = $resource(BaseUrl + 'clusters/', {
         id: '@id'
     }, {
         'query': {
@@ -48503,9 +48513,9 @@ exports.default = ClusterService;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-var AttachmentService = function AttachmentService($resource, $http) {
+var AttachmentService = function AttachmentService($resource, $http, BaseUrl) {
 
-    var obj = $resource('https://dev-uprep.nijel.org/api/observation_evidences/:id', {
+    var obj = $resource(BaseUrl + 'observation_evidences/:id', {
         id: '@id'
     }, {
         'query': {
