@@ -10,8 +10,10 @@
                 select.grade-color(ng-model='observation.grade' ng-change='updateTeachersBasedOnSelectedGrade()' ng-options='grade.name for grade in grades track by grade.id')
             .c-select-group.ul-margin-bottom-20
                 select.teacher-color(ng-model='observation.teacher' ng-change='updateSubjectsBasedOnSelectedTeacher()' ng-options='teacher.name for teacher in teachers track by teacher.id')
+                    option(value="" disabled selected) Select Teacher
             .c-select-group.ul-margin-bottom-20
                 select.subject-color(ng-model='observation.subject' ng-options='subject.name for subject in subjects track by subject.id')
+                    option(value="" disabled selected) Select Subject
             button(ng-click='editObservation()') Save
 .c-modal.delete-observation-modal
     .c-modal__modal-content
