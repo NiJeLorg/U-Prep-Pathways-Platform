@@ -49,7 +49,7 @@ uprepApp
   .service('AttachmentService', AttachmentService)
   .service('UtilService', UtilService)
   .factory('ObservationFactory', ObservationFactory)
-  .constant('BaseUrl', 'https://dev-uprep.nijel.org/api/')
+  .constant('BASE_URL', 'https://dev-uprep.nijel.org/api/');
 
 uprepApp.config(['$stateProvider', '$httpProvider',
   '$urlRouterProvider', '$locationProvider', ($stateProvider, $httpProvider, $urlRouterProvider, $locationProvider) => {
