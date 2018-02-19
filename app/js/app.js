@@ -31,7 +31,6 @@ const uprepApp = angular.module('uprepApp', [uiRouter, ngFileUpload, ngResource]
 
 let url = 'https://dev-uprep.nijel.org/api/';
 uprepApp
-    .constant('BASE_URL', url)
   .controller('NavCtrl', NavCtrl)
   .controller('HomeCtrl', HomeCtrl)
   .controller('SchoolCtrl', SchoolCtrl)
@@ -49,7 +48,7 @@ uprepApp
   .service('AttachmentService', AttachmentService)
   .service('UtilService', UtilService)
   .factory('ObservationFactory', ObservationFactory)
-  .constant('BASE_URL', 'https://dev-uprep.nijel.org/api/');
+  .constant('BASE_URL', url);
 
 uprepApp.config(['$stateProvider', '$httpProvider',
   '$urlRouterProvider', '$locationProvider', ($stateProvider, $httpProvider, $urlRouterProvider, $locationProvider) => {
