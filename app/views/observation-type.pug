@@ -1,11 +1,11 @@
 .ul-padding-30
     .l-flex-space-between.ul-border-bottom
         h1 Make A New Observation
-        img(src='assets/icons/x-icon.svg')
+        img.ul-cursor-pointer(src='assets/icons/x-icon.svg' ng-click='cancelObservation()')
     .ul-padding-30
         ul.c-triangle-breadcrumb.ul-margin-bottom-20
             li.c-triangle-breadcrumb__item
-                a.c-triangle-breadcrumb__link(href='#') SCHOOL
+                a.c-triangle-breadcrumb__link(href='#') {{observation.school.name}}
             li.c-triangle-breadcrumb__item
                 a.c-triangle-breadcrumb__link(href='#') TYPE
             li.c-triangle-breadcrumb__item
@@ -15,8 +15,5 @@
             l.flex
                 p.ul-margin-bottom-20 What kind of observation are you going to do? #[strong For more details see] #[a.c-link(href='#') Observation Types] #[img(src='assets/icons/question-mark.svg')]
             .c-buttons-holder
-                button.ul-margin-bottom-20(ui-sref='observationInputs') Crew
-                button.ul-margin-bottom-20 School-Wide
-                button.ul-margin-bottom-20 Lesson
-                button.ul-margin-bottom-20 Adult
+                button.ul-margin-bottom-20(ng-repeat='observationType in observationTypes' ng-click='recordObservationType(observationType)' ui-sref='observationInputs') {{observationType.name}}
 
