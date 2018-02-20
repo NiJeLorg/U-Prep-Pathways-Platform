@@ -56,8 +56,8 @@ const update = async (req, res, next) => {
     await observation_evidence.bulkCreate(attachments);
     const cluster_ids = req.body.cluster_ids;
     const observation_type_property_data = req.body.observation_type_property_data;
-    console.log(observation_type_property_data, "TADADADASD");
-    console.log(observation_type_property_data[0]['1'], "TADADADASD");
+    // console.log(observation_type_property_data, "TADADADASD");
+    // console.log(observation_type_property_data[0]['1'], "TADADADASD");
 
     //Save property Data
     if(observation_type_property_data){
