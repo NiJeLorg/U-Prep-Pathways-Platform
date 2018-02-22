@@ -62,9 +62,14 @@ uprepApp.config(['$stateProvider', '$httpProvider',
         templateUrl: 'views/home.html'
       })
       .state('school', {
-        url: '/school',
+        url: '/school?workflow',
         controller: 'SchoolCtrl',
-        templateUrl: 'views/school.html'
+        templateUrl: 'views/school.html',
+        resolve: {
+            workflow: function($stateParams){
+                return $stateParams.workflow;
+            }
+        }
       })
       .state('observationType', {
         url: '/observation-type',

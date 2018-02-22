@@ -1,8 +1,10 @@
 'use strict';
 
-const SchoolCtrl = ($scope, $state, $rootScope, UtilService, SchoolService, ObservationFactory) => {
+const SchoolCtrl = ($scope, $state, $rootScope, UtilService, SchoolService, ObservationFactory, workflow) => {
 
     $rootScope.observation = ObservationFactory;
+    $scope.templateUrl = `views/breadcrumbs/${workflow}.html`;
+
 
     // fetch data
     SchoolService.fetchSchools((err, res) => {
@@ -12,6 +14,20 @@ const SchoolCtrl = ($scope, $state, $rootScope, UtilService, SchoolService, Obse
         $scope.schools = res.data.data;
     });
 
+    $scope.getTitle = () => {
+        if(workflow === 'observations'){
+            return 'Make an Observation';
+        }
+        return 'Score an Observation';
+    };
+
+    $scope.cancel = () =>{
+        if(workflow === 'observations'){
+            UtilService.cancelObservation(ObservationFactory);
+        }else{
+            UtilService.cancelScore();
+        }
+    };
     $scope.checkIfSchoolIsUPSM = (school) => {
         if (school.includes('UPSM')) {
             return true;
