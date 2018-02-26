@@ -21,6 +21,8 @@ const ObservationFormCtrl = ($scope, $state, $stateParams, $timeout, observation
         id: $scope.observation.school.id
     }, (res) => {
         $scope.grades = res.data;
+        $scope.updateTeachersBasedOnSelectedGrade();
+        $scope.updateSubjectsBasedOnSelectedTeacher();
     }, (err) => {
         console.error(err, 'ERROR');
     });
@@ -82,6 +84,7 @@ const ObservationFormCtrl = ($scope, $state, $stateParams, $timeout, observation
             gradeId: $scope.observation.grade.id
         }, (res) => {
             $scope.teachers = res.data;
+            $scope.subjects= []
         });
     };
 
