@@ -9,8 +9,17 @@ const TeacherService = (BASE_URL, $resource, $http) => {
         }
     });
 
+    obj.fetchSchoolTeachers = (schoolId, cb) => {
+        $http.get(BASE_URL+ '/teachers?schoolId=' + schoolId)
+            .then((res) => {
+                cb(null, res);
+            }, (err) => {
+                cb(err);
+            });
+    };
+
     obj.fetchTeacher = (teacherId, schoolId, gradeId, cb) => {
-        $http.get((BASE_URL+ '/teachers/' + teacherId) + '?schoolId=' + schoolId + '&gradeId=' + gradeId)
+        $http.get(BASE_URL+ '/teachers/' + teacherId + '?schoolId=' + schoolId + '&gradeId=' + gradeId)
             .then((res) => {
                 cb(null, res);
             }, (err) => {

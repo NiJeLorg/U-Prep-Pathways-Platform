@@ -16,8 +16,8 @@ const UtilService = ($state) => {
         $state.go('home');
     };
 
-    obj.cancelScore= () => {
-        // observation = {};
+    obj.cancelScore= (score) => {
+        score = {};
         $state.go('home');
     };
     return obj;

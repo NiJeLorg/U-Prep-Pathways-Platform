@@ -1,7 +1,9 @@
 'use strict';
 
-const ObservationInputsCtrl = ($scope, $state, GradeService, $rootScope, UtilService, TeacherService, ObservationService, ObservationFactory) => {
+const ObservationInputsCtrl = ($scope, $state, GradeService, $rootScope, UtilService, TeacherService, ObservationService, ObservationFactory, BreadcrumbFactory) => {
 
+    $scope.templateUrl = `views/breadcrumbs/breadcrumbs.html`;
+    $scope.breadcrumbs = BreadcrumbFactory;
     // fetch data
     GradeService.query({
         id: ObservationFactory.school.id
@@ -78,7 +80,7 @@ const ObservationInputsCtrl = ($scope, $state, GradeService, $rootScope, UtilSer
         }
     };
 
-    $scope.cancelObservation = () => {
+    $scope.cancel = () =>{
         UtilService.cancelObservation(ObservationFactory);
     };
 
