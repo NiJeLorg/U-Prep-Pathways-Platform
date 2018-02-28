@@ -6,6 +6,10 @@ module.exports = {
                 allowNull: false,
                 type: Sequelize.INTEGER
             },
+            grade_id:{
+                allowNull: false,
+                type: Sequelize.INTEGER
+            },
             subject_id: {
                 type: Sequelize.INTEGER,
                 allowNull: false,
