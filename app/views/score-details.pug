@@ -11,4 +11,4 @@ ng-include(src='templateUrl')
                 select.subject-color(ng-model='subject' ng-change='recordSubject()' ng-disabled='disableSubjectSelect')
                     option(value='' disabled selected) Select Subject
                     option(ng-repeat='subject in subjects' value='{{subject}}') {{subject.name}}
-        button(ui-sref='scoreForm') Done
+        button(ui-sref='score-form') Done

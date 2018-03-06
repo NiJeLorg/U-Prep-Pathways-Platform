@@ -13,6 +13,7 @@ import SchoolCtrl from './controllers/school';
 import ObservationTypeCtrl from './controllers/observation-type';
 import ObservationInputsCtrl from './controllers/observation-inputs';
 import ObservationFormCtrl from './controllers/observation-form';
+import ScoreFormCtrl from './controllers/score-form';
 import TeacherCtrl from './controllers/teacher';
 
 // load services
@@ -34,6 +35,7 @@ const uprepApp = angular.module('uprepApp', [uiRouter, ngFileUpload, ngResource]
 
 
 let url = 'https://dev-uprep.nijel.org/api/';
+// let url = 'http://localhost:3000/api/';
 uprepApp
   .controller('NavCtrl', NavCtrl)
   .controller('HomeCtrl', HomeCtrl)
@@ -42,7 +44,8 @@ uprepApp
   .controller('ObservationTypeCtrl', ObservationTypeCtrl)
   .controller('ObservationInputsCtrl', ObservationInputsCtrl)
   .controller('ObservationFormCtrl', ObservationFormCtrl)
-  .controller('MakeScoreCtrl', MakeScoreCtrl)  
+  .controller('ScoreFormCtrl', ScoreFormCtrl)
+  .controller('MakeScoreCtrl', MakeScoreCtrl)
   .controller('TeacherCtrl', TeacherCtrl)
   .service('SchoolService', SchoolService)
   .service('ObservationTypeService', ObservationTypeService)
@@ -117,9 +120,14 @@ uprepApp.config(['$stateProvider', '$httpProvider',
         controller: 'ScoreInputCtrl',
         templateUrl:'views/score-details.html'
       })
-      .state('scoreForm', {
+      .state('score-form', {
         url:'/score-form',
         controller: 'MakeScoreCtrl',
+        templateUrl:'views/score-form.html'
+      })
+      .state('scoreForm', {
+        url:'/score-form',
+        controller: 'ScoreFormCtrl',
         templateUrl:'views/score-form.html'
       });
     $locationProvider.html5Mode(true);
