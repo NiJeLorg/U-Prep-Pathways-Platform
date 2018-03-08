@@ -33,12 +33,12 @@ app.use(cors());
 app.use(express.static(path.resolve('./public')));
 app.use('/uploads', express.static(path.resolve('./uploads')));
 
-// Setup a default catch-all route that sends back the index.html page
-app.get('/', (req, res) => {
-    res.sendFile('index.html', {root: './public'});
-});
 // mount all routes on /api path
 app.use('/api', routes);
+// Setup a default catch-all route that sends back the index.html page
+app.get('*', (req, res) => {
+    res.sendFile('index.html', {root: './public'});
+});
 
 // if error is not an instanceOf APIError, convert it.
 app.use((err, req, res, next) => {
