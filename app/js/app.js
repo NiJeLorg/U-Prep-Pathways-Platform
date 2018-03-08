@@ -23,6 +23,7 @@ import GradeService from './services/grade-service';
 import TeacherService from './services/teacher-service';
 import SubjectService from './services/subject-service';
 import ObservationService from './services/observation-service';
+import ElementService from './services/element-service';
 import ClusterService from './services/cluster-service';
 import AttachmentService from './services/attachment-service';
 import UtilService from './services/utilities-service';
@@ -34,8 +35,8 @@ import MakeScoreCtrl from './controllers/make-score';
 const uprepApp = angular.module('uprepApp', [uiRouter, ngFileUpload, ngResource]);
 
 
-let url = 'https://dev-uprep.nijel.org/api/';
-// let url = 'http://localhost:3000/api/';
+// let url = 'https://dev-uprep.nijel.org/api/';
+let url = 'http://localhost:3000/api/';
 uprepApp
   .controller('NavCtrl', NavCtrl)
   .controller('HomeCtrl', HomeCtrl)
@@ -51,6 +52,7 @@ uprepApp
   .service('ObservationTypeService', ObservationTypeService)
   .service('GradeService', GradeService)
   .service('TeacherService', TeacherService)
+  .service('ElementService', ElementService)
   .service('SubjectService', SubjectService)
   .service('ObservationService', ObservationService)
   .service('ClusterService', ClusterService)
