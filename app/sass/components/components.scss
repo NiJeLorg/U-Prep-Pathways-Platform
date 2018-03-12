@@ -138,6 +138,11 @@
     }
 }
 
+.c-observations-scores-container {
+    max-height: 600px;
+    overflow-y: scroll;
+}
+
 .c-observation {
     background: #fff;
     border-radius: 4px;

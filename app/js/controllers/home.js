@@ -20,6 +20,8 @@ const HomeCtrl = ($scope, $state, ObservationService, SchoolService, UtilService
         $scope.schools = res.data.data;
     });
 
+    // event handlers
+
     $scope.openModal = (observation) => {      
         UtilService.openModal('delete-observation-modal');
         observationToBeDeleted = observation;

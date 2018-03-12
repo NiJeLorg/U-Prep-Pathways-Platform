@@ -30,31 +30,32 @@
                         select
                             option(value='' disabled selected ) Select School
                             option(ng-repeat='school in schools' ng-model='selectedSchool') {{school.name}}
-            .c-observation.l-flex-space-between.ul-padding-30(ng-repeat='observation in observations | filter:search |filter:selectedSchool')
-                .c-observation__date
-                    p Created
-                    p {{observation.created_at | date: 'shortDate'}}
-                .c-observation__details
-                    h3 {{observation.observation_type.name}}
-                    span.grade-color(ng-if='observation.grade.name') {{observation.grade.name}}
-                    span.teacher-color(ng-if='observation.teacher.name') {{observation.teacher.name}}
-                    span.subject-color(ng-if='observation.subject.name') {{observation.subject.name}}
-                .c-observation__badge(ng-if='observation.status===1')
-                    .holder
-                        img(src='assets/icons/submitted-badge-icon.svg')
-                        p SUBMITTED
-                .c-observation__actions.l-flex-flex-end
-                    img.ul-cursor-pointer(ng-if='observation.status ===0' src='assets/icons/edit-icon.svg' ng-click='editObservation(observation)')
-                    //- img.ul-cursor-pointer(src='assets/icons/duplicate-icon.svg')
-                    img.ul-cursor-pointer(src='assets/icons/delete-icon.svg' ng-click='openModal(observation)')
-            .c-score.l-flex-space-between.ul-padding-30(ng-show="page === 'scored'" ng-repeat='score in scores')
-                .c-score__date
-                    p Created
-                    p {{score.readableDate}}
-                .c-score__details
-                    h3 {{score.scoreName}}
-                    span.teacher-color {{score.scoreKind}}: {{score.scoreTime}}
-                .c-score__actions.l-flex-flex-end
-                    img(src='assets/icons/edit-icon.svg')
-                    img(src='assets/icons/duplicate-icon.svg')
-                    img(src='assets/icons/delete-icon.svg')
+            .c-observations-scores-container 
+                .c-observation.l-flex-space-between.ul-padding-30(ng-repeat='observation in observations | filter:search |filter:selectedSchool' ng-show='page === "observed"')
+                    .c-observation__date
+                        p Created
+                        p {{observation.created_at | date: 'shortDate'}}
+                    .c-observation__details
+                        h3 {{observation.observation_type.name}}
+                        span.grade-color(ng-if='observation.grade.name') {{observation.grade.name}}
+                        span.teacher-color(ng-if='observation.teacher.name') {{observation.teacher.name}}
+                        span.subject-color(ng-if='observation.subject.name') {{observation.subject.name}}
+                    .c-observation__badge(ng-if='observation.status===1')
+                        .holder
+                            img(src='assets/icons/submitted-badge-icon.svg')
+                            p SUBMITTED
+                    .c-observation__actions.l-flex-flex-end
+                        img.ul-cursor-pointer(ng-if='observation.status ===0' src='assets/icons/edit-icon.svg' ng-click='editObservation(observation)')
+                        //- img.ul-cursor-pointer(src='assets/icons/duplicate-icon.svg')
+                        img.ul-cursor-pointer(src='assets/icons/delete-icon.svg' ng-click='openModal(observation)')
+                .c-score.l-flex-space-between.ul-padding-30(ng-show="page === 'scored'" ng-repeat='score in scores')
+                    .c-score__date
+                        p Created
+                        p {{score.readableDate}}
+                    .c-score__details
+                        h3 {{score.scoreName}}
+                        span.teacher-color {{score.scoreKind}}: {{score.scoreTime}}
+                    .c-score__actions.l-flex-flex-end
+                        img(src='assets/icons/edit-icon.svg')
+                        img(src='assets/icons/duplicate-icon.svg')
+                        img(src='assets/icons/delete-icon.svg')
