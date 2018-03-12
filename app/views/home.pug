@@ -27,16 +27,16 @@
                 .input-group.l-flex
                     p School
                     .c-select-group.l-flex
-                        select
+                        select(ng-change='filterObservationsBySchool()'  ng-model='selectedSchool')
                             option(value='' disabled selected ) Select School
-                            option(ng-repeat='school in schools' ng-model='selectedSchool') {{school.name}}
+                            option(ng-repeat='school in schools') {{school.name}}
             .c-observations-scores-container 
                 .c-observation.l-flex-space-between.ul-padding-30(ng-repeat='observation in observations | orderBy:"-created_at" | filter:search |filter:selectedSchool' ng-show='page === "observed"')
                     .c-observation__date
                         p Created
                         p {{observation.created_at | date: 'shortDate'}}
                     .c-observation__details
-                        h3 {{observation.observation_type.name}}
+                        h3 {{observation.name || observation.observation_type.name}}
                         span.grade-color(ng-if='observation.grade.name') {{observation.grade.name}}
                         span.teacher-color(ng-if='observation.teacher.name') {{observation.teacher.name}}
                         span.subject-color(ng-if='observation.subject.name') {{observation.subject.name}}
@@ -45,8 +45,9 @@
                             img(src='assets/icons/submitted-badge-icon.svg')
                             p SUBMITTED
                     .c-observation__actions.l-flex-flex-end
+                        svg.c-view-icon.ul-cursor-pointer(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512")
+                            path(d="M569.354 231.631C512.969 135.949 407.81 72 288 72 168.14 72 63.004 135.994 6.646 231.631a47.999 47.999 0 0 0 0 48.739C63.031 376.051 168.19 440 288 440c119.86 0 224.996-63.994 281.354-159.631a47.997 47.997 0 0 0 0-48.738zM288 392c-75.162 0-136-60.827-136-136 0-75.162 60.826-136 136-136 75.162 0 136 60.826 136 136 0 75.162-60.826 136-136 136zm104-136c0 57.438-46.562 104-104 104s-104-46.562-104-104c0-17.708 4.431-34.379 12.236-48.973l-.001.032c0 23.651 19.173 42.823 42.824 42.823s42.824-19.173 42.824-42.823c0-23.651-19.173-42.824-42.824-42.824l-.032.001C253.621 156.431 270.292 152 288 152c57.438 0 104 46.562 104 104z")
                         img.ul-cursor-pointer(ng-if='observation.status ===0' src='assets/icons/edit-icon.svg' ng-click='editObservation(observation)')
-                        //- img.ul-cursor-pointer(src='assets/icons/duplicate-icon.svg')
                         img.ul-cursor-pointer(src='assets/icons/delete-icon.svg' ng-click='openModal(observation)')
                 .c-score.l-flex-space-between.ul-padding-30(ng-show="page === 'scored'" ng-repeat='score in scores | orderBy:"-readableDate"')
                     .c-score__date
@@ -57,5 +58,4 @@
                         span.teacher-color {{score.scoreKind}}: {{score.scoreTime}}
                     .c-score__actions.l-flex-flex-end
                         img(src='assets/icons/edit-icon.svg')
-                        //- img(src='assets/icons/duplicate-icon.svg')
                         img(src='assets/icons/delete-icon.svg')

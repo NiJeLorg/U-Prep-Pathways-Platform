@@ -8,6 +8,7 @@ const HomeCtrl = ($scope, $state, ObservationService, SchoolService, UtilService
     ObservationService.fetchObservations((err, res) => {
         if (!err) {
             $scope.observations = res.data.data;
+            console.log($scope.observations, 'observations');
         } else {
             console.error(err, 'ERROR');
         }
@@ -21,6 +22,9 @@ const HomeCtrl = ($scope, $state, ObservationService, SchoolService, UtilService
     });
 
     // event handlers
+    $scope.filterObservationsBySchool = ()=> {
+        // console.log($scope.selectedSchool, 'school');
+    }
 
     $scope.openModal = (observation) => {      
         UtilService.openModal('delete-observation-modal');

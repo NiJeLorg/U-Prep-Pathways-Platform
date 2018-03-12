@@ -5,6 +5,9 @@ const ObservationFormCtrl = ($scope, $state, $stateParams, $timeout, observation
 
     let observationToBeDeleted, cluster_ids = [];
     $scope.observation = observation.data;
+    $scope.editObservationName = false;
+    
+    // fetch data
     ObservationTypeService.get({
         id: $scope.observation.observation_type_id
     }, (res) =>{
@@ -15,7 +18,6 @@ const ObservationFormCtrl = ($scope, $state, $stateParams, $timeout, observation
     }, (err) => {
         console.error(err, 'ERROR');
     });
-    // fetch data
 
     GradeService.query({
         id: $scope.observation.school.id
@@ -139,6 +141,7 @@ const ObservationFormCtrl = ($scope, $state, $stateParams, $timeout, observation
         ObservationService.update({
             id: $scope.observation.id,
         }, {
+            name: $scope.observation.name,
             description: $scope.observation.description,
             cluster_ids: $scope.observation.cluster_ids,
             status: status,

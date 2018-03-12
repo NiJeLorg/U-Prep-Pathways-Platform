@@ -49,10 +49,13 @@
                 p VIEW ALL OBSERVATIONS
         .c-observation-observation-form
             .c-observation-observation-form__details
-                h3 {{observation.observation_type.name}} Observation
+                .edit-observation-name
+                    h3(ng-show='!editObservationName') {{observation.name || observation.observation_type.name}}
+                    input.c-input(type='text' placeholder='{{observation.name}}' ng-show='editObservationName' ng-model='observation.name')
+                    img.ul-cursor-pointer(src='assets/icons/edit-icon.svg' ng-show='!editObservationName' ng-click='editObservationName = true')
                 span.grade-color {{observation.grade.name}}
                 span.teacher-color {{observation.teacher.name}}
-                span.subject-color {{observation.subject.name}}
+                span.subject-color {{observation .subject.name}}
                 p CREATED {{observation.created_at | date:'short'}}
             .c-observation-observation-form__actions
                 button(ng-click='openSubmitObservationModal()') Submit

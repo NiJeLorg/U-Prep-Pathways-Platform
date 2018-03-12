@@ -49341,6 +49341,7 @@ var HomeCtrl = function HomeCtrl($scope, $state, ObservationService, SchoolServi
     ObservationService.fetchObservations(function (err, res) {
         if (!err) {
             $scope.observations = res.data.data;
+            console.log($scope.observations, 'observations');
         } else {
             console.error(err, 'ERROR');
         }
@@ -49354,6 +49355,9 @@ var HomeCtrl = function HomeCtrl($scope, $state, ObservationService, SchoolServi
     });
 
     // event handlers
+    $scope.filterObservationsBySchool = function () {
+        // console.log($scope.selectedSchool, 'school');
+    };
 
     $scope.openModal = function (observation) {
         UtilService.openModal('delete-observation-modal');
@@ -49691,6 +49695,9 @@ var ObservationFormCtrl = function ObservationFormCtrl($scope, $state, $statePar
     var observationToBeDeleted = void 0,
         cluster_ids = [];
     $scope.observation = observation.data;
+    $scope.editObservationName = false;
+
+    // fetch data
     ObservationTypeService.get({
         id: $scope.observation.observation_type_id
     }, function (res) {
@@ -49701,7 +49708,6 @@ var ObservationFormCtrl = function ObservationFormCtrl($scope, $state, $statePar
     }, function (err) {
         console.error(err, 'ERROR');
     });
-    // fetch data
 
     GradeService.query({
         id: $scope.observation.school.id
@@ -49823,6 +49829,7 @@ var ObservationFormCtrl = function ObservationFormCtrl($scope, $state, $statePar
         ObservationService.update({
             id: $scope.observation.id
         }, {
+            name: $scope.observation.name,
             description: $scope.observation.description,
             cluster_ids: $scope.observation.cluster_ids,
             status: status,

@@ -40,9 +40,6 @@
     input {
         width: 250px;
         height: 40px;
-        background: rgba(255, 255, 255, 0.80);
-        border: 1px solid rgba(151, 151, 151, 0.20);
-        border-radius: 4px;
         padding-left: 30px;
     }
     input:focus {
@@ -52,6 +49,15 @@
         position: absolute;
         left: 10px;
     }
+}
+
+.c-input {
+    border-radius: 4px;
+    border: 1px solid rgba(151, 151, 151, 0.20);
+    background: rgba(255, 255, 255, 0.80);
+    padding: 10px 15px;
+    font-weight: bold;
+    font-family: 'Raleway', sans-serif;  
 }
 
 .c-select-group {
@@ -317,23 +323,30 @@
     justify-content: space-between;
     align-items: center;
     border-bottom: 1px solid #808285;
-    padding-bottom: 15px;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
     .c-observation-observation-form__details {
-        h3 {
-            color: $purple;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
         span {
             margin-right: 20px;
-        }
-        p {
-            margin-top: 5px;
         }
     }
     .c-observation-observation-form__actions * {
         margin-left: 20px;
+    }
+    .edit-observation-name {
+        padding: 18px 0;
+        h3 {
+            color: $purple;
+            font-weight: bold;
+            margin: 0;
+        }
+        input {
+            color: $purple;
+        }
+        img {
+            margin-left: 20px;
+        }
+        display: flex;
+        align-items: center;
     }
 }
 
@@ -569,5 +582,14 @@
         right: 15px;
         top: 20%;
         transform: rotate(-135deg);
+    }
+}
+
+.c-view-icon {
+    width: 24px;
+    height: auto;
+    margin-left: 25px;
+    path {
+        fill: #808285;
     }
 }
