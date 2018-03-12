@@ -49386,17 +49386,17 @@ var HomeCtrl = function HomeCtrl($scope, $state, ObservationService, SchoolServi
     };
     $scope.scores = [{
         scoreKind: 'Teacher',
-        readableDate: '11/13/2017',
+        readableDate: '11/13/17',
         scoreName: 'Mr.Martin',
         scoreTime: '1st Score'
     }, {
         scoreKind: 'Teacher',
-        readableDate: '11/13/2017',
+        readableDate: '11/13/17',
         scoreName: 'Ms.Andrews',
         scoreTime: '3rd Score'
     }, {
         scoreKind: 'Schoolwide',
-        readableDate: '11/13/2017',
+        readableDate: '11/13/17',
         scoreName: 'Ellen Thompson Elementary',
         scoreTime: '1st Score'
     }];

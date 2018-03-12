@@ -48,7 +48,7 @@
                         img.ul-cursor-pointer(ng-if='observation.status ===0' src='assets/icons/edit-icon.svg' ng-click='editObservation(observation)')
                         //- img.ul-cursor-pointer(src='assets/icons/duplicate-icon.svg')
                         img.ul-cursor-pointer(src='assets/icons/delete-icon.svg' ng-click='openModal(observation)')
-                .c-score.l-flex-space-between.ul-padding-30(ng-show="page === 'scored'" ng-repeat='score in scores')
+                .c-score.l-flex-space-between.ul-padding-30(ng-show="page === 'scored'" ng-repeat='score in scores | orderBy:"-readableDate"')
                     .c-score__date
                         p Created
                         p {{score.readableDate | date: 'shortDate'}}
@@ -57,5 +57,5 @@
                         span.teacher-color {{score.scoreKind}}: {{score.scoreTime}}
                     .c-score__actions.l-flex-flex-end
                         img(src='assets/icons/edit-icon.svg')
-                        img(src='assets/icons/duplicate-icon.svg')
+                        //- img(src='assets/icons/duplicate-icon.svg')
                         img(src='assets/icons/delete-icon.svg')
