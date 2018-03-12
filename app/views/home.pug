@@ -31,7 +31,7 @@
                             option(value='' disabled selected ) Select School
                             option(ng-repeat='school in schools' ng-model='selectedSchool') {{school.name}}
             .c-observations-scores-container 
-                .c-observation.l-flex-space-between.ul-padding-30(ng-repeat='observation in observations | filter:search |filter:selectedSchool' ng-show='page === "observed"')
+                .c-observation.l-flex-space-between.ul-padding-30(ng-repeat='observation in observations | orderBy:"-created_at" | filter:search |filter:selectedSchool' ng-show='page === "observed"')
                     .c-observation__date
                         p Created
                         p {{observation.created_at | date: 'shortDate'}}
@@ -51,7 +51,7 @@
                 .c-score.l-flex-space-between.ul-padding-30(ng-show="page === 'scored'" ng-repeat='score in scores')
                     .c-score__date
                         p Created
-                        p {{score.readableDate}}
+                        p {{score.readableDate | date: 'shortDate'}}
                     .c-score__details
                         h3 {{score.scoreName}}
                         span.teacher-color {{score.scoreKind}}: {{score.scoreTime}}
