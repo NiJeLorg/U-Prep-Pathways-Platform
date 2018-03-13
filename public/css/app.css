@@ -234,9 +234,9 @@ select {
   margin-bottom: 30px; }
   .c-observation .c-observation__date {
     color: #808285;
-    flex-basis: 15%; }
+    flex-basis: 10%; }
   .c-observation .c-observation__details {
-    flex-basis: 80%; }
+    flex-basis: 70%; }
     .c-observation .c-observation__details h3 {
       font-weight: bold;
       margin-top: 0;
@@ -245,7 +245,7 @@ select {
       margin-right: 10px; }
   .c-observation .c-observation__badge {
     position: relative;
-    flex-basis: 5%; }
+    flex-basis: 10%; }
     .c-observation .c-observation__badge .holder {
       position: relative;
       display: flex;
@@ -254,8 +254,11 @@ select {
       justify-content: center;
       top: -30px; }
       .c-observation .c-observation__badge .holder p {
-        font-weight: bold;
+        font-weight: bold; }
+      .c-observation .c-observation__badge .holder .submitted {
         color: #31a35a; }
+      .c-observation .c-observation__badge .holder .draft {
+        color: #35A3DC; }
   .c-observation .c-observation__actions {
     flex-basis: 10%; }
     .c-observation .c-observation__actions img {
@@ -543,8 +546,7 @@ select {
     fill: #808285; }
 
 .ul-padding-30 {
-  padding: 30px;
-  padding-bottom: 10px; }
+  padding: 30px; }
 
 .ul-padding-30-content {
   padding: 30px;

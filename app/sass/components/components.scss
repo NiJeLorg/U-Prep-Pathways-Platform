@@ -155,10 +155,10 @@
     margin-bottom: 30px;
     .c-observation__date {
         color: #808285;
-        flex-basis: 15%;
+        flex-basis: 10%;
     }
     .c-observation__details {
-        flex-basis: 80%;
+        flex-basis: 70%;
         h3 {
             font-weight: bold;
             margin-top: 0;
@@ -170,7 +170,7 @@
     }
     .c-observation__badge {
         position: relative;
-        flex-basis: 5%;
+        flex-basis: 10%;
         .holder {
             position: relative;
             display: flex;
@@ -180,7 +180,12 @@
             top: -30px;
             p {
                 font-weight: bold;
+            }
+            .submitted {
                 color: #31a35a;
+            }
+            .draft {
+                color: #35A3DC;
             }
         }
     }
