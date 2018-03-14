@@ -22,11 +22,11 @@ const HomeCtrl = ($scope, $state, ObservationService, SchoolService, UtilService
     });
 
     // event handlers
-    $scope.filterObservationsBySchool = ()=> {
+    $scope.filterObservationsBySchool = () => {
         // console.log($scope.selectedSchool, 'school');
     }
 
-    $scope.openModal = (observation) => {      
+    $scope.openModal = (observation) => {
         UtilService.openModal('delete-observation-modal');
         observationToBeDeleted = observation;
     };
@@ -40,21 +40,24 @@ const HomeCtrl = ($scope, $state, ObservationService, SchoolService, UtilService
         ObservationService.remove({
             id: observationToBeDeleted.id
         }, (res) => {
-            index = $scope.observations.findIndex((elem)=> {
-                if(elem.id == observationToBeDeleted.id) {
+            index = $scope.observations.findIndex((elem) => {
+                if (elem.id == observationToBeDeleted.id) {
                     return elem;
                 }
-            });        
+            });
             $scope.observations.splice(index, 1);
             UtilService.closeModal('delete-observation-modal');
         });
     };
 
-    $scope.editObservation = (observation) => {
+    $scope.editOrViewObservation = (observation, action) => {
         $state.go('observationForm', {
             observationId: observation.id,
+            action, action
         });
     };
+
+
     $scope.scores = [{
         scoreKind: 'Teacher',
         readableDate: '11/13/17',
@@ -69,7 +72,7 @@ const HomeCtrl = ($scope, $state, ObservationService, SchoolService, UtilService
         scoreKind: 'Schoolwide',
         readableDate: '11/13/17',
         scoreName: 'Ellen Thompson Elementary',
-        scoreTime:'1st Score'
+        scoreTime: '1st Score'
     }];
 };
 

@@ -79,7 +79,7 @@
         .c-observation-form-input-group.ul-margin-bottom-20(ng-repeat='observationTypeProperty in observationTypeProperties')
             h2 {{observationTypeProperty.label}}: {{observationTypeProperty.label_meta}}
             p {{observationTypeProperty.help_text}}
-            textarea(name='property_{{observationTypeProperty.id}}' ng-model="observationTypeProperty.value")
+            textarea(name='property_{{observationTypeProperty.id}}' ng-model="observationTypeProperty.value" ng-disabled='observation.status === 1')
         .c-clusters
             .c-clusters__title
                 h3 Clusters Observed

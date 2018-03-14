@@ -1,19 +1,19 @@
 'use strict';
 
-const ObservationFormCtrl = ($scope, $state, $stateParams, $timeout, observation, Upload, GradeService, TeacherService,ObservationTypeService, ObservationService, ClusterService, AttachmentService, UtilService, ObservationFactory, BASE_URL) => {
+const ObservationFormCtrl = ($scope, $state, $stateParams, $timeout, observation, Upload, GradeService, TeacherService, ObservationTypeService, ObservationService, ClusterService, AttachmentService, UtilService, ObservationFactory, BASE_URL) => {
 
 
     let observationToBeDeleted, cluster_ids = [];
     $scope.observation = observation.data;
     $scope.editObservationName = false;
-    
+
     // fetch data
     ObservationTypeService.get({
         id: $scope.observation.observation_type_id
-    }, (res) =>{
+    }, (res) => {
         $scope.observationTypeProperties = res.data.observation_type_properties.map((property) => {
-             property.value = $scope.getObservationTypePropertyVal(property.id);
-             return property;
+            property.value = $scope.getObservationTypePropertyVal(property.id);
+            return property;
         });
     }, (err) => {
         console.error(err, 'ERROR');
@@ -56,7 +56,7 @@ const ObservationFormCtrl = ($scope, $state, $stateParams, $timeout, observation
 
         angular.forEach(files, (file) => {
             file.upload = Upload.upload({
-                url: (BASE_URL+'/observations/' + $scope.observation.id),
+                url: (BASE_URL + '/observations/' + $scope.observation.id),
                 method: 'PUT',
                 data: {
                     attachments: file
@@ -120,18 +120,20 @@ const ObservationFormCtrl = ($scope, $state, $stateParams, $timeout, observation
         });
     };
 
-    $scope.getPropertyData = () =>{
+    $scope.getPropertyData = () => {
         return $scope.observationTypeProperties.map((property) => {
-            return {[property.id]: property.value};
+            return {
+                [property.id]: property.value
+            };
         });
     };
 
     $scope.getObservationTypePropertyVal = (id) => {
-        const property =$scope.observation.observation_type_property_data.filter((property) => {
+        const property = $scope.observation.observation_type_property_data.filter((property) => {
             return property[id];
         });
         console.log(property);
-        if(property.length > 0){
+        if (property.length > 0) {
             return property[0][id];
         }
         return '';
