@@ -343,6 +343,19 @@
     .c-observation-observation-form__actions * {
         margin-left: 20px;
     }
+    .c-observation-observation-form__actions span {
+        padding: 10px;
+        font-weight: bold;
+    }
+    .c-observation-observation-form__actions .submitted {
+        border: 2px solid #29A457;
+        color: #29A457;
+    }
+
+    .c-observation-observation-form__actions .draft {
+        border: 2px solid #35A3DC;
+        color: #35A3DC;
+    }
     .edit-observation-name {
         padding: 18px 0;
         h3 {
