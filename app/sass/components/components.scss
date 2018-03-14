@@ -371,6 +371,7 @@
 .c-accordion {
     background: $yellow;
     padding: 15px;
+    margin-bottom: 20px;
     &.c-accordion-collapsed .c-accordion-content {
         max-height: 0;
         overflow: hidden;
