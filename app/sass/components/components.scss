@@ -256,6 +256,12 @@
 }
 .c-attachments-holder {
     display: flex;
+    video {
+        width: 130px;
+        height: 110px;
+        margin-right: 20px;
+    }
+    
     .c-attachment-holder__add-attachment {
         background: $purple;
         margin-right: 20px;

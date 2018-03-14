@@ -79,10 +79,10 @@ uprepApp.config(['$stateProvider', '$httpProvider',
         controller: 'SchoolCtrl',
         templateUrl: 'views/school.html',
         resolve: {
-            workflow: function($stateParams){
-                return $stateParams.workflow;
+          workflow: function ($stateParams) {
+            return $stateParams.workflow;
 
-            }
+          }
         }
       })
       .state('observationType', {
@@ -108,29 +108,29 @@ uprepApp.config(['$stateProvider', '$httpProvider',
         }
       })
       .state('score', {
-        url:'/score',
+        url: '/score',
         controller: 'MakeScoreCtrl',
-        templateUrl:'views/score.html'
+        templateUrl: 'views/score.html'
       })
       .state('teacher', {
-        url:'/teacher',
+        url: '/teacher',
         controller: 'TeacherCtrl',
-        templateUrl:'views/teacher.html'
+        templateUrl: 'views/teacher.html'
       })
       .state('scoreDetails', {
-        url:'/score-details',
+        url: '/score-details',
         controller: 'ScoreInputCtrl',
-        templateUrl:'views/score-details.html'
+        templateUrl: 'views/score-details.html'
       })
       .state('score-form', {
-        url:'/score-form',
+        url: '/score-form',
         controller: 'MakeScoreCtrl',
-        templateUrl:'views/score-form.html'
+        templateUrl: 'views/score-form.html'
       })
       .state('scoreForm', {
-        url:'/score-form',
+        url: '/score-form',
         controller: 'ScoreFormCtrl',
-        templateUrl:'views/score-form.html'
+        templateUrl: 'views/score-form.html'
       });
     $locationProvider.html5Mode(true);
   }

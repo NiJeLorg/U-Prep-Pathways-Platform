@@ -50,6 +50,17 @@ const ObservationFormCtrl = ($scope, $state, $stateParams, $timeout, observation
         }
     };
 
+    $scope.checkMediaType = (file) => {
+        const fileExtension = file.substr(file.indexOf(".") + 1).toLowerCase(),
+            imageFormats = ['bmp', 'gif', 'jpeg', 'jpg', 'png'];
+
+        if (imageFormats.some(el => fileExtension.includes(el))) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     $scope.uploadFiles = (files, errFiles) => {
         $scope.files = files;
         $scope.errFiles = errFiles;

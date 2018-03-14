@@ -71,10 +71,16 @@
             h2 Attachments
             p Add photos, videos, word documents, or pdf's to your observation
             .c-attachments-holder
-                .c-attachment-holder__add-attachment.ul-cursor-pointer(ngf-select='uploadFiles($files, $invalidFiles)' multiple accept='image/*')
+                .c-attachment-holder__add-attachment.ul-cursor-pointer(ngf-select='uploadFiles($files, $invalidFiles)' ngf-pattern="'image/*,video/*'" multiple accept='"image/*,video/*"')
                     img(src='assets/icons/add-icon.svg')
-                .c-attachment-holder__attachment.ul-cursor-pointer(style='background-size: 100%' ng-if='observation.attachments' ng-repeat='attachment in observation.attachments' ng-style="{background: 'url({{attachment.link}})'}")
-                      img(src='assets/icons/x-icon-circle.svg' ng-click='removeAttachment(observation.attachments, attachment)')
+                div(ng-if='observation.attachments')
+                    .l-flex
+                        .l-flex(ng-repeat='attachment in observation.attachments')
+                            .c-attachment-holder__attachment.ul-cursor-pointer(style='background-size: 100%' ng-if='checkMediaType(attachment.link)'  ng-style="{background: 'url({{attachment.link}})'}")
+                                img(src='assets/icons/x-icon-circle.svg' ng-click='removeAttachment(observation.attachments, attachment)')         
+                        video(ng-if='!checkMediaType(attachment.link)' ng-repeat='attachment in observation.attachments' controls)
+                            source(src='{{attachment.link}}')
+                      
 
         .c-observation-form-input-group.ul-margin-bottom-20(ng-repeat='observationTypeProperty in observationTypeProperties')
             h2 {{observationTypeProperty.label}}: {{observationTypeProperty.label_meta}}

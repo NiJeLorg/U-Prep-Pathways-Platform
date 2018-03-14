@@ -49984,6 +49984,19 @@ var ObservationFormCtrl = function ObservationFormCtrl($scope, $state, $statePar
         }
     };
 
+    $scope.checkMediaType = function (file) {
+        var fileExtension = file.substr(file.indexOf(".") + 1).toLowerCase(),
+            imageFormats = ['bmp', 'gif', 'jpeg', 'jpg', 'png'];
+
+        if (imageFormats.some(function (el) {
+            return fileExtension.includes(el);
+        })) {
+            return true;
+        } else {
+            return false;
+        }
+    };
+
     $scope.uploadFiles = function (files, errFiles) {
         $scope.files = files;
         $scope.errFiles = errFiles;

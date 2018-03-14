@@ -314,6 +314,10 @@ select {
 
 .c-attachments-holder {
   display: flex; }
+  .c-attachments-holder video {
+    width: 130px;
+    height: 110px;
+    margin-right: 20px; }
   .c-attachments-holder .c-attachment-holder__add-attachment {
     background: #681c5b;
     margin-right: 20px;
@@ -403,7 +407,8 @@ select {
 
 .c-accordion {
   background: #F7F0D2;
-  padding: 15px; }
+  padding: 15px;
+  margin-bottom: 20px; }
   .c-accordion.c-accordion-collapsed .c-accordion-content {
     max-height: 0;
     overflow: hidden; }
