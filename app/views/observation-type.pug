@@ -1,15 +1,6 @@
-.ul-padding-30
-    .l-flex-space-between.ul-border-bottom
-        h1 Make A New Observation
-        img.ul-cursor-pointer(src='assets/icons/x-icon.svg' ng-click='cancelObservation()')
-    .ul-padding-30
-        ul.c-triangle-breadcrumb.ul-margin-bottom-20
-            li.c-triangle-breadcrumb__item
-                a.c-triangle-breadcrumb__link(href='#') {{observation.school.name}}
-            li.c-triangle-breadcrumb__item
-                a.c-triangle-breadcrumb__link(href='#') TYPE
-            li.c-triangle-breadcrumb__item
-                a.c-triangle-breadcrumb__link(href='#') DETAILS
+ng-include(src='templateUrl')
+.ul-padding-30-content
+    .ul-padding-30-content
         div
             h2 Step 1: Choose Type of Observation
             l.flex

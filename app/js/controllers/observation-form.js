@@ -1,6 +1,6 @@
 'use strict';
 
-const ObservationFormCtrl = ($scope, $state, $stateParams, $timeout, observation, Upload, GradeService, TeacherService,ObservationTypeService, ObservationService, ClusterService, AttachmentService, UtilService, ObservationFactory) => {
+const ObservationFormCtrl = ($scope, $state, $stateParams, $timeout, observation, Upload, GradeService, TeacherService,ObservationTypeService, ObservationService, ClusterService, AttachmentService, UtilService, ObservationFactory, BASE_URL) => {
 
 
     let observationToBeDeleted, cluster_ids = [];
@@ -56,7 +56,7 @@ const ObservationFormCtrl = ($scope, $state, $stateParams, $timeout, observation
 
         angular.forEach(files, (file) => {
             file.upload = Upload.upload({
-                url: ('https://dev-uprep.nijel.org/api/observations/' + $scope.observation.id),
+                url: (BASE_URL+'/observations/' + $scope.observation.id),
                 method: 'PUT',
                 data: {
                     attachments: file

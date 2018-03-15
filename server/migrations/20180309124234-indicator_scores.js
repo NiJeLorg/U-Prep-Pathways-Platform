@@ -1,18 +1,24 @@
 'use strict';
 module.exports = {
     up: (queryInterface, Sequelize) => {
-        return queryInterface.createTable('subject_teachers', {
-            teacher_id: {
+        return queryInterface.createTable('indicator_scores', {
+            id: {
+                allowNull: false,
+                autoIncrement: true,
+                primaryKey: true,
+                type: Sequelize.INTEGER
+            },
+            indicator_id: {
                 allowNull: false,
                 type: Sequelize.INTEGER
             },
-            grade_id:{
+            score_id:{
                 allowNull: false,
                 type: Sequelize.INTEGER
             },
-            subject_id: {
+            value: {
                 type: Sequelize.INTEGER,
-                allowNull: false,
+                allowNull: true,
             },
             created_at: {
                 allowNull: false,
@@ -25,6 +31,6 @@ module.exports = {
         });
     },
     down: (queryInterface, Sequelize) => {
-        return queryInterface.dropTable('subject_teachers');
+        return queryInterface.dropTable('indicator_scores');
     }
 };

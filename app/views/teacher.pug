@@ -1,23 +1,8 @@
-.ul-padding-30
-    .l-flex-space-between.ul-border-bottom
-        h1 Make A New Score
-        img(src='assets/icons/x-icon.svg')
-    .ul-padding-30
-        ul.c-triangle-breadcrumb.ul-margin-bottom-20
-            li.c-triangle-breadcrumb__item
-                a.c-triangle-breadcrumb__link(href='#') ELLEN-THOMPSON
-            li.c-triangle-breadcrumb__item
-                a.c-triangle-breadcrumb__link(href='#') TEACHER
-            li.c-triangle-breadcrumb__item
-                a.c-triangle-breadcrumb__link(href='#') DETAILS
+ng-include(src='templateUrl')
+.ul-padding-30-content
+    .ul-padding-30-content
         div
             h2 Step 2: Choose the Teacher who you will Score
-
             .c-buttons-holder
-                button.ul-margin-bottom-20.teacher-button Ms Martin
-                button.ul-margin-bottom-20.teacher-button Mr. Andrew
-                button.ul-margin-bottom-20.teacher-button(ui-sref='scoreDetails') Ms. Ng
-                button.ul-margin-bottom-20.teacher-button Mr Schnider
-                button.ul-margin-bottom-20.teacher-button Mr. Peterson
-                button.ul-margin-bottom-20.teacher-button Mr. Underhill
-                
+                span(ng-repeat='teacher in teachers')
+                    button.ul-margin-bottom-20.teacher-button(ng-click='recordTeacher(teacher)') {{teacher.name}}

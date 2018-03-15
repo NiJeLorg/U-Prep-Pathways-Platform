@@ -12,8 +12,8 @@
     h1 Pathways
     p Is a new tool to help teachers observe in classrooms and to make work pathways for improvement. Take a sentence or two to explain what is being done here. #[a.c-link(href='#') Watch a tutorial here].
     .make-observation-score.l-flex
-        button(ui-sref='school') Make New Observation
-        button(ui-sref='score') Make New Score
+        button(ui-sref="school({workflow:'observations'})") Make New Observation
+        button(ui-sref="school({workflow:'scores'})") Make New Score
     .c-list-observations
         header
             button.c-round-breadcrumb(ng-class="{'is-disabled': page == 'scored'}" ng-click="page='observed'") VIEW OBSERVATIONS

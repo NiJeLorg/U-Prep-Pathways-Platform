@@ -3,6 +3,7 @@ import gradeRoutes from './grade.route';
 import schoolRoutes from './school.route';
 import subjectRoutes from './subject.route';
 import teacherRoutes from './teacher.route';
+import elementRoutes from './element.route';
 import observationRoutes from './observation.route';
 import observationTypeRoutes from './observation_type.route';
 import observationEvidenceRoutes from './observation_evidence.route';
@@ -18,6 +19,7 @@ router.get('/health-check', (req, res) => res.send('OK'));
 
 router.use('/schools', schoolRoutes);
 router.use('/grades', gradeRoutes);
+router.use('/elements', elementRoutes);
 router.use('/schools/:schoolId/grades', gradeRoutes);
 router.use('/teachers', teacherRoutes);
 router.use('/schools/:schoolId/grades/:gradeId/teachers', teacherRoutes);

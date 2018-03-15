@@ -1,25 +1,14 @@
-.ul-padding-30
-    .l-flex-space-between.ul-border-bottom
-        h1 Make A New Score
-        img(src='assets/icons/x-icon.svg')
-    .ul-padding-30
-        ul.c-triangle-breadcrumb.ul-margin-bottom-20
-            li.c-triangle-breadcrumb__item
-                a.c-triangle-breadcrumb__link(href='#') ELLEN-THOMPSON
-            li.c-triangle-breadcrumb__item
-                a.c-triangle-breadcrumb__link(href='#') MS.NG
-            li.c-triangle-breadcrumb__item
-                a.c-triangle-breadcrumb__link(href='#') DETAILS
+ng-include(src='templateUrl')
+.ul-padding-30-content
+    .ul-padding-30-content
         div
             h2 Step 3: Provide More Details about your Score
             .c-select-group.ul-margin-bottom-20
-                select.grade-color
-                    option Grade
-                    option Grade
-                    option Grade
+                select.grade-color(ng-model='grade' ng-change='recordGrade()')
+                    option(value='' disabled selected) Select Grade
+                    option(ng-repeat='grade in grades' value='{{grade}}') {{grade.name}}
             .c-select-group.ul-margin-bottom-20
-                select.subject-color
-                    option Subject
-                    option Subject
-                    option Subject
+                select.subject-color(ng-model='subject' ng-change='recordSubject()' ng-disabled='disableSubjectSelect')
+                    option(value='' disabled selected) Select Subject
+                    option(ng-repeat='subject in subjects' value='{{subject}}') {{subject.name}}
         button(ui-sref='scoreForm') Done

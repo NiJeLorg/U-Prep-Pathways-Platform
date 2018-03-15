@@ -16,6 +16,10 @@ const UtilService = ($state) => {
         $state.go('home');
     };
 
+    obj.cancelScore= (score) => {
+        score = {};
+        $state.go('home');
+    };
     return obj;
 };
 

@@ -21,7 +21,10 @@ const getIncludes = (req) => {
     const gradeId = req.params.gradeId || req.query.gradeId;
     let includes = {
         attributes: ['id', 'name'], include: [
-            {model: subject, as: 'subjects', attributes: ['id', 'name']}
+            {model: subject, as: 'subjects', attributes: ['id', 'name'], through: {
+                as: 'grade',
+                attributes: ['grade_id']
+            },},
         ]
     };
     if (schoolId) {
@@ -32,15 +35,16 @@ const getIncludes = (req) => {
             where: {id: schoolId}
         });
     }
+    let gradeAssociaton = {
+        attributes: ['id', 'name'],
+        model: grade,
+        as: 'grades',
+    };
     if (gradeId) {
-        includes.include.push({
-            attributes: [],
-            model: grade,
-            as: 'grades',
-            where: {id: gradeId},
-            required: true,
-        });
+        gradeAssociaton.where = {id: gradeId};
+        gradeAssociaton.attributes = [];
     }
+    includes.include.push(gradeAssociaton);
     return includes;
 
 };

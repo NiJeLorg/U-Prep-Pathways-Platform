@@ -72,7 +72,7 @@
             .c-attachments-holder
                 .c-attachment-holder__add-attachment.ul-cursor-pointer(ngf-select='uploadFiles($files, $invalidFiles)' multiple accept='image/*')
                     img(src='assets/icons/add-icon.svg')
-                .c-attachment-holder__attachment.ul-cursor-pointer(style='background-size: 100%' ng-if='observation.attachments' ng-repeat='attachment in observation.attachments' ng-style="{background: 'url(https://dev-uprep.nijel.org/{{attachment.link}})'}")
+                .c-attachment-holder__attachment.ul-cursor-pointer(style='background-size: 100%' ng-if='observation.attachments' ng-repeat='attachment in observation.attachments' ng-style="{background: 'url({{attachment.link}})'}")
                       img(src='assets/icons/x-icon-circle.svg' ng-click='removeAttachment(observation.attachments, attachment)')
 
         .c-observation-form-input-group.ul-margin-bottom-20(ng-repeat='observationTypeProperty in observationTypeProperties')
