@@ -62,7 +62,6 @@ const update = async (req, res, next) => {
     //Save property Data
     if(observation_type_property_data){
         for(let propertyData of observation_type_property_data){
-            console.log(propertyData);
             const oType = await observation_type_property.findById(Object.keys(propertyData)[0]);
             if (oType){
                 await oType.addObservations(observation,{through:{value: Object.values(propertyData)[0]}});

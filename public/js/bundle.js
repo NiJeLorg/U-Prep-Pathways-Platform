@@ -49659,7 +49659,7 @@ module.exports = function (bitmap, value) {
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-var ScoreInputCtrl = function ScoreInputCtrl($scope, $state, $rootScope, UtilService, TeacherService, BreadcrumbFactory, ScoreFactory) {
+var ScoreInputCtrl = function ScoreInputCtrl($scope, $state, $rootScope, UtilService, TeacherService, BreadcrumbFactory, ScoreService, ScoreFactory) {
 
     $scope.templateUrl = 'views/breadcrumbs/breadcrumbs.html';
 
@@ -49684,6 +49684,19 @@ var ScoreInputCtrl = function ScoreInputCtrl($scope, $state, $rootScope, UtilSer
 
     $scope.cancel = function () {
         UtilService.cancelScore(ScoreFactory);
+    };
+
+    $scope.scoreObservation = function () {
+        ScoreService.createScore({
+            school_id: ScoreFactory.school.id,
+            grade_id: ScoreFactory.grade.id,
+            subject_id: ScoreFactory.subject.id,
+            teacher_id: ScoreFactory.teacher.id
+        }, function (err, res) {
+            if (!err) {
+                $state.go('scoreForm');
+            }
+        });
     };
 };
 

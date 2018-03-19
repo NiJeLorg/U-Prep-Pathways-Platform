@@ -8,6 +8,6 @@ const router = express.Router();
 
 router.route('/')
     .get(asyncHandler(scoreCtrl.list))
-    .post();
+    .post(asyncHandler(scoreCtrl.create));
 
 export default router;
