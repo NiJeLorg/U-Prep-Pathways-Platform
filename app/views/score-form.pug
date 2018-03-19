@@ -7,9 +7,9 @@
             p VIEW ALL SCORES
         .c-observation-observation-form
             .c-observation-observation-form__details
-                h3 {{teacher.name}}
+                h3 {{score.teacher.name}}
                 span.teacher-color Teacher: 1st Score
-                p CREATED ON 12/16/17 AT 5:00PM
+                p  CREATED ON {{score.created_at | date: 'shortDate'}} {{score.created_at | date: 'shortTime'}}
             .c-observation-observation-form__actions
                     button Submit
                     img(src='assets/icons/settings-small-icon.svg')

@@ -5,9 +5,9 @@ import {
 } from './../models';
 import Sequelize from 'sequelize';
 
-// const get = async(req, res)=> {
-//     res.sendData(req.score);
-// }
+const get = async (req, res) => {
+    res.sendData(req.score);
+}
 
 const list = async (req, res) => {
     const scores = await score.all({
@@ -27,7 +27,30 @@ const create = async (req, res) => {
     res.sendData(scoreObj);
 };
 
+
+const load = async (req, res, next) => {
+    const scoreObj = await score
+        .findById(req.params.scoreId, {
+            include: ['subject', 'school', 'teacher', 'grade']
+        });
+    if (!scoreObj) {
+        return res.sendNotFound();
+    }
+    req.score = scoreObj;
+    return next();
+};
+
+const remove = async (req, res) => {
+    const score = req.score;
+    let deletedScore = await score.destroy();
+    res.sendData(deletedScore)
+};
+
+
 export default {
+    get,
     list,
-    create
+    load,
+    create,
+    remove
 };

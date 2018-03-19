@@ -124,15 +124,23 @@ uprepApp.config(['$stateProvider', '$httpProvider',
         controller: 'ScoreInputCtrl',
         templateUrl: 'views/score-details.html'
       })
-      .state('score-form', {
-        url: '/score-form',
-        controller: 'MakeScoreCtrl',
-        templateUrl: 'views/score-form.html'
-      })
+      // .state('score-form', {
+      //   url: '/score-form/:scoredId',
+      //   controller: 'MakeScoreCtrl',
+      //   templateUrl: 'views/score-form.html',
+        
+      // })
       .state('scoreForm', {
-        url: '/score-form',
+        url: '/score-form/:scoreId',
         controller: 'ScoreFormCtrl',
-        templateUrl: 'views/score-form.html'
+        templateUrl: 'views/score-form.html',
+        resolve: {
+          score: ($stateParams, ScoreService) => {
+            return ScoreService.query({
+              id: $stateParams.scoreId
+            }).$promise;
+          }
+        }
       });
     $locationProvider.html5Mode(true);
   }

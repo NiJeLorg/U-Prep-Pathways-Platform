@@ -36,7 +36,9 @@ const ScoreInputCtrl = ($scope, $state, $rootScope, UtilService, TeacherService,
             teacher_id: ScoreFactory.teacher.id,
         }, (err, res) => {
             if (!err) {
-                $state.go('scoreForm');
+                $state.go('scoreForm', {
+                    scoreId: res.data.data.id
+                });
             }
         })
     }

@@ -8519,14 +8519,24 @@ uprepApp.config(['$stateProvider', '$httpProvider', '$urlRouterProvider', '$loca
     url: '/score-details',
     controller: 'ScoreInputCtrl',
     templateUrl: 'views/score-details.html'
-  }).state('score-form', {
-    url: '/score-form',
-    controller: 'MakeScoreCtrl',
-    templateUrl: 'views/score-form.html'
-  }).state('scoreForm', {
-    url: '/score-form',
+  })
+  // .state('score-form', {
+  //   url: '/score-form/:scoredId',
+  //   controller: 'MakeScoreCtrl',
+  //   templateUrl: 'views/score-form.html',
+
+  // })
+  .state('scoreForm', {
+    url: '/score-form/:scoreId',
     controller: 'ScoreFormCtrl',
-    templateUrl: 'views/score-form.html'
+    templateUrl: 'views/score-form.html',
+    resolve: {
+      score: function score($stateParams, ScoreService) {
+        return ScoreService.query({
+          id: $stateParams.scoreId
+        }).$promise;
+      }
+    }
   });
   $locationProvider.html5Mode(true);
 }]);
@@ -49375,7 +49385,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var HomeCtrl = function HomeCtrl($scope, $state, ObservationService, ScoreService, SchoolService, UtilService) {
 
-    var observationToBeDeleted = void 0;
+    var resourceToBeDeleted = void 0;
+    var resourceType = void 0;
     $scope.page = 'observed';
 
     // fetch data
@@ -49407,28 +49418,40 @@ var HomeCtrl = function HomeCtrl($scope, $state, ObservationService, ScoreServic
         // console.log($scope.selectedSchool, 'school');
     };
 
-    $scope.openModal = function (observation) {
+    $scope.openModal = function (obj, type) {
         UtilService.openModal('delete-observation-modal');
-        observationToBeDeleted = observation;
+        resourceToBeDeleted = obj;
+        resourceType = type;
     };
 
     $scope.closeModal = function () {
         UtilService.closeModal('delete-observation-modal');
     };
 
-    $scope.deleteObservation = function () {
-        var index = void 0;
-        ObservationService.remove({
-            id: observationToBeDeleted.id
-        }, function (res) {
-            index = $scope.observations.findIndex(function (elem) {
-                if (elem.id == observationToBeDeleted.id) {
+    $scope.deleteResource = function () {
+        function findIndex(arr, obj) {
+            var index = arr.findIndex(function (elem) {
+                if (elem.id == obj.id) {
                     return elem;
                 }
             });
-            $scope.observations.splice(index, 1);
-            UtilService.closeModal('delete-observation-modal');
-        });
+            return index;
+        }
+
+        if (resourceType === 'observation') {
+            ObservationService.remove({
+                id: resourceToBeDeleted.id
+            }, function (res) {
+                $scope.observations.splice(findIndex($scope.observations, resourceToBeDeleted), 1);
+            });
+        } else if (resourceType === 'score') {
+            ScoreService.remove({
+                id: resourceToBeDeleted.id
+            }, function (res) {
+                $scope.scores.splice(findIndex($scope.scores, resourceToBeDeleted), 1);
+            });
+        }
+        UtilService.closeModal('delete-observation-modal');
     };
 
     $scope.editOrViewObservation = function (observation, action) {
@@ -49694,7 +49717,9 @@ var ScoreInputCtrl = function ScoreInputCtrl($scope, $state, $rootScope, UtilSer
             teacher_id: ScoreFactory.teacher.id
         }, function (err, res) {
             if (!err) {
-                $state.go('scoreForm');
+                $state.go('scoreForm', {
+                    scoreId: res.data.data.id
+                });
             }
         });
     };
@@ -50177,14 +50202,18 @@ exports.default = ObservationFormCtrl;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-var ScoreFormCtrl = function ScoreFormCtrl($scope, $state, $stateParams, $timeout, ElementService, UtilService, ScoreFactory) {
+var ScoreFormCtrl = function ScoreFormCtrl($scope, $state, $stateParams, $timeout, score, ElementService, UtilService, ScoreFactory) {
 
-    $scope.teacher = ScoreFactory.teacher;
-    $scope.grade = ScoreFactory.grade;
-    $scope.subject = ScoreFactory.subject;
+    // $scope.teacher = ScoreFactory.teacher;
+    // $scope.grade = ScoreFactory.grade;
+    // $scope.subject = ScoreFactory.subject;
+
+    $scope.score = score.data;
+
     ElementService.fetchElements(function (err, res) {
         if (!err) {
             $scope.elements = res.data.data;
+            console.log($scope.elements, 'yoo');
         } else {
             console.error(err, res.data);
         }

@@ -1,8 +1,10 @@
 'use strict';
 const HomeCtrl = ($scope, $state, ObservationService, ScoreService, SchoolService, UtilService) => {
 
-    let observationToBeDeleted;
+    let resourceToBeDeleted;
+    let resourceType;
     $scope.page = 'observed';
+
 
     // fetch data
     ObservationService.fetchObservations((err, res) => {
@@ -33,28 +35,41 @@ const HomeCtrl = ($scope, $state, ObservationService, ScoreService, SchoolServic
         // console.log($scope.selectedSchool, 'school');
     }
 
-    $scope.openModal = (observation) => {
+    $scope.openModal = (obj, type) => {
         UtilService.openModal('delete-observation-modal');
-        observationToBeDeleted = observation;
+        resourceToBeDeleted = obj;
+        resourceType = type;
     };
 
     $scope.closeModal = () => {
         UtilService.closeModal('delete-observation-modal');
     };
 
-    $scope.deleteObservation = () => {
-        let index;
-        ObservationService.remove({
-            id: observationToBeDeleted.id
-        }, (res) => {
-            index = $scope.observations.findIndex((elem) => {
-                if (elem.id == observationToBeDeleted.id) {
+    $scope.deleteResource = () => {
+        function findIndex(arr, obj) {
+            let index = arr.findIndex((elem) => {
+                if (elem.id == obj.id) {
                     return elem;
                 }
             });
-            $scope.observations.splice(index, 1);
-            UtilService.closeModal('delete-observation-modal');
-        });
+            return index;
+        }
+
+        if (resourceType === 'observation') {
+            ObservationService.remove({
+                id: resourceToBeDeleted.id
+            }, (res) => {
+                $scope.observations.splice(findIndex($scope.observations, resourceToBeDeleted), 1);
+            });
+
+        } else if (resourceType === 'score') {
+            ScoreService.remove({
+                id: resourceToBeDeleted.id
+            }, (res) => {
+                $scope.scores.splice(findIndex($scope.scores, resourceToBeDeleted), 1);
+            });
+        }
+        UtilService.closeModal('delete-observation-modal');
     };
 
     $scope.editOrViewObservation = (observation, action) => {
