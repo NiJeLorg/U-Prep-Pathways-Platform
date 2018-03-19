@@ -1,3 +1,5 @@
+.c-modal.indicator-levels-modal
+    p Teddy
 .ul-padding-30
     .ul-padding-30
         .c-view-all-observations-header
@@ -24,7 +26,7 @@
                     img(src="assets/icons/question-mark.svg")
                 .c-accordion-content
                     .c-radio-group.c-accordion-radio-group.l-flex.ul-margin-bottom-20(ng-repeat="indicator in component.indicators track by indicator.id")
-                        p {{indicator.name}}
+                        p.ul-cursor-pointer(ng-click='displayIndicatorLevelsModal(indicator)') {{indicator.name}}
                         label.c-accordion-radio-group-label
                             input(type='radio' name='{{indicator.name}}' value='N/A')
                             span.radio-label N/A

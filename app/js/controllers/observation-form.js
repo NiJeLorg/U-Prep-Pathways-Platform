@@ -6,6 +6,7 @@ const ObservationFormCtrl = ($scope, $state, $stateParams, $timeout, observation
     let observationToBeDeleted, cluster_ids = [];
     $scope.observation = observation.data;
     $scope.editObservationName = false;
+    $scope.selectedImageUrl;
 
     // fetch data
     ObservationTypeService.get({
@@ -60,6 +61,19 @@ const ObservationFormCtrl = ($scope, $state, $stateParams, $timeout, observation
             return false;
         }
     }
+
+    $scope.selectAttachment = (link) => {
+        $scope.selectedImageUrl = link;
+        angular.element(document.getElementsByClassName('c-light-box-overlay')).css('display', 'block');
+        angular.element(document.getElementsByClassName('c-light-box')).css('display', 'flex');
+    };
+
+    angular.element(document.getElementsByClassName('c-light-box-overlay')).on('click', function() {
+        angular.element(document.getElementsByClassName('c-light-box-overlay')).css('display', 'none');
+        angular.element(document.getElementsByClassName('c-light-box')).css('display', 'none');        
+        $scope.selectedImageUrl = "";
+    });
+    
 
     $scope.uploadFiles = (files, errFiles) => {
         $scope.files = files;
@@ -143,7 +157,6 @@ const ObservationFormCtrl = ($scope, $state, $stateParams, $timeout, observation
         const property = $scope.observation.observation_type_property_data.filter((property) => {
             return property[id];
         });
-        console.log(property);
         if (property.length > 0) {
             return property[0][id];
         }

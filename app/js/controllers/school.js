@@ -41,7 +41,6 @@ const SchoolCtrl = ($scope, $state, $rootScope, UtilService, SchoolService, Obse
     $scope.recordSchool = (school) => {
         ObservationFactory['school'] = school;
         ScoreFactory['school'] = school;
-
         BreadcrumbFactory['label_1'] = school.name;
         if(workflow === 'observations'){
 

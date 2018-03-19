@@ -1,5 +1,5 @@
 'use strict';
-const HomeCtrl = ($scope, $state, ObservationService, SchoolService, UtilService) => {
+const HomeCtrl = ($scope, $state, ObservationService, ScoreService, SchoolService, UtilService) => {
 
     let observationToBeDeleted;
     $scope.page = 'observed';
@@ -8,7 +8,14 @@ const HomeCtrl = ($scope, $state, ObservationService, SchoolService, UtilService
     ObservationService.fetchObservations((err, res) => {
         if (!err) {
             $scope.observations = res.data.data;
-            console.log($scope.observations, 'observations');
+        } else {
+            console.error(err, 'ERROR');
+        }
+    });
+
+    ScoreService.fetchScores((err, res) => {
+        if (!err) {
+            $scope.scores = res.data.data
         } else {
             console.error(err, 'ERROR');
         }
@@ -53,27 +60,10 @@ const HomeCtrl = ($scope, $state, ObservationService, SchoolService, UtilService
     $scope.editOrViewObservation = (observation, action) => {
         $state.go('observationForm', {
             observationId: observation.id,
-            action, action
+            action,
+            action
         });
     };
-
-
-    $scope.scores = [{
-        scoreKind: 'Teacher',
-        readableDate: '11/13/17',
-        scoreName: 'Mr.Martin',
-        scoreTime: '1st Score'
-    }, {
-        scoreKind: 'Teacher',
-        readableDate: '11/13/17',
-        scoreName: 'Ms.Andrews',
-        scoreTime: '3rd Score'
-    }, {
-        scoreKind: 'Schoolwide',
-        readableDate: '11/13/17',
-        scoreName: 'Ellen Thompson Elementary',
-        scoreTime: '1st Score'
-    }];
 };
 
 export default HomeCtrl;

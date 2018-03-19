@@ -13,6 +13,11 @@ const ScoreFormCtrl = ($scope, $state, $stateParams, $timeout, ElementService, U
         }
     });
 
+    // event listeners
+    $scope.displayIndicatorLevelsModal = (indicator)=> {
+        UtilService.openModal('indicator-levels-modal');
+    }
+
 
 };
 
