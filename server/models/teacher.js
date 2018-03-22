@@ -20,6 +20,9 @@ module.exports = (sequelize, DataTypes) => {
         Teacher.hasMany(models.observation, {
             foreignKey: 'teacher_id',
         });
+        Teacher.hasMany(models.score, {
+            foreignKey: 'teacher_id',
+        });
     };
     return Teacher;
 };

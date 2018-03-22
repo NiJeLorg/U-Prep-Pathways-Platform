@@ -24,6 +24,7 @@ import TeacherService from './services/teacher-service';
 import SubjectService from './services/subject-service';
 import ObservationService from './services/observation-service';
 import ScoreService from './services/score-service';
+import IndicatorScoreService from './services/indicator-score-service'
 import ElementService from './services/element-service';
 import ClusterService from './services/cluster-service';
 import AttachmentService from './services/attachment-service';
@@ -57,6 +58,7 @@ uprepApp
   .service('SubjectService', SubjectService)
   .service('ObservationService', ObservationService)
   .service('ScoreService', ScoreService)
+  .service('IndicatorScoreService', IndicatorScoreService)
   .service('ClusterService', ClusterService)
   .service('AttachmentService', AttachmentService)
   .service('UtilService', UtilService)

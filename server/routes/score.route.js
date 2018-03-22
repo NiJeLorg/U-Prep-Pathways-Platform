@@ -1,9 +1,6 @@
 import express from 'express';
 import scoreCtrl from './../controllers/score.controller';
-import path from 'path';
-import crypto from 'crypto';
 import asyncHandler from 'express-async-handler';
-import scoreController from './../controllers/score.controller';
 
 const router = express.Router();
 

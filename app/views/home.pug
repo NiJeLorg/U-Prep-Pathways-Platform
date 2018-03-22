@@ -60,5 +60,5 @@
                         h3 {{score.teacher.name}}
                         span.teacher-color {{score.school.name}}
                     .c-score__actions.l-flex-flex-end
-                        img.ul-cursor-pointer(src='assets/icons/edit-icon.svg')
+                        img.ul-cursor-pointer(src='assets/icons/edit-icon.svg' ng-click='editOrViewScore(score)')
                         img.ul-cursor-pointer(src='assets/icons/delete-icon.svg'  ng-click='openModal(score, "score")')

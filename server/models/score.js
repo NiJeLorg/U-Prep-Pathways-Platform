@@ -18,6 +18,10 @@ module.exports = (sequelize, DataTypes) => {
         Score.belongsTo(models.grade, {
             foreignKey: 'grade_id',
         });
+        Score.hasMany(models.indicator_score, {
+            foreignKey: 'score_id',
+            as: 'indicator_scores'
+        })
     };
     return Score;
 };

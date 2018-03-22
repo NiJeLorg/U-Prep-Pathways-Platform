@@ -17,7 +17,9 @@ const HomeCtrl = ($scope, $state, ObservationService, ScoreService, SchoolServic
 
     ScoreService.fetchScores((err, res) => {
         if (!err) {
-            $scope.scores = res.data.data
+            $scope.scores = res.data.data;
+            console.log($scope.scores, 'scores');
+
         } else {
             console.error(err, 'ERROR');
         }
@@ -75,6 +77,15 @@ const HomeCtrl = ($scope, $state, ObservationService, ScoreService, SchoolServic
     $scope.editOrViewObservation = (observation, action) => {
         $state.go('observationForm', {
             observationId: observation.id,
+            action,
+            action
+        });
+    };
+
+
+    $scope.editOrViewScore = (score, action) => {
+        $state.go('scoreForm', {
+            scoreId: score.id,
             action,
             action
         });

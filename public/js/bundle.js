@@ -8426,49 +8426,53 @@ var _scoreService = __webpack_require__(115);
 
 var _scoreService2 = _interopRequireDefault(_scoreService);
 
-var _elementService = __webpack_require__(116);
+var _indicatorScoreService = __webpack_require__(116);
+
+var _indicatorScoreService2 = _interopRequireDefault(_indicatorScoreService);
+
+var _elementService = __webpack_require__(117);
 
 var _elementService2 = _interopRequireDefault(_elementService);
 
-var _clusterService = __webpack_require__(117);
+var _clusterService = __webpack_require__(118);
 
 var _clusterService2 = _interopRequireDefault(_clusterService);
 
-var _attachmentService = __webpack_require__(118);
+var _attachmentService = __webpack_require__(119);
 
 var _attachmentService2 = _interopRequireDefault(_attachmentService);
 
-var _utilitiesService = __webpack_require__(119);
+var _utilitiesService = __webpack_require__(120);
 
 var _utilitiesService2 = _interopRequireDefault(_utilitiesService);
 
-var _observationFactory = __webpack_require__(120);
+var _observationFactory = __webpack_require__(121);
 
 var _observationFactory2 = _interopRequireDefault(_observationFactory);
 
-var _breadcrumbFactory = __webpack_require__(121);
+var _breadcrumbFactory = __webpack_require__(122);
 
 var _breadcrumbFactory2 = _interopRequireDefault(_breadcrumbFactory);
 
-var _scoreFactory = __webpack_require__(122);
+var _scoreFactory = __webpack_require__(123);
 
 var _scoreFactory2 = _interopRequireDefault(_scoreFactory);
 
-var _makeScore = __webpack_require__(123);
+var _makeScore = __webpack_require__(124);
 
 var _makeScore2 = _interopRequireDefault(_makeScore);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// load controllers
+// load services
 var uprepApp = _angular2.default.module('uprepApp', [_angularjs2.default, _ngFileUpload2.default, _angularResource2.default]);
 
 // let url = 'https://dev-uprep.nijel.org/api/';
 
 
-// load services
+// load controllers
 var url = 'http://localhost:3000/api/';
-uprepApp.controller('NavCtrl', _nav2.default).controller('HomeCtrl', _home2.default).controller('ScoreInputCtrl', _scoreInputs2.default).controller('SchoolCtrl', _school2.default).controller('ObservationTypeCtrl', _observationType2.default).controller('ObservationInputsCtrl', _observationInputs2.default).controller('ObservationFormCtrl', _observationForm2.default).controller('ScoreFormCtrl', _scoreForm2.default).controller('MakeScoreCtrl', _makeScore2.default).controller('TeacherCtrl', _teacher2.default).service('SchoolService', _schoolService2.default).service('ObservationTypeService', _observationTypeService2.default).service('GradeService', _gradeService2.default).service('TeacherService', _teacherService2.default).service('ElementService', _elementService2.default).service('SubjectService', _subjectService2.default).service('ObservationService', _observationService2.default).service('ScoreService', _scoreService2.default).service('ClusterService', _clusterService2.default).service('AttachmentService', _attachmentService2.default).service('UtilService', _utilitiesService2.default).factory('ObservationFactory', _observationFactory2.default).factory('ScoreFactory', _scoreFactory2.default).factory('BreadcrumbFactory', _breadcrumbFactory2.default).constant('BASE_URL', url);
+uprepApp.controller('NavCtrl', _nav2.default).controller('HomeCtrl', _home2.default).controller('ScoreInputCtrl', _scoreInputs2.default).controller('SchoolCtrl', _school2.default).controller('ObservationTypeCtrl', _observationType2.default).controller('ObservationInputsCtrl', _observationInputs2.default).controller('ObservationFormCtrl', _observationForm2.default).controller('ScoreFormCtrl', _scoreForm2.default).controller('MakeScoreCtrl', _makeScore2.default).controller('TeacherCtrl', _teacher2.default).service('SchoolService', _schoolService2.default).service('ObservationTypeService', _observationTypeService2.default).service('GradeService', _gradeService2.default).service('TeacherService', _teacherService2.default).service('ElementService', _elementService2.default).service('SubjectService', _subjectService2.default).service('ObservationService', _observationService2.default).service('ScoreService', _scoreService2.default).service('IndicatorScoreService', _indicatorScoreService2.default).service('ClusterService', _clusterService2.default).service('AttachmentService', _attachmentService2.default).service('UtilService', _utilitiesService2.default).factory('ObservationFactory', _observationFactory2.default).factory('ScoreFactory', _scoreFactory2.default).factory('BreadcrumbFactory', _breadcrumbFactory2.default).constant('BASE_URL', url);
 
 uprepApp.config(['$stateProvider', '$httpProvider', '$urlRouterProvider', '$locationProvider', function ($stateProvider, $httpProvider, $urlRouterProvider, $locationProvider) {
 
@@ -49401,6 +49405,7 @@ var HomeCtrl = function HomeCtrl($scope, $state, ObservationService, ScoreServic
     ScoreService.fetchScores(function (err, res) {
         if (!err) {
             $scope.scores = res.data.data;
+            console.log($scope.scores, 'scores');
         } else {
             console.error(err, 'ERROR');
         }
@@ -49457,6 +49462,13 @@ var HomeCtrl = function HomeCtrl($scope, $state, ObservationService, ScoreServic
     $scope.editOrViewObservation = function (observation, action) {
         $state.go('observationForm', (0, _defineProperty3.default)({
             observationId: observation.id,
+            action: action
+        }, 'action', action));
+    };
+
+    $scope.editOrViewScore = function (score, action) {
+        $state.go('scoreForm', (0, _defineProperty3.default)({
+            scoreId: score.id,
             action: action
         }, 'action', action));
     };
@@ -49992,6 +50004,8 @@ var ObservationFormCtrl = function ObservationFormCtrl($scope, $state, $statePar
         id: $scope.observation.school.id
     }, function (res) {
         $scope.grades = res.data;
+        $scope.updateTeachersBasedOnSelectedGrade();
+        $scope.updateSubjectsBasedOnSelectedTeacher();
     }, function (err) {
         console.error(err, 'ERROR');
     });
@@ -50076,6 +50090,7 @@ var ObservationFormCtrl = function ObservationFormCtrl($scope, $state, $statePar
             gradeId: $scope.observation.grade.id
         }, function (res) {
             $scope.teachers = res.data;
+            $scope.subjects = [];
         });
     };
 
@@ -50202,18 +50217,20 @@ exports.default = ObservationFormCtrl;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-var ScoreFormCtrl = function ScoreFormCtrl($scope, $state, $stateParams, $timeout, score, ElementService, UtilService, ScoreFactory) {
+var ScoreFormCtrl = function ScoreFormCtrl($scope, $state, $stateParams, $timeout, score, ElementService, IndicatorScoreService, UtilService, ScoreService, ScoreFactory) {
 
     // $scope.teacher = ScoreFactory.teacher;
     // $scope.grade = ScoreFactory.grade;
     // $scope.subject = ScoreFactory.subject;
 
     $scope.score = score.data;
+    $scope.indicatorValue = [null, 1, 2, 3, 4];
+
+    console.log($scope.score, 'score');
 
     ElementService.fetchElements(function (err, res) {
         if (!err) {
             $scope.elements = res.data.data;
-            console.log($scope.elements, 'yoo');
         } else {
             console.error(err, res.data);
         }
@@ -50221,8 +50238,84 @@ var ScoreFormCtrl = function ScoreFormCtrl($scope, $state, $stateParams, $timeou
 
     // event listeners
     $scope.displayIndicatorLevelsModal = function (indicator) {
+        $scope.selectedIndicator = indicator.name;
         UtilService.openModal('indicator-levels-modal');
     };
+
+    $scope.closeIndicatorLevelsModal = function () {
+        UtilService.closeModal('indicator-levels-modal');
+    };
+
+    $scope.openSubmitScoreModal = function () {
+        UtilService.openModal('sumbit-score-modal');
+    };
+
+    $scope.closeSubmitScoreModal = function () {
+        UtilService.closeModal('submitted-score-popup');
+    };
+
+    $scope.submitScore = function () {
+        UtilService.closeModal('sumbit-score-modal');
+        UtilService.openModal('submitted-score-popup');
+        setTimeout(function () {
+            $state.go('home');
+        }, 3000);
+    };
+
+    $scope.showDeleteScoreModal = function () {
+        console.log('yoo');
+        UtilService.openModal('delete-score-modal');
+    };
+
+    $scope.deleteScore = function () {
+        ScoreService.remove({
+            id: $scope.score.id
+        }, function (res) {
+            $state.go('home');
+        });
+    };
+
+    $scope.getAddSelectedIndicators = function (indicators) {
+        var indicators_mapped = indicators.map(function (indicator) {
+            var matched_indicator = $scope.score.indicator_scores.filter(function (indicator_score) {
+                return indicator_score.indicator_id === indicator.id;
+            });
+            if (matched_indicator.length > 0) {
+                indicator.value = '' + matched_indicator[0].value;
+            }
+            return indicator;
+        });
+        return indicators_mapped;
+    };
+    $scope.checkIndicatorScore = function (indicator, value) {
+        var matched_indicator_score = $scope.score.indicator_scores.filter(function (indicator_score) {
+            return indicator_score.indicator_id === indicator.id;
+        });
+        console.log(matched_indicator_score);
+        return false;
+        // $scope.score.indicator_scores.forEach((elem, index) => {
+        //     if (elem.indicator_id == indicator.id) {
+        //         console.log('here');
+        //         return value == elem.value;
+        //     }
+        // })
+    };
+
+    $scope.storeIndicatorScore = function (value, indicator) {
+        IndicatorScoreService.createIndicatorScore({
+            value: value,
+            score_id: $scope.score.id,
+            indicator_id: indicator.id
+        }, function (err, res) {
+            // console.log(res, 'res');
+            // console.log(err, 'err');
+        });
+    };
+
+    // $scope.submitScore = () => {
+    //     // console.log();
+    // };
+
 };
 
 exports.default = ScoreFormCtrl;
@@ -50514,6 +50607,50 @@ exports.default = ScoreService;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+var IndicatorScoreService = function IndicatorScoreService(BASE_URL, $resource, $http) {
+    var obj = $resource(BASE_URL + '/indicator_scores/:id', {
+        id: '@id'
+    }, {
+        'query': {
+            method: 'GET'
+        },
+        'update': {
+            method: 'PUT'
+        }
+    });
+
+    // obj.fetchScores = (cb) => {
+    //     $http.get(BASE_URL + '/scores')
+    //         .then((res) => {
+    //             cb(null, res)
+    //         }, (err) => {
+    //             cb(err);
+    //         });
+    // };
+
+    obj.createIndicatorScore = function (data, cb) {
+        $http.post(BASE_URL + '/indicator_scores', data).then(function (res) {
+            cb(null, res);
+        }, function (err) {
+            cb(err);
+        });
+    };
+
+    return obj;
+};
+
+exports.default = IndicatorScoreService;
+
+/***/ }),
+/* 117 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
 var ElementService = function ElementService(BASE_URL, $resource, $http) {
 
     var obj = $resource(BASE_URL + '/elements/:id', {
@@ -50534,7 +50671,7 @@ var ElementService = function ElementService(BASE_URL, $resource, $http) {
 exports.default = ElementService;
 
 /***/ }),
-/* 117 */
+/* 118 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -50559,7 +50696,7 @@ var ClusterService = function ClusterService(BASE_URL, $resource, $http) {
 exports.default = ClusterService;
 
 /***/ }),
-/* 118 */
+/* 119 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -50584,7 +50721,7 @@ var AttachmentService = function AttachmentService(BASE_URL, $resource, $http) {
 exports.default = AttachmentService;
 
 /***/ }),
-/* 119 */
+/* 120 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -50619,7 +50756,7 @@ var UtilService = function UtilService($state) {
 exports.default = UtilService;
 
 /***/ }),
-/* 120 */
+/* 121 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -50638,7 +50775,7 @@ var ObservationFactory = function ObservationFactory() {
 exports.default = ObservationFactory;
 
 /***/ }),
-/* 121 */
+/* 122 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -50667,7 +50804,7 @@ var BreadcrumbFactory = function BreadcrumbFactory() {
 exports.default = BreadcrumbFactory;
 
 /***/ }),
-/* 122 */
+/* 123 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -50686,7 +50823,7 @@ var ScoreFactory = function ScoreFactory() {
 exports.default = ScoreFactory;
 
 /***/ }),
-/* 123 */
+/* 124 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

@@ -31,7 +31,7 @@ const create = async (req, res) => {
 const load = async (req, res, next) => {
     const scoreObj = await score
         .findById(req.params.scoreId, {
-            include: ['subject', 'school', 'teacher', 'grade']
+            include: ['subject', 'school', 'teacher', 'grade', 'indicator_scores']
         });
     if (!scoreObj) {
         return res.sendNotFound();

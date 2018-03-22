@@ -587,6 +587,21 @@ select {
     pointer-events: auto;
     max-width: 90%; }
 
+.indicator-levels-modal .indicator-name {
+  font-size: 24px;
+  color: #808285;
+  margin: 10px 0; }
+
+.indicator-levels-modal .level {
+  font-weight: bold;
+  font-size: 20px;
+  color: #808285; }
+
+.indicator-levels-modal .level-info {
+  font-size: 16px;
+  color: rgba(0, 0, 0, 0.54);
+  line-height: 24px; }
+
 .ul-padding-30 {
   padding: 30px; }
 
