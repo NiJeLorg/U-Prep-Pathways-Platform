@@ -62,13 +62,15 @@ info:
 
 
 # during dev, should point to your local machine
-host: dev-uprep.nijel.org
+host: localhost:3000
+
+# dev-uprep.nijel.org
 # basePath prefixes all resource paths
 basePath: /api/
 #
 schemes:
   # tip: remove http to make production-grade
-  - https
+  # - https
 # format of bodies a client can send (Content-Type)
 consumes:
   - application/json
@@ -90,6 +92,10 @@ tags:
   description: "Everything about subjects"
 - name: "clusters"
   description: "Everything about clusters"
+- name: "scores"
+  description: "Everything about scores"
+- name: "indicator_scores"
+  description: "Everything about indicator scores"
 
 paths:
   /schools:
@@ -702,6 +708,77 @@ paths:
       responses:
         201:
           description: OK
+  /scores:
+    get:
+      tags:
+        - "scores"
+      summary: 'Get list of scores'
+      description: 'Fetch a list of scores'
+      operationId: 'getScores'
+      responses: 
+        200: 
+          description: OK
+          schema: 
+            type: object
+            properties:
+              data: 
+                type: "array"
+                items:
+                  $ref: "#/definitions/Score"
+  # post:
+  #   tags: 
+  #     - "scores"
+  #   summary: "Save score data"
+  #   operationId: "saveScore"
+  #   parameters:
+  #     - in: body
+  #       name: body
+  #       description: "Score data that needs to be saved"
+  #       schema:
+  #         type: object
+  #         required:
+  #           - school_id
+  #           - user_id
+  #         properties:
+  #           id:
+  #             type: integer
+  #             format: int64
+  #           school_id:
+  #             type: integer
+  #             required: true
+  #             format: int64
+  #           grade_id:
+  #             type: integer
+  #             format: int64
+  #           subject_id:
+  #             type: integer
+  #             format: int64
+  #           user_id:
+  #             type: integer
+  #             format: int64 
+  #           teacher_id:
+  #             type: integer
+  #             format: int64
+  #           status:
+  #             type: integer
+  #             format: int64
+  #     responses:
+  #       200:
+  #         description: OK
+
+    /scores/{id}:
+      get:
+        tags: 
+        - "score"
+        summary: "Find a score using its id"
+        description: "Fetches a score using its Id including nested properties"
+        operationId: "findScoreById"
+        
+
+
+        
+
+
 
 # complex objects have schema definitions
 definitions:
@@ -813,22 +890,16 @@ definitions:
             format: "int64"
           value:
             type: "string"
-  Observation:
+  Score:
     type: "object"
     properties:
       id:
         type: "integer"
         format: "int64"
-      name:
-        type: "string"
-      description:
-        type: "string"
       created_at:
         type: "string"
       updated_at:
         type: "string"
-      observation_type:
-        $ref: "#/definitions/ObservationType"
       teacher_id:
         type: "integer"
         format: "int64"
@@ -849,11 +920,3 @@ definitions:
         $ref: "#/definitions/School"
       grade:
         $ref: "#/definitions/Grade"
-      attachments:
-        type: "array"
-        items:
-          $ref: "#/definitions/ObservationEvidence"
-      property_data:
-        type: "array"
-        items:
-          $ref: "#/definitions/ObservationTypePropertyData"

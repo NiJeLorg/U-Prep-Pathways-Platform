@@ -15,7 +15,7 @@ const get = async (req, res) => {
 const list = async (req, res) => {
     const observations = await observation
         .all({
-            include: ['attachments', 'school', 'clusters', 'subject', 'teacher', 'grade', 'observation_type', 'observation_type_property']
+            include: ['attachments', 'school', 'clusters', 'subject', 'teacher', 'grade', 'observation_type', 'observation_type_property'],
         });
     res.sendData(observations)
 };

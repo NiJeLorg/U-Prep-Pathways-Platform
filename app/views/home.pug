@@ -19,7 +19,7 @@
             button.c-round-breadcrumb(ng-class="{'is-disabled': page == 'scored'}" ng-click="page='observed'") VIEW OBSERVATIONS
             button.c-round-breadcrumb(ng-class="{'is-disabled': page == 'observed'}" ng-click="page='scored'") VIEW SCORES
         main
-            .l-flex.ul-margin-top-bottom-30
+            .l-flex
                 .input-group.c-input-text-group.l-flex
                     span
                         img(src='assets/icons/search-icon.svg')
@@ -30,6 +30,9 @@
                         select(ng-change='filterObservationsBySchool()'  ng-model='selectedSchool')
                             option(value='' disabled selected ) Select School
                             option(ng-repeat='school in schools') {{school.name}}
+            .c-pagination
+                .c-pagination__page-numbers
+                    a.ul-cursor-pointer(ng-repeat='page in pager.pages' ng-click='setPage(page)' ng-class='{"active-page": pager.currentPage === page}') {{page}}
             .c-observations-scores-container 
                 .c-observation.l-flex-space-between.ul-padding-30(ng-repeat='observation in observations | orderBy:"-created_at" | filter:search |filter:selectedSchool' ng-show='page === "observed"')
                     .c-observation__date

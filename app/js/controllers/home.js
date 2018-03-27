@@ -1,15 +1,30 @@
 'use strict';
-const HomeCtrl = ($scope, $state, ObservationService, ScoreService, SchoolService, UtilService) => {
+const HomeCtrl = ($scope, $state, ObservationService, ScoreService, SchoolService, UtilService, PaginationFactory) => {
 
-    let resourceToBeDeleted;
-    let resourceType;
+    let resourceToBeDeleted,
+        resourceType;
+
     $scope.page = 'observed';
+    $scope.pager = {};
+
 
 
     // fetch data
     ObservationService.fetchObservations((err, res) => {
         if (!err) {
-            $scope.observations = res.data.data;
+            let data = res.data.data;
+
+            $scope.setPage = (page) => {
+                if (page < 1 || page.totalPages) {
+                    return;
+                }
+                $scope.pager = PaginationFactory.getPager(data.length, page);
+                $scope.observations = data.slice($scope.pager.startIndex, $scope.pager.endIndex + 1);
+            }
+
+            // initialize to page 1
+            $scope.setPage(1);
+
         } else {
             console.error(err, 'ERROR');
         }
@@ -18,8 +33,6 @@ const HomeCtrl = ($scope, $state, ObservationService, ScoreService, SchoolServic
     ScoreService.fetchScores((err, res) => {
         if (!err) {
             $scope.scores = res.data.data;
-            console.log($scope.scores, 'scores');
-
         } else {
             console.error(err, 'ERROR');
         }
@@ -32,10 +45,6 @@ const HomeCtrl = ($scope, $state, ObservationService, ScoreService, SchoolServic
         $scope.schools = res.data.data;
     });
 
-    // event handlers
-    $scope.filterObservationsBySchool = () => {
-        // console.log($scope.selectedSchool, 'school');
-    }
 
     $scope.openModal = (obj, type) => {
         UtilService.openModal('delete-observation-modal');
@@ -46,6 +55,7 @@ const HomeCtrl = ($scope, $state, ObservationService, ScoreService, SchoolServic
     $scope.closeModal = () => {
         UtilService.closeModal('delete-observation-modal');
     };
+
 
     $scope.deleteResource = () => {
         function findIndex(arr, obj) {

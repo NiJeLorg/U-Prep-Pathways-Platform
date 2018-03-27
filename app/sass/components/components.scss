@@ -665,3 +665,26 @@
         line-height: 24px;
     }
 }
+
+.c-pagination {
+    display: flex;
+    justify-content: space-between;
+    margin: 30px 0;
+    .c-pagination__page-numbers {
+        display: flex;
+        a {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 20px;
+            height: 45px;
+            width: 45px;
+            color: #999999;
+        }
+        .active-page {
+            color: #9C9C9C;
+            background: #D8D8D8;
+            font-weight: bold;
+        }
+    }
+}

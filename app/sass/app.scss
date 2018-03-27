@@ -5,11 +5,13 @@
 @import 'components/nav';
 @import 'components/components';
 @import 'utilities/utilities';
-
-
 * {
 	font-family: 'Raleway', sans-serif;
 	outline: none;
+}
+
+a {
+	text-decoration: none;
 }
 
 .make-observation-score {
@@ -30,5 +32,4 @@
 	.saved-button {
 		background: $light-purple;
 	}
-
 }

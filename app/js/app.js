@@ -4,6 +4,7 @@ import angular from 'angular';
 import uiRouter from '@uirouter/angularjs';
 import ngResource from 'angular-resource';
 import ngFileUpload from 'ng-file-upload';
+import _ from 'lodash';
 
 // load controllers
 import HomeCtrl from './controllers/home';
@@ -31,8 +32,10 @@ import AttachmentService from './services/attachment-service';
 import UtilService from './services/utilities-service';
 import ObservationFactory from './factories/observation-factory';
 import BreadcrumbFactory from './factories/breadcrumb-factory';
+import PaginationFactory from './factories/pagination-factory';
 import ScoreFactory from './factories/score-factory';
 import MakeScoreCtrl from './controllers/make-score';
+
 
 const uprepApp = angular.module('uprepApp', [uiRouter, ngFileUpload, ngResource]);
 
@@ -65,6 +68,7 @@ uprepApp
   .factory('ObservationFactory', ObservationFactory)
   .factory('ScoreFactory', ScoreFactory)
   .factory('BreadcrumbFactory', BreadcrumbFactory)
+  .factory('PaginationFactory', PaginationFactory)
   .constant('BASE_URL', url);
 
 uprepApp.config(['$stateProvider', '$httpProvider',
@@ -130,7 +134,7 @@ uprepApp.config(['$stateProvider', '$httpProvider',
       //   url: '/score-form/:scoredId',
       //   controller: 'MakeScoreCtrl',
       //   templateUrl: 'views/score-form.html',
-        
+
       // })
       .state('scoreForm', {
         url: '/score-form/:scoreId',
