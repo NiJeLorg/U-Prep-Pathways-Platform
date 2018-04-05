@@ -8,6 +8,7 @@ import _ from 'lodash';
 
 // load controllers
 import HomeCtrl from './controllers/home';
+import NewObservationCtrl from './controllers/new-observation';
 import ScoreInputCtrl from './controllers/score-inputs';
 import NavCtrl from './controllers/nav';
 import SchoolCtrl from './controllers/school';
@@ -45,6 +46,7 @@ let url = 'http://localhost:3000/api/';
 uprepApp
   .controller('NavCtrl', NavCtrl)
   .controller('HomeCtrl', HomeCtrl)
+  .controller('NewObservationCtrl', NewObservationCtrl)
   .controller('ScoreInputCtrl', ScoreInputCtrl)
   .controller('SchoolCtrl', SchoolCtrl)
   .controller('ObservationTypeCtrl', ObservationTypeCtrl)
@@ -92,6 +94,11 @@ uprepApp.config(['$stateProvider', '$httpProvider',
 
           }
         }
+      })
+      .state('newObservation', {
+        url: '/new-observation',
+        controller: 'NewObservationCtrl',
+        templateUrl: 'views/new-observation.html'
       })
       .state('observationType', {
         url: '/observation-type',

@@ -9,7 +9,6 @@ const ScoreFormCtrl = ($scope, $state, $stateParams, $timeout, score, ElementSer
     $scope.score = score.data;
     $scope.indicatorValue = [null, 1, 2, 3, 4];
 
-    console.log($scope.score, 'score');
 
 
     ElementService.fetchElements((err, res) => {

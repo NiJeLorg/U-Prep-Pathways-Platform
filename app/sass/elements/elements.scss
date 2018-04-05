@@ -2,7 +2,6 @@ body {
     background: #fff;
 }
 
-
 button {
     border-radius: 4px;
     color: #fff;
@@ -11,20 +10,29 @@ button {
     cursor: pointer;
     border: none;
     background: $dark-purple;
-    
 }
 
-
-h1, h2, h3, h4, h5, h6, p {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
     color: $light-grey;
     font-weight: 100;
 }
 
-
 select {
-   background: transparent;
-   background-image: none;
-   box-shadow: none;
-   border: none;
-   -webkit-appearance: none;
+    background: transparent;
+    background-image: none;
+    box-shadow: none;
+    border: none;
+    -webkit-appearance: none;
+}
+
+input[type='text'] {
+    background: rgba(255, 255, 255, 0.80);
+    border: 1px solid rgba(151, 151, 151, 0.20);
+    border-radius: 4px;
 }

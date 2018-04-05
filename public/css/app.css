@@ -28,7 +28,13 @@ button {
   border: none;
   background: #681c5b; }
 
-h1, h2, h3, h4, h5, h6, p {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
   color: #808285;
   font-weight: 100; }
 
@@ -38,6 +44,11 @@ select {
   box-shadow: none;
   border: none;
   -webkit-appearance: none; }
+
+input[type='text'] {
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(151, 151, 151, 0.2);
+  border-radius: 4px; }
 
 .l-flex {
   display: flex;
@@ -129,7 +140,8 @@ select {
   width: 200px;
   padding: 10px;
   background: #9d5f92;
-  margin-right: 20px; }
+  margin-right: 20px;
+  text-transform: uppercase; }
 
 .c-input-text-group {
   margin-left: 0 !important;
@@ -224,7 +236,7 @@ select {
       left: 100%;
       z-index: 1; }
 
-.c-observations-scores-container {
+.c-main-section {
   max-height: 600px;
   overflow-y: scroll; }
 
@@ -482,8 +494,9 @@ select {
     background-image: url(/assets/icons/duplicate-icon.svg); }
 
 .c-card {
+  padding: 30px;
+  margin-bottom: 30px;
   background: #FFFFFF;
-  box-shadow: 0 0 8px 0 rgba(72, 72, 72, 0.5);
   border-radius: 4px; }
 
 .c-modal {
@@ -621,6 +634,40 @@ select {
       background: #D8D8D8;
       font-weight: bold; }
 
+.c-teacher p {
+  margin: 0;
+  font-weight: bold; }
+
+.c-teacher .group {
+  margin: 15px 0; }
+  .c-teacher .group span {
+    margin-right: 10px; }
+
+.c-teacher .c-teacher__actions {
+  display: flex;
+  flex-direction: column;
+  justify-content: center; }
+  .c-teacher .c-teacher__actions button:first-child {
+    margin-bottom: 15px; }
+
+.c-name-of-observation {
+  display: flex;
+  align-items: center;
+  padding: 30px 0; }
+  .c-name-of-observation p {
+    margin: 0;
+    margin-right: 30px;
+    font-size: 20px;
+    color: #808285; }
+  .c-name-of-observation input {
+    width: 300px;
+    padding: 10px 20px; }
+
+.c-add-teacher p {
+  font-size: 20px;
+  margin: 0;
+  margin-right: 30px; }
+
 .ul-padding-30 {
   padding: 30px; }
 
@@ -651,13 +698,6 @@ select {
 
 a {
   text-decoration: none; }
-
-.make-observation-score {
-  margin: 30px 0; }
-  .make-observation-score button {
-    width: 295px;
-    background: #681c5b;
-    margin-right: 30px; }
 
 .submit-buttons-holder {
   margin-top: 30px; }

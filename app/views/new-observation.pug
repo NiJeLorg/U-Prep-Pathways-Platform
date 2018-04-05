@@ -1,0 +1,22 @@
+.ul-padding-30
+    .l-flex-space-between.ul-border-bottom
+        h1 Make A New Observation
+        img.ul-cursor-pointer(src='assets/icons/x-icon.svg' ng-click='cancel()')
+    .ul-padding-30-content
+        .c-name-of-observation
+            p Name:
+            input(type='text' placeholder='Name of observation')
+        .c-add-teacher.input-group.l-flex
+            p Add:
+            .c-select-group
+                select
+                    option Teacher
+                    option Teacher Group
+            input(type='text')
+            
+
+
+            //- p.ul-margin-bottom-20 Below is a list of schools you are able to observe
+            //- .c-buttons-holder
+            //-     span(ng-repeat='school in schools')
+            //-         button.ul-margin-bottom-20(ng-class="(checkIfSchoolIsUPSM(school.name) ? 'upsm-school' : 'non-upsm-school')" ng-click='recordSchool(school)') {{school.name}}
