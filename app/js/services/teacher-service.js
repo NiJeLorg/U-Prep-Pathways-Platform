@@ -1,8 +1,7 @@
 const TeacherService = (BASE_URL, $resource, $http) => {
 
-    let obj = $resource(BASE_URL + '/schools/:schoolId/grades/:gradeId/teachers', {
-        schoolId: '@schoolId',
-        gradeId: '@gradeId'
+    let obj = $resource(BASE_URL + '/teachers/:id', {
+        id: '@id',
     }, {
         'query': {
             method: 'GET'

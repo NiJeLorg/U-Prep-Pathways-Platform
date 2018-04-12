@@ -717,8 +717,8 @@
     align-items: center;
     padding: 30px 0;
     p {
+        flex-basis: 2%;
         margin: 0;
-        margin-right: 30px;
         font-size: 20px;
         color: #808285;
     }
@@ -729,9 +729,41 @@
 }
 
 .c-add-teacher {
+    display: flex;
     p {
+        flex-basis: 2%;
         font-size: 20px;
         margin: 0;
-        margin-right: 30px;
+    }
+}
+
+.c-teacher-observation {
+    width: 70%;
+    margin: 0 auto;
+    background: #ECEDED;
+    padding: 30px 40px;
+    border-radius: 4px;
+    .c-teacher-header {
+        border-bottom: 1px solid #C6C6C6;
+        padding-bottom: 20px;
+    }
+    .c-teacher-contents {
+        padding: 30px 0;
+        .l-flex * {
+            margin-right: 10px;
+        }
+        .actions {
+            display: flex;
+            flex-direction: column;
+            button {
+               margin-bottom: 10px;
+            }
+        }
+    }
+    .c-observation-reports {
+        .header {
+            background: #D6D7D8;
+            padding: 20px;            
+        }
     }
 }

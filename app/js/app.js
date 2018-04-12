@@ -11,12 +11,11 @@ import HomeCtrl from './controllers/home';
 import NewObservationCtrl from './controllers/new-observation';
 import ScoreInputCtrl from './controllers/score-inputs';
 import NavCtrl from './controllers/nav';
-import SchoolCtrl from './controllers/school';
-import ObservationTypeCtrl from './controllers/observation-type';
 import ObservationInputsCtrl from './controllers/observation-inputs';
 import ObservationFormCtrl from './controllers/observation-form';
 import ScoreFormCtrl from './controllers/score-form';
 import TeacherCtrl from './controllers/teacher';
+import TeacherObservationCtrl from './controllers/teacher-observation';
 
 // load services
 import SchoolService from './services/school-service';
@@ -48,13 +47,12 @@ uprepApp
   .controller('HomeCtrl', HomeCtrl)
   .controller('NewObservationCtrl', NewObservationCtrl)
   .controller('ScoreInputCtrl', ScoreInputCtrl)
-  .controller('SchoolCtrl', SchoolCtrl)
-  .controller('ObservationTypeCtrl', ObservationTypeCtrl)
   .controller('ObservationInputsCtrl', ObservationInputsCtrl)
   .controller('ObservationFormCtrl', ObservationFormCtrl)
   .controller('ScoreFormCtrl', ScoreFormCtrl)
   .controller('MakeScoreCtrl', MakeScoreCtrl)
   .controller('TeacherCtrl', TeacherCtrl)
+  .controller('TeacherObservationCtrl', TeacherObservationCtrl)
   .service('SchoolService', SchoolService)
   .service('ObservationTypeService', ObservationTypeService)
   .service('GradeService', GradeService)
@@ -84,31 +82,32 @@ uprepApp.config(['$stateProvider', '$httpProvider',
         controller: 'HomeCtrl',
         templateUrl: 'views/home.html'
       })
-      .state('school', {
-        url: '/school?workflow',
-        controller: 'SchoolCtrl',
-        templateUrl: 'views/school.html',
-        resolve: {
-          workflow: function ($stateParams) {
-            return $stateParams.workflow;
-
-          }
-        }
-      })
       .state('newObservation', {
         url: '/new-observation',
         controller: 'NewObservationCtrl',
         templateUrl: 'views/new-observation.html'
       })
-      .state('observationType', {
-        url: '/observation-type',
-        controller: 'ObservationTypeCtrl',
-        templateUrl: 'views/observation-type.html'
+      .state('teacherObservation', {
+        url: '/teacher-observation/:teacherId',
+        controller: 'TeacherObservationCtrl',
+        templateUrl: 'views/teacher-observation.html',
+        resolve: {
+          teacher: ($stateParams, TeacherService) => {
+            return TeacherService.query({
+              id: $stateParams.teacherId
+            }).$promise
+          }
+        }
       })
       .state('observationInputs', {
-        url: '/observation-inputs',
+        url: '/observation-inputs?workflow',
         controller: 'ObservationInputsCtrl',
-        templateUrl: 'views/observation-inputs.html'
+        templateUrl: 'views/observation-inputs.html',
+        resolve: {
+          workflow: function ($stateParams) {
+            return $stateParams.workflow;
+          }
+        }
       })
       .state('observationForm', {
         url: '/observation-form/:observationId',
@@ -133,16 +132,15 @@ uprepApp.config(['$stateProvider', '$httpProvider',
         templateUrl: 'views/teacher.html'
       })
       .state('scoreDetails', {
-        url: '/score-details',
+        url: '/score-details?workflow',
         controller: 'ScoreInputCtrl',
-        templateUrl: 'views/score-details.html'
+        templateUrl: 'views/score-details.html',
+        resolve: {
+          workflow: function ($stateParams) {
+            return $stateParams.workflow;
+          }
+        }
       })
-      // .state('score-form', {
-      //   url: '/score-form/:scoredId',
-      //   controller: 'MakeScoreCtrl',
-      //   templateUrl: 'views/score-form.html',
-
-      // })
       .state('scoreForm', {
         url: '/score-form/:scoreId',
         controller: 'ScoreFormCtrl',
