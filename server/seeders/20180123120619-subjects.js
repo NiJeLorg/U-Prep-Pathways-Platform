@@ -7,7 +7,8 @@ const subjects = ['ela',
     'art',
     'science',
     'math',
-    'reading'
+    'reading',
+    'ss/sci'
     ];
 
 const subjectEntries = subjects.map(subject =>  {
