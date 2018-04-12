@@ -21,6 +21,12 @@ module.exports = (sequelize, DataTypes) => {
             onDelete: 'CASCADE',
             as: 'grades'
         });
+        School.belongsToMany(models.subject, {
+            foreignKey: 'school_id',
+            through: models.school_subject,
+            onDelete: 'CASCADE',
+            as: 'subjects'
+        });
         School.belongsTo(models.district, {
             foreignKey: 'district_id',
         });
