@@ -33,14 +33,17 @@ const HomeCtrl = ($scope, $state, TeacherService, SchoolService, ObservationType
 
     // event handlders
     $scope.fetchGrades = (school) => {
-        GradeService.query({
-            id: school.id
-        }, (res) => {
-            console.log(res);
-            $scope.grades = res.data;
-        }, (err) => {
-            console.error(err, 'ERROR');
-        });
+        if (school !== null) {
+            GradeService.query({
+                id: school.id
+            }, (res) => {
+                $scope.grades = res.data;
+            }, (err) => {
+                console.error(err, 'ERROR');
+            });
+        } else {
+            $scope.grades = [];
+        }
     }
 
 

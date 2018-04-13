@@ -28,7 +28,7 @@
                         .c-select-group
                             select(ng-model='selectedGrade' ng-options='grade.name for grade in grades')
                                 option(value='') Select Grade
-                button(ui-sref='newObservation') Make New Observation
+                button Make New Observation
             .c-pagination
                 .c-pagination__page-numbers
                     a.ul-cursor-pointer(ng-repeat='page in pager.pages' ng-click='setPage(page)' ng-class='{"active-page": pager.currentPage === page}') {{page}}

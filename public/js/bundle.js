@@ -66528,14 +66528,17 @@ var HomeCtrl = function HomeCtrl($scope, $state, TeacherService, SchoolService, 
 
     // event handlders
     $scope.fetchGrades = function (school) {
-        GradeService.query({
-            id: school.id
-        }, function (res) {
-            console.log(res);
-            $scope.grades = res.data;
-        }, function (err) {
-            console.error(err, 'ERROR');
-        });
+        if (school !== null) {
+            GradeService.query({
+                id: school.id
+            }, function (res) {
+                $scope.grades = res.data;
+            }, function (err) {
+                console.error(err, 'ERROR');
+            });
+        } else {
+            $scope.grades = [];
+        }
     };
 
     $scope.newTeacherScore = function (teacher) {
