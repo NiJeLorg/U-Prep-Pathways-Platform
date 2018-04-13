@@ -69,6 +69,28 @@ uprepApp
   .factory('ScoreFactory', ScoreFactory)
   .factory('BreadcrumbFactory', BreadcrumbFactory)
   .factory('PaginationFactory', PaginationFactory)
+  .filter('teacherGradeFilter', function() {
+
+    // In the return function, we must pass in a single parameter which will be the data we will work on.
+    // We have the ability to support multiple other parameters that can be passed into the filter optionally
+      return function( items, grade) {
+          let filtered = [];
+          if(grade === undefined){
+            return items
+          }else{
+              angular.forEach(items, function(item) {
+                  angular.forEach(item.grades, function (teacherGrade) {
+                      if(teacherGrade.name === grade) {
+                          filtered.push(item);
+                      }
+                  });
+
+              });
+          }
+          return filtered;
+      };
+
+})
   .constant('BASE_URL', url);
 
 uprepApp.config(['$stateProvider', '$httpProvider',

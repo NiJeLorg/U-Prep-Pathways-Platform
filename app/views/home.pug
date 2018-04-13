@@ -28,14 +28,14 @@
                         .c-select-group
                             select(ng-model='selectedGrade' ng-options='grade.name for grade in grades')
                                 option(value='') Select Grade
-                    p {{selectedGrade}}
-                button Make New Observation
+                    //p {{selectedGrade}}
+                //button Make New Observation
             .c-pagination
                 .c-pagination__page-numbers
                     a.ul-cursor-pointer(ng-repeat='page in pager.pages' ng-click='setPage(page)' ng-class='{"active-page": pager.currentPage === page}') {{page}}
             .c-main-section
                 .c-teachers-container(ng-show='page === "dashboard"')
-                    .c-teacher.c-card.l-flex-space-between(ng-repeat='teacher in teachers | filter:search |filter:selectedGrade.name | filter:selectedSchool.name ')
+                    .c-teacher.c-card.l-flex-space-between(ng-repeat='teacher in teachers | filter:search | filter:selectedSchool.name | teacherGradeFilter:selectedGrade.name ')
                         .c-teacher__details
                             p.ul-cursor-pointer(ng-click='loadTeacherView(teacher)') {{teacher.name}}
                             p.school {{teacher.school.name}}
