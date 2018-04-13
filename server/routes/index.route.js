@@ -2,6 +2,7 @@ import express from 'express';
 import gradeRoutes from './grade.route';
 import schoolRoutes from './school.route';
 import subjectRoutes from './subject.route';
+import seedRoutes from './seeder.route';
 import teacherRoutes from './teacher.route';
 import elementRoutes from './element.route';
 import observationRoutes from './observation.route';
@@ -21,6 +22,7 @@ router.get('/health-check', (req, res) => res.send('OK'));
 
 router.use('/schools', schoolRoutes);
 router.use('/grades', gradeRoutes);
+router.use('/seed', seedRoutes);
 router.use('/elements', elementRoutes);
 router.use('/schools/:schoolId/grades', gradeRoutes);
 router.use('/teachers', teacherRoutes);

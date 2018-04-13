@@ -1,15 +1,22 @@
 'use strict';
+const subjects = ['ela',
+    'self-contained',
+    'music',
+    'gym',
+    'pltw',
+    'art',
+    'science',
+    'math',
+    'reading',
+    'ss/sci'
+    ];
 
+const subjectEntries = subjects.map(subject =>  {
+    return {name: subject, created_at: new Date(), updated_at: new Date()}
+});
 module.exports = {
     up: (queryInterface, Sequelize) => {
-        return queryInterface.bulkInsert('subjects', [
-            {name: "Math", created_at: new Date(), updated_at: new Date()},
-            {name: "English", created_at: new Date(), updated_at: new Date()},
-            {name: "Geography", created_at: new Date(), updated_at: new Date()},
-            {name: "Biology", created_at: new Date(), updated_at: new Date()},
-            {name: "History", created_at: new Date(), updated_at: new Date()},
-
-        ], {});
+        return queryInterface.bulkInsert('subjects', subjectEntries, {});
     },
 
     down: (queryInterface, Sequelize) => {
