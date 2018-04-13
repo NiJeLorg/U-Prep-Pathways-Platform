@@ -40,8 +40,8 @@ import MakeScoreCtrl from './controllers/make-score';
 const uprepApp = angular.module('uprepApp', [uiRouter, ngFileUpload, ngResource]);
 
 
-// let url = 'https://dev-uprep.nijel.org/api/';
-let url = 'http://localhost:3000/api/';
+let url = 'https://dev-uprep.nijel.org/api/';
+// let url = 'http://localhost:3000/api/';
 uprepApp
   .controller('NavCtrl', NavCtrl)
   .controller('HomeCtrl', HomeCtrl)
