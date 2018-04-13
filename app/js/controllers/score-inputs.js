@@ -1,24 +1,29 @@
 'use strict';
 
-const ScoreInputCtrl = ($scope, $state, $rootScope, UtilService, TeacherService, BreadcrumbFactory, ScoreService, ScoreFactory) => {
+const ScoreInputCtrl = ($scope, $state, $rootScope, UtilService, TeacherService, BreadcrumbFactory, ScoreService, ScoreFactory, workflow) => {
 
 
     $scope.templateUrl = `views/breadcrumbs/breadcrumbs.html`;
 
+
+    BreadcrumbFactory['workflow'] = workflow;
+    BreadcrumbFactory['label_1'] = ScoreFactory.school.name;
+    BreadcrumbFactory['label_3'] = 'Step 3';
+    if (workflow === 'scores') {
+        BreadcrumbFactory['label_2'] = ScoreFactory.teacher.name;
+    } else {
+        BreadcrumbFactory['label_2'] = 'Teachers';
+    }
     $scope.breadcrumbs = BreadcrumbFactory;
+
     // fetch data
-    $scope.grades = ScoreFactory.teacher.grades;
-    $scope.subjects = ScoreFactory.teacher.subjects;
+    $scope.grades = ScoreFactory.grades;
+    $scope.subjects = ScoreFactory.subjects;
     $scope.disableSubjectSelect = true;
 
     $scope.recordGrade = () => {
         ScoreFactory['grade'] = JSON.parse($scope.grade);
-        if (ScoreFactory.grade) {
-            $scope.subjects = ScoreFactory.teacher.subjects.filter(
-                subject => subject.grade.grade_id === ScoreFactory.grade.id
-            )
-            $scope.disableSubjectSelect = false;
-        }
+        $scope.disableSubjectSelect = false;
     };
     $scope.recordSubject = () => {
         ScoreFactory['subject'] = JSON.parse($scope.subject);

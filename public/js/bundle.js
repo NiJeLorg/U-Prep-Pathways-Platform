@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 61);
+/******/ 	return __webpack_require__(__webpack_require__.s = 60);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -3859,7 +3859,7 @@ exports.BaseLocationServices = BaseLocationServices;
 /***/ (function(module, exports, __webpack_require__) {
 
 // Thank's IE8 for his funny defineProperty
-module.exports = !__webpack_require__(60)(function () {
+module.exports = !__webpack_require__(59)(function () {
   return Object.defineProperty({}, 'a', { get: function () { return 7; } }).a != 7;
 });
 
@@ -4546,21 +4546,21 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var interface_1 = __webpack_require__(7);
 var transition_1 = __webpack_require__(13);
 var hookRegistry_1 = __webpack_require__(22);
-var coreResolvables_1 = __webpack_require__(68);
-var redirectTo_1 = __webpack_require__(69);
-var onEnterExitRetain_1 = __webpack_require__(70);
-var resolve_1 = __webpack_require__(71);
-var views_1 = __webpack_require__(72);
-var updateGlobals_1 = __webpack_require__(73);
-var url_1 = __webpack_require__(74);
+var coreResolvables_1 = __webpack_require__(67);
+var redirectTo_1 = __webpack_require__(68);
+var onEnterExitRetain_1 = __webpack_require__(69);
+var resolve_1 = __webpack_require__(70);
+var views_1 = __webpack_require__(71);
+var updateGlobals_1 = __webpack_require__(72);
+var url_1 = __webpack_require__(73);
 var lazyLoad_1 = __webpack_require__(47);
 var transitionEventType_1 = __webpack_require__(48);
 var transitionHook_1 = __webpack_require__(11);
 var predicates_1 = __webpack_require__(1);
 var common_1 = __webpack_require__(0);
 var hof_1 = __webpack_require__(2);
-var ignoredTransition_1 = __webpack_require__(75);
-var invalidTransition_1 = __webpack_require__(76);
+var ignoredTransition_1 = __webpack_require__(74);
+var invalidTransition_1 = __webpack_require__(75);
 /**
  * The default [[Transition]] options.
  *
@@ -4851,7 +4851,7 @@ module.exports = function (it) {
 /* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(62);
+__webpack_require__(61);
 module.exports = angular;
 
 
@@ -8283,36 +8283,6 @@ exports.BrowserLocationConfig = BrowserLocationConfig;
 
 /***/ }),
 /* 56 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-exports.__esModule = true;
-
-var _defineProperty = __webpack_require__(91);
-
-var _defineProperty2 = _interopRequireDefault(_defineProperty);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = function (obj, key, value) {
-  if (key in obj) {
-    (0, _defineProperty2.default)(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-
-  return obj;
-};
-
-/***/ }),
-/* 57 */
 /***/ (function(module, exports) {
 
 // https://github.com/zloirock/core-js/issues/86#issuecomment-115759028
@@ -8324,7 +8294,7 @@ if (typeof __g == 'number') __g = global; // eslint-disable-line no-undef
 
 
 /***/ }),
-/* 58 */
+/* 57 */
 /***/ (function(module, exports) {
 
 var core = module.exports = { version: '2.5.3' };
@@ -8332,12 +8302,12 @@ if (typeof __e == 'number') __e = core; // eslint-disable-line no-undef
 
 
 /***/ }),
-/* 59 */
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var anObject = __webpack_require__(98);
-var IE8_DOM_DEFINE = __webpack_require__(99);
-var toPrimitive = __webpack_require__(101);
+var anObject = __webpack_require__(103);
+var IE8_DOM_DEFINE = __webpack_require__(104);
+var toPrimitive = __webpack_require__(106);
 var dP = Object.defineProperty;
 
 exports.f = __webpack_require__(18) ? Object.defineProperty : function defineProperty(O, P, Attributes) {
@@ -8354,7 +8324,7 @@ exports.f = __webpack_require__(18) ? Object.defineProperty : function definePro
 
 
 /***/ }),
-/* 60 */
+/* 59 */
 /***/ (function(module, exports) {
 
 module.exports = function (exec) {
@@ -8367,7 +8337,7 @@ module.exports = function (exec) {
 
 
 /***/ }),
-/* 61 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8377,57 +8347,57 @@ var _angular = __webpack_require__(28);
 
 var _angular2 = _interopRequireDefault(_angular);
 
-var _angularjs = __webpack_require__(63);
+var _angularjs = __webpack_require__(62);
 
 var _angularjs2 = _interopRequireDefault(_angularjs);
 
-var _angularResource = __webpack_require__(84);
+var _angularResource = __webpack_require__(83);
 
 var _angularResource2 = _interopRequireDefault(_angularResource);
 
-var _ngFileUpload = __webpack_require__(86);
+var _ngFileUpload = __webpack_require__(85);
 
 var _ngFileUpload2 = _interopRequireDefault(_ngFileUpload);
 
-var _lodash = __webpack_require__(88);
+var _lodash = __webpack_require__(87);
 
 var _lodash2 = _interopRequireDefault(_lodash);
 
-var _home = __webpack_require__(90);
+var _home = __webpack_require__(89);
 
 var _home2 = _interopRequireDefault(_home);
 
-var _scoreInputs = __webpack_require__(103);
+var _newObservation = __webpack_require__(90);
+
+var _newObservation2 = _interopRequireDefault(_newObservation);
+
+var _scoreInputs = __webpack_require__(91);
 
 var _scoreInputs2 = _interopRequireDefault(_scoreInputs);
 
-var _nav = __webpack_require__(104);
+var _nav = __webpack_require__(92);
 
 var _nav2 = _interopRequireDefault(_nav);
 
-var _school = __webpack_require__(105);
-
-var _school2 = _interopRequireDefault(_school);
-
-var _observationType = __webpack_require__(106);
-
-var _observationType2 = _interopRequireDefault(_observationType);
-
-var _observationInputs = __webpack_require__(107);
+var _observationInputs = __webpack_require__(93);
 
 var _observationInputs2 = _interopRequireDefault(_observationInputs);
 
-var _observationForm = __webpack_require__(108);
+var _observationForm = __webpack_require__(94);
 
 var _observationForm2 = _interopRequireDefault(_observationForm);
 
-var _scoreForm = __webpack_require__(109);
+var _scoreForm = __webpack_require__(108);
 
 var _scoreForm2 = _interopRequireDefault(_scoreForm);
 
-var _teacher = __webpack_require__(110);
+var _teacher = __webpack_require__(109);
 
 var _teacher2 = _interopRequireDefault(_teacher);
+
+var _teacherObservation = __webpack_require__(110);
+
+var _teacherObservation2 = _interopRequireDefault(_teacherObservation);
 
 var _schoolService = __webpack_require__(111);
 
@@ -8507,7 +8477,7 @@ var uprepApp = _angular2.default.module('uprepApp', [_angularjs2.default, _ngFil
 
 // load services
 var url = 'http://localhost:3000/api/';
-uprepApp.controller('NavCtrl', _nav2.default).controller('HomeCtrl', _home2.default).controller('ScoreInputCtrl', _scoreInputs2.default).controller('SchoolCtrl', _school2.default).controller('ObservationTypeCtrl', _observationType2.default).controller('ObservationInputsCtrl', _observationInputs2.default).controller('ObservationFormCtrl', _observationForm2.default).controller('ScoreFormCtrl', _scoreForm2.default).controller('MakeScoreCtrl', _makeScore2.default).controller('TeacherCtrl', _teacher2.default).service('SchoolService', _schoolService2.default).service('ObservationTypeService', _observationTypeService2.default).service('GradeService', _gradeService2.default).service('TeacherService', _teacherService2.default).service('ElementService', _elementService2.default).service('SubjectService', _subjectService2.default).service('ObservationService', _observationService2.default).service('ScoreService', _scoreService2.default).service('IndicatorScoreService', _indicatorScoreService2.default).service('ClusterService', _clusterService2.default).service('AttachmentService', _attachmentService2.default).service('UtilService', _utilitiesService2.default).factory('ObservationFactory', _observationFactory2.default).factory('ScoreFactory', _scoreFactory2.default).factory('BreadcrumbFactory', _breadcrumbFactory2.default).factory('PaginationFactory', _paginationFactory2.default).constant('BASE_URL', url);
+uprepApp.controller('NavCtrl', _nav2.default).controller('HomeCtrl', _home2.default).controller('NewObservationCtrl', _newObservation2.default).controller('ScoreInputCtrl', _scoreInputs2.default).controller('ObservationInputsCtrl', _observationInputs2.default).controller('ObservationFormCtrl', _observationForm2.default).controller('ScoreFormCtrl', _scoreForm2.default).controller('MakeScoreCtrl', _makeScore2.default).controller('TeacherCtrl', _teacher2.default).controller('TeacherObservationCtrl', _teacherObservation2.default).service('SchoolService', _schoolService2.default).service('ObservationTypeService', _observationTypeService2.default).service('GradeService', _gradeService2.default).service('TeacherService', _teacherService2.default).service('ElementService', _elementService2.default).service('SubjectService', _subjectService2.default).service('ObservationService', _observationService2.default).service('ScoreService', _scoreService2.default).service('IndicatorScoreService', _indicatorScoreService2.default).service('ClusterService', _clusterService2.default).service('AttachmentService', _attachmentService2.default).service('UtilService', _utilitiesService2.default).factory('ObservationFactory', _observationFactory2.default).factory('ScoreFactory', _scoreFactory2.default).factory('BreadcrumbFactory', _breadcrumbFactory2.default).factory('PaginationFactory', _paginationFactory2.default).constant('BASE_URL', url);
 
 uprepApp.config(['$stateProvider', '$httpProvider', '$urlRouterProvider', '$locationProvider', function ($stateProvider, $httpProvider, $urlRouterProvider, $locationProvider) {
 
@@ -8518,23 +8488,30 @@ uprepApp.config(['$stateProvider', '$httpProvider', '$urlRouterProvider', '$loca
     url: '/',
     controller: 'HomeCtrl',
     templateUrl: 'views/home.html'
-  }).state('school', {
-    url: '/school?workflow',
-    controller: 'SchoolCtrl',
-    templateUrl: 'views/school.html',
+  }).state('newObservation', {
+    url: '/new-observation',
+    controller: 'NewObservationCtrl',
+    templateUrl: 'views/new-observation.html'
+  }).state('teacherObservation', {
+    url: '/teacher-observation/:teacherId',
+    controller: 'TeacherObservationCtrl',
+    templateUrl: 'views/teacher-observation.html',
+    resolve: {
+      teacher: function teacher($stateParams, TeacherService) {
+        return TeacherService.query({
+          id: $stateParams.teacherId
+        }).$promise;
+      }
+    }
+  }).state('observationInputs', {
+    url: '/observation-inputs?workflow',
+    controller: 'ObservationInputsCtrl',
+    templateUrl: 'views/observation-inputs.html',
     resolve: {
       workflow: function workflow($stateParams) {
         return $stateParams.workflow;
       }
     }
-  }).state('observationType', {
-    url: '/observation-type',
-    controller: 'ObservationTypeCtrl',
-    templateUrl: 'views/observation-type.html'
-  }).state('observationInputs', {
-    url: '/observation-inputs',
-    controller: 'ObservationInputsCtrl',
-    templateUrl: 'views/observation-inputs.html'
   }).state('observationForm', {
     url: '/observation-form/:observationId',
     controller: 'ObservationFormCtrl',
@@ -8555,17 +8532,15 @@ uprepApp.config(['$stateProvider', '$httpProvider', '$urlRouterProvider', '$loca
     controller: 'TeacherCtrl',
     templateUrl: 'views/teacher.html'
   }).state('scoreDetails', {
-    url: '/score-details',
+    url: '/score-details?workflow',
     controller: 'ScoreInputCtrl',
-    templateUrl: 'views/score-details.html'
-  })
-  // .state('score-form', {
-  //   url: '/score-form/:scoredId',
-  //   controller: 'MakeScoreCtrl',
-  //   templateUrl: 'views/score-form.html',
-
-  // })
-  .state('scoreForm', {
+    templateUrl: 'views/score-details.html',
+    resolve: {
+      workflow: function workflow($stateParams) {
+        return $stateParams.workflow;
+      }
+    }
+  }).state('scoreForm', {
     url: '/score-form/:scoreId',
     controller: 'ScoreFormCtrl',
     templateUrl: 'views/score-form.html',
@@ -8581,7 +8556,7 @@ uprepApp.config(['$stateProvider', '$httpProvider', '$urlRouterProvider', '$loca
 }]);
 
 /***/ }),
-/* 62 */
+/* 61 */
 /***/ (function(module, exports) {
 
 /**
@@ -42945,7 +42920,7 @@ $provide.value("$locale", {
 !window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
 
 /***/ }),
-/* 63 */
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -42956,7 +42931,7 @@ $provide.value("$locale", {
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
 (function (global, factory) {
-	 true ? factory(exports, __webpack_require__(28), __webpack_require__(64)) :
+	 true ? factory(exports, __webpack_require__(28), __webpack_require__(63)) :
 	typeof define === 'function' && define.amd ? define(['exports', 'angular', '@uirouter/core'], factory) :
 	(factory((global['@uirouter/angularjs'] = {}),global.angular,global['@uirouter/core']));
 }(this, (function (exports,ng_from_import,core) { 'use strict';
@@ -44950,7 +44925,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 
 /***/ }),
-/* 64 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -44964,21 +44939,21 @@ function __export(m) {
 }
 Object.defineProperty(exports, "__esModule", { value: true });
 __export(__webpack_require__(4));
+__export(__webpack_require__(64));
 __export(__webpack_require__(65));
-__export(__webpack_require__(66));
 __export(__webpack_require__(34));
-__export(__webpack_require__(67));
+__export(__webpack_require__(66));
+__export(__webpack_require__(76));
 __export(__webpack_require__(77));
 __export(__webpack_require__(78));
-__export(__webpack_require__(79));
 __export(__webpack_require__(45));
 __export(__webpack_require__(40));
-__export(__webpack_require__(80));
-__export(__webpack_require__(83));
+__export(__webpack_require__(79));
+__export(__webpack_require__(82));
 //# sourceMappingURL=index.js.map
 
 /***/ }),
-/* 65 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -44994,7 +44969,7 @@ __export(__webpack_require__(24));
 //# sourceMappingURL=index.js.map
 
 /***/ }),
-/* 66 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45009,7 +44984,7 @@ __export(__webpack_require__(14));
 //# sourceMappingURL=index.js.map
 
 /***/ }),
-/* 67 */
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45028,7 +45003,7 @@ __export(__webpack_require__(8));
 //# sourceMappingURL=index.js.map
 
 /***/ }),
-/* 68 */
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45070,7 +45045,7 @@ exports.treeChangesCleanup = function (trans) {
 //# sourceMappingURL=coreResolvables.js.map
 
 /***/ }),
-/* 69 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45113,7 +45088,7 @@ exports.registerRedirectToHook = function (transitionService) {
 //# sourceMappingURL=redirectTo.js.map
 
 /***/ }),
-/* 70 */
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45176,7 +45151,7 @@ exports.registerOnEnterHook = function (transitionService) {
 //# sourceMappingURL=onEnterExitRetain.js.map
 
 /***/ }),
-/* 71 */
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45244,7 +45219,7 @@ exports.registerResolveRemaining = function (transitionService) {
 //# sourceMappingURL=resolve.js.map
 
 /***/ }),
-/* 72 */
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45297,7 +45272,7 @@ exports.registerActivateViews = function (transitionService) {
 //# sourceMappingURL=views.js.map
 
 /***/ }),
-/* 73 */
+/* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45338,7 +45313,7 @@ exports.registerUpdateGlobalState = function (transitionService) {
 //# sourceMappingURL=updateGlobals.js.map
 
 /***/ }),
-/* 74 */
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45369,7 +45344,7 @@ exports.registerUpdateUrl = function (transitionService) {
 //# sourceMappingURL=url.js.map
 
 /***/ }),
-/* 75 */
+/* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45406,7 +45381,7 @@ exports.registerIgnoredTransitionHook = function (transitionService) {
 //# sourceMappingURL=ignoredTransition.js.map
 
 /***/ }),
-/* 76 */
+/* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45431,7 +45406,7 @@ exports.registerInvalidTransitionHook = function (transitionService) {
 //# sourceMappingURL=invalidTransition.js.map
 
 /***/ }),
-/* 77 */
+/* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45465,7 +45440,7 @@ __export(__webpack_require__(25));
 //# sourceMappingURL=index.js.map
 
 /***/ }),
-/* 78 */
+/* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45482,7 +45457,7 @@ __export(__webpack_require__(46));
 //# sourceMappingURL=index.js.map
 
 /***/ }),
-/* 79 */
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45495,7 +45470,7 @@ __export(__webpack_require__(44));
 //# sourceMappingURL=index.js.map
 
 /***/ }),
-/* 80 */
+/* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45509,11 +45484,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * @module vanilla
  */
 /** */
-__export(__webpack_require__(81));
+__export(__webpack_require__(80));
 //# sourceMappingURL=vanilla.js.map
 
 /***/ }),
-/* 81 */
+/* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45531,11 +45506,11 @@ __export(__webpack_require__(53));
 __export(__webpack_require__(54));
 __export(__webpack_require__(55));
 __export(__webpack_require__(26));
-__export(__webpack_require__(82));
+__export(__webpack_require__(81));
 //# sourceMappingURL=index.js.map
 
 /***/ }),
-/* 82 */
+/* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45570,7 +45545,7 @@ exports.memoryLocationPlugin = utils_1.locationPluginFactory('vanilla.memoryLoca
 //# sourceMappingURL=plugins.js.map
 
 /***/ }),
-/* 83 */
+/* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45597,15 +45572,15 @@ exports.UIRouterPluginBase = UIRouterPluginBase;
 //# sourceMappingURL=interface.js.map
 
 /***/ }),
-/* 84 */
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(85);
+__webpack_require__(84);
 module.exports = 'ngResource';
 
 
 /***/ }),
-/* 85 */
+/* 84 */
 /***/ (function(module, exports) {
 
 /**
@@ -46468,14 +46443,14 @@ angular.module('ngResource', ['ng']).
 
 
 /***/ }),
-/* 86 */
+/* 85 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(87);
+__webpack_require__(86);
 module.exports = 'ngFileUpload';
 
 /***/ }),
-/* 87 */
+/* 86 */
 /***/ (function(module, exports) {
 
 /**!
@@ -49379,7 +49354,7 @@ ngFileUpload.service('UploadExif', ['UploadResize', '$q', function (UploadResize
 
 
 /***/ }),
-/* 88 */
+/* 87 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, module) {var __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -66481,10 +66456,10 @@ ngFileUpload.service('UploadExif', ['UploadResize', '$q', function (UploadResize
   }
 }.call(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(29), __webpack_require__(89)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(29), __webpack_require__(88)(module)))
 
 /***/ }),
-/* 89 */
+/* 88 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -66512,6 +66487,97 @@ module.exports = function(module) {
 
 
 /***/ }),
+/* 89 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var HomeCtrl = function HomeCtrl($scope, $state, TeacherService, SchoolService, ObservationTypeService, GradeService, ObservationFactory, ScoreFactory, PaginationFactory) {
+
+    $scope.page = 'dashboard';
+    $scope.pager = {};
+
+    // fetch data
+    TeacherService.fetchAllTeachers(function (err, res) {
+        if (!err) {
+            $scope.teachers = res.data.data;
+        } else {
+            console.error(err, 'ERROR');
+        }
+    });
+
+    SchoolService.fetchSchools(function (err, res) {
+        if (!err) {
+            $scope.schools = res.data.data;
+        } else {
+            console.error(err, 'ERROR');
+        }
+    });
+
+    ObservationTypeService.fetchObservationTypes(function (err, res) {
+        if (!err) {
+            $scope.observationTypes = res.data.data;
+        } else {
+            console.error(err, 'ERROR');
+        }
+    });
+
+    // event handlders
+    $scope.fetchGrades = function (school) {
+        if (school !== null) {
+            GradeService.query({
+                id: school.id
+            }, function (res) {
+                $scope.grades = res.data;
+            }, function (err) {
+                console.error(err, 'ERROR');
+            });
+        } else {
+            $scope.grades = [];
+        }
+    };
+
+    $scope.newTeacherScore = function (teacher) {
+        ScoreFactory['teacher'] = {
+            id: teacher.id,
+            name: teacher.name
+        };
+        ScoreFactory['school'] = teacher.school;
+        ScoreFactory['grades'] = teacher.grades;
+        ScoreFactory['subjects'] = teacher.subjects;
+        $state.go('scoreDetails', {
+            workflow: 'scores'
+        });
+    };
+
+    $scope.newTeacherObservation = function (teacher) {
+        ObservationFactory['teacher'] = {
+            id: teacher.id,
+            name: teacher.name
+        };
+        ObservationFactory['school'] = teacher.school;
+        ObservationFactory['observationType'] = $scope.observationTypes[1];
+        ObservationFactory['grades'] = teacher.grades;
+        ObservationFactory['subjects'] = teacher.subjects;
+        $state.go('observationInputs', {
+            workflow: 'observations'
+        });
+    };
+
+    $scope.loadTeacherView = function (teacher) {
+        $state.go('teacherObservation', {
+            teacherId: teacher.id
+        });
+    };
+};
+
+exports.default = HomeCtrl;
+
+/***/ }),
 /* 90 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -66519,321 +66585,14 @@ module.exports = function(module) {
 
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
+var NewObservaitonCtrl = function NewObservaitonCtrl(BreadcrumbFactory) {};
 
-var _defineProperty2 = __webpack_require__(56);
-
-var _defineProperty3 = _interopRequireDefault(_defineProperty2);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var HomeCtrl = function HomeCtrl($scope, $state, ObservationService, ScoreService, SchoolService, UtilService, PaginationFactory) {
-
-    var resourceToBeDeleted = void 0,
-        resourceType = void 0;
-
-    $scope.page = 'observed';
-    $scope.pager = {};
-
-    // fetch data
-    ObservationService.fetchObservations(function (err, res) {
-        if (!err) {
-            var data = res.data.data;
-
-            $scope.setPage = function (page) {
-                if (page < 1 || page.totalPages) {
-                    return;
-                }
-                $scope.pager = PaginationFactory.getPager(data.length, page);
-                $scope.observations = data.slice($scope.pager.startIndex, $scope.pager.endIndex + 1);
-            };
-
-            // initialize to page 1
-            $scope.setPage(1);
-        } else {
-            console.error(err, 'ERROR');
-        }
-    });
-
-    ScoreService.fetchScores(function (err, res) {
-        if (!err) {
-            $scope.scores = res.data.data;
-        } else {
-            console.error(err, 'ERROR');
-        }
-    });
-
-    SchoolService.fetchSchools(function (err, res) {
-        if (err) {
-            console.error(err);
-        }
-        $scope.schools = res.data.data;
-    });
-
-    $scope.openModal = function (obj, type) {
-        UtilService.openModal('delete-observation-modal');
-        resourceToBeDeleted = obj;
-        resourceType = type;
-    };
-
-    $scope.closeModal = function () {
-        UtilService.closeModal('delete-observation-modal');
-    };
-
-    $scope.deleteResource = function () {
-        function findIndex(arr, obj) {
-            var index = arr.findIndex(function (elem) {
-                if (elem.id == obj.id) {
-                    return elem;
-                }
-            });
-            return index;
-        }
-
-        if (resourceType === 'observation') {
-            ObservationService.remove({
-                id: resourceToBeDeleted.id
-            }, function (res) {
-                $scope.observations.splice(findIndex($scope.observations, resourceToBeDeleted), 1);
-            });
-        } else if (resourceType === 'score') {
-            ScoreService.remove({
-                id: resourceToBeDeleted.id
-            }, function (res) {
-                $scope.scores.splice(findIndex($scope.scores, resourceToBeDeleted), 1);
-            });
-        }
-        UtilService.closeModal('delete-observation-modal');
-    };
-
-    $scope.editOrViewObservation = function (observation, action) {
-        $state.go('observationForm', (0, _defineProperty3.default)({
-            observationId: observation.id,
-            action: action
-        }, 'action', action));
-    };
-
-    $scope.editOrViewScore = function (score, action) {
-        $state.go('scoreForm', (0, _defineProperty3.default)({
-            scoreId: score.id,
-            action: action
-        }, 'action', action));
-    };
-};
-
-exports.default = HomeCtrl;
+exports.default = NewObservaitonCtrl;
 
 /***/ }),
 /* 91 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = { "default": __webpack_require__(92), __esModule: true };
-
-/***/ }),
-/* 92 */
-/***/ (function(module, exports, __webpack_require__) {
-
-__webpack_require__(93);
-var $Object = __webpack_require__(58).Object;
-module.exports = function defineProperty(it, key, desc) {
-  return $Object.defineProperty(it, key, desc);
-};
-
-
-/***/ }),
-/* 93 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var $export = __webpack_require__(94);
-// 19.1.2.4 / 15.2.3.6 Object.defineProperty(O, P, Attributes)
-$export($export.S + $export.F * !__webpack_require__(18), 'Object', { defineProperty: __webpack_require__(59).f });
-
-
-/***/ }),
-/* 94 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var global = __webpack_require__(57);
-var core = __webpack_require__(58);
-var ctx = __webpack_require__(95);
-var hide = __webpack_require__(97);
-var PROTOTYPE = 'prototype';
-
-var $export = function (type, name, source) {
-  var IS_FORCED = type & $export.F;
-  var IS_GLOBAL = type & $export.G;
-  var IS_STATIC = type & $export.S;
-  var IS_PROTO = type & $export.P;
-  var IS_BIND = type & $export.B;
-  var IS_WRAP = type & $export.W;
-  var exports = IS_GLOBAL ? core : core[name] || (core[name] = {});
-  var expProto = exports[PROTOTYPE];
-  var target = IS_GLOBAL ? global : IS_STATIC ? global[name] : (global[name] || {})[PROTOTYPE];
-  var key, own, out;
-  if (IS_GLOBAL) source = name;
-  for (key in source) {
-    // contains in native
-    own = !IS_FORCED && target && target[key] !== undefined;
-    if (own && key in exports) continue;
-    // export native or passed
-    out = own ? target[key] : source[key];
-    // prevent global pollution for namespaces
-    exports[key] = IS_GLOBAL && typeof target[key] != 'function' ? source[key]
-    // bind timers to global for call from export context
-    : IS_BIND && own ? ctx(out, global)
-    // wrap global constructors for prevent change them in library
-    : IS_WRAP && target[key] == out ? (function (C) {
-      var F = function (a, b, c) {
-        if (this instanceof C) {
-          switch (arguments.length) {
-            case 0: return new C();
-            case 1: return new C(a);
-            case 2: return new C(a, b);
-          } return new C(a, b, c);
-        } return C.apply(this, arguments);
-      };
-      F[PROTOTYPE] = C[PROTOTYPE];
-      return F;
-    // make static versions for prototype methods
-    })(out) : IS_PROTO && typeof out == 'function' ? ctx(Function.call, out) : out;
-    // export proto methods to core.%CONSTRUCTOR%.methods.%NAME%
-    if (IS_PROTO) {
-      (exports.virtual || (exports.virtual = {}))[key] = out;
-      // export proto methods to core.%CONSTRUCTOR%.prototype.%NAME%
-      if (type & $export.R && expProto && !expProto[key]) hide(expProto, key, out);
-    }
-  }
-};
-// type bitmap
-$export.F = 1;   // forced
-$export.G = 2;   // global
-$export.S = 4;   // static
-$export.P = 8;   // proto
-$export.B = 16;  // bind
-$export.W = 32;  // wrap
-$export.U = 64;  // safe
-$export.R = 128; // real proto method for `library`
-module.exports = $export;
-
-
-/***/ }),
-/* 95 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// optional / simple context binding
-var aFunction = __webpack_require__(96);
-module.exports = function (fn, that, length) {
-  aFunction(fn);
-  if (that === undefined) return fn;
-  switch (length) {
-    case 1: return function (a) {
-      return fn.call(that, a);
-    };
-    case 2: return function (a, b) {
-      return fn.call(that, a, b);
-    };
-    case 3: return function (a, b, c) {
-      return fn.call(that, a, b, c);
-    };
-  }
-  return function (/* ...args */) {
-    return fn.apply(that, arguments);
-  };
-};
-
-
-/***/ }),
-/* 96 */
-/***/ (function(module, exports) {
-
-module.exports = function (it) {
-  if (typeof it != 'function') throw TypeError(it + ' is not a function!');
-  return it;
-};
-
-
-/***/ }),
-/* 97 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var dP = __webpack_require__(59);
-var createDesc = __webpack_require__(102);
-module.exports = __webpack_require__(18) ? function (object, key, value) {
-  return dP.f(object, key, createDesc(1, value));
-} : function (object, key, value) {
-  object[key] = value;
-  return object;
-};
-
-
-/***/ }),
-/* 98 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var isObject = __webpack_require__(27);
-module.exports = function (it) {
-  if (!isObject(it)) throw TypeError(it + ' is not an object!');
-  return it;
-};
-
-
-/***/ }),
-/* 99 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = !__webpack_require__(18) && !__webpack_require__(60)(function () {
-  return Object.defineProperty(__webpack_require__(100)('div'), 'a', { get: function () { return 7; } }).a != 7;
-});
-
-
-/***/ }),
-/* 100 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var isObject = __webpack_require__(27);
-var document = __webpack_require__(57).document;
-// typeof document.createElement is 'object' in old IE
-var is = isObject(document) && isObject(document.createElement);
-module.exports = function (it) {
-  return is ? document.createElement(it) : {};
-};
-
-
-/***/ }),
-/* 101 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// 7.1.1 ToPrimitive(input [, PreferredType])
-var isObject = __webpack_require__(27);
-// instead of the ES6 spec version, we didn't implement @@toPrimitive case
-// and the second argument - flag - preferred type is a string
-module.exports = function (it, S) {
-  if (!isObject(it)) return it;
-  var fn, val;
-  if (S && typeof (fn = it.toString) == 'function' && !isObject(val = fn.call(it))) return val;
-  if (typeof (fn = it.valueOf) == 'function' && !isObject(val = fn.call(it))) return val;
-  if (!S && typeof (fn = it.toString) == 'function' && !isObject(val = fn.call(it))) return val;
-  throw TypeError("Can't convert object to primitive value");
-};
-
-
-/***/ }),
-/* 102 */
-/***/ (function(module, exports) {
-
-module.exports = function (bitmap, value) {
-  return {
-    enumerable: !(bitmap & 1),
-    configurable: !(bitmap & 2),
-    writable: !(bitmap & 4),
-    value: value
-  };
-};
-
-
-/***/ }),
-/* 103 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -66842,24 +66601,28 @@ module.exports = function (bitmap, value) {
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-var ScoreInputCtrl = function ScoreInputCtrl($scope, $state, $rootScope, UtilService, TeacherService, BreadcrumbFactory, ScoreService, ScoreFactory) {
+var ScoreInputCtrl = function ScoreInputCtrl($scope, $state, $rootScope, UtilService, TeacherService, BreadcrumbFactory, ScoreService, ScoreFactory, workflow) {
 
     $scope.templateUrl = 'views/breadcrumbs/breadcrumbs.html';
 
+    BreadcrumbFactory['workflow'] = workflow;
+    BreadcrumbFactory['label_1'] = ScoreFactory.school.name;
+    BreadcrumbFactory['label_3'] = 'Step 3';
+    if (workflow === 'scores') {
+        BreadcrumbFactory['label_2'] = ScoreFactory.teacher.name;
+    } else {
+        BreadcrumbFactory['label_2'] = 'Teachers';
+    }
     $scope.breadcrumbs = BreadcrumbFactory;
+
     // fetch data
-    $scope.grades = ScoreFactory.teacher.grades;
-    $scope.subjects = ScoreFactory.teacher.subjects;
+    $scope.grades = ScoreFactory.grades;
+    $scope.subjects = ScoreFactory.subjects;
     $scope.disableSubjectSelect = true;
 
     $scope.recordGrade = function () {
         ScoreFactory['grade'] = JSON.parse($scope.grade);
-        if (ScoreFactory.grade) {
-            $scope.subjects = ScoreFactory.teacher.subjects.filter(function (subject) {
-                return subject.grade.grade_id === ScoreFactory.grade.id;
-            });
-            $scope.disableSubjectSelect = false;
-        }
+        $scope.disableSubjectSelect = false;
     };
     $scope.recordSubject = function () {
         ScoreFactory['subject'] = JSON.parse($scope.subject);
@@ -66888,7 +66651,7 @@ var ScoreInputCtrl = function ScoreInputCtrl($scope, $state, $rootScope, UtilSer
 exports.default = ScoreInputCtrl;
 
 /***/ }),
-/* 104 */
+/* 92 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -66925,7 +66688,7 @@ var NavCtrl = function NavCtrl($scope) {
 exports.default = NavCtrl;
 
 /***/ }),
-/* 105 */
+/* 93 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -66934,111 +66697,25 @@ exports.default = NavCtrl;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-var SchoolCtrl = function SchoolCtrl($scope, $state, $rootScope, UtilService, SchoolService, ObservationFactory, BreadcrumbFactory, ScoreFactory, workflow) {
+var ObservationInputsCtrl = function ObservationInputsCtrl($scope, $state, GradeService, $rootScope, UtilService, TeacherService, ObservationService, ObservationFactory, BreadcrumbFactory, workflow) {
 
-    $rootScope.observation = ObservationFactory;
     $scope.templateUrl = 'views/breadcrumbs/breadcrumbs.html';
+    // $scope.breadcrumbs = BreadcrumbFactory;
+
     BreadcrumbFactory['workflow'] = workflow;
-    BreadcrumbFactory['label_1'] = 'School';
+    BreadcrumbFactory['label_1'] = ObservationFactory.school.name;
     BreadcrumbFactory['label_3'] = 'Details';
     if (workflow === 'observations') {
-        BreadcrumbFactory['label_2'] = 'Type';
+        BreadcrumbFactory['label_2'] = ObservationFactory.observationType.name;
     } else {
         BreadcrumbFactory['label_2'] = 'Teachers';
     }
     $scope.breadcrumbs = BreadcrumbFactory;
-    // fetch data
-    SchoolService.fetchSchools(function (err, res) {
-        if (err) {
-            console.error(err);
-        }
-        $scope.schools = res.data.data;
-    });
 
-    $scope.cancel = function () {
-        if (workflow === 'observations') {
-            UtilService.cancelObservation(ObservationFactory);
-        } else {
-            UtilService.cancelScore(ScoreFactory);
-        }
-    };
-    $scope.checkIfSchoolIsUPSM = function (school) {
-        if (school.includes('UPSM')) {
-            return true;
-        }
-        return false;
-    };
+    $scope.grades = ObservationFactory.grades;
+    $scope.subjects = ObservationFactory.subjects;
 
-    $scope.recordSchool = function (school) {
-        ObservationFactory['school'] = school;
-        ScoreFactory['school'] = school;
-        BreadcrumbFactory['label_1'] = school.name;
-        if (workflow === 'observations') {
-
-            $state.go('observationType');
-        } else {
-            $state.go('teacher');
-        }
-    };
-};
-
-exports.default = SchoolCtrl;
-
-/***/ }),
-/* 106 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-var ObservationTypeCtrl = function ObservationTypeCtrl($scope, UtilService, ObservationTypeService, ObservationFactory, BreadcrumbFactory) {
-
-    // fetch data
-    $scope.templateUrl = 'views/breadcrumbs/breadcrumbs.html';
-    $scope.breadcrumbs = BreadcrumbFactory;
-
-    $scope.cancel = function () {
-        UtilService.cancelObservation(ObservationFactory);
-    };
-
-    ObservationTypeService.fetchObservationTypes(function (err, res) {
-        if (!err) {
-            $scope.observationTypes = res.data.data;
-        } else {
-            console.error(err, 'ERROR');
-        }
-    });
-
-    $scope.recordObservationType = function (observationType) {
-        ObservationFactory['observationType'] = observationType;
-    };
-};
-
-exports.default = ObservationTypeCtrl;
-
-/***/ }),
-/* 107 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-var ObservationInputsCtrl = function ObservationInputsCtrl($scope, $state, GradeService, $rootScope, UtilService, TeacherService, ObservationService, ObservationFactory, BreadcrumbFactory) {
-
-    $scope.templateUrl = 'views/breadcrumbs/breadcrumbs.html';
-    $scope.breadcrumbs = BreadcrumbFactory;
-    // fetch data
-    GradeService.query({
-        id: ObservationFactory.school.id
-    }, function (res) {
-        $scope.grades = res.data;
-    });
+    console.log($scope.subjects, 'subjects');
 
     // disable teacher and subject select elements on load
     $scope.disableTeacherSelect = true;
@@ -67047,30 +66724,7 @@ var ObservationInputsCtrl = function ObservationInputsCtrl($scope, $state, Grade
     $scope.recordGrade = function () {
         if ($scope.grade) {
             ObservationFactory['grade'] = JSON.parse($scope.grade);
-            TeacherService.query({
-                schoolId: ObservationFactory.school.id,
-                gradeId: ObservationFactory.grade.id
-            }, function (res) {
-                $scope.teachers = res.data;
-            });
-
-            // disable teacher select
-            $scope.disableTeacherSelect = false;
-        }
-    };
-
-    $scope.recordTeacher = function () {
-        if ($scope.teacher) {
-            ObservationFactory['teacher'] = JSON.parse($scope.teacher);
-            TeacherService.fetchTeacher(ObservationFactory.teacher.id, ObservationFactory.school.id, ObservationFactory.grade.id, function (err, res) {
-                if (!err) {
-                    $scope.subjects = res.data.data.subjects;
-                } else {
-                    console.error(err, 'errr');
-                }
-            });
-
-            // disalbe subject select
+            // disable subject select
             $scope.disableSubjectSelect = false;
         }
     };
@@ -67080,6 +66734,7 @@ var ObservationInputsCtrl = function ObservationInputsCtrl($scope, $state, Grade
     };
 
     $scope.createObservation = function () {
+        console.log(ObservationFactory, 'observa-factory-new');
 
         if (ObservationFactory.grade && ObservationFactory.teacher && ObservationFactory.subject) {
             ObservationService.createObservation({
@@ -67112,7 +66767,7 @@ var ObservationInputsCtrl = function ObservationInputsCtrl($scope, $state, Grade
 exports.default = ObservationInputsCtrl;
 
 /***/ }),
-/* 108 */
+/* 94 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -67122,7 +66777,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _defineProperty2 = __webpack_require__(56);
+var _defineProperty2 = __webpack_require__(95);
 
 var _defineProperty3 = _interopRequireDefault(_defineProperty2);
 
@@ -67356,7 +67011,245 @@ var ObservationFormCtrl = function ObservationFormCtrl($scope, $state, $statePar
 exports.default = ObservationFormCtrl;
 
 /***/ }),
-/* 109 */
+/* 95 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+exports.__esModule = true;
+
+var _defineProperty = __webpack_require__(96);
+
+var _defineProperty2 = _interopRequireDefault(_defineProperty);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = function (obj, key, value) {
+  if (key in obj) {
+    (0, _defineProperty2.default)(obj, key, {
+      value: value,
+      enumerable: true,
+      configurable: true,
+      writable: true
+    });
+  } else {
+    obj[key] = value;
+  }
+
+  return obj;
+};
+
+/***/ }),
+/* 96 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = { "default": __webpack_require__(97), __esModule: true };
+
+/***/ }),
+/* 97 */
+/***/ (function(module, exports, __webpack_require__) {
+
+__webpack_require__(98);
+var $Object = __webpack_require__(57).Object;
+module.exports = function defineProperty(it, key, desc) {
+  return $Object.defineProperty(it, key, desc);
+};
+
+
+/***/ }),
+/* 98 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var $export = __webpack_require__(99);
+// 19.1.2.4 / 15.2.3.6 Object.defineProperty(O, P, Attributes)
+$export($export.S + $export.F * !__webpack_require__(18), 'Object', { defineProperty: __webpack_require__(58).f });
+
+
+/***/ }),
+/* 99 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var global = __webpack_require__(56);
+var core = __webpack_require__(57);
+var ctx = __webpack_require__(100);
+var hide = __webpack_require__(102);
+var PROTOTYPE = 'prototype';
+
+var $export = function (type, name, source) {
+  var IS_FORCED = type & $export.F;
+  var IS_GLOBAL = type & $export.G;
+  var IS_STATIC = type & $export.S;
+  var IS_PROTO = type & $export.P;
+  var IS_BIND = type & $export.B;
+  var IS_WRAP = type & $export.W;
+  var exports = IS_GLOBAL ? core : core[name] || (core[name] = {});
+  var expProto = exports[PROTOTYPE];
+  var target = IS_GLOBAL ? global : IS_STATIC ? global[name] : (global[name] || {})[PROTOTYPE];
+  var key, own, out;
+  if (IS_GLOBAL) source = name;
+  for (key in source) {
+    // contains in native
+    own = !IS_FORCED && target && target[key] !== undefined;
+    if (own && key in exports) continue;
+    // export native or passed
+    out = own ? target[key] : source[key];
+    // prevent global pollution for namespaces
+    exports[key] = IS_GLOBAL && typeof target[key] != 'function' ? source[key]
+    // bind timers to global for call from export context
+    : IS_BIND && own ? ctx(out, global)
+    // wrap global constructors for prevent change them in library
+    : IS_WRAP && target[key] == out ? (function (C) {
+      var F = function (a, b, c) {
+        if (this instanceof C) {
+          switch (arguments.length) {
+            case 0: return new C();
+            case 1: return new C(a);
+            case 2: return new C(a, b);
+          } return new C(a, b, c);
+        } return C.apply(this, arguments);
+      };
+      F[PROTOTYPE] = C[PROTOTYPE];
+      return F;
+    // make static versions for prototype methods
+    })(out) : IS_PROTO && typeof out == 'function' ? ctx(Function.call, out) : out;
+    // export proto methods to core.%CONSTRUCTOR%.methods.%NAME%
+    if (IS_PROTO) {
+      (exports.virtual || (exports.virtual = {}))[key] = out;
+      // export proto methods to core.%CONSTRUCTOR%.prototype.%NAME%
+      if (type & $export.R && expProto && !expProto[key]) hide(expProto, key, out);
+    }
+  }
+};
+// type bitmap
+$export.F = 1;   // forced
+$export.G = 2;   // global
+$export.S = 4;   // static
+$export.P = 8;   // proto
+$export.B = 16;  // bind
+$export.W = 32;  // wrap
+$export.U = 64;  // safe
+$export.R = 128; // real proto method for `library`
+module.exports = $export;
+
+
+/***/ }),
+/* 100 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// optional / simple context binding
+var aFunction = __webpack_require__(101);
+module.exports = function (fn, that, length) {
+  aFunction(fn);
+  if (that === undefined) return fn;
+  switch (length) {
+    case 1: return function (a) {
+      return fn.call(that, a);
+    };
+    case 2: return function (a, b) {
+      return fn.call(that, a, b);
+    };
+    case 3: return function (a, b, c) {
+      return fn.call(that, a, b, c);
+    };
+  }
+  return function (/* ...args */) {
+    return fn.apply(that, arguments);
+  };
+};
+
+
+/***/ }),
+/* 101 */
+/***/ (function(module, exports) {
+
+module.exports = function (it) {
+  if (typeof it != 'function') throw TypeError(it + ' is not a function!');
+  return it;
+};
+
+
+/***/ }),
+/* 102 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var dP = __webpack_require__(58);
+var createDesc = __webpack_require__(107);
+module.exports = __webpack_require__(18) ? function (object, key, value) {
+  return dP.f(object, key, createDesc(1, value));
+} : function (object, key, value) {
+  object[key] = value;
+  return object;
+};
+
+
+/***/ }),
+/* 103 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var isObject = __webpack_require__(27);
+module.exports = function (it) {
+  if (!isObject(it)) throw TypeError(it + ' is not an object!');
+  return it;
+};
+
+
+/***/ }),
+/* 104 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = !__webpack_require__(18) && !__webpack_require__(59)(function () {
+  return Object.defineProperty(__webpack_require__(105)('div'), 'a', { get: function () { return 7; } }).a != 7;
+});
+
+
+/***/ }),
+/* 105 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var isObject = __webpack_require__(27);
+var document = __webpack_require__(56).document;
+// typeof document.createElement is 'object' in old IE
+var is = isObject(document) && isObject(document.createElement);
+module.exports = function (it) {
+  return is ? document.createElement(it) : {};
+};
+
+
+/***/ }),
+/* 106 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// 7.1.1 ToPrimitive(input [, PreferredType])
+var isObject = __webpack_require__(27);
+// instead of the ES6 spec version, we didn't implement @@toPrimitive case
+// and the second argument - flag - preferred type is a string
+module.exports = function (it, S) {
+  if (!isObject(it)) return it;
+  var fn, val;
+  if (S && typeof (fn = it.toString) == 'function' && !isObject(val = fn.call(it))) return val;
+  if (typeof (fn = it.valueOf) == 'function' && !isObject(val = fn.call(it))) return val;
+  if (!S && typeof (fn = it.toString) == 'function' && !isObject(val = fn.call(it))) return val;
+  throw TypeError("Can't convert object to primitive value");
+};
+
+
+/***/ }),
+/* 107 */
+/***/ (function(module, exports) {
+
+module.exports = function (bitmap, value) {
+  return {
+    enumerable: !(bitmap & 1),
+    configurable: !(bitmap & 2),
+    writable: !(bitmap & 4),
+    value: value
+  };
+};
+
+
+/***/ }),
+/* 108 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -67373,8 +67266,6 @@ var ScoreFormCtrl = function ScoreFormCtrl($scope, $state, $stateParams, $timeou
 
     $scope.score = score.data;
     $scope.indicatorValue = [null, 1, 2, 3, 4];
-
-    console.log($scope.score, 'score');
 
     ElementService.fetchElements(function (err, res) {
         if (!err) {
@@ -67469,7 +67360,7 @@ var ScoreFormCtrl = function ScoreFormCtrl($scope, $state, $stateParams, $timeou
 exports.default = ScoreFormCtrl;
 
 /***/ }),
-/* 110 */
+/* 109 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -67503,6 +67394,98 @@ var TeacherCtrl = function TeacherCtrl($scope, $state, $rootScope, UtilService, 
 };
 
 exports.default = TeacherCtrl;
+
+/***/ }),
+/* 110 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var TeacherObservationCtrl = function TeacherObservationCtrl($scope, $state, UtilService, ObservationService, ObservationTypeService, ObservationFactory, ScoreFactory, teacher) {
+    $scope.teacher = teacher.data;
+    var observationToBeDeleted = void 0;
+
+    console.log($scope.teacher, 'yoo');
+
+    $scope.subview = 'observations';
+
+    ObservationTypeService.fetchObservationTypes(function (err, res) {
+        if (!err) {
+            $scope.observationTypes = res.data.data;
+        } else {
+            console.error(err, 'ERROR');
+        }
+    });
+
+    $scope.newTeacherObservation = function (teacher) {
+        ObservationFactory['teacher'] = {
+            id: teacher.id,
+            name: teacher.name
+        };
+        ObservationFactory['school'] = teacher.school;
+        ObservationFactory['observationType'] = $scope.observationTypes[1];
+        ObservationFactory['grades'] = teacher.grades;
+        ObservationFactory['subjects'] = teacher.subjects;
+        $state.go('observationInputs', {
+            workflow: 'observations'
+        });
+    };
+
+    $scope.newTeacherScore = function (teacher) {
+        ScoreFactory['teacher'] = {
+            id: teacher.id,
+            name: teacher.name
+        };
+        ScoreFactory['school'] = teacher.school;
+        ScoreFactory['grades'] = teacher.grades;
+        ScoreFactory['subjects'] = teacher.subjects;
+        $state.go('scoreDetails', {
+            workflow: 'scores'
+        });
+    };
+
+    $scope.editObservation = function (observation) {
+        $state.go('observationForm', {
+            observationId: observation.id
+        });
+    };
+
+    $scope.editScore = function (score) {
+        $state.go('scoreForm', {
+            scoreId: score.id
+        });
+    };
+
+    $scope.openModal = function (observation) {
+        UtilService.openModal('delete-observation-modal');
+        observationToBeDeleted = observation;
+    };
+
+    $scope.closeModal = function () {
+        UtilService.closeModal('delete-observation-modal');
+    };
+
+    $scope.deleteObservation = function () {
+        var index = void 0;
+        ObservationService.remove({
+            id: observationToBeDeleted.id
+        }, function (res) {
+            index = $scope.teacher.observations.findIndex(function (elem) {
+                if (elem.id == observationToBeDeleted.id) {
+                    return elem;
+                }
+            });
+            $scope.teacher.observations.splice(index, 1);
+            UtilService.closeModal('delete-observation-modal');
+        });
+    };
+};
+
+exports.default = TeacherObservationCtrl;
 
 /***/ }),
 /* 111 */
@@ -67602,14 +67585,21 @@ Object.defineProperty(exports, "__esModule", {
 });
 var TeacherService = function TeacherService(BASE_URL, $resource, $http) {
 
-    var obj = $resource(BASE_URL + '/schools/:schoolId/grades/:gradeId/teachers', {
-        schoolId: '@schoolId',
-        gradeId: '@gradeId'
+    var obj = $resource(BASE_URL + '/teachers/:id', {
+        id: '@id'
     }, {
         'query': {
             method: 'GET'
         }
     });
+
+    obj.fetchAllTeachers = function (cb) {
+        $http.get(BASE_URL + '/teachers').then(function (res) {
+            cb(null, res);
+        }, function (err) {
+            cb(err);
+        });
+    };
 
     obj.fetchSchoolTeachers = function (schoolId, cb) {
         $http.get(BASE_URL + '/teachers?schoolId=' + schoolId).then(function (res) {

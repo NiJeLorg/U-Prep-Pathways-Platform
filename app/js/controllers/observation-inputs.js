@@ -1,15 +1,25 @@
 'use strict';
 
-const ObservationInputsCtrl = ($scope, $state, GradeService, $rootScope, UtilService, TeacherService, ObservationService, ObservationFactory, BreadcrumbFactory) => {
+const ObservationInputsCtrl = ($scope, $state, GradeService, $rootScope, UtilService, TeacherService, ObservationService, ObservationFactory, BreadcrumbFactory, workflow) => {
 
     $scope.templateUrl = `views/breadcrumbs/breadcrumbs.html`;
+    // $scope.breadcrumbs = BreadcrumbFactory;
+
+    BreadcrumbFactory['workflow'] = workflow;
+    BreadcrumbFactory['label_1'] = ObservationFactory.school.name;
+    BreadcrumbFactory['label_3'] = 'Details';
+    if (workflow === 'observations') {
+        BreadcrumbFactory['label_2'] = ObservationFactory.observationType.name;
+
+    } else {
+        BreadcrumbFactory['label_2'] = 'Teachers';
+    }
     $scope.breadcrumbs = BreadcrumbFactory;
-    // fetch data
-    GradeService.query({
-        id: ObservationFactory.school.id
-    }, (res) => {
-        $scope.grades = res.data;
-    });
+
+    $scope.grades = ObservationFactory.grades;
+    $scope.subjects = ObservationFactory.subjects;
+
+    console.log($scope.subjects, 'subjects');
 
     // disable teacher and subject select elements on load
     $scope.disableTeacherSelect = true;
@@ -17,38 +27,13 @@ const ObservationInputsCtrl = ($scope, $state, GradeService, $rootScope, UtilSer
 
 
     $scope.recordGrade = () => {
-        if($scope.grade){
+        if ($scope.grade) {
             ObservationFactory['grade'] = JSON.parse($scope.grade);
-            TeacherService.query({
-                schoolId: ObservationFactory.school.id,
-                gradeId: ObservationFactory.grade.id
-            }, (res) => {
-                $scope.teachers = res.data;
-            });
-
-            // disable teacher select
-            $scope.disableTeacherSelect = false;
-        }
-
-    };
-
-    $scope.recordTeacher = () => {
-        if($scope.teacher){
-            ObservationFactory['teacher'] = JSON.parse($scope.teacher);
-            TeacherService.fetchTeacher(ObservationFactory.teacher.id, ObservationFactory.school.id, ObservationFactory.grade.id, (err, res) => {
-                if (!err) {
-                    $scope.subjects = res.data.data.subjects;
-                } else {
-                    console.error(err, 'errr');
-                }
-            });
-
-            // disalbe subject select
+            // disable subject select
             $scope.disableSubjectSelect = false;
         }
 
     };
-
 
     $scope.recordSubject = () => {
         ObservationFactory['subject'] = JSON.parse($scope.subject);
@@ -56,6 +41,7 @@ const ObservationInputsCtrl = ($scope, $state, GradeService, $rootScope, UtilSer
 
 
     $scope.createObservation = () => {
+        console.log(ObservationFactory, 'observa-factory-new');
 
         if (ObservationFactory.grade && ObservationFactory.teacher && ObservationFactory.subject) {
             ObservationService.createObservation({
@@ -80,7 +66,7 @@ const ObservationInputsCtrl = ($scope, $state, GradeService, $rootScope, UtilSer
         }
     };
 
-    $scope.cancel = () =>{
+    $scope.cancel = () => {
         UtilService.cancelObservation(ObservationFactory);
     };
 

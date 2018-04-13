@@ -1,4 +1,10 @@
-import {subject, teacher, school, grade} from './../models';
+import {
+    subject,
+    teacher,
+    observation,
+    school,
+    grade
+} from './../models';
 
 const get = async (req, res) => {
     res.sendData(req.teacher);
@@ -20,20 +26,32 @@ const getIncludes = (req) => {
     const schoolId = req.params.schoolId || req.query.schoolId;
     const gradeId = req.params.gradeId || req.query.gradeId;
     let includes = {
-        attributes: ['id', 'name'], include: [
-            {model: subject, as: 'subjects', attributes: ['id', 'name'], through: {
+        attributes: ['id', 'name'],
+        include: [{
+            model: subject,
+            as: 'subjects',
+            attributes: ['id', 'name'],
+            through: {
                 as: 'grade',
                 attributes: ['grade_id']
-            },},
-        ]
+            },
+        }, {
+            model: observation,
+            as: 'observations',
+            include: ['grade', 'subject', 'observation_type']
+        }, 'scores']
     };
     if (schoolId) {
         includes.include.push({
             required: true,
             attributes: [],
             model: school,
-            where: {id: schoolId}
+            where: {
+                id: schoolId
+            }
         });
+    } else {
+        includes.include.push('school');
     }
     let gradeAssociaton = {
         attributes: ['id', 'name'],
@@ -41,7 +59,9 @@ const getIncludes = (req) => {
         as: 'grades',
     };
     if (gradeId) {
-        gradeAssociaton.where = {id: gradeId};
+        gradeAssociaton.where = {
+            id: gradeId
+        };
         gradeAssociaton.attributes = [];
     }
     includes.include.push(gradeAssociaton);
@@ -49,4 +69,8 @@ const getIncludes = (req) => {
 
 };
 
-export default {get, load, list};
+export default {
+    get,
+    load,
+    list
+};

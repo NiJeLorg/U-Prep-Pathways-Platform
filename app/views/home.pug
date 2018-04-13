@@ -1,67 +1,48 @@
-.c-modal.delete-observation-modal
-    .c-modal__modal-content
-        span.l-flex-flex-end
-            img.ul-cursor-pointer(src='assets/icons/x-icon.svg' ng-click='closeModal()')
-        h2 Delete This Observation?
-        p This action cannot be reversed
-        .c-buttons-holder
-            button(ng-click='deleteResource()') Yes
-            button(ng-click='closeModal()') Cancel
-
 .ul-padding-30
     h1 Pathways
     p Is a new tool to help teachers observe in classrooms and to make work pathways for improvement. Take a sentence or two to explain what is being done here. #[a.c-link(href='#') Watch a tutorial here].
-    .make-observation-score.l-flex
-        button(ui-sref="school({workflow:'observations'})") Make New Observation
-        button(ui-sref="school({workflow:'scores'})") Make New Score
     .c-list-observations
         header
-            button.c-round-breadcrumb(ng-class="{'is-disabled': page == 'scored'}" ng-click="page='observed'") VIEW OBSERVATIONS
-            button.c-round-breadcrumb(ng-class="{'is-disabled': page == 'observed'}" ng-click="page='scored'") VIEW SCORES
+            button.c-round-breadcrumb(ng-class="{'is-disabled': page == 'progress'}" ng-click="page='dashboard'") Dashboard
+            button.c-round-breadcrumb(ng-class="{'is-disabled': page == 'dashboard'}" ng-click="page='progress'") Progress
         main
-            .l-flex
-                .input-group.c-input-text-group.l-flex
-                    span
-                        img(src='assets/icons/search-icon.svg')
-                    input(type='text' placeholder='Search' name='search' ng-model='search')
-                .input-group.l-flex
-                    p School
-                    .c-select-group.l-flex
-                        select(ng-change='filterObservationsBySchool()'  ng-model='selectedSchool')
-                            option(value='' disabled selected ) Select School
-                            option(ng-repeat='school in schools') {{school.name}}
+            .l-flex-space-between
+                .l-flex            
+                    .input-group.c-input-text-group.l-flex
+                        span
+                            img(src='assets/icons/search-icon.svg')
+                        input(type='text' placeholder='Search' name='search' ng-model='search')
+                    .input-group.l-flex
+                        p Select By: 
+                        .c-select-group
+                            select
+                                option Teacher
+                                option Teacher Group                  
+                    .input-group.l-flex
+                        p Filter By: 
+                        .c-select-group
+                            select(ng-model='selectedSchool' ng-options='school.name for school in schools' ng-change='fetchGrades(selectedSchool)')
+                                option(value='') Select School
+                    .input-group.l-flex
+                        p Order By: 
+                        .c-select-group
+                            select(ng-model='selectedGrade' ng-options='grade.name for grade in grades')
+                                option(value='') Select Grade
+                button Make New Observation
             .c-pagination
                 .c-pagination__page-numbers
                     a.ul-cursor-pointer(ng-repeat='page in pager.pages' ng-click='setPage(page)' ng-class='{"active-page": pager.currentPage === page}') {{page}}
-            .c-observations-scores-container 
-                .c-observation.l-flex-space-between.ul-padding-30(ng-repeat='observation in observations | orderBy:"-created_at" | filter:search |filter:selectedSchool' ng-show='page === "observed"')
-                    .c-observation__date
-                        p Created
-                        p {{observation.created_at | date: 'shortDate'}}
-                    .c-observation__details
-                        h3 {{observation.name || observation.observation_type.name}}
-                        span.grade-color(ng-if='observation.grade.name') {{observation.grade.name}}
-                        span.teacher-color(ng-if='observation.teacher.name') {{observation.teacher.name}}
-                        span.subject-color(ng-if='observation.subject.name') {{observation.subject.name}}
-                    .c-observation__badge
-                        .holder(ng-if='observation.status===1')
-                            img(src='assets/icons/submitted-badge-icon.svg')
-                            p.submitted SUBMITTED
-                        .holder(ng-if='observation.status===0')
-                            img(src='assets/icons/draft-badge-icon.svg')
-                            p.draft DRAFT
-                    .c-observation__actions.l-flex-flex-end
-                        svg.c-view-icon.ul-cursor-pointer(xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512" ng-click='editOrViewObservation(observation, "view")' ng-if='observation.status === 1')
-                            path(d="M569.354 231.631C512.969 135.949 407.81 72 288 72 168.14 72 63.004 135.994 6.646 231.631a47.999 47.999 0 0 0 0 48.739C63.031 376.051 168.19 440 288 440c119.86 0 224.996-63.994 281.354-159.631a47.997 47.997 0 0 0 0-48.738zM288 392c-75.162 0-136-60.827-136-136 0-75.162 60.826-136 136-136 75.162 0 136 60.826 136 136 0 75.162-60.826 136-136 136zm104-136c0 57.438-46.562 104-104 104s-104-46.562-104-104c0-17.708 4.431-34.379 12.236-48.973l-.001.032c0 23.651 19.173 42.823 42.824 42.823s42.824-19.173 42.824-42.823c0-23.651-19.173-42.824-42.824-42.824l-.032.001C253.621 156.431 270.292 152 288 152c57.438 0 104 46.562 104 104z")
-                        img.ul-cursor-pointer(ng-if='observation.status ===0' src='assets/icons/edit-icon.svg' ng-click='editOrViewObservation(observation, "edit")')
-                        img.ul-cursor-pointer(src='assets/icons/delete-icon.svg' ng-click='openModal(observation, "observation")')
-                .c-score.l-flex-space-between.ul-padding-30(ng-show="page === 'scored'" ng-repeat='score in scores |  orderBy:"-created_at"')
-                    .c-score__date
-                        p Created
-                        p {{score.created_at | date: 'shortDate'}}
-                    .c-score__details
-                        h3 {{score.teacher.name}}
-                        span.teacher-color {{score.school.name}}
-                    .c-score__actions.l-flex-flex-end
-                        img.ul-cursor-pointer(src='assets/icons/edit-icon.svg' ng-click='editOrViewScore(score)')
-                        img.ul-cursor-pointer(src='assets/icons/delete-icon.svg'  ng-click='openModal(score, "score")')
+            .c-main-section
+                .c-teachers-container(ng-show='page === "dashboard"')
+                    .c-teacher.c-card.l-flex-space-between(ng-repeat='teacher in teachers | filter:search| filter:selectedSchool.name | filter:selectedGrade.name')
+                        .c-teacher__details
+                            p.ul-cursor-pointer(ng-click='loadTeacherView(teacher)') {{teacher.name}}
+                            .group
+                                span.grade-color(ng-repeat='grade in teacher.grades') {{grade.name}}
+                            .group
+                                span.subject-color(ng-repeat='subject in teacher.subjects') {{subject.name}}
+                        .c-teacher__actions
+                            button(ng-click='newTeacherScore(teacher)') New Score
+                            button(ng-click='newTeacherObservation(teacher)') New Observation
+                .c-teacher-groups-container(ng-show='page ==="progress"')
+                    p Progress

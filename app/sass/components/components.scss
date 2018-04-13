@@ -32,6 +32,7 @@
     padding: 10px;
     background: $light-purple;
     margin-right: 20px;
+    text-transform: uppercase;
 }
 
 .c-input-text-group {
@@ -144,7 +145,7 @@
     }
 }
 
-.c-observations-scores-container {
+.c-main-section {
     max-height: 600px;
     overflow-y: scroll;
 }
@@ -525,8 +526,9 @@
 //     }
 // }
 .c-card {
+    padding: 30px;
+    margin-bottom: 30px;
     background: #FFFFFF;
-    box-shadow: 0 0 8px 0 rgba(72, 72, 72, 0.50);
     border-radius: 4px;
 }
 
@@ -685,6 +687,83 @@
             color: #9C9C9C;
             background: #D8D8D8;
             font-weight: bold;
+        }
+    }
+}
+
+.c-teacher {
+    p {
+        margin: 0;
+        font-weight: bold;
+    }
+    .group {
+        margin: 15px 0;
+        span {
+            margin-right: 10px;
+        }
+    }
+    .c-teacher__actions {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        button:first-child {
+            margin-bottom: 15px;
+        }
+    }
+}
+
+.c-name-of-observation {
+    display: flex;
+    align-items: center;
+    padding: 30px 0;
+    p {
+        flex-basis: 2%;
+        margin: 0;
+        font-size: 20px;
+        color: #808285;
+    }
+    input {
+        width: 300px;
+        padding: 10px 20px;
+    }
+}
+
+.c-add-teacher {
+    display: flex;
+    p {
+        flex-basis: 2%;
+        font-size: 20px;
+        margin: 0;
+    }
+}
+
+.c-teacher-observation {
+    width: 70%;
+    margin: 0 auto;
+    background: #ECEDED;
+    padding: 30px 40px;
+    border-radius: 4px;
+    .c-teacher-header {
+        border-bottom: 1px solid #C6C6C6;
+        padding-bottom: 20px;
+    }
+    .c-teacher-contents {
+        padding: 30px 0;
+        .l-flex * {
+            margin-right: 10px;
+        }
+        .actions {
+            display: flex;
+            flex-direction: column;
+            button {
+               margin-bottom: 10px;
+            }
+        }
+    }
+    .c-observation-reports {
+        .header {
+            background: #D6D7D8;
+            padding: 20px;            
         }
     }
 }
