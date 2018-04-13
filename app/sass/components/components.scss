@@ -526,7 +526,7 @@
 //     }
 // }
 .c-card {
-    padding: 30px;
+    padding: 20px;
     margin-bottom: 30px;
     background: #FFFFFF;
     border-radius: 4px;
@@ -695,9 +695,18 @@
     p {
         margin: 0;
         font-weight: bold;
+        text-transform: capitalize;
+        font-size: 20px;
+    }
+    .school {
+        font-size: 16px;
+        font-weight: normal;
+        text-transform: uppercase;
+        padding: 10px 0;
     }
     .group {
-        margin: 15px 0;
+        margin-bottom: 15px;
+        text-transform: uppercase;
         span {
             margin-right: 10px;
         }

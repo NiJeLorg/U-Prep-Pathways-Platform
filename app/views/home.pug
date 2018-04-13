@@ -28,19 +28,21 @@
                         .c-select-group
                             select(ng-model='selectedGrade' ng-options='grade.name for grade in grades')
                                 option(value='') Select Grade
+                    p {{selectedGrade}}
                 button Make New Observation
             .c-pagination
                 .c-pagination__page-numbers
                     a.ul-cursor-pointer(ng-repeat='page in pager.pages' ng-click='setPage(page)' ng-class='{"active-page": pager.currentPage === page}') {{page}}
             .c-main-section
                 .c-teachers-container(ng-show='page === "dashboard"')
-                    .c-teacher.c-card.l-flex-space-between(ng-repeat='teacher in teachers | filter:search| filter:selectedSchool.name | filter:selectedGrade.name')
+                    .c-teacher.c-card.l-flex-space-between(ng-repeat='teacher in teachers | filter:search |filter:selectedGrade.name | filter:selectedSchool.name ')
                         .c-teacher__details
                             p.ul-cursor-pointer(ng-click='loadTeacherView(teacher)') {{teacher.name}}
+                            p.school {{teacher.school.name}}
                             .group
-                                span.grade-color(ng-repeat='grade in teacher.grades') {{grade.name}}
+                                span.grade-color(ng-repeat='grade in teacher.grades | orderBy:"name"') {{grade.name}}
                             .group
-                                span.subject-color(ng-repeat='subject in teacher.subjects') {{subject.name}}
+                                span.subject-color(ng-repeat='subject in teacher.subjects | orderBy:"name"') {{subject.name}}
                         .c-teacher__actions
                             button(ng-click='newTeacherScore(teacher)') New Score
                             button(ng-click='newTeacherObservation(teacher)') New Observation

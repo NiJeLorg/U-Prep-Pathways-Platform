@@ -494,7 +494,7 @@ input[type='text'] {
     background-image: url(/assets/icons/duplicate-icon.svg); }
 
 .c-card {
-  padding: 30px;
+  padding: 20px;
   margin-bottom: 30px;
   background: #FFFFFF;
   border-radius: 4px; }
@@ -636,10 +636,19 @@ input[type='text'] {
 
 .c-teacher p {
   margin: 0;
-  font-weight: bold; }
+  font-weight: bold;
+  text-transform: capitalize;
+  font-size: 20px; }
+
+.c-teacher .school {
+  font-size: 16px;
+  font-weight: normal;
+  text-transform: uppercase;
+  padding: 10px 0; }
 
 .c-teacher .group {
-  margin: 15px 0; }
+  margin-bottom: 15px;
+  text-transform: uppercase; }
   .c-teacher .group span {
     margin-right: 10px; }
 
