@@ -66,3 +66,6 @@ public/*
 
 # Babel ES6 compiles files
 dist
+
+config/db.json
+uploads/

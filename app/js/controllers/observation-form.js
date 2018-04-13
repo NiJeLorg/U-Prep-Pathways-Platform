@@ -1,21 +1,24 @@
 'use strict';
 
-const ObservationFormCtrl = ($scope, $state, $stateParams, $timeout, observation, Upload, GradeService, TeacherService,ObservationTypeService, ObservationService, ClusterService, AttachmentService, UtilService, ObservationFactory, BASE_URL) => {
+const ObservationFormCtrl = ($scope, $state, $stateParams, $timeout, observation, Upload, GradeService, TeacherService, ObservationTypeService, ObservationService, ClusterService, AttachmentService, UtilService, ObservationFactory, BASE_URL) => {
 
 
     let observationToBeDeleted, cluster_ids = [];
     $scope.observation = observation.data;
+    $scope.editObservationName = false;
+    $scope.selectedImageUrl;
+
+    // fetch data
     ObservationTypeService.get({
         id: $scope.observation.observation_type_id
-    }, (res) =>{
+    }, (res) => {
         $scope.observationTypeProperties = res.data.observation_type_properties.map((property) => {
-             property.value = $scope.getObservationTypePropertyVal(property.id);
-             return property;
+            property.value = $scope.getObservationTypePropertyVal(property.id);
+            return property;
         });
     }, (err) => {
         console.error(err, 'ERROR');
     });
-    // fetch data
 
     GradeService.query({
         id: $scope.observation.school.id
@@ -50,13 +53,37 @@ const ObservationFormCtrl = ($scope, $state, $stateParams, $timeout, observation
         }
     };
 
+    $scope.checkMediaType = (file) => {
+        const fileExtension = file.substr(file.indexOf(".") + 1).toLowerCase(),
+            imageFormats = ['bmp', 'gif', 'jpeg', 'jpg', 'png'];
+
+        if (imageFormats.some(el => fileExtension.includes(el))) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    $scope.selectAttachment = (link) => {
+        $scope.selectedImageUrl = link;
+        angular.element(document.getElementsByClassName('c-light-box-overlay')).css('display', 'block');
+        angular.element(document.getElementsByClassName('c-light-box')).css('display', 'flex');
+    };
+
+    angular.element(document.getElementsByClassName('c-light-box-overlay')).on('click', function() {
+        angular.element(document.getElementsByClassName('c-light-box-overlay')).css('display', 'none');
+        angular.element(document.getElementsByClassName('c-light-box')).css('display', 'none');        
+        $scope.selectedImageUrl = "";
+    });
+    
+
     $scope.uploadFiles = (files, errFiles) => {
         $scope.files = files;
         $scope.errFiles = errFiles;
 
         angular.forEach(files, (file) => {
             file.upload = Upload.upload({
-                url: (BASE_URL+'/observations/' + $scope.observation.id),
+                url: (BASE_URL + '/observations/' + $scope.observation.id),
                 method: 'PUT',
                 data: {
                     attachments: file
@@ -121,18 +148,19 @@ const ObservationFormCtrl = ($scope, $state, $stateParams, $timeout, observation
         });
     };
 
-    $scope.getPropertyData = () =>{
+    $scope.getPropertyData = () => {
         return $scope.observationTypeProperties.map((property) => {
-            return {[property.id]: property.value};
+            return {
+                [property.id]: property.value
+            };
         });
     };
 
     $scope.getObservationTypePropertyVal = (id) => {
-        const property =$scope.observation.observation_type_property_data.filter((property) => {
+        const property = $scope.observation.observation_type_property_data.filter((property) => {
             return property[id];
         });
-        console.log(property);
-        if(property.length > 0){
+        if (property.length > 0) {
             return property[0][id];
         }
         return '';
@@ -142,6 +170,7 @@ const ObservationFormCtrl = ($scope, $state, $stateParams, $timeout, observation
         ObservationService.update({
             id: $scope.observation.id,
         }, {
+            name: $scope.observation.name,
             description: $scope.observation.description,
             cluster_ids: $scope.observation.cluster_ids,
             status: status,

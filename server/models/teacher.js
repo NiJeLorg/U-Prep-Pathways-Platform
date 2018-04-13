@@ -2,7 +2,9 @@
 module.exports = (sequelize, DataTypes) => {
     let Teacher = sequelize.define('teacher', {
         name: DataTypes.STRING
-    }, {underscored: true});
+    }, {
+        underscored: true
+    });
     Teacher.associate = (models) => {
         Teacher.belongsTo(models.school, {
             foreignKey: 'school_id',
@@ -18,6 +20,9 @@ module.exports = (sequelize, DataTypes) => {
             as: 'subjects'
         });
         Teacher.hasMany(models.observation, {
+            foreignKey: 'teacher_id',
+        });
+        Teacher.hasMany(models.score, {
             foreignKey: 'teacher_id',
         });
     };

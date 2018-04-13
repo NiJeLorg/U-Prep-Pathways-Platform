@@ -1,3 +1,51 @@
+.c-modal.indicator-levels-modal
+    .c-modal__modal-content
+        header.l-flex-space-between
+            p.indicator-name {{selectedIndicator}}
+            img.ul-cursor-pointer(src='assets/icons/x-icon.svg' ng-click='closeIndicatorLevelsModal()')
+        h4.level 0
+        p.level-info Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisinuli.
+        h4.level Level 1
+        p.level-info Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisinuli.
+        h4.level Level 2
+        p.level-info Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisinuli.
+        h4.level Level 3
+        p.level-info Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisinuli.
+        h4.level Level 4
+        p.level-info Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisinuli.
+    //- .c-buttons-holder
+    //-     button OK
+
+
+.c-modal.delete-score-modal
+    .c-modal__modal-content
+        span.l-flex-flex-end
+            img.ul-cursor-pointer(src='assets/icons/x-icon.svg' ng-click='closeModal()')
+        h2 Delete This Score?
+        p This action cannot be reversed
+        .c-buttons-holder
+            button(ng-click='deleteScore()') Yes
+            button(ng-click='closeModal()') Cancel
+
+
+.c-modal.submitted-score-popup
+    .c-modal__modal-content
+        .l-flex
+            .c-modal__badge
+                img(src='assets/icons/submitted-badge-icon.svg')
+            span(style='margin-left: 60px')
+                h2 Thank you for Submitting Your Score
+
+.c-modal.sumbit-score-modal
+    .c-modal__modal-content
+        p(style='font-size:21px') Thank You. 
+        p(style='font-size:21px') Are you Sure you want to Submit Your Score?
+        .c-buttons-holder
+            button(ng-click='submitScore()') Yes
+            button(ng-click='closeSubmitScoreModal()') Cancel
+
+
+
 .ul-padding-30
     .ul-padding-30
         .c-view-all-observations-header
@@ -5,13 +53,12 @@
             p VIEW ALL SCORES
         .c-observation-observation-form
             .c-observation-observation-form__details
-                h3 {{teacher.name}}
+                h3(style='font-weight:bold; color: #681C5B') {{score.teacher.name}}
                 span.teacher-color Teacher: 1st Score
-                p CREATED ON 12/16/17 AT 5:00PM
+                p  CREATED ON {{score.created_at | date: 'shortDate'}} {{score.created_at | date: 'shortTime'}}
             .c-observation-observation-form__actions
-                    button Submit
-                    img(src='assets/icons/settings-small-icon.svg')
-                    img(src='assets/icons/delete-icon.svg')
+                    button(ng-click='openSubmitScoreModal()') Submit
+                    img.ul-cursor-pointer(src='assets/icons/delete-icon.svg' ng-click='showDeleteScoreModal()')
         .c-score-form-input-group.element-accordion.ul-margin-bottom-20(ng-repeat='element in elements track by element.id')
             h2 
                 span Section {{element.id}} of 5:&nbsp;
@@ -23,26 +70,12 @@
                     span.accordion-title {{component.name}} &nbsp;
                     img(src="assets/icons/question-mark.svg")
                 .c-accordion-content
-                    .c-radio-group.c-accordion-radio-group.l-flex.ul-margin-bottom-20(ng-repeat="indicator in component.indicators track by indicator.id")
-                        p {{indicator.name}}
-                        label.c-accordion-radio-group-label
-                            input(type='radio' name='{{indicator.name}}' value='N/A')
-                            span.radio-label N/A
-                        label.c-accordion-radio-group-label
-                            input(type='radio' name='{{indicator.name}}' value='0')
-                            span.radio-label 0
-                        label.c-accordion-radio-group-label
-                            input(type='radio' name='{{indicator.name}}' value='1')
-                            span.radio-label 1
-                        label.c-accordion-radio-group-label
-                            input(type='radio' name='{{indicator.name}}' value='2')
-                            span.radio-label 2
-                        label.c-accordion-radio-group-label
-                            input(type='radio' name='{{indicator.name}}' value='3')
-                            span.radio-label 3
-                        label.c-accordion-radio-group-label
-                            input(type='radio' name='{{indicator.name}}' value='4')
-                            span.radio-label 4
+                    .c-radio-group.c-accordion-radio-group.l-flex.ul-margin-bottom-20(ng-repeat="indicator in getAddSelectedIndicators(component.indicators) track by indicator.id")
+                        p.ul-cursor-pointer(ng-click='displayIndicatorLevelsModal(indicator)') {{indicator.name}}
+                        label.c-accordion-radio-group-label(ng-repeat='value in indicatorValue')
+                            input(type='radio' name='{{indicator.name}}' value='{{value}}' ng-model='indicator.value' ng-click='storeIndicatorScore(value, indicator)')
+                            span.radio-label(ng-if='value == null') N/A
+                            span.radio-label(ng-if='value != null') {{value}}                           
                         .c-accordion-actions
                             button.c-accordion_actions_button.add
                             button.c-accordion_actions_button.attach(ng-if="indicator.name === 'Grading'")

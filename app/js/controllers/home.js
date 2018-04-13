@@ -1,70 +1,84 @@
 'use strict';
-const HomeCtrl = ($scope, $state, ObservationService, SchoolService, UtilService) => {
+const HomeCtrl = ($scope, $state, TeacherService, SchoolService, ObservationTypeService, GradeService, ObservationFactory, ScoreFactory, PaginationFactory) => {
 
-    let observationToBeDeleted;
-    $scope.page = 'observed';
+    $scope.page = 'dashboard';
+    $scope.pager = {};
 
     // fetch data
-    ObservationService.fetchObservations((err, res) => {
+    TeacherService.fetchAllTeachers((err, res) => {
         if (!err) {
-            $scope.observations = res.data.data;
+            $scope.teachers = res.data.data;
+
         } else {
             console.error(err, 'ERROR');
         }
     });
 
     SchoolService.fetchSchools((err, res) => {
-        if (err) {
-            console.error(err);
+        if (!err) {
+            $scope.schools = res.data.data;
+        } else {
+            console.error(err, 'ERROR');
         }
-        $scope.schools = res.data.data;
     });
 
-    $scope.openModal = (observation) => {      
-        UtilService.openModal('delete-observation-modal');
-        observationToBeDeleted = observation;
-    };
+    ObservationTypeService.fetchObservationTypes((err, res) => {
+        if (!err) {
+            $scope.observationTypes = res.data.data;
+        } else {
+            console.error(err, 'ERROR');
+        }
+    });
 
-    $scope.closeModal = () => {
-        UtilService.closeModal('delete-observation-modal');
-    };
 
-    $scope.deleteObservation = () => {
-        let index;
-        ObservationService.remove({
-            id: observationToBeDeleted.id
-        }, (res) => {
-            index = $scope.observations.findIndex((elem)=> {
-                if(elem.id == observationToBeDeleted.id) {
-                    return elem;
-                }
-            });        
-            $scope.observations.splice(index, 1);
-            UtilService.closeModal('delete-observation-modal');
+    // event handlders
+    $scope.fetchGrades = (school) => {
+        if (school !== null) {
+            GradeService.query({
+                id: school.id
+            }, (res) => {
+                $scope.grades = res.data;
+            }, (err) => {
+                console.error(err, 'ERROR');
+            });
+        } else {
+            $scope.grades = [];
+        }
+    }
+
+
+    $scope.newTeacherScore = (teacher) => {
+        ScoreFactory['teacher'] = {
+            id: teacher.id,
+            name: teacher.name
+        };
+        ScoreFactory['school'] = teacher.school;
+        ScoreFactory['grades'] = teacher.grades;
+        ScoreFactory['subjects'] = teacher.subjects;
+        $state.go('scoreDetails', {
+            workflow: 'scores'
         });
     };
 
-    $scope.editObservation = (observation) => {
-        $state.go('observationForm', {
-            observationId: observation.id,
+    $scope.newTeacherObservation = (teacher) => {
+        ObservationFactory['teacher'] = {
+            id: teacher.id,
+            name: teacher.name
+        };
+        ObservationFactory['school'] = teacher.school;
+        ObservationFactory['observationType'] = $scope.observationTypes[1];
+        ObservationFactory['grades'] = teacher.grades;
+        ObservationFactory['subjects'] = teacher.subjects;
+        $state.go('observationInputs', {
+            workflow: 'observations'
         });
     };
-    $scope.scores = [{
-        scoreKind: 'Teacher',
-        readableDate: '11/13/2017',
-        scoreName: 'Mr.Martin',
-        scoreTime: '1st Score'
-    }, {
-        scoreKind: 'Teacher',
-        readableDate: '11/13/2017',
-        scoreName: 'Ms.Andrews',
-        scoreTime: '3rd Score'
-    }, {
-        scoreKind: 'Schoolwide',
-        readableDate: '11/13/2017',
-        scoreName: 'Ellen Thompson Elementary',
-        scoreTime:'1st Score'
-    }];
+
+    $scope.loadTeacherView = (teacher) => {
+        $state.go('teacherObservation', {
+            teacherId: teacher.id
+        });
+    };
 };
 
 export default HomeCtrl;

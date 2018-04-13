@@ -15,7 +15,7 @@ const get = async (req, res) => {
 const list = async (req, res) => {
     const observations = await observation
         .all({
-            include: ['attachments', 'school', 'clusters', 'subject', 'teacher', 'grade', 'observation_type', 'observation_type_property']
+            include: ['attachments', 'school', 'clusters', 'subject', 'teacher', 'grade', 'observation_type', 'observation_type_property'],
         });
     res.sendData(observations)
 };
@@ -62,7 +62,6 @@ const update = async (req, res, next) => {
     //Save property Data
     if(observation_type_property_data){
         for(let propertyData of observation_type_property_data){
-            console.log(propertyData);
             const oType = await observation_type_property.findById(Object.keys(propertyData)[0]);
             if (oType){
                 await oType.addObservations(observation,{through:{value: Object.values(propertyData)[0]}});
@@ -165,7 +164,6 @@ const create = async (req, res, next) => {
         }, {
             include: [{model: observation_evidence, as: "attachments"}]
         });
-    console.log("Edit Stucc");
     res.sendData(observationObj);
 
 };
