@@ -649,6 +649,10 @@ input[type='text'] {
 .c-teacher .group {
   margin-bottom: 15px;
   text-transform: uppercase; }
+  .c-teacher .group .group-title {
+    font-size: 16px;
+    font-weight: normal;
+    margin-right: 15px; }
   .c-teacher .group span {
     margin-right: 10px; }
 
@@ -701,6 +705,12 @@ input[type='text'] {
     background: #D6D7D8;
     padding: 20px; }
 
+.upaElementaryColor {
+  color: #EF4060; }
+
+.upsmElementaryColor {
+  color: #35A3DC; }
+
 .ul-padding-30 {
   padding: 30px; }
 
@@ -724,6 +734,12 @@ input[type='text'] {
 .ul-error {
   color: red;
   font-weight: bold; }
+
+.ul-capitalize {
+  text-transform: capitalize; }
+
+.ul-uppercase {
+  text-transform: uppercase; }
 
 * {
   font-family: 'Raleway', sans-serif;

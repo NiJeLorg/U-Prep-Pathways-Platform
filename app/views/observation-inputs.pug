@@ -3,14 +3,14 @@ ng-include(src='templateUrl')
     .ul-padding-30-content
         div
             h2 Step 3: Provide More Details about your Observation
-            .c-select-group.ul-margin-bottom-20
-                select.grade-color(ng-model='grade' ng-change='recordGrade()')
+            .c-select-group.ul-margin-bottom-20.ul-capitalize
+                select.grade-color.ul-capitalize(ng-model='grade' ng-change='recordGrade()')
                     option(value='' disabled selected) Select Grade
-                    option(ng-repeat='grade in grades' value='{{grade}}') {{grade.name}}
-            .c-select-group.ul-margin-bottom-20
-                select.subject-color(ng-model='subject' ng-change='recordSubject()' ng-disabled='disableSubjectSelect')
+                    option.ul-capitalize(ng-repeat='grade in grades' value='{{grade}}') {{grade.name}}
+            .c-select-group.ul-margin-bottom-20.ul-capitalize
+                select.subject-color.ul-capitalize(ng-model='subject' ng-change='recordSubject()' ng-disabled='disableSubjectSelect')
                     option(value='' disabled selected) Select Subject
-                    option(ng-repeat='subject in subjects' value='{{subject}}') {{subject.name}}
+                    option.ul-capitalize(ng-repeat='subject in subjects' value='{{subject}}') {{subject.name}}
         p.ul-error(ng-if='errorMessage') {{errorMessage}}
         button(ng-click='createObservation()') Done
 

@@ -11,15 +11,17 @@
 .ul-padding-30
     .c-teacher-observation
         .c-teacher-header.l-flex-space-between
-            h2 {{teacher.name}}
+            h2.ul-capitalize {{teacher.name}}
             button EDIT PROFILE
         .c-teacher-contents.l-flex-space-between
             .details
                 .l-flex
-                    p(ng-repeat='grade in teacher.grades') {{grade.name}}
+                    p Grades: 
+                    p.ul-capitalize(ng-repeat='grade in teacher.grades') {{grade.name}}
                 .l-flex
-                    p(ng-repeat='subject in teacher.subjects') {{subject.name}}
-                p {{teacher.school.name}}
+                    p Subjects: 
+                    p.ul-capitalize(ng-repeat='subject in teacher.subjects') {{subject.name}}
+                p(ng-class='{upaElementaryColor: teacher.school.name === "UPA Elementary", upsmElementaryColor: teacher.school.name === "UPSM Elementary"}') {{teacher.school.name}}
             .actions
                 button(ng-click='newTeacherObservation(teacher)') New Observation
                 button(ng-click='newTeacherScore(teacher)') New Score

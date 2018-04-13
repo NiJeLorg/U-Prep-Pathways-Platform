@@ -35,13 +35,15 @@
                     a.ul-cursor-pointer(ng-repeat='page in pager.pages' ng-click='setPage(page)' ng-class='{"active-page": pager.currentPage === page}') {{page}}
             .c-main-section
                 .c-teachers-container(ng-show='page === "dashboard"')
-                    .c-teacher.c-card.l-flex-space-between(ng-repeat='teacher in teachers | filter:search | filter:selectedSchool.name | teacherGradeFilter:selectedGrade.name ')
+                    .c-teacher.c-card.l-flex-space-between(ng-repeat='teacher in teachers | filter:search | filter:selectedSchool.name | teacherGradeFilter:selectedGrade.name | orderBy: "name" ')
                         .c-teacher__details
                             p.ul-cursor-pointer(ng-click='loadTeacherView(teacher)') {{teacher.name}}
-                            p.school {{teacher.school.name}}
-                            .group
+                            p.school(ng-class='{upaElementaryColor: teacher.school.name === "UPA Elementary", upsmElementaryColor: teacher.school.name === "UPSM Elementary"}') {{teacher.school.name}}
+                            .group.l-flex
+                                p.group-title Grades: 
                                 span.grade-color(ng-repeat='grade in teacher.grades | orderBy:"name"') {{grade.name}}
-                            .group
+                            .group.l-flex
+                                p.group-title Subjects: 
                                 span.subject-color(ng-repeat='subject in teacher.subjects | orderBy:"name"') {{subject.name}}
                         .c-teacher__actions
                             button(ng-click='newTeacherScore(teacher)') New Score
