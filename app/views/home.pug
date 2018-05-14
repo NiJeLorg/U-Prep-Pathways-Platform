@@ -6,47 +6,57 @@
             button.c-round-breadcrumb(ng-class="{'is-disabled': page == 'progress'}" ng-click="page='dashboard'") Dashboard
             button.c-round-breadcrumb(ng-class="{'is-disabled': page == 'dashboard'}" ng-click="page='progress'") Progress
         main
-            .l-flex-space-between
-                .l-flex            
-                    .input-group.c-input-text-group.l-flex
+            .c-filter-actions
+                .input-group.c-input-text-group.l-flex
                         span
                             img(src='assets/icons/search-icon.svg')
                         input(type='text' placeholder='Search' name='search' ng-model='search')
-                    .input-group.l-flex
-                        p Select By: 
-                        .c-select-group
-                            select
-                                option Teacher
-                                option Teacher Group                  
-                    .input-group.l-flex
-                        p Filter By: 
-                        .c-select-group
-                            select(ng-model='selectedSchool' ng-options='school.name for school in schools' ng-change='fetchGrades(selectedSchool)')
-                                option(value='') Select School
-                    .input-group.l-flex
-                        p Order By: 
-                        .c-select-group
-                            select(ng-model='selectedGrade' ng-options='grade.name for grade in grades')
-                                option(value='') Select Grade
-                    //p {{selectedGrade}}
-                //button Make New Observation
-            .c-pagination
-                .c-pagination__page-numbers
-                    a.ul-cursor-pointer(ng-repeat='page in pager.pages' ng-click='setPage(page)' ng-class='{"active-page": pager.currentPage === page}') {{page}}
-            .c-main-section
-                .c-teachers-container(ng-show='page === "dashboard"')
-                    .c-teacher.c-card.l-flex-space-between(ng-repeat='teacher in teachers | filter:search | filter:selectedSchool.name | teacherGradeFilter:selectedGrade.name | orderBy: "name" ')
-                        .c-teacher__details
-                            p.ul-cursor-pointer(ng-click='loadTeacherView(teacher)') {{teacher.name}}
-                            p.school(ng-class='{upaElementaryColor: teacher.school.name === "UPA Elementary", upsmElementaryColor: teacher.school.name === "UPSM Elementary"}') {{teacher.school.name}}
-                            .group.l-flex
-                                p.group-title Grades: 
-                                span.grade-color(ng-repeat='grade in teacher.grades | orderBy:"name"') {{grade.name}}
-                            .group.l-flex
-                                p.group-title Subjects: 
-                                span.subject-color(ng-repeat='subject in teacher.subjects | orderBy:"name"') {{subject.name}}
-                        .c-teacher__actions
-                            button(ng-click='newTeacherScore(teacher)') New Score
-                            button(ng-click='newTeacherObservation(teacher)') New Observation
-                .c-teacher-groups-container(ng-show='page ==="progress"')
-                    p Progress
+                .input-group.l-flex
+                    p Select By: 
+                    .c-select-group
+                        select
+                            option Teacher
+                            option Teacher Group                  
+                .input-group.l-flex
+                    p Filter By: 
+                    .c-select-group
+                        select(ng-model='selectedSchool' ng-options='school.name for school in schools' ng-change='fetchGrades(selectedSchool)')
+                            option(value='') Select School
+                .input-group.l-flex
+                    p Order By: 
+                    .c-select-group
+                        select(ng-model='selectedGrade' ng-options='grade.name for grade in grades')
+                            option(value='') Select Grade
+            //- .c-pagination
+            //-     .c-pagination__page-numbers
+            //-         a.ul-cursor-pointer(ng-repeat='page in pager.pages' ng-click='setPage(page)' ng-class='{"active-page": pager.currentPage === page}') {{page}}
+            .c-teachers-container(ng-show='page === "dashboard"')
+                .c-teacher(ng-repeat='teacher in teachers | filter:search | filter:selectedSchool.name | teacherGradeFilter:selectedGrade.name | orderBy: "name" ')
+                    .c-more-options
+                        i.fa.fa-2x.fa-ellipsis-v
+                    .c-teacher__details
+                        .c-teacher-avatar.l-flex-center
+                        .name-school
+                            p.name.ul-cursor-pointer.ul-text-align-center(ng-click='loadTeacherView(teacher)') {{teacher.name}}
+                            p.ul-text-align-center(ng-class='{upaElementaryColor: teacher.school.name === "UPA Elementary", upsmElementaryColor: teacher.school.name === "UPSM Elementary"}') {{teacher.school.name}}
+                        .switch-context
+                            .img-container
+                                img(src='assets/icons/switch-arrows.svg')
+                        .grades-teacher-groups
+                            div
+                                p.group-title Grades
+                                ul
+                                    //- li(ng-repeat='grade in teacher.grades | orderBy:"name"') {{grade.name}}
+                                    li Grade: 1, 2
+                            div
+                                p.group-title Subjects
+                                ul
+                                    //- li(ng-repeat='subject in teacher.subjects | orderBy:"name"') {{subject.name}}
+                                    li Math
+                                    li English
+                    .c-teacher__actions
+                        button(ng-click='newTeacherObservation(teacher)') Observe
+                        button(ng-click='newTeacherScore(teacher)') Score
+                        
+            .c-teacher-groups-container(ng-show='page ==="progress"')
+                p Progress
