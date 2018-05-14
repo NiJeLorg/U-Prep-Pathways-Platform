@@ -1,0 +1,13 @@
+.c-admin-section
+    aside.c-admin-side-nav
+        .title Admin Resources
+        nav
+            p.nav-link.ul-cursor-pointer(ui-sref='admin.teacher' ng-click='resourceType = "Teachers"') Teachers
+            p.nav-link.ul-cursor-pointer(ui-sref='admin.school' ng-click='resourceType="Schools"') Schools
+            p.nav-link.ul-cursor-pointer(ui-sref='admin.subjects' ng-click='resourceType="Subjects"') Subjects
+            p.nav-link.ul-cursor-pointer(ui-sref='admin.grades' ng-click='resourceType="Grades"') Grades                                
+    main
+        .l-flex-space-between
+            h1 {{resourceType}}
+            i.fas.fa-plus-circle.fa-3x(style='color: #681C5B')
+        section(ui-view='')

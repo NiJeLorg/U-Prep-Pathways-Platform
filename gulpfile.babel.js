@@ -8,6 +8,7 @@ import webpack from 'webpack-stream';
 import config from './config/config';
 
 const plugins = gulpLoadPlugins();
+
 const paths = {
     app: ['app/**/*.{js,sass,pug}'],
     sass: 'app/sass/**/*.scss',
@@ -27,7 +28,6 @@ gulp.task('pug2html', () => {
         .pipe(browserSync.stream());
 });
 
-
 gulp.task('sass2css', () => {
     gulp.src('app/sass/app.scss')
         .pipe(plugins.sass())
@@ -37,14 +37,14 @@ gulp.task('sass2css', () => {
 
 // Clean up dist and coverage directory
 gulp.task('clean', () =>
-    del.sync(['dist/**', 'dist/.*','public/**', 'public/.*', 'coverage/**', '!dist', '!coverage', '!public', '!public/assets','!public/assets/**'])
+    del.sync(['dist/**', 'dist/.*', 'public/**', 'public/.*', 'coverage/**', '!dist', '!coverage', '!public', '!public/assets', '!public/assets/**'])
 );
 
 // Copy non-js files to dist
 gulp.task('copy', () =>
     gulp.src(paths.nonJs)
-        .pipe(plugins.newer('dist'))
-        .pipe(gulp.dest('dist'))
+    .pipe(plugins.newer('dist'))
+    .pipe(gulp.dest('dist'))
 );
 
 gulp.task('bundleJS', () => {
@@ -55,22 +55,24 @@ gulp.task('bundleJS', () => {
 });
 // Compile ES6 to ES5 and copy to dist
 gulp.task('babel', () =>
-    gulp.src([...paths.server, '!gulpfile.babel.js'], {base: '.'})
-        .pipe(plugins.newer('dist'))
-        .pipe(plugins.sourcemaps.init())
-        .pipe(plugins.babel())
-        .pipe(plugins.sourcemaps.write('.', {
-            includeContent: false,
-            sourceRoot(file) {
-                return path.relative(file.path, __dirname);
-            }
-        }))
-        .pipe(gulp.dest('dist'))
+    gulp.src([...paths.server, '!gulpfile.babel.js'], {
+        base: '.'
+    })
+    .pipe(plugins.newer('dist'))
+    .pipe(plugins.sourcemaps.init())
+    .pipe(plugins.babel())
+    .pipe(plugins.sourcemaps.write('.', {
+        includeContent: false,
+        sourceRoot(file) {
+            return path.relative(file.path, __dirname);
+        }
+    }))
+    .pipe(gulp.dest('dist'))
 );
 
 gulp.task('watch', () => {
     browserSync.init(null, {
-        proxy: 'localhost:'+config.port,
+        proxy: 'localhost:' + config.port,
         port: 5000,
         open: false
     });
@@ -87,7 +89,7 @@ gulp.task('nodemon', ['copy', 'babel', 'pug2html', 'sass2css', 'bundleJS'], () =
         script: path.join('dist', 'index.js'),
         ext: 'js ',
         ignore: ['node_modules/**/*.js', 'dist/**/*.js', 'public/', 'app/'],
-        tasks: ['copy', 'babel', 'pug2html', 'sass2css', 'bundleJS' ]
+        tasks: ['copy', 'babel', 'pug2html', 'sass2css', 'bundleJS']
     })
 );
 

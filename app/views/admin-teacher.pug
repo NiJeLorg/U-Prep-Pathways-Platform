@@ -1,0 +1,10 @@
+.c-modal.c-delete-resource-modal
+    .c-modal__modal-content
+        p Are you sure you want to delete?
+
+.c-list-group
+    .list-item(ng-repeat='teacher in teachers')        
+        h2 {{teacher.name}}
+        .actions
+            img.ul-cursor-pointer(src='assets/icons/edit-icon.svg' ng-click='')            
+            img.ul-cursor-pointer(src='assets/icons/delete-icon.svg' ng-click='showDeleteResourceModal(teacher)')

@@ -8297,7 +8297,7 @@ if (typeof __g == 'number') __g = global; // eslint-disable-line no-undef
 /* 57 */
 /***/ (function(module, exports) {
 
-var core = module.exports = { version: '2.5.3' };
+var core = module.exports = { version: '2.5.1' };
 if (typeof __e == 'number') __e = core; // eslint-disable-line no-undef
 
 
@@ -8399,85 +8399,91 @@ var _teacherObservation = __webpack_require__(110);
 
 var _teacherObservation2 = _interopRequireDefault(_teacherObservation);
 
-var _schoolService = __webpack_require__(111);
+var _admin = __webpack_require__(111);
+
+var _admin2 = _interopRequireDefault(_admin);
+
+var _schoolService = __webpack_require__(112);
 
 var _schoolService2 = _interopRequireDefault(_schoolService);
 
-var _observationTypeService = __webpack_require__(112);
+var _observationTypeService = __webpack_require__(113);
 
 var _observationTypeService2 = _interopRequireDefault(_observationTypeService);
 
-var _gradeService = __webpack_require__(113);
+var _gradeService = __webpack_require__(114);
 
 var _gradeService2 = _interopRequireDefault(_gradeService);
 
-var _teacherService = __webpack_require__(114);
+var _teacherService = __webpack_require__(115);
 
 var _teacherService2 = _interopRequireDefault(_teacherService);
 
-var _subjectService = __webpack_require__(115);
+var _subjectService = __webpack_require__(116);
 
 var _subjectService2 = _interopRequireDefault(_subjectService);
 
-var _observationService = __webpack_require__(116);
+var _observationService = __webpack_require__(117);
 
 var _observationService2 = _interopRequireDefault(_observationService);
 
-var _scoreService = __webpack_require__(117);
+var _scoreService = __webpack_require__(118);
 
 var _scoreService2 = _interopRequireDefault(_scoreService);
 
-var _indicatorScoreService = __webpack_require__(118);
+var _indicatorScoreService = __webpack_require__(119);
 
 var _indicatorScoreService2 = _interopRequireDefault(_indicatorScoreService);
 
-var _elementService = __webpack_require__(119);
+var _elementService = __webpack_require__(120);
 
 var _elementService2 = _interopRequireDefault(_elementService);
 
-var _clusterService = __webpack_require__(120);
+var _clusterService = __webpack_require__(121);
 
 var _clusterService2 = _interopRequireDefault(_clusterService);
 
-var _attachmentService = __webpack_require__(121);
+var _attachmentService = __webpack_require__(122);
 
 var _attachmentService2 = _interopRequireDefault(_attachmentService);
 
-var _utilitiesService = __webpack_require__(122);
+var _utilitiesService = __webpack_require__(123);
 
 var _utilitiesService2 = _interopRequireDefault(_utilitiesService);
 
-var _observationFactory = __webpack_require__(123);
+var _observationFactory = __webpack_require__(124);
 
 var _observationFactory2 = _interopRequireDefault(_observationFactory);
 
-var _breadcrumbFactory = __webpack_require__(124);
+var _breadcrumbFactory = __webpack_require__(125);
 
 var _breadcrumbFactory2 = _interopRequireDefault(_breadcrumbFactory);
 
-var _paginationFactory = __webpack_require__(125);
+var _paginationFactory = __webpack_require__(126);
 
 var _paginationFactory2 = _interopRequireDefault(_paginationFactory);
 
-var _scoreFactory = __webpack_require__(126);
+var _scoreFactory = __webpack_require__(127);
 
 var _scoreFactory2 = _interopRequireDefault(_scoreFactory);
 
-var _makeScore = __webpack_require__(127);
+var _makeScore = __webpack_require__(128);
 
 var _makeScore2 = _interopRequireDefault(_makeScore);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// load controllers
 var uprepApp = _angular2.default.module('uprepApp', [_angularjs2.default, _ngFileUpload2.default, _angularResource2.default]);
 
 // load services
 
 
+// load controllers
+
+
 var url = 'https://dev-uprep.nijel.org/api/';
 // let url = 'http://localhost:3000/api/';
-uprepApp.controller('NavCtrl', _nav2.default).controller('HomeCtrl', _home2.default).controller('NewObservationCtrl', _newObservation2.default).controller('ScoreInputCtrl', _scoreInputs2.default).controller('ObservationInputsCtrl', _observationInputs2.default).controller('ObservationFormCtrl', _observationForm2.default).controller('ScoreFormCtrl', _scoreForm2.default).controller('MakeScoreCtrl', _makeScore2.default).controller('TeacherCtrl', _teacher2.default).controller('TeacherObservationCtrl', _teacherObservation2.default).service('SchoolService', _schoolService2.default).service('ObservationTypeService', _observationTypeService2.default).service('GradeService', _gradeService2.default).service('TeacherService', _teacherService2.default).service('ElementService', _elementService2.default).service('SubjectService', _subjectService2.default).service('ObservationService', _observationService2.default).service('ScoreService', _scoreService2.default).service('IndicatorScoreService', _indicatorScoreService2.default).service('ClusterService', _clusterService2.default).service('AttachmentService', _attachmentService2.default).service('UtilService', _utilitiesService2.default).factory('ObservationFactory', _observationFactory2.default).factory('ScoreFactory', _scoreFactory2.default).factory('BreadcrumbFactory', _breadcrumbFactory2.default).factory('PaginationFactory', _paginationFactory2.default).filter('teacherGradeFilter', function () {
+uprepApp.controller('NavCtrl', _nav2.default).controller('HomeCtrl', _home2.default).controller('NewObservationCtrl', _newObservation2.default).controller('ScoreInputCtrl', _scoreInputs2.default).controller('ObservationInputsCtrl', _observationInputs2.default).controller('ObservationFormCtrl', _observationForm2.default).controller('ScoreFormCtrl', _scoreForm2.default).controller('MakeScoreCtrl', _makeScore2.default).controller('TeacherCtrl', _teacher2.default).controller('TeacherObservationCtrl', _teacherObservation2.default).controller('AdminCtrl', _admin2.default).service('SchoolService', _schoolService2.default).service('ObservationTypeService', _observationTypeService2.default).service('GradeService', _gradeService2.default).service('TeacherService', _teacherService2.default).service('ElementService', _elementService2.default).service('SubjectService', _subjectService2.default).service('ObservationService', _observationService2.default).service('ScoreService', _scoreService2.default).service('IndicatorScoreService', _indicatorScoreService2.default).service('ClusterService', _clusterService2.default).service('AttachmentService', _attachmentService2.default).service('UtilService', _utilitiesService2.default).factory('ObservationFactory', _observationFactory2.default).factory('ScoreFactory', _scoreFactory2.default).factory('BreadcrumbFactory', _breadcrumbFactory2.default).factory('PaginationFactory', _paginationFactory2.default).filter('teacherGradeFilter', function () {
 
   // In the return function, we must pass in a single parameter which will be the data we will work on.
   // We have the ability to support multiple other parameters that can be passed into the filter optionally
@@ -8570,7 +8576,21 @@ uprepApp.config(['$stateProvider', '$httpProvider', '$urlRouterProvider', '$loca
         }).$promise;
       }
     }
+  }).state('admin', {
+    url: '/admin',
+    templateUrl: 'views/admin.html',
+    controller: 'AdminCtrl'
+  }).state('admin.schools', {
+    url: '/schools',
+    templateUrl: 'views/admin-schools.html'
+  }).state('admin.subjects', {
+    url: '/subjects',
+    templateUrl: 'views/admin-subjects.html'
+  }).state('admin.grades', {
+    url: '/grades',
+    templateUrl: 'views/admin-grades.html'
   });
+
   $locationProvider.html5Mode(true);
 }]);
 
@@ -67516,6 +67536,45 @@ exports.default = TeacherObservationCtrl;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+var AdminCtrl = function AdminCtrl($scope, $state, TeacherService, SchoolService, UtilService) {
+
+    //initialize models
+    $scope.resourceType;
+
+    // fetch data
+    TeacherService.fetchAllTeachers(function (err, res) {
+        if (!err) {
+            $scope.teachers = res.data.data;
+        } else {
+            console.error(err, 'ERROR');
+        }
+    });
+
+    SchoolService.fetchSchools(function (err, res) {
+        if (!err) {
+            $scope.schools = res.data;
+        } else {
+            console.error(err, 'ERROR');
+        }
+    });
+
+    $scope.showDeleteResourceModal = function (resource) {
+        UtilService.openModal('c-delete-resource-modal');
+    };
+};
+
+exports.default = AdminCtrl;
+
+/***/ }),
+/* 112 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
 var SchoolService = function SchoolService(BASE_URL, $resource, $http) {
 
     var obj = $resource(BASE_URL + '/schools/:id', {
@@ -67536,7 +67595,7 @@ var SchoolService = function SchoolService(BASE_URL, $resource, $http) {
 exports.default = SchoolService;
 
 /***/ }),
-/* 112 */
+/* 113 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -67568,7 +67627,7 @@ var ObservationTypeService = function ObservationTypeService(BASE_URL, $resource
 exports.default = ObservationTypeService;
 
 /***/ }),
-/* 113 */
+/* 114 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -67593,7 +67652,7 @@ var GradeService = function GradeService(BASE_URL, $resource, $http) {
 exports.default = GradeService;
 
 /***/ }),
-/* 114 */
+/* 115 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -67642,7 +67701,7 @@ var TeacherService = function TeacherService(BASE_URL, $resource, $http) {
 exports.default = TeacherService;
 
 /***/ }),
-/* 115 */
+/* 116 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -67668,7 +67727,7 @@ var SubjectService = function SubjectService(BASE_URL, $resource, $http) {
 exports.default = SubjectService;
 
 /***/ }),
-/* 116 */
+/* 117 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -67712,7 +67771,7 @@ var ObservationService = function ObservationService(BASE_URL, $resource, $http)
 exports.default = ObservationService;
 
 /***/ }),
-/* 117 */
+/* 118 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -67755,7 +67814,7 @@ var ScoreService = function ScoreService(BASE_URL, $resource, $http) {
 exports.default = ScoreService;
 
 /***/ }),
-/* 118 */
+/* 119 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -67799,7 +67858,7 @@ var IndicatorScoreService = function IndicatorScoreService(BASE_URL, $resource, 
 exports.default = IndicatorScoreService;
 
 /***/ }),
-/* 119 */
+/* 120 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -67828,7 +67887,7 @@ var ElementService = function ElementService(BASE_URL, $resource, $http) {
 exports.default = ElementService;
 
 /***/ }),
-/* 120 */
+/* 121 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -67853,7 +67912,7 @@ var ClusterService = function ClusterService(BASE_URL, $resource, $http) {
 exports.default = ClusterService;
 
 /***/ }),
-/* 121 */
+/* 122 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -67878,7 +67937,7 @@ var AttachmentService = function AttachmentService(BASE_URL, $resource, $http) {
 exports.default = AttachmentService;
 
 /***/ }),
-/* 122 */
+/* 123 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -67913,7 +67972,7 @@ var UtilService = function UtilService($state) {
 exports.default = UtilService;
 
 /***/ }),
-/* 123 */
+/* 124 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -67932,7 +67991,7 @@ var ObservationFactory = function ObservationFactory() {
 exports.default = ObservationFactory;
 
 /***/ }),
-/* 124 */
+/* 125 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -67961,7 +68020,7 @@ var BreadcrumbFactory = function BreadcrumbFactory() {
 exports.default = BreadcrumbFactory;
 
 /***/ }),
-/* 125 */
+/* 126 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -68022,7 +68081,7 @@ var PaginationFactory = function PaginationFactory() {
 exports.default = PaginationFactory;
 
 /***/ }),
-/* 126 */
+/* 127 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -68041,7 +68100,7 @@ var ScoreFactory = function ScoreFactory() {
 exports.default = ScoreFactory;
 
 /***/ }),
-/* 127 */
+/* 128 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

@@ -16,6 +16,7 @@ import ObservationFormCtrl from './controllers/observation-form';
 import ScoreFormCtrl from './controllers/score-form';
 import TeacherCtrl from './controllers/teacher';
 import TeacherObservationCtrl from './controllers/teacher-observation';
+import AdminCtrl from './controllers/admin';
 
 // load services
 import SchoolService from './services/school-service';
@@ -53,6 +54,7 @@ uprepApp
   .controller('MakeScoreCtrl', MakeScoreCtrl)
   .controller('TeacherCtrl', TeacherCtrl)
   .controller('TeacherObservationCtrl', TeacherObservationCtrl)
+  .controller('AdminCtrl', AdminCtrl)
   .service('SchoolService', SchoolService)
   .service('ObservationTypeService', ObservationTypeService)
   .service('GradeService', GradeService)
@@ -69,28 +71,28 @@ uprepApp
   .factory('ScoreFactory', ScoreFactory)
   .factory('BreadcrumbFactory', BreadcrumbFactory)
   .factory('PaginationFactory', PaginationFactory)
-  .filter('teacherGradeFilter', function() {
+  .filter('teacherGradeFilter', function () {
 
     // In the return function, we must pass in a single parameter which will be the data we will work on.
     // We have the ability to support multiple other parameters that can be passed into the filter optionally
-      return function( items, grade) {
-          let filtered = [];
-          if(grade === undefined){
-            return items
-          }else{
-              angular.forEach(items, function(item) {
-                  angular.forEach(item.grades, function (teacherGrade) {
-                      if(teacherGrade.name === grade) {
-                          filtered.push(item);
-                      }
-                  });
+    return function (items, grade) {
+      let filtered = [];
+      if (grade === undefined) {
+        return items
+      } else {
+        angular.forEach(items, function (item) {
+          angular.forEach(item.grades, function (teacherGrade) {
+            if (teacherGrade.name === grade) {
+              filtered.push(item);
+            }
+          });
 
-              });
-          }
-          return filtered;
-      };
+        });
+      }
+      return filtered;
+    };
 
-})
+  })
   .constant('BASE_URL', url);
 
 uprepApp.config(['$stateProvider', '$httpProvider',
@@ -174,7 +176,25 @@ uprepApp.config(['$stateProvider', '$httpProvider',
             }).$promise;
           }
         }
+      })
+      .state('admin', {
+        url: '/admin',
+        templateUrl: 'views/admin.html',
+        controller: 'AdminCtrl'
+      })
+      .state('admin.schools', {
+        url: '/schools',
+        templateUrl: 'views/admin-schools.html',
+      })
+      .state('admin.subjects', {
+        url: '/subjects',
+        templateUrl: 'views/admin-subjects.html',
+      })
+      .state('admin.grades', {
+        url: '/grades',
+        templateUrl: 'views/admin-grades.html',
       });
+
     $locationProvider.html5Mode(true);
   }
 ]);
