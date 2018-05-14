@@ -66542,8 +66542,14 @@ var HomeCtrl = function HomeCtrl($scope, $state, TeacherService, SchoolService, 
 
     // fetch data
     TeacherService.fetchAllTeachers(function (err, res) {
+        var reg = /^(\w+)\s(\w+)$/;
         if (!err) {
             $scope.teachers = res.data.data;
+            res.data.data.forEach(function (elem, index) {
+                if (elem.school.name === 'UPA HS' || elem.school.name === 'UPA MS') {
+                    elem.name = elem.name.replace(reg, "$2 $1");
+                }
+            });
         } else {
             console.error(err, 'ERROR');
         }
@@ -66552,14 +66558,6 @@ var HomeCtrl = function HomeCtrl($scope, $state, TeacherService, SchoolService, 
     SchoolService.fetchSchools(function (err, res) {
         if (!err) {
             $scope.schools = res.data.data;
-        } else {
-            console.error(err, 'ERROR');
-        }
-    });
-
-    ObservationTypeService.fetchObservationTypes(function (err, res) {
-        if (!err) {
-            $scope.observationTypes = res.data.data;
         } else {
             console.error(err, 'ERROR');
         }
@@ -66588,29 +66586,23 @@ var HomeCtrl = function HomeCtrl($scope, $state, TeacherService, SchoolService, 
         ScoreFactory['school'] = teacher.school;
         ScoreFactory['grades'] = teacher.grades;
         ScoreFactory['subjects'] = teacher.subjects;
-        $state.go('scoreDetails', {
-            workflow: 'scores'
-        });
+        $state.go('scoreDetails', { workflow: 'scores' });
     };
 
     $scope.newTeacherObservation = function (teacher) {
+        console.log(teacher, 'teacher');
         ObservationFactory['teacher'] = {
             id: teacher.id,
             name: teacher.name
         };
         ObservationFactory['school'] = teacher.school;
-        ObservationFactory['observationType'] = $scope.observationTypes[1];
         ObservationFactory['grades'] = teacher.grades;
         ObservationFactory['subjects'] = teacher.subjects;
-        $state.go('observationInputs', {
-            workflow: 'observations'
-        });
+        $state.go('observationInputs', { workflow: 'observations' });
     };
 
     $scope.loadTeacherView = function (teacher) {
-        $state.go('teacherObservation', {
-            teacherId: teacher.id
-        });
+        $state.go('teacherObservation', { teacherId: teacher.id });
     };
 };
 
