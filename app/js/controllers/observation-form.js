@@ -2,20 +2,25 @@
 
 const ObservationFormCtrl = ($scope, $state, $stateParams, $timeout, observation, Upload, GradeService, TeacherService, ObservationTypeService, ObservationService, ClusterService, AttachmentService, UtilService, ObservationFactory, BASE_URL) => {
 
-
-    let observationToBeDeleted, cluster_ids = [];
+    let observationToBeDeleted,
+        cluster_ids = [];
     $scope.observation = observation.data;
     $scope.editObservationName = false;
+    $scope.isImage;
     $scope.selectedImageUrl;
 
+    console.log($scope.observation, 'observation');
     // fetch data
     ObservationTypeService.get({
         id: $scope.observation.observation_type_id
     }, (res) => {
-        $scope.observationTypeProperties = res.data.observation_type_properties.map((property) => {
-            property.value = $scope.getObservationTypePropertyVal(property.id);
-            return property;
-        });
+        $scope.observationTypeProperties = res
+            .data
+            .observation_type_properties
+            .map((property) => {
+                property.value = $scope.getObservationTypePropertyVal(property.id);
+                return property;
+            });
     }, (err) => {
         console.error(err, 'ERROR');
     });
@@ -31,24 +36,31 @@ const ObservationFormCtrl = ($scope, $state, $stateParams, $timeout, observation
     });
 
     ClusterService.query((res) => {
-        $scope.clusters = res.data.map((cluster) => {
-            cluster.selected = `${$scope.observation.cluster_ids.includes(cluster.id)}`;
-            return cluster;
-        });
+        $scope.clusters = res
+            .data
+            .map((cluster) => {
+                cluster.selected = `${$scope
+                    .observation
+                    .cluster_ids
+                    .includes(cluster.id)}`;
+                return cluster;
+            });
     }, (err) => {
         console.errror(err, 'ERROR');
     });
 
-
     $scope.selectCluster = (value, cluster) => {
         if (value === true) {
-            if (!$scope.observation.cluster_ids.includes(cluster.id))
+            if (!$scope.observation.cluster_ids.includes(cluster.id)) 
                 $scope.observation.cluster_ids.push(cluster.id);
             cluster.selected = "true";
         } else {
             cluster.selected = "false";
             if ($scope.observation.cluster_ids.indexOf(cluster.id) !== -1) {
-                $scope.observation.cluster_ids.splice($scope.observation.cluster_ids.indexOf(cluster.id), 1);
+                $scope
+                    .observation
+                    .cluster_ids
+                    .splice($scope.observation.cluster_ids.indexOf(cluster.id), 1);
             }
         }
     };
@@ -56,26 +68,36 @@ const ObservationFormCtrl = ($scope, $state, $stateParams, $timeout, observation
     $scope.checkMediaType = (file) => {
         const fileExtension = file.substr(file.indexOf(".") + 1).toLowerCase(),
             imageFormats = ['bmp', 'gif', 'jpeg', 'jpg', 'png'];
-
         if (imageFormats.some(el => fileExtension.includes(el))) {
+            $scope.isImage = true;
             return true;
         } else {
+            $scope.isImage = false;
             return false;
         }
     }
 
     $scope.selectAttachment = (link) => {
         $scope.selectedImageUrl = link;
-        angular.element(document.getElementsByClassName('c-light-box-overlay')).css('display', 'block');
-        angular.element(document.getElementsByClassName('c-light-box')).css('display', 'flex');
+        angular
+            .element(document.getElementsByClassName('c-light-box-overlay'))
+            .css('display', 'block');
+        angular
+            .element(document.getElementsByClassName('c-light-box'))
+            .css('display', 'flex');
     };
 
-    angular.element(document.getElementsByClassName('c-light-box-overlay')).on('click', function() {
-        angular.element(document.getElementsByClassName('c-light-box-overlay')).css('display', 'none');
-        angular.element(document.getElementsByClassName('c-light-box')).css('display', 'none');        
-        $scope.selectedImageUrl = "";
-    });
-    
+    angular
+        .element(document.getElementsByClassName('c-light-box-overlay'))
+        .on('click', function () {
+            angular
+                .element(document.getElementsByClassName('c-light-box-overlay'))
+                .css('display', 'none');
+            angular
+                .element(document.getElementsByClassName('c-light-box'))
+                .css('display', 'none');
+            $scope.selectedImageUrl = "";
+        });
 
     $scope.uploadFiles = (files, errFiles) => {
         $scope.files = files;
@@ -90,20 +112,25 @@ const ObservationFormCtrl = ($scope, $state, $stateParams, $timeout, observation
                 }
             });
 
-            file.upload.then((res) => {
-                $timeout(() => {
-                    $scope.observation.attachments = res.data.data.attachments;
+            file
+                .upload
+                .then((res) => {
+                    $timeout(() => {
+                        $scope.observation.attachments = res.data.data.attachments;
+                    });
+                }, (res) => {
+                    if (res.status > 0) {
+                        $scope.errMessage = res.status + ': ' + res.data;
+                    }
                 });
-            }, (res) => {
-                if (res.status > 0) {
-                    $scope.errMessage = res.status + ': ' + res.data;
-                }
-            });
         });
     };
 
     $scope.isSelectedCluster = (cluster_id) => {
-        return $scope.observation.cluster_ids.includes(cluster_id);
+        return $scope
+            .observation
+            .cluster_ids
+            .includes(cluster_id);
     };
     $scope.updateTeachersBasedOnSelectedGrade = () => {
         TeacherService.query({
@@ -111,7 +138,7 @@ const ObservationFormCtrl = ($scope, $state, $stateParams, $timeout, observation
             gradeId: $scope.observation.grade.id
         }, (res) => {
             $scope.teachers = res.data;
-            $scope.subjects= []
+            $scope.subjects = []
         });
     };
 
@@ -149,17 +176,22 @@ const ObservationFormCtrl = ($scope, $state, $stateParams, $timeout, observation
     };
 
     $scope.getPropertyData = () => {
-        return $scope.observationTypeProperties.map((property) => {
-            return {
-                [property.id]: property.value
-            };
-        });
+        return $scope
+            .observationTypeProperties
+            .map((property) => {
+                return {
+                    [property.id]: property.value
+                };
+            });
     };
 
     $scope.getObservationTypePropertyVal = (id) => {
-        const property = $scope.observation.observation_type_property_data.filter((property) => {
-            return property[id];
-        });
+        const property = $scope
+            .observation
+            .observation_type_property_data
+            .filter((property) => {
+                return property[id];
+            });
         if (property.length > 0) {
             return property[0][id];
         }
@@ -168,7 +200,7 @@ const ObservationFormCtrl = ($scope, $state, $stateParams, $timeout, observation
 
     $scope.submitObservation = (status) => {
         ObservationService.update({
-            id: $scope.observation.id,
+            id: $scope.observation.id
         }, {
             name: $scope.observation.name,
             description: $scope.observation.description,
@@ -195,7 +227,7 @@ const ObservationFormCtrl = ($scope, $state, $stateParams, $timeout, observation
         });
 
         AttachmentService.delete({
-            id: file.id,
+            id: file.id
         }, (res) => {
             console.log(res, 'attachment-delete')
         }, (err) => {
@@ -210,7 +242,6 @@ const ObservationFormCtrl = ($scope, $state, $stateParams, $timeout, observation
     $scope.closeSubmitObservationModal = () => {
         UtilService.closeModal('submit-observation-modal');
     };
-
 
     $scope.openEditObservationModal = () => {
         UtilService.openModal('edit-observation-modal');
@@ -228,6 +259,5 @@ const ObservationFormCtrl = ($scope, $state, $stateParams, $timeout, observation
         UtilService.closeModal('delete-observation-modal');
     };
 };
-
 
 export default ObservationFormCtrl;

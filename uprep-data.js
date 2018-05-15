@@ -67,9 +67,9 @@ function importSchoolCoreData(school, filename) {
 
 }
 
-importSchoolCoreData('UPA HS', 'UPA-HS.csv');
+// importSchoolCoreData('UPA HS', 'UPA-HS.csv');
 importSchoolCoreData('UPSM High School', 'UPSM-High-School.csv');
-importSchoolCoreData('UPA Elementary', 'UPA-ET.csv');
-importSchoolCoreData('UPSM Elementary', 'UPSM-Elementary.csv');
-importSchoolCoreData('UPA MM', 'UPA-MM.csv');
-importSchoolCoreData('UPA MS', 'UPA-MS.csv');
+// importSchoolCoreData('UPA Elementary', 'UPA-ET.csv');
+// importSchoolCoreData('UPSM Elementary', 'UPSM-Elementary.csv');
+// importSchoolCoreData('UPA MM', 'UPA-MM.csv');
+// importSchoolCoreData('UPA MS', 'UPA-MS.csv');

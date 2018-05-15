@@ -38,9 +38,9 @@
                     .c-observation__details
                         h3 {{observation.name}}
                         h3(ng-if='!observation.name') {{observation.observation_type.name }} Observation
-                        span.grade-color(ng-if='observation.grade.name') {{observation.grade.name}}
-                        span.teacher-color(ng-if='observation.teacher.name') {{observation.teacher.name}}
-                        span.subject-color(ng-if='observation.subject.name') {{observation.subject.name}}
+                        span.grade-color.ul-text-uppercase(ng-if='observation.grade.name') Grade: {{observation.grade.name}}
+                        span.teacher-color.ul-text-uppercase(ng-if='observation.teacher.name') {{observation.teacher.name}}
+                        span.subject-color.ul-text-uppercase(ng-if='observation.subject.name') {{observation.subject.name}}
                     .c-observation__badge(ng-if='observation.status===1')
                         .holder
                             img(src='assets/icons/submitted-badge-icon.svg')

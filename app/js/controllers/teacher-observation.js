@@ -4,7 +4,6 @@ const TeacherObservationCtrl = ($scope, $state, UtilService, ObservationService,
     $scope.teacher = teacher.data;
     let observationToBeDeleted;
 
-    console.log($scope.teacher, 'yoo');
 
     $scope.subview = 'observations';
 

@@ -5,6 +5,7 @@
 @import 'components/nav';
 @import 'components/components';
 @import 'utilities/utilities';
+@import 'typography/typography';
 
 * {
 	font-family: 'Raleway', sans-serif;
@@ -19,7 +20,7 @@ a {
 ul {
 	padding: 0;
 	list-style-type: none;
-
+	margin: 0;
 }
 
 

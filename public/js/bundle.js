@@ -66539,6 +66539,7 @@ var HomeCtrl = function HomeCtrl($scope, $state, TeacherService, SchoolService, 
 
     $scope.page = 'dashboard';
     $scope.pager = {};
+    $scope.switchCardContext = false;
 
     // fetch data
     TeacherService.fetchAllTeachers(function (err, res) {
@@ -66558,6 +66559,14 @@ var HomeCtrl = function HomeCtrl($scope, $state, TeacherService, SchoolService, 
     SchoolService.fetchSchools(function (err, res) {
         if (!err) {
             $scope.schools = res.data.data;
+        } else {
+            console.error(err, 'ERROR');
+        }
+    });
+
+    ObservationTypeService.fetchObservationTypes(function (err, res) {
+        if (!err) {
+            $scope.observationTypes = res.data.data;
         } else {
             console.error(err, 'ERROR');
         }
@@ -66590,7 +66599,6 @@ var HomeCtrl = function HomeCtrl($scope, $state, TeacherService, SchoolService, 
     };
 
     $scope.newTeacherObservation = function (teacher) {
-        console.log(teacher, 'teacher');
         ObservationFactory['teacher'] = {
             id: teacher.id,
             name: teacher.name
@@ -66598,6 +66606,7 @@ var HomeCtrl = function HomeCtrl($scope, $state, TeacherService, SchoolService, 
         ObservationFactory['school'] = teacher.school;
         ObservationFactory['grades'] = teacher.grades;
         ObservationFactory['subjects'] = teacher.subjects;
+        ObservationFactory['observationType'] = $scope.observationTypes[1];
         $state.go('observationInputs', { workflow: 'observations' });
     };
 
@@ -66733,6 +66742,7 @@ var ObservationInputsCtrl = function ObservationInputsCtrl($scope, $state, Grade
     $scope.templateUrl = 'views/breadcrumbs/breadcrumbs.html';
     // $scope.breadcrumbs = BreadcrumbFactory;
 
+    console.log(workflow, 'workflow');
     BreadcrumbFactory['workflow'] = workflow;
     BreadcrumbFactory['label_1'] = ObservationFactory.school.name;
     BreadcrumbFactory['label_3'] = 'Details';
@@ -66820,8 +66830,10 @@ var ObservationFormCtrl = function ObservationFormCtrl($scope, $state, $statePar
         cluster_ids = [];
     $scope.observation = observation.data;
     $scope.editObservationName = false;
+    $scope.isImage;
     $scope.selectedImageUrl;
 
+    console.log($scope.observation, 'observation');
     // fetch data
     ObservationTypeService.get({
         id: $scope.observation.observation_type_id
@@ -66868,12 +66880,13 @@ var ObservationFormCtrl = function ObservationFormCtrl($scope, $state, $statePar
     $scope.checkMediaType = function (file) {
         var fileExtension = file.substr(file.indexOf(".") + 1).toLowerCase(),
             imageFormats = ['bmp', 'gif', 'jpeg', 'jpg', 'png'];
-
         if (imageFormats.some(function (el) {
             return fileExtension.includes(el);
         })) {
+            $scope.isImage = true;
             return true;
         } else {
+            $scope.isImage = false;
             return false;
         }
     };
@@ -67439,8 +67452,6 @@ Object.defineProperty(exports, "__esModule", {
 var TeacherObservationCtrl = function TeacherObservationCtrl($scope, $state, UtilService, ObservationService, ObservationTypeService, ObservationFactory, ScoreFactory, teacher) {
     $scope.teacher = teacher.data;
     var observationToBeDeleted = void 0;
-
-    console.log($scope.teacher, 'yoo');
 
     $scope.subview = 'observations';
 

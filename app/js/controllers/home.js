@@ -3,6 +3,7 @@ const HomeCtrl = ($scope, $state, TeacherService, SchoolService, ObservationType
 
     $scope.page = 'dashboard';
     $scope.pager = {};
+    $scope.switchCardContext = false;
 
     // fetch data
     TeacherService.fetchAllTeachers((err, res) => {
@@ -32,6 +33,13 @@ const HomeCtrl = ($scope, $state, TeacherService, SchoolService, ObservationType
         }
     });
 
+    ObservationTypeService.fetchObservationTypes((err, res) => {
+        if (!err) {
+            $scope.observationTypes = res.data.data;
+        } else {
+            console.error(err, 'ERROR');
+        }
+    });
 
     // event handlders
     $scope.fetchGrades = (school) => {
@@ -60,7 +68,6 @@ const HomeCtrl = ($scope, $state, TeacherService, SchoolService, ObservationType
     };
 
     $scope.newTeacherObservation = (teacher) => {
-        console.log(teacher, 'teacher');
         ObservationFactory['teacher'] = {
             id: teacher.id,
             name: teacher.name
@@ -68,6 +75,7 @@ const HomeCtrl = ($scope, $state, TeacherService, SchoolService, ObservationType
         ObservationFactory['school'] = teacher.school;
         ObservationFactory['grades'] = teacher.grades;
         ObservationFactory['subjects'] = teacher.subjects;
+        ObservationFactory['observationType'] = $scope.observationTypes[1];  
         $state.go('observationInputs', {workflow: 'observations'});
     };
 

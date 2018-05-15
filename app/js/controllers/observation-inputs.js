@@ -5,6 +5,7 @@ const ObservationInputsCtrl = ($scope, $state, GradeService, $rootScope, UtilSer
     $scope.templateUrl = `views/breadcrumbs/breadcrumbs.html`;
     // $scope.breadcrumbs = BreadcrumbFactory;
 
+    console.log(workflow, 'workflow');
     BreadcrumbFactory['workflow'] = workflow;
     BreadcrumbFactory['label_1'] = ObservationFactory.school.name;
     BreadcrumbFactory['label_3'] = 'Details';

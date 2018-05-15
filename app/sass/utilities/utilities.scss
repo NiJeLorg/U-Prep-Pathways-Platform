@@ -44,3 +44,18 @@
 .ul-text-bold {
     font-weight: bold;
 }
+
+.ul-text-uppercase {
+    text-transform: uppercase;
+}
+
+.ul-text-capitalize {
+    text-transform: capitalize;
+}
+
+.ul-50-50 {
+    display: flex;
+    * {
+        flex-basis: 50%;
+    }
+}
