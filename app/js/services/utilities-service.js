@@ -4,11 +4,13 @@ const UtilService = ($state) => {
     let obj = {};
 
     obj.openModal = (elementClassName) => {
-        angular.element(document.getElementsByClassName(elementClassName)).css('display', 'flex');
+        let el = angular.element(document.getElementsByClassName(elementClassName));
+        el.css('display', 'flex');
     };
 
     obj.closeModal = (elementClassName) => {
-        angular.element(document.getElementsByClassName(elementClassName)).css('display', 'none');
+        let el = angular.element(document.getElementsByClassName(elementClassName));
+        el.css('display', 'none');
     };
 
     obj.cancelObservation = (observation) => {
@@ -16,7 +18,7 @@ const UtilService = ($state) => {
         $state.go('home');
     };
 
-    obj.cancelScore= (score) => {
+    obj.cancelScore = (score) => {
         score = {};
         $state.go('home');
     };

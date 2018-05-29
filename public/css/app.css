@@ -81,6 +81,7 @@ input[type='text'] {
   flex-direction: column;
   margin-top: 20px;
   min-width: 150px;
+  width: 200px;
   display: none;
   position: absolute;
   z-index: 1;
@@ -136,6 +137,15 @@ input[type='text'] {
   grid-column-gap: 30px;
   grid-row-gap: 50px;
   padding: 20px 30px; }
+
+.go-back-homepage-container {
+  background: #E6E6E7;
+  display: flex;
+  padding: 10px 15px; }
+  .go-back-homepage-container img {
+    padding: 20px; }
+  .go-back-homepage-container p {
+    font-weight: bold; }
 
 .c-round-breadcrumb {
   border-radius: 20px;
@@ -265,6 +275,19 @@ input[type='text'] {
     .c-teacher-card .c-teacher__actions button:nth-child(2) {
       border-left: 1px solid #fff;
       border-bottom-right-radius: 6px; }
+
+.c-accordion {
+  background: #F7F0D2;
+  padding: 15px;
+  margin-bottom: 20px; }
+  .c-accordion.c-accordion-collapsed .c-accordion-content {
+    max-height: 0;
+    overflow: hidden; }
+  .c-accordion.c-accordion-collapsed .c-accordion-header:after {
+    transform: rotate(45deg); }
+  .c-accordion .c-accordion-content {
+    max-height: 400px;
+    transition: all 200ms ease-in-out; }
 
 .c-link {
   color: #35a3dc;
@@ -443,7 +466,7 @@ input[type='text'] {
     width: 130px;
     height: 110px;
     background: #fff; }
-  .c-attachments-holder .c-attachment-holder__add-attachment {
+  .c-attachments-holder .add-attachment {
     background: #681c5b;
     margin-right: 20px;
     display: flex;
@@ -452,6 +475,41 @@ input[type='text'] {
     width: 130px;
     height: 110px;
     border-radius: 4px; }
+  .c-attachments-holder .attachments-container {
+    display: flex; }
+    .c-attachments-holder .attachments-container .attachment {
+      width: 130px;
+      height: 110px;
+      margin-right: 20px;
+      position: relative; }
+      .c-attachments-holder .attachments-container .attachment .remove-attachment {
+        position: absolute;
+        top: -8;
+        right: -8;
+        cursor: pointer; }
+      .c-attachments-holder .attachments-container .attachment__photo {
+        width: 100%;
+        height: 100%;
+        background-size: 100% !important;
+        background-position: center center !important; }
+      .c-attachments-holder .attachments-container .attachment__document {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+        background: #fff;
+        border: 1px solid #CBCBCB;
+        border-radius: 4px;
+        text-overflow: ellipsis;
+        overflow: hidden; }
+        .c-attachments-holder .attachments-container .attachment__document p {
+          margin: 0;
+          margin-top: 15px;
+          width: 100%;
+          text-align: center; }
+        .c-attachments-holder .attachments-container .attachment__document img {
+          width: 30px; }
   .c-attachments-holder .c-attachment-holder__attachment {
     width: 130px;
     height: 110px;
@@ -469,6 +527,7 @@ input[type='text'] {
       left: 6px; }
 
 .c-clusters {
+  display: none;
   padding: 50px 40px;
   width: 40%;
   background: #f5f5f6; }
@@ -486,12 +545,52 @@ input[type='text'] {
       flex-basis: 23%;
       display: flex; }
 
+.c-element {
+  background: #FDF9EB;
+  border-top: 10px solid #F1D678;
+  padding: 30px 40px; }
+  .c-element .title h2 {
+    color: #6c6c6d;
+    margin: 0; }
+  .c-element .title p {
+    margin-top: 8px; }
+  .c-element__component {
+    background: #F9F0CE;
+    padding: 25px 20px;
+    margin-bottom: 20px;
+    border-radius: 4px; }
+    .c-element__component .title {
+      display: flex;
+      margin-bottom: 15px; }
+      .c-element__component .title h3 {
+        margin: 0; }
+      .c-element__component .title img {
+        cursor: pointer;
+        padding: 0 15px; }
+  .c-element__indicator {
+    background: #fff;
+    padding: 20px;
+    border-bottom: 1px solid #BCB8A8;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center; }
+    .c-element__indicator p {
+      margin: 0;
+      color: #35A3DC; }
+    .c-element__indicator .ratings span {
+      padding: 0 10px; }
+
 .c-radio-group {
   background: #fff;
   padding: 10px;
   border-bottom: 1px solid #808285; }
+  .c-radio-group .indicator {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center; }
   .c-radio-group p {
-    flex-basis: 80%;
     color: #35a3dc; }
   .c-radio-group input {
     flex-basis: 10%; }
@@ -527,30 +626,6 @@ input[type='text'] {
       color: #681c5b; }
     .c-observation-observation-form .edit-observation-name img {
       margin-left: 20px; }
-
-.c-view-all-observations-header {
-  display: flex;
-  align-items: center;
-  background: #e6e6e7;
-  color: #818386;
-  padding: 15px; }
-  .c-view-all-observations-header img {
-    margin-right: 15px; }
-  .c-view-all-observations-header p {
-    font-weight: bold; }
-
-.c-accordion {
-  background: #F7F0D2;
-  padding: 15px;
-  margin-bottom: 20px; }
-  .c-accordion.c-accordion-collapsed .c-accordion-content {
-    max-height: 0;
-    overflow: hidden; }
-  .c-accordion.c-accordion-collapsed .c-accordion-header:after {
-    transform: rotate(45deg); }
-  .c-accordion .c-accordion-content {
-    max-height: 400px;
-    transition: all 200ms ease-in-out; }
 
 .c-accordion-header {
   position: relative;
@@ -623,6 +698,57 @@ input[type='text'] {
   overflow: auto;
   background-color: black;
   background-color: rgba(0, 0, 0, 0.4); }
+  .c-modal h2 {
+    font-weight: bold;
+    border-bottom: 1px solid #b1b1b1;
+    margin: 0;
+    padding: 15px 0; }
+  .c-modal form {
+    padding: 20px 0;
+    margin: 0; }
+    .c-modal form .input-group {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 20px; }
+      .c-modal form .input-group label {
+        padding: 8px 0;
+        font-size: 12px;
+        text-transform: uppercase;
+        font-weight: bold; }
+      .c-modal form .input-group input {
+        padding: 10px 15px;
+        text-transform: capitalize; }
+      .c-modal form .input-group select {
+        padding: 10px 15px;
+        background: rgba(255, 255, 255, 0.8);
+        border: 1px solid rgba(151, 151, 151, 0.2);
+        border-radius: 4px; }
+    .c-modal form .action-buttons {
+      margin-top: 10px;
+      border-top: 1px solid #b1b1b1;
+      padding: 20px 0 0 0; }
+      .c-modal form .action-buttons button {
+        text-transform: uppercase;
+        margin-right: 30px;
+        border-radius: 80px;
+        padding: 10px 30px;
+        background: none;
+        color: #4f4f4f; }
+      .c-modal form .action-buttons .submit {
+        border: 2px solid #5FC99A; }
+      .c-modal form .action-buttons .cancel {
+        border: 2px solid #EA7F80; }
+      .c-modal form .action-buttons .submit:hover {
+        background: #5FC99A;
+        color: #fff; }
+      .c-modal form .action-buttons .cancel:hover {
+        background: #EA7F80;
+        color: #fff; }
+  .c-modal .c-modal__action-buttons {
+    margin-top: 40px; }
+    .c-modal .c-modal__action-buttons button {
+      width: 140px;
+      margin-right: 30px; }
   .c-modal .c-modal__badge {
     position: absolute;
     margin-top: -41px;
@@ -874,7 +1000,6 @@ input[type='text'] {
   color: #35A3DC; }
 
 .c-admin-section {
-  padding: 0 20px;
   display: flex;
   height: 100%; }
   .c-admin-section aside {
@@ -899,10 +1024,27 @@ input[type='text'] {
     background: #F6F6F6;
     box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12); }
     .c-admin-section main h1 {
-      margin: 35px 0; }
+      margin: 35px 0;
+      font-weight: bold;
+      text-transform: capitalize; }
     .c-admin-section main section {
       background: #fff;
       box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.2), 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12); }
+
+.c-list-resources ul {
+  height: 100%;
+  overflow-y: scroll; }
+  .c-list-resources ul li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #c2c2c2;
+    text-transform: capitalize;
+    margin: 0;
+    padding: 15px 0; }
+    .c-list-resources ul li img {
+      cursor: pointer;
+      padding: 0 10px; }
 
 .c-list-group .list-item {
   text-transform: capitalize;
@@ -1002,3 +1144,7 @@ ul {
     margin-right: 30px; }
   .submit-buttons-holder .saved-button {
     background: #9d5f92; }
+
+.checkboxContainer {
+  max-height: 120px;
+  overflow-y: scroll !important; }

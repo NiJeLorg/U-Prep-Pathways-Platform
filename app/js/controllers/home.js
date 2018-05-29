@@ -4,6 +4,7 @@ const HomeCtrl = ($scope, $state, TeacherService, SchoolService, ObservationType
     $scope.page = 'dashboard';
     $scope.pager = {};
     $scope.switchCardContext = false;
+    let observationTypes;
 
     // fetch data
     TeacherService.fetchAllTeachers((err, res) => {
@@ -35,7 +36,7 @@ const HomeCtrl = ($scope, $state, TeacherService, SchoolService, ObservationType
 
     ObservationTypeService.fetchObservationTypes((err, res) => {
         if (!err) {
-            $scope.observationTypes = res.data.data;
+            observationTypes = res.data.data;
         } else {
             console.error(err, 'ERROR');
         }
@@ -57,30 +58,14 @@ const HomeCtrl = ($scope, $state, TeacherService, SchoolService, ObservationType
     }
 
     $scope.newTeacherScore = (teacher) => {
-        ScoreFactory['teacher'] = {
-            id: teacher.id,
-            name: teacher.name
-        };
-        ScoreFactory['school'] = teacher.school;
-        ScoreFactory['grades'] = teacher.grades;
-        ScoreFactory['subjects'] = teacher.subjects;
+        ScoreFactory.teacher = teacher;
         $state.go('scoreDetails', {workflow: 'scores'});
     };
 
     $scope.newTeacherObservation = (teacher) => {
-        ObservationFactory['teacher'] = {
-            id: teacher.id,
-            name: teacher.name
-        };
-        ObservationFactory['school'] = teacher.school;
-        ObservationFactory['grades'] = teacher.grades;
-        ObservationFactory['subjects'] = teacher.subjects;
-        ObservationFactory['observationType'] = $scope.observationTypes[1];  
+        ObservationFactory.teacher = teacher;
+        ObservationFactory['observationType'] = observationTypes[1];
         $state.go('observationInputs', {workflow: 'observations'});
-    };
-
-    $scope.loadTeacherView = (teacher) => {
-        $state.go('teacherObservation', {teacherId: teacher.id});
     };
 };
 

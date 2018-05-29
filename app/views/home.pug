@@ -32,7 +32,7 @@
                     i.fa.fa-2x.fa-ellipsis-v
                 .c-teacher-card__avatar
                 .c-teacher-card__details
-                    p.ul-cursor-pointer(ng-click='loadTeacherView(teacher)') {{teacher.name}}
+                    p.ul-cursor-pointer(ui-sref='teacher({teacherId: teacher.id})') {{teacher.name}}
                     p(ng-class='{upaElementaryColor: teacher.school.name === "UPA Elementary", upsmElementaryColor: teacher.school.name === "UPSM Elementary"}') {{teacher.school.name}}                    
                 .c-teacher-card__switch-context
                     .img-container.ul-cursor-pointer(ng-click='switchCardContext = !switchCardContext' ng-style='{background: switchCardContext ? "#EF4060" : "#5F2358"}')

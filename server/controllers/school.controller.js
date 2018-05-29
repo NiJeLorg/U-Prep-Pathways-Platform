@@ -1,15 +1,14 @@
 import {school, grade} from './../models';
 
-const get = async (req, res) => {
+const get = async(req, res) => {
     res.sendData(req.school);
 };
-const list = async (req, res) => {
+const list = async(req, res) => {
     const schools = await school.findAll();
     res.sendData(schools);
 };
-const load = async (req, res, next, id) => {
-    const schoolObj = await school
-        .findById(id, getIncludes(req));
+const load = async(req, res, next, id) => {
+    const schoolObj = await school.findById(id, getIncludes(req));
     if (!schoolObj) {
         return res.sendNotFound();
     }
@@ -17,10 +16,35 @@ const load = async (req, res, next, id) => {
     return next();
 };
 
-const getIncludes = (req) => {
-    return {
-        include: ['grades'],
-    }
+const destroy = async(req, res) => {
+    const schoolObj = req
+        .school
+        .destroy();
+    res.sendData(schoolObj);
 };
 
-export default {get, load, list};
+const update = async(req, res) => {
+    console.log(req.body, 'bodyd tings');
+    const schoolObj = req
+        .school
+        .update({name: req.body.name});
+    res.sendData(schoolObj);
+}
+
+const create = async(req, res) => {
+    const schoolObj = await school.create({name: req.body.school});
+    res.sendData(schoolObj);
+}
+
+const getIncludes = (req) => {
+    return {include: ['grades']}
+};
+
+export default {
+    get,
+    load,
+    list,
+    create,
+    destroy,
+    update
+};

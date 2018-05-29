@@ -15,8 +15,6 @@
         p.level-info Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisinuli.
     //- .c-buttons-holder
     //-     button OK
-
-
 .c-modal.delete-score-modal
     .c-modal__modal-content
         span.l-flex-flex-end
@@ -48,37 +46,41 @@
 
 .ul-padding-30
     .ul-padding-30
-        .c-view-all-observations-header
-            img.ul-cursor-pointer(src='assets/icons/back-icon.svg' ui-sref='home')
-            p VIEW ALL SCORES
         .c-observation-observation-form
             .c-observation-observation-form__details
-                h3(style='font-weight:bold; color: #681C5B') {{score.teacher.name}}
-                span.teacher-color Teacher: 1st Score
+                h3.ul-text-capitalize(style='font-weight:bold; color: #681C5B') {{score.teacher.name}}
                 p  CREATED ON {{score.created_at | date: 'shortDate'}} {{score.created_at | date: 'shortTime'}}
             .c-observation-observation-form__actions
                     button(ng-click='openSubmitScoreModal()') Submit
                     img.ul-cursor-pointer(src='assets/icons/delete-icon.svg' ng-click='showDeleteScoreModal()')
-        .c-score-form-input-group.element-accordion.ul-margin-bottom-20(ng-repeat='element in elements track by element.id')
-            h2 
-                span Section {{element.id}} of 5:&nbsp;
-                strong {{element.name}} &nbsp;
-                img(src="assets/icons/question-mark.svg")
-            p Score the teacher from 1-4 stars on the following indicator
-            .c-accordion.tab-content(ng-class="{'c-accordion-collapsed': !toggleAccordion}" ng-repeat='component in element.components track by component.id')
-                .c-accordion-header(ng-click="toggleAccordion = !toggleAccordion")
-                    span.accordion-title {{component.name}} &nbsp;
+        
+        .c-element(ng-repeat='element in elements track by element.id')
+            .title
+                h2 Section {{element.id}} of 5: {{element.name}} &nbsp;
+                p Score the teacher from 1-4 stars on the following indicator
+            .c-element__component(ng-repeat='component in element.components track by component.id')
+                .title
+                    h3 {{component.name}}
                     img(src="assets/icons/question-mark.svg")
-                .c-accordion-content
-                    .c-radio-group.c-accordion-radio-group.l-flex.ul-margin-bottom-20(ng-repeat="indicator in getAddSelectedIndicators(component.indicators) track by indicator.id")
-                        p.ul-cursor-pointer(ng-click='displayIndicatorLevelsModal(indicator)') {{indicator.name}}
-                        label.c-accordion-radio-group-label(ng-repeat='value in indicatorValue')
-                            input(type='radio' name='{{indicator.name}}' value='{{value}}' ng-model='indicator.value' ng-click='storeIndicatorScore(value, indicator)')
-                            span.radio-label(ng-if='value == null') N/A
-                            span.radio-label(ng-if='value != null') {{value}}                           
-                        .c-accordion-actions
-                            button.c-accordion_actions_button.add
-                            button.c-accordion_actions_button.attach(ng-if="indicator.name === 'Grading'")
-
-                        
-                        
+                .indicator-groups
+                    .c-element__indicator(ng-repeat='indicator in component.indicators track by indicator.id')
+                        p {{indicator.name}}
+                        .ratings
+                            //- input(type='radio' ng-repeat='value in indicatorValue' ) {{value}}
+            
+            //- .c-accordion.tab-content(ng-class="{'c-accordion-collapsed': !toggleAccordion}" ng-repeat='component in element.components track by component.id')
+            //-     .c-accordion-header(ng-click="toggleAccordion = !toggleAccordion")
+            //-         span.accordion-title {{component.name}} &nbsp;
+            //-         img(src="assets/icons/question-mark.svg")
+            //-     .c-accordion-content
+            //-         .c-radio-group.c-accordion-radio-group.l-flex.ul-margin-bottom-20(ng-repeat="indicator in getAddSelectedIndicators(component.indicators) track by indicator.id")
+            //-             .indicator
+            //-                 p.ul-cursor-pointer(ng-click='displayIndicatorLevelsModal(indicator)') {{indicator.name}}
+            //-                 .ratings
+            //-                     label.c-accordion-radio-group-label(ng-repeat='value in indicatorValue')
+            //-                         input(type='radio' name='{{indicator.name}}' value='{{value}}' ng-model='indicator.value' ng-click='storeIndicatorScore(value, indicator)')
+            //-                         span.radio-label(ng-if='value == null') N/A
+            //-                         span.radio-label(ng-if='value != null') {{value}}                           
+            //-             .c-accordion-actions
+            //-                 button.c-accordion_actions_button.add
+            //-                 button.c-accordion_actions_button.attach(ng-if="indicator.name === 'Grading'")

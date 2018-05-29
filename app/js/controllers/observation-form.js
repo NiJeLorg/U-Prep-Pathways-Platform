@@ -1,6 +1,8 @@
 'use strict';
 
-const ObservationFormCtrl = ($scope, $state, $stateParams, $timeout, observation, Upload, GradeService, TeacherService, ObservationTypeService, ObservationService, ClusterService, AttachmentService, UtilService, ObservationFactory, BASE_URL) => {
+const ObservationFormCtrl = function ($scope, $state, $stateParams, $timeout, observation, Upload, GradeService, TeacherService, ObservationTypeService, ObservationService, ClusterService, AttachmentService, UtilService, ObservationFactory, BASE_URL,) {
+
+    var line = new ProgressBar.Line('#progress', {color: '#5F2358'});
 
     let observationToBeDeleted,
         cluster_ids = [];
@@ -8,8 +10,8 @@ const ObservationFormCtrl = ($scope, $state, $stateParams, $timeout, observation
     $scope.editObservationName = false;
     $scope.isImage;
     $scope.selectedImageUrl;
+    $scope.attachmentFormat;
 
-    console.log($scope.observation, 'observation');
     // fetch data
     ObservationTypeService.get({
         id: $scope.observation.observation_type_id
@@ -65,14 +67,32 @@ const ObservationFormCtrl = ($scope, $state, $stateParams, $timeout, observation
         }
     };
 
-    $scope.checkMediaType = (file) => {
-        const fileExtension = file.substr(file.indexOf(".") + 1).toLowerCase(),
-            imageFormats = ['bmp', 'gif', 'jpeg', 'jpg', 'png'];
-        if (imageFormats.some(el => fileExtension.includes(el))) {
-            $scope.isImage = true;
+    $scope.checkIfAttacmentIsImage = (file) => {
+        let commonImageTypes = ['bmp', 'gif', 'jpeg', 'jpg', 'png'];
+
+        if (commonImageTypes.some(el => file.name.substr(file.name.indexOf(".") + 1).toLowerCase().includes(el))) {
             return true;
         } else {
-            $scope.isImage = false;
+            return false;
+        }
+    }
+
+    $scope.checkIfAttacmentIsDocument = (file) => {
+        let commonDocumentTypes = ['pdf', 'doc', 'docx'];
+
+        if (commonDocumentTypes.some(el => file.name.substr(file.name.indexOf(".") + 1).toLowerCase().includes(el))) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    $scope.checkIfAttacmentIsVideo = (file) => {
+        let commonVideoTypes = ['mov', 'mp4'];
+
+        if (commonVideoTypes.some(el => file.name.substr(file.name.indexOf(".") + 1).toLowerCase().includes(el))) {
+            return true;
+        } else {
             return false;
         }
     }
@@ -102,6 +122,7 @@ const ObservationFormCtrl = ($scope, $state, $stateParams, $timeout, observation
     $scope.uploadFiles = (files, errFiles) => {
         $scope.files = files;
         $scope.errFiles = errFiles;
+    
 
         angular.forEach(files, (file) => {
             file.upload = Upload.upload({
@@ -112,11 +133,16 @@ const ObservationFormCtrl = ($scope, $state, $stateParams, $timeout, observation
                 }
             });
 
+            line.animate(0.5)
             file
                 .upload
                 .then((res) => {
                     $timeout(() => {
                         $scope.observation.attachments = res.data.data.attachments;
+                        line.animate(1.0)
+                        setTimeout(function () {
+                            line.animate(0);
+                        }, 2000);                      
                     });
                 }, (res) => {
                     if (res.status > 0) {

@@ -17,7 +17,6 @@ module.exports = (sequelize, DataTypes) => {
             through: models.grade_school,
             as: 'schools'
         });
-
     };
     return Grade;
 };

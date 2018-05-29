@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 60);
+/******/ 	return __webpack_require__(__webpack_require__.s = 61);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -4546,21 +4546,21 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var interface_1 = __webpack_require__(7);
 var transition_1 = __webpack_require__(13);
 var hookRegistry_1 = __webpack_require__(22);
-var coreResolvables_1 = __webpack_require__(67);
-var redirectTo_1 = __webpack_require__(68);
-var onEnterExitRetain_1 = __webpack_require__(69);
-var resolve_1 = __webpack_require__(70);
-var views_1 = __webpack_require__(71);
-var updateGlobals_1 = __webpack_require__(72);
-var url_1 = __webpack_require__(73);
+var coreResolvables_1 = __webpack_require__(68);
+var redirectTo_1 = __webpack_require__(69);
+var onEnterExitRetain_1 = __webpack_require__(70);
+var resolve_1 = __webpack_require__(71);
+var views_1 = __webpack_require__(72);
+var updateGlobals_1 = __webpack_require__(73);
+var url_1 = __webpack_require__(74);
 var lazyLoad_1 = __webpack_require__(47);
 var transitionEventType_1 = __webpack_require__(48);
 var transitionHook_1 = __webpack_require__(11);
 var predicates_1 = __webpack_require__(1);
 var common_1 = __webpack_require__(0);
 var hof_1 = __webpack_require__(2);
-var ignoredTransition_1 = __webpack_require__(74);
-var invalidTransition_1 = __webpack_require__(75);
+var ignoredTransition_1 = __webpack_require__(75);
+var invalidTransition_1 = __webpack_require__(76);
 /**
  * The default [[Transition]] options.
  *
@@ -4851,7 +4851,7 @@ module.exports = function (it) {
 /* 28 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(61);
+__webpack_require__(62);
 module.exports = angular;
 
 
@@ -8343,41 +8343,94 @@ module.exports = function (exec) {
 "use strict";
 
 
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var GradeService = function GradeService(BASE_URL, $resource, $http) {
+
+    var obj = $resource(BASE_URL + '/schools/:id/grades', {
+        id: '@id'
+    }, {
+        'query': {
+            method: 'GET'
+        }
+    });
+
+    obj.fetchGrades = function (cb) {
+        $http.get(BASE_URL + 'grades').then(function (res) {
+            cb(null, res);
+        }, function (err) {
+            cb(err);
+        });
+    };
+
+    obj.createGrade = function (cb, newGrade) {
+        $http.post(BASE_URL + 'grades', { grade: newGrade }).then(function (res) {
+            cb(null, res);
+        }, function (err) {
+            cb(err);
+        });
+    };
+
+    obj.deleteGrade = function (cb, grade) {
+        $http.delete(BASE_URL + 'grades/' + grade.id).then(function (res) {
+            cb(null, res);
+        }, function (err) {
+            cb(err);
+        });
+    };
+
+    obj.updateGrade = function (cb, grade) {
+        $http.put(BASE_URL + 'grades/' + grade.id, { name: grade.name }).then(function (res) {
+            cb(null, res);
+        }, function (err) {
+            cb(err);
+        });
+    };
+
+    return obj;
+};
+
+exports.default = GradeService;
+
+/***/ }),
+/* 61 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
 var _angular = __webpack_require__(28);
 
 var _angular2 = _interopRequireDefault(_angular);
 
-var _angularjs = __webpack_require__(62);
+var _angularjs = __webpack_require__(63);
 
 var _angularjs2 = _interopRequireDefault(_angularjs);
 
-var _angularResource = __webpack_require__(83);
+var _angularResource = __webpack_require__(84);
 
 var _angularResource2 = _interopRequireDefault(_angularResource);
 
-var _ngFileUpload = __webpack_require__(85);
+var _ngFileUpload = __webpack_require__(86);
 
 var _ngFileUpload2 = _interopRequireDefault(_ngFileUpload);
 
-var _lodash = __webpack_require__(87);
+var _lodash = __webpack_require__(88);
 
 var _lodash2 = _interopRequireDefault(_lodash);
 
-var _home = __webpack_require__(89);
+var _nav = __webpack_require__(90);
+
+var _nav2 = _interopRequireDefault(_nav);
+
+var _home = __webpack_require__(91);
 
 var _home2 = _interopRequireDefault(_home);
 
-var _newObservation = __webpack_require__(90);
-
-var _newObservation2 = _interopRequireDefault(_newObservation);
-
-var _scoreInputs = __webpack_require__(91);
+var _scoreInputs = __webpack_require__(92);
 
 var _scoreInputs2 = _interopRequireDefault(_scoreInputs);
-
-var _nav = __webpack_require__(92);
-
-var _nav2 = _interopRequireDefault(_nav);
 
 var _observationInputs = __webpack_require__(93);
 
@@ -8395,85 +8448,81 @@ var _teacher = __webpack_require__(109);
 
 var _teacher2 = _interopRequireDefault(_teacher);
 
-var _teacherObservation = __webpack_require__(110);
-
-var _teacherObservation2 = _interopRequireDefault(_teacherObservation);
-
-var _admin = __webpack_require__(111);
+var _admin = __webpack_require__(110);
 
 var _admin2 = _interopRequireDefault(_admin);
 
-var _schoolService = __webpack_require__(112);
+var _schoolService = __webpack_require__(111);
 
 var _schoolService2 = _interopRequireDefault(_schoolService);
 
-var _observationTypeService = __webpack_require__(113);
+var _observationTypeService = __webpack_require__(112);
 
 var _observationTypeService2 = _interopRequireDefault(_observationTypeService);
 
-var _gradeService = __webpack_require__(114);
+var _gradeService = __webpack_require__(60);
 
 var _gradeService2 = _interopRequireDefault(_gradeService);
 
-var _teacherService = __webpack_require__(115);
+var _teacherService = __webpack_require__(113);
 
 var _teacherService2 = _interopRequireDefault(_teacherService);
 
-var _subjectService = __webpack_require__(116);
+var _subjectService = __webpack_require__(114);
 
 var _subjectService2 = _interopRequireDefault(_subjectService);
 
-var _observationService = __webpack_require__(117);
+var _observationService = __webpack_require__(115);
 
 var _observationService2 = _interopRequireDefault(_observationService);
 
-var _scoreService = __webpack_require__(118);
+var _scoreService = __webpack_require__(116);
 
 var _scoreService2 = _interopRequireDefault(_scoreService);
 
-var _indicatorScoreService = __webpack_require__(119);
+var _indicatorScoreService = __webpack_require__(117);
 
 var _indicatorScoreService2 = _interopRequireDefault(_indicatorScoreService);
 
-var _elementService = __webpack_require__(120);
+var _elementService = __webpack_require__(118);
 
 var _elementService2 = _interopRequireDefault(_elementService);
 
-var _clusterService = __webpack_require__(121);
+var _clusterService = __webpack_require__(119);
 
 var _clusterService2 = _interopRequireDefault(_clusterService);
 
-var _attachmentService = __webpack_require__(122);
+var _attachmentService = __webpack_require__(120);
 
 var _attachmentService2 = _interopRequireDefault(_attachmentService);
 
-var _utilitiesService = __webpack_require__(123);
+var _utilitiesService = __webpack_require__(121);
 
 var _utilitiesService2 = _interopRequireDefault(_utilitiesService);
 
-var _observationFactory = __webpack_require__(124);
+var _observationFactory = __webpack_require__(122);
 
 var _observationFactory2 = _interopRequireDefault(_observationFactory);
 
-var _breadcrumbFactory = __webpack_require__(125);
+var _breadcrumbFactory = __webpack_require__(123);
 
 var _breadcrumbFactory2 = _interopRequireDefault(_breadcrumbFactory);
 
-var _paginationFactory = __webpack_require__(126);
+var _paginationFactory = __webpack_require__(124);
 
 var _paginationFactory2 = _interopRequireDefault(_paginationFactory);
 
-var _scoreFactory = __webpack_require__(127);
+var _scoreFactory = __webpack_require__(125);
 
 var _scoreFactory2 = _interopRequireDefault(_scoreFactory);
 
-var _makeScore = __webpack_require__(128);
+var _makeScore = __webpack_require__(126);
 
 var _makeScore2 = _interopRequireDefault(_makeScore);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var uprepApp = _angular2.default.module('uprepApp', [_angularjs2.default, _ngFileUpload2.default, _angularResource2.default]);
+var uprepApp = _angular2.default.module('uprepApp', ['isteven-multi-select', _angularjs2.default, _ngFileUpload2.default, _angularResource2.default]);
 
 // load services
 
@@ -8483,7 +8532,7 @@ var uprepApp = _angular2.default.module('uprepApp', [_angularjs2.default, _ngFil
 
 var url = 'https://dev-uprep.nijel.org/api/';
 // let url = 'http://localhost:3000/api/';
-uprepApp.controller('NavCtrl', _nav2.default).controller('HomeCtrl', _home2.default).controller('NewObservationCtrl', _newObservation2.default).controller('ScoreInputCtrl', _scoreInputs2.default).controller('ObservationInputsCtrl', _observationInputs2.default).controller('ObservationFormCtrl', _observationForm2.default).controller('ScoreFormCtrl', _scoreForm2.default).controller('MakeScoreCtrl', _makeScore2.default).controller('TeacherCtrl', _teacher2.default).controller('TeacherObservationCtrl', _teacherObservation2.default).controller('AdminCtrl', _admin2.default).service('SchoolService', _schoolService2.default).service('ObservationTypeService', _observationTypeService2.default).service('GradeService', _gradeService2.default).service('TeacherService', _teacherService2.default).service('ElementService', _elementService2.default).service('SubjectService', _subjectService2.default).service('ObservationService', _observationService2.default).service('ScoreService', _scoreService2.default).service('IndicatorScoreService', _indicatorScoreService2.default).service('ClusterService', _clusterService2.default).service('AttachmentService', _attachmentService2.default).service('UtilService', _utilitiesService2.default).factory('ObservationFactory', _observationFactory2.default).factory('ScoreFactory', _scoreFactory2.default).factory('BreadcrumbFactory', _breadcrumbFactory2.default).factory('PaginationFactory', _paginationFactory2.default).filter('teacherGradeFilter', function () {
+uprepApp.controller('NavCtrl', _nav2.default).controller('HomeCtrl', _home2.default).controller('ScoreInputCtrl', _scoreInputs2.default).controller('ObservationInputsCtrl', _observationInputs2.default).controller('ObservationFormCtrl', _observationForm2.default).controller('ScoreFormCtrl', _scoreForm2.default).controller('TeacherCtrl', _teacher2.default).controller('AdminCtrl', _admin2.default).service('SchoolService', _schoolService2.default).service('ObservationTypeService', _observationTypeService2.default).service('GradeService', _gradeService2.default).service('TeacherService', _teacherService2.default).service('ElementService', _elementService2.default).service('SubjectService', _subjectService2.default).service('ObservationService', _observationService2.default).service('ScoreService', _scoreService2.default).service('IndicatorScoreService', _indicatorScoreService2.default).service('ClusterService', _clusterService2.default).service('AttachmentService', _attachmentService2.default).service('UtilService', _utilitiesService2.default).factory('ObservationFactory', _observationFactory2.default).factory('ScoreFactory', _scoreFactory2.default).factory('BreadcrumbFactory', _breadcrumbFactory2.default).factory('PaginationFactory', _paginationFactory2.default).filter('teacherGradeFilter', function () {
 
   // In the return function, we must pass in a single parameter which will be the data we will work on.
   // We have the ability to support multiple other parameters that can be passed into the filter optionally
@@ -8513,14 +8562,10 @@ uprepApp.config(['$stateProvider', '$httpProvider', '$urlRouterProvider', '$loca
     url: '/',
     controller: 'HomeCtrl',
     templateUrl: 'views/home.html'
-  }).state('newObservation', {
-    url: '/new-observation',
-    controller: 'NewObservationCtrl',
-    templateUrl: 'views/new-observation.html'
-  }).state('teacherObservation', {
-    url: '/teacher-observation/:teacherId',
-    controller: 'TeacherObservationCtrl',
-    templateUrl: 'views/teacher-observation.html',
+  }).state('teacher', {
+    url: '/teacher/:teacherId',
+    controller: 'TeacherCtrl',
+    templateUrl: 'views/teacher.html',
     resolve: {
       teacher: function teacher($stateParams, TeacherService) {
         return TeacherService.query({
@@ -8548,14 +8593,6 @@ uprepApp.config(['$stateProvider', '$httpProvider', '$urlRouterProvider', '$loca
         }).$promise;
       }
     }
-  }).state('score', {
-    url: '/score',
-    controller: 'MakeScoreCtrl',
-    templateUrl: 'views/score.html'
-  }).state('teacher', {
-    url: '/teacher',
-    controller: 'TeacherCtrl',
-    templateUrl: 'views/teacher.html'
   }).state('scoreDetails', {
     url: '/score-details?workflow',
     controller: 'ScoreInputCtrl',
@@ -8580,22 +8617,12 @@ uprepApp.config(['$stateProvider', '$httpProvider', '$urlRouterProvider', '$loca
     url: '/admin',
     templateUrl: 'views/admin.html',
     controller: 'AdminCtrl'
-  }).state('admin.schools', {
-    url: '/schools',
-    templateUrl: 'views/admin-schools.html'
-  }).state('admin.subjects', {
-    url: '/subjects',
-    templateUrl: 'views/admin-subjects.html'
-  }).state('admin.grades', {
-    url: '/grades',
-    templateUrl: 'views/admin-grades.html'
   });
-
   $locationProvider.html5Mode(true);
 }]);
 
 /***/ }),
-/* 61 */
+/* 62 */
 /***/ (function(module, exports) {
 
 /**
@@ -42959,7 +42986,7 @@ $provide.value("$locale", {
 !window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
 
 /***/ }),
-/* 62 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /**
@@ -42970,7 +42997,7 @@ $provide.value("$locale", {
  * @license MIT License, http://www.opensource.org/licenses/MIT
  */
 (function (global, factory) {
-	 true ? factory(exports, __webpack_require__(28), __webpack_require__(63)) :
+	 true ? factory(exports, __webpack_require__(28), __webpack_require__(64)) :
 	typeof define === 'function' && define.amd ? define(['exports', 'angular', '@uirouter/core'], factory) :
 	(factory((global['@uirouter/angularjs'] = {}),global.angular,global['@uirouter/core']));
 }(this, (function (exports,ng_from_import,core) { 'use strict';
@@ -44964,7 +44991,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 
 /***/ }),
-/* 63 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -44978,21 +45005,21 @@ function __export(m) {
 }
 Object.defineProperty(exports, "__esModule", { value: true });
 __export(__webpack_require__(4));
-__export(__webpack_require__(64));
 __export(__webpack_require__(65));
-__export(__webpack_require__(34));
 __export(__webpack_require__(66));
-__export(__webpack_require__(76));
+__export(__webpack_require__(34));
+__export(__webpack_require__(67));
 __export(__webpack_require__(77));
 __export(__webpack_require__(78));
+__export(__webpack_require__(79));
 __export(__webpack_require__(45));
 __export(__webpack_require__(40));
-__export(__webpack_require__(79));
-__export(__webpack_require__(82));
+__export(__webpack_require__(80));
+__export(__webpack_require__(83));
 //# sourceMappingURL=index.js.map
 
 /***/ }),
-/* 64 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45008,7 +45035,7 @@ __export(__webpack_require__(24));
 //# sourceMappingURL=index.js.map
 
 /***/ }),
-/* 65 */
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45023,7 +45050,7 @@ __export(__webpack_require__(14));
 //# sourceMappingURL=index.js.map
 
 /***/ }),
-/* 66 */
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45042,7 +45069,7 @@ __export(__webpack_require__(8));
 //# sourceMappingURL=index.js.map
 
 /***/ }),
-/* 67 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45084,7 +45111,7 @@ exports.treeChangesCleanup = function (trans) {
 //# sourceMappingURL=coreResolvables.js.map
 
 /***/ }),
-/* 68 */
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45127,7 +45154,7 @@ exports.registerRedirectToHook = function (transitionService) {
 //# sourceMappingURL=redirectTo.js.map
 
 /***/ }),
-/* 69 */
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45190,7 +45217,7 @@ exports.registerOnEnterHook = function (transitionService) {
 //# sourceMappingURL=onEnterExitRetain.js.map
 
 /***/ }),
-/* 70 */
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45258,7 +45285,7 @@ exports.registerResolveRemaining = function (transitionService) {
 //# sourceMappingURL=resolve.js.map
 
 /***/ }),
-/* 71 */
+/* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45311,7 +45338,7 @@ exports.registerActivateViews = function (transitionService) {
 //# sourceMappingURL=views.js.map
 
 /***/ }),
-/* 72 */
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45352,7 +45379,7 @@ exports.registerUpdateGlobalState = function (transitionService) {
 //# sourceMappingURL=updateGlobals.js.map
 
 /***/ }),
-/* 73 */
+/* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45383,7 +45410,7 @@ exports.registerUpdateUrl = function (transitionService) {
 //# sourceMappingURL=url.js.map
 
 /***/ }),
-/* 74 */
+/* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45420,7 +45447,7 @@ exports.registerIgnoredTransitionHook = function (transitionService) {
 //# sourceMappingURL=ignoredTransition.js.map
 
 /***/ }),
-/* 75 */
+/* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45445,7 +45472,7 @@ exports.registerInvalidTransitionHook = function (transitionService) {
 //# sourceMappingURL=invalidTransition.js.map
 
 /***/ }),
-/* 76 */
+/* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45479,7 +45506,7 @@ __export(__webpack_require__(25));
 //# sourceMappingURL=index.js.map
 
 /***/ }),
-/* 77 */
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45496,7 +45523,7 @@ __export(__webpack_require__(46));
 //# sourceMappingURL=index.js.map
 
 /***/ }),
-/* 78 */
+/* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45509,7 +45536,7 @@ __export(__webpack_require__(44));
 //# sourceMappingURL=index.js.map
 
 /***/ }),
-/* 79 */
+/* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45523,11 +45550,11 @@ Object.defineProperty(exports, "__esModule", { value: true });
  * @module vanilla
  */
 /** */
-__export(__webpack_require__(80));
+__export(__webpack_require__(81));
 //# sourceMappingURL=vanilla.js.map
 
 /***/ }),
-/* 80 */
+/* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45545,11 +45572,11 @@ __export(__webpack_require__(53));
 __export(__webpack_require__(54));
 __export(__webpack_require__(55));
 __export(__webpack_require__(26));
-__export(__webpack_require__(81));
+__export(__webpack_require__(82));
 //# sourceMappingURL=index.js.map
 
 /***/ }),
-/* 81 */
+/* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45584,7 +45611,7 @@ exports.memoryLocationPlugin = utils_1.locationPluginFactory('vanilla.memoryLoca
 //# sourceMappingURL=plugins.js.map
 
 /***/ }),
-/* 82 */
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -45611,15 +45638,15 @@ exports.UIRouterPluginBase = UIRouterPluginBase;
 //# sourceMappingURL=interface.js.map
 
 /***/ }),
-/* 83 */
+/* 84 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(84);
+__webpack_require__(85);
 module.exports = 'ngResource';
 
 
 /***/ }),
-/* 84 */
+/* 85 */
 /***/ (function(module, exports) {
 
 /**
@@ -46482,14 +46509,14 @@ angular.module('ngResource', ['ng']).
 
 
 /***/ }),
-/* 85 */
+/* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(86);
+__webpack_require__(87);
 module.exports = 'ngFileUpload';
 
 /***/ }),
-/* 86 */
+/* 87 */
 /***/ (function(module, exports) {
 
 /**!
@@ -49393,7 +49420,7 @@ ngFileUpload.service('UploadExif', ['UploadResize', '$q', function (UploadResize
 
 
 /***/ }),
-/* 87 */
+/* 88 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, module) {var __WEBPACK_AMD_DEFINE_RESULT__;/**
@@ -66495,10 +66522,10 @@ ngFileUpload.service('UploadExif', ['UploadResize', '$q', function (UploadResize
   }
 }.call(this));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(29), __webpack_require__(88)(module)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(29), __webpack_require__(89)(module)))
 
 /***/ }),
-/* 88 */
+/* 89 */
 /***/ (function(module, exports) {
 
 module.exports = function(module) {
@@ -66526,172 +66553,7 @@ module.exports = function(module) {
 
 
 /***/ }),
-/* 89 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-var HomeCtrl = function HomeCtrl($scope, $state, TeacherService, SchoolService, ObservationTypeService, GradeService, ObservationFactory, ScoreFactory, PaginationFactory) {
-
-    $scope.page = 'dashboard';
-    $scope.pager = {};
-    $scope.switchCardContext = false;
-
-    // fetch data
-    TeacherService.fetchAllTeachers(function (err, res) {
-        var reg = /^(\w+)\s(\w+)$/;
-        if (!err) {
-            $scope.teachers = res.data.data;
-            res.data.data.forEach(function (elem, index) {
-                if (elem.school.name === 'UPA HS' || elem.school.name === 'UPA MS') {
-                    elem.name = elem.name.replace(reg, "$2 $1");
-                }
-            });
-        } else {
-            console.error(err, 'ERROR');
-        }
-    });
-
-    SchoolService.fetchSchools(function (err, res) {
-        if (!err) {
-            $scope.schools = res.data.data;
-        } else {
-            console.error(err, 'ERROR');
-        }
-    });
-
-    ObservationTypeService.fetchObservationTypes(function (err, res) {
-        if (!err) {
-            $scope.observationTypes = res.data.data;
-        } else {
-            console.error(err, 'ERROR');
-        }
-    });
-
-    // event handlders
-    $scope.fetchGrades = function (school) {
-        if (school !== null) {
-            GradeService.query({
-                id: school.id
-            }, function (res) {
-                $scope.grades = res.data;
-            }, function (err) {
-                console.error(err, 'ERROR');
-            });
-        } else {
-            $scope.grades = [];
-        }
-    };
-
-    $scope.newTeacherScore = function (teacher) {
-        ScoreFactory['teacher'] = {
-            id: teacher.id,
-            name: teacher.name
-        };
-        ScoreFactory['school'] = teacher.school;
-        ScoreFactory['grades'] = teacher.grades;
-        ScoreFactory['subjects'] = teacher.subjects;
-        $state.go('scoreDetails', { workflow: 'scores' });
-    };
-
-    $scope.newTeacherObservation = function (teacher) {
-        ObservationFactory['teacher'] = {
-            id: teacher.id,
-            name: teacher.name
-        };
-        ObservationFactory['school'] = teacher.school;
-        ObservationFactory['grades'] = teacher.grades;
-        ObservationFactory['subjects'] = teacher.subjects;
-        ObservationFactory['observationType'] = $scope.observationTypes[1];
-        $state.go('observationInputs', { workflow: 'observations' });
-    };
-
-    $scope.loadTeacherView = function (teacher) {
-        $state.go('teacherObservation', { teacherId: teacher.id });
-    };
-};
-
-exports.default = HomeCtrl;
-
-/***/ }),
 /* 90 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var NewObservaitonCtrl = function NewObservaitonCtrl(BreadcrumbFactory) {};
-
-exports.default = NewObservaitonCtrl;
-
-/***/ }),
-/* 91 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-var ScoreInputCtrl = function ScoreInputCtrl($scope, $state, $rootScope, UtilService, TeacherService, BreadcrumbFactory, ScoreService, ScoreFactory, workflow) {
-
-    $scope.templateUrl = 'views/breadcrumbs/breadcrumbs.html';
-
-    BreadcrumbFactory['workflow'] = workflow;
-    BreadcrumbFactory['label_1'] = ScoreFactory.school.name;
-    BreadcrumbFactory['label_3'] = 'Step 3';
-    if (workflow === 'scores') {
-        BreadcrumbFactory['label_2'] = ScoreFactory.teacher.name;
-    } else {
-        BreadcrumbFactory['label_2'] = 'Teachers';
-    }
-    $scope.breadcrumbs = BreadcrumbFactory;
-
-    // fetch data
-    $scope.grades = ScoreFactory.grades;
-    $scope.subjects = ScoreFactory.subjects;
-    $scope.disableSubjectSelect = true;
-
-    $scope.recordGrade = function () {
-        ScoreFactory['grade'] = JSON.parse($scope.grade);
-        $scope.disableSubjectSelect = false;
-    };
-    $scope.recordSubject = function () {
-        ScoreFactory['subject'] = JSON.parse($scope.subject);
-    };
-
-    $scope.cancel = function () {
-        UtilService.cancelScore(ScoreFactory);
-    };
-
-    $scope.scoreObservation = function () {
-        ScoreService.createScore({
-            school_id: ScoreFactory.school.id,
-            grade_id: ScoreFactory.grade.id,
-            subject_id: ScoreFactory.subject.id,
-            teacher_id: ScoreFactory.teacher.id
-        }, function (err, res) {
-            if (!err) {
-                $state.go('scoreForm', {
-                    scoreId: res.data.data.id
-                });
-            }
-        });
-    };
-};
-
-exports.default = ScoreInputCtrl;
-
-/***/ }),
-/* 92 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -66728,6 +66590,140 @@ var NavCtrl = function NavCtrl($scope) {
 exports.default = NavCtrl;
 
 /***/ }),
+/* 91 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var HomeCtrl = function HomeCtrl($scope, $state, TeacherService, SchoolService, ObservationTypeService, GradeService, ObservationFactory, ScoreFactory, PaginationFactory) {
+
+    $scope.page = 'dashboard';
+    $scope.pager = {};
+    $scope.switchCardContext = false;
+    var observationTypes = void 0;
+
+    // fetch data
+    TeacherService.fetchAllTeachers(function (err, res) {
+        var reg = /^(\w+)\s(\w+)$/;
+        if (!err) {
+            $scope.teachers = res.data.data;
+            res.data.data.forEach(function (elem, index) {
+                if (elem.school.name === 'UPA HS' || elem.school.name === 'UPA MS') {
+                    elem.name = elem.name.replace(reg, "$2 $1");
+                }
+            });
+        } else {
+            console.error(err, 'ERROR');
+        }
+    });
+
+    SchoolService.fetchSchools(function (err, res) {
+        if (!err) {
+            $scope.schools = res.data.data;
+        } else {
+            console.error(err, 'ERROR');
+        }
+    });
+
+    ObservationTypeService.fetchObservationTypes(function (err, res) {
+        if (!err) {
+            observationTypes = res.data.data;
+        } else {
+            console.error(err, 'ERROR');
+        }
+    });
+
+    // event handlders
+    $scope.fetchGrades = function (school) {
+        if (school !== null) {
+            GradeService.query({
+                id: school.id
+            }, function (res) {
+                $scope.grades = res.data;
+            }, function (err) {
+                console.error(err, 'ERROR');
+            });
+        } else {
+            $scope.grades = [];
+        }
+    };
+
+    $scope.newTeacherScore = function (teacher) {
+        ScoreFactory.teacher = teacher;
+        $state.go('scoreDetails', { workflow: 'scores' });
+    };
+
+    $scope.newTeacherObservation = function (teacher) {
+        ObservationFactory.teacher = teacher;
+        ObservationFactory['observationType'] = observationTypes[1];
+        $state.go('observationInputs', { workflow: 'observations' });
+    };
+};
+
+exports.default = HomeCtrl;
+
+/***/ }),
+/* 92 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var ScoreInputCtrl = function ScoreInputCtrl($scope, $state, $rootScope, UtilService, TeacherService, BreadcrumbFactory, ScoreService, ScoreFactory, workflow) {
+
+    $scope.templateUrl = 'views/breadcrumbs/breadcrumbs.html';
+
+    BreadcrumbFactory['workflow'] = workflow;
+    BreadcrumbFactory['label_1'] = ScoreFactory.teacher.school.name;
+    BreadcrumbFactory['label_3'] = 'Step 3';
+    if (workflow === 'scores') {
+        BreadcrumbFactory['label_2'] = ScoreFactory.teacher.name;
+    } else {
+        BreadcrumbFactory['label_2'] = 'Teachers';
+    }
+    $scope.breadcrumbs = BreadcrumbFactory;
+
+    // fetch data
+    $scope.grades = ScoreFactory.teacher.grades;
+    $scope.subjects = ScoreFactory.teacher.subjects;
+    $scope.disableSubjectSelect = true;
+
+    $scope.recordGrade = function () {
+        ScoreFactory['grade'] = JSON.parse($scope.grade);
+        $scope.disableSubjectSelect = false;
+    };
+    $scope.recordSubject = function () {
+        ScoreFactory['subject'] = JSON.parse($scope.subject);
+    };
+
+    $scope.cancel = function () {
+        UtilService.cancelScore(ScoreFactory);
+    };
+
+    $scope.scoreObservation = function () {
+        ScoreService.createScore({
+            school_id: ScoreFactory.teacher.school.id,
+            grade_id: ScoreFactory.grade.id,
+            subject_id: ScoreFactory.subject.id,
+            teacher_id: ScoreFactory.teacher.id
+        }, function (err, res) {
+            if (!err) {
+                $state.go('scoreForm', { scoreId: res.data.data.id });
+            }
+        });
+    };
+};
+
+exports.default = ScoreInputCtrl;
+
+/***/ }),
 /* 93 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -66740,11 +66736,8 @@ Object.defineProperty(exports, "__esModule", {
 var ObservationInputsCtrl = function ObservationInputsCtrl($scope, $state, GradeService, $rootScope, UtilService, TeacherService, ObservationService, ObservationFactory, BreadcrumbFactory, workflow) {
 
     $scope.templateUrl = 'views/breadcrumbs/breadcrumbs.html';
-    // $scope.breadcrumbs = BreadcrumbFactory;
-
-    console.log(workflow, 'workflow');
     BreadcrumbFactory['workflow'] = workflow;
-    BreadcrumbFactory['label_1'] = ObservationFactory.school.name;
+    BreadcrumbFactory['label_1'] = ObservationFactory.teacher.school.name;
     BreadcrumbFactory['label_3'] = 'Details';
     if (workflow === 'observations') {
         BreadcrumbFactory['label_2'] = ObservationFactory.observationType.name;
@@ -66753,10 +66746,8 @@ var ObservationInputsCtrl = function ObservationInputsCtrl($scope, $state, Grade
     }
     $scope.breadcrumbs = BreadcrumbFactory;
 
-    $scope.grades = ObservationFactory.grades;
-    $scope.subjects = ObservationFactory.subjects;
-
-    console.log($scope.subjects, 'subjects');
+    $scope.grades = ObservationFactory.teacher.grades;
+    $scope.subjects = ObservationFactory.teacher.subjects;
 
     // disable teacher and subject select elements on load
     $scope.disableTeacherSelect = true;
@@ -66775,11 +66766,9 @@ var ObservationInputsCtrl = function ObservationInputsCtrl($scope, $state, Grade
     };
 
     $scope.createObservation = function () {
-        console.log(ObservationFactory, 'observa-factory-new');
-
         if (ObservationFactory.grade && ObservationFactory.teacher && ObservationFactory.subject) {
             ObservationService.createObservation({
-                school_id: ObservationFactory.school.id,
+                school_id: ObservationFactory.teacher.school.id,
                 grade_id: ObservationFactory.grade.id,
                 subject_id: ObservationFactory.subject.id,
                 teacher_id: ObservationFactory.teacher.id,
@@ -66826,14 +66815,16 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var ObservationFormCtrl = function ObservationFormCtrl($scope, $state, $stateParams, $timeout, observation, Upload, GradeService, TeacherService, ObservationTypeService, ObservationService, ClusterService, AttachmentService, UtilService, ObservationFactory, BASE_URL) {
 
+    var line = new ProgressBar.Line('#progress', { color: '#5F2358' });
+
     var observationToBeDeleted = void 0,
         cluster_ids = [];
     $scope.observation = observation.data;
     $scope.editObservationName = false;
     $scope.isImage;
     $scope.selectedImageUrl;
+    $scope.attachmentFormat;
 
-    console.log($scope.observation, 'observation');
     // fetch data
     ObservationTypeService.get({
         id: $scope.observation.observation_type_id
@@ -66877,16 +66868,38 @@ var ObservationFormCtrl = function ObservationFormCtrl($scope, $state, $statePar
         }
     };
 
-    $scope.checkMediaType = function (file) {
-        var fileExtension = file.substr(file.indexOf(".") + 1).toLowerCase(),
-            imageFormats = ['bmp', 'gif', 'jpeg', 'jpg', 'png'];
-        if (imageFormats.some(function (el) {
-            return fileExtension.includes(el);
+    $scope.checkIfAttacmentIsImage = function (file) {
+        var commonImageTypes = ['bmp', 'gif', 'jpeg', 'jpg', 'png'];
+
+        if (commonImageTypes.some(function (el) {
+            return file.name.substr(file.name.indexOf(".") + 1).toLowerCase().includes(el);
         })) {
-            $scope.isImage = true;
             return true;
         } else {
-            $scope.isImage = false;
+            return false;
+        }
+    };
+
+    $scope.checkIfAttacmentIsDocument = function (file) {
+        var commonDocumentTypes = ['pdf', 'doc', 'docx'];
+
+        if (commonDocumentTypes.some(function (el) {
+            return file.name.substr(file.name.indexOf(".") + 1).toLowerCase().includes(el);
+        })) {
+            return true;
+        } else {
+            return false;
+        }
+    };
+
+    $scope.checkIfAttacmentIsVideo = function (file) {
+        var commonVideoTypes = ['mov', 'mp4'];
+
+        if (commonVideoTypes.some(function (el) {
+            return file.name.substr(file.name.indexOf(".") + 1).toLowerCase().includes(el);
+        })) {
+            return true;
+        } else {
             return false;
         }
     };
@@ -66916,9 +66929,14 @@ var ObservationFormCtrl = function ObservationFormCtrl($scope, $state, $statePar
                 }
             });
 
+            line.animate(0.5);
             file.upload.then(function (res) {
                 $timeout(function () {
                     $scope.observation.attachments = res.data.data.attachments;
+                    line.animate(1.0);
+                    setTimeout(function () {
+                        line.animate(0);
+                    }, 2000);
                 });
             }, function (res) {
                 if (res.status > 0) {
@@ -67413,46 +67431,9 @@ exports.default = ScoreFormCtrl;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-var TeacherCtrl = function TeacherCtrl($scope, $state, $rootScope, UtilService, TeacherService, BreadcrumbFactory, ScoreFactory) {
-
-    $scope.templateUrl = 'views/breadcrumbs/breadcrumbs.html';
-
-    $scope.breadcrumbs = BreadcrumbFactory;
-    // fetch data
-    TeacherService.fetchSchoolTeachers(2, function (err, res) {
-        if (err) {
-            console.error(err);
-        }
-        console.log(res.data.data);
-        $scope.teachers = res.data.data;
-    });
-
-    $scope.cancel = function () {
-        UtilService.cancelScore(ScoreFactory);
-    };
-    $scope.recordTeacher = function (teacher) {
-        BreadcrumbFactory['label_2'] = teacher.name;
-        ScoreFactory['teacher'] = teacher;
-        $state.go('scoreDetails');
-    };
-};
-
-exports.default = TeacherCtrl;
-
-/***/ }),
-/* 110 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-var TeacherObservationCtrl = function TeacherObservationCtrl($scope, $state, UtilService, ObservationService, ObservationTypeService, ObservationFactory, ScoreFactory, teacher) {
+var TeacherCtrl = function TeacherCtrl($scope, $state, UtilService, ObservationService, ObservationTypeService, ObservationFactory, ScoreFactory, teacher) {
     $scope.teacher = teacher.data;
     var observationToBeDeleted = void 0;
-
     $scope.subview = 'observations';
 
     ObservationTypeService.fetchObservationTypes(function (err, res) {
@@ -67464,42 +67445,22 @@ var TeacherObservationCtrl = function TeacherObservationCtrl($scope, $state, Uti
     });
 
     $scope.newTeacherObservation = function (teacher) {
-        ObservationFactory['teacher'] = {
-            id: teacher.id,
-            name: teacher.name
-        };
-        ObservationFactory['school'] = teacher.school;
+        ObservationFactory.teacher = teacher;
         ObservationFactory['observationType'] = $scope.observationTypes[1];
-        ObservationFactory['grades'] = teacher.grades;
-        ObservationFactory['subjects'] = teacher.subjects;
-        $state.go('observationInputs', {
-            workflow: 'observations'
-        });
+        $state.go('observationInputs', { workflow: 'observations' });
     };
 
     $scope.newTeacherScore = function (teacher) {
-        ScoreFactory['teacher'] = {
-            id: teacher.id,
-            name: teacher.name
-        };
-        ScoreFactory['school'] = teacher.school;
-        ScoreFactory['grades'] = teacher.grades;
-        ScoreFactory['subjects'] = teacher.subjects;
-        $state.go('scoreDetails', {
-            workflow: 'scores'
-        });
+        ObservationFactory.teacher = teacher;
+        $state.go('scoreDetails', { workflow: 'scores' });
     };
 
     $scope.editObservation = function (observation) {
-        $state.go('observationForm', {
-            observationId: observation.id
-        });
+        $state.go('observationForm', { observationId: observation.id });
     };
 
     $scope.editScore = function (score) {
-        $state.go('scoreForm', {
-            scoreId: score.id
-        });
+        $state.go('scoreForm', { scoreId: score.id });
     };
 
     $scope.openModal = function (observation) {
@@ -67527,7 +67488,256 @@ var TeacherObservationCtrl = function TeacherObservationCtrl($scope, $state, Uti
     };
 };
 
-exports.default = TeacherObservationCtrl;
+exports.default = TeacherCtrl;
+
+/***/ }),
+/* 110 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _gradeService = __webpack_require__(60);
+
+var _gradeService2 = _interopRequireDefault(_gradeService);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var AdminCtrl = function AdminCtrl($scope, $state, TeacherService, SchoolService, GradeService, SubjectService, UtilService) {
+
+    //initialize models
+    $scope.resourceType;
+    var toBeDeletedResource = void 0;
+
+    // fetch data
+    TeacherService.fetchAllTeachers(function (err, res) {
+        if (!err) {
+            $scope.teachers = res.data.data;
+            $scope.teachers.map(function (el, index) {
+                var lastName = el.name.split(' ').slice(-1).join(' ');
+                el.lastName = lastName;
+            });
+        } else {
+            console.error(err, 'ERROR');
+        }
+    });
+
+    SchoolService.fetchSchools(function (err, res) {
+        if (!err) {
+            $scope.schools = res.data.data;
+        } else {
+            console.error(err, 'ERROR');
+        }
+    });
+
+    GradeService.fetchGrades(function (err, res) {
+        if (!err) {
+            $scope.grades = res.data.data;
+        } else {
+            console.error(err, 'ERROR');
+        }
+    });
+
+    SubjectService.fetchSubjects(function (err, res) {
+        if (!err) {
+            $scope.subjects = res.data.data;
+        } else {
+            console.error(err, 'ERROR');
+        }
+    });
+
+    // event handlders
+    $scope.fetchGrades = function (school) {
+        if (school !== null) {
+            GradeService.query({
+                id: school.id
+            }, function (res) {
+                $scope.grades = res.data;
+            }, function (err) {
+                console.error(err, 'ERROR');
+            });
+        } else {
+            $scope.grades = [];
+        }
+    };
+
+    // crete resource
+    function createResources() {
+
+        // event handlers
+        $scope.openModal = function () {
+            UtilService.openModal('create-' + $scope.resourceType + '-modal');
+        };
+
+        $scope.closeModal = function () {
+            UtilService.closeModal('create-' + $scope.resourceType + '-modal');
+        };
+
+        $scope.createSchool = function (newSchool) {
+            SchoolService.createSchool(function (err, res) {
+                if (!err) {
+                    UtilService.closeModal('create-' + $scope.resourceType + '-modal');
+                    $state.reload();
+                } else {
+                    console.error(err, 'ERROR');
+                }
+            }, newSchool);
+        };
+
+        $scope.createGrade = function (newGrade) {
+            GradeService.createGrade(function (err, res) {
+                if (!err) {
+                    UtilService.closeModal('create-' + $scope.resourceType + '-modal');
+                    $state.reload();
+                } else {
+                    console.error(err, 'ERROR');
+                }
+            }, newGrade);
+        };
+
+        $scope.createSubject = function (newSubject) {
+            SubjectService.createSubject(function (err, res) {
+                if (!err) {
+                    UtilService.closeModal('create-' + $scope.resourceType + '-modal');
+                    $state.reload();
+                } else {
+                    console.error(err, 'ERROR');
+                }
+            }, newSubject);
+        };
+
+        $scope.createTeacher = function (newTeacher) {
+            TeacherService.createTeacher(function (err, res) {
+                if (!err) {
+                    UtilService.closeModal('create-' + $scope.resourceType + '-modal');
+                    $state.reload();
+                } else {
+                    console.error(err, 'ERROR');
+                }
+            }, newTeacher);
+        };
+    }
+
+    function deleteResources() {
+        // delete resources
+        $scope.openDeleteResourceModal = function (resource) {
+            UtilService.openModal('delete-resource-modal');
+            toBeDeletedResource = resource;
+        };
+
+        $scope.closeDeleteResourceModal = function () {
+            UtilService.closeModal('delete-resource-modal');
+        };
+
+        $scope.deleteResource = function (resource) {
+            if (resource == 'school') {
+                SchoolService.deleteSchool(function (err, res) {
+                    if (!err) {
+                        UtilService.closeModal('delete-resource-modal');
+                        $state.reload();
+                    } else {
+                        console.error(err, 'ERR');
+                    }
+                }, toBeDeletedResource);
+            }
+            if (resource == 'teacher') {
+                TeacherService.deleteTeacher(function (err, res) {
+                    if (!err) {
+                        UtilService.closeModal('delete-resource-modal');
+                        $state.reload();
+                    } else {
+                        console.error(err, 'ERR');
+                    }
+                }, toBeDeletedResource);
+            }
+            if (resource == 'grade') {
+                GradeService.deleteGrade(function (err, res) {
+                    if (!err) {
+                        UtilService.closeModal('delete-resource-modal');
+                        $state.reload();
+                    } else {
+                        console.error(err, 'ERR');
+                    }
+                }, toBeDeletedResource);
+            }
+            if (resource == 'subject') {
+                SubjectService.deleteSubject(function (err, res) {
+                    if (!err) {
+                        UtilService.closeModal('delete-resource-modal');
+                        $state.reload();
+                    } else {
+                        console.error(err, 'ERR');
+                    }
+                }, toBeDeletedResource);
+            }
+        };
+    }
+
+    function updateResources() {
+        // update resources
+        $scope.openEditResoureModal = function (obj) {
+            UtilService.openModal('update-' + $scope.resourceType + '-modal');
+            if ($scope.resourceType == 'teacher') {
+                $scope.updatedTeacher = obj;
+            }
+            if ($scope.resourceType == 'school') {
+                $scope.updatedSchool = obj;
+            }
+            if ($scope.resourceType == 'subject') {
+                $scope.updatedSubject = obj;
+            }
+            if ($scope.resourceType == 'grade') {
+                $scope.updatedGrade = obj;
+            }
+        };
+
+        $scope.closeEditResourceModal = function () {
+            UtilService.closeModal('update-' + $scope.resourceType + '-modal');
+        };
+
+        $scope.updateSchool = function (school) {
+            SchoolService.updateSchool(function (err, res) {
+                if (!err) {
+                    UtilService.closeModal('update-' + $scope.resourceType + '-modal');
+                    $state.reload();
+                } else {
+                    console.error(err, 'ERR');
+                }
+            }, school);
+        };
+
+        $scope.updateSubject = function (subject) {
+            SubjectService.updateSubject(function (err, res) {
+                if (!err) {
+                    UtilService.closeModal('update-' + $scope.resourceType + '-modal');
+                    $state.reload();
+                } else {
+                    console.error(err, 'ERR');
+                }
+            }, subject);
+        };
+
+        $scope.updateGrade = function (grade) {
+            GradeService.updateGrade(function (err, res) {
+                if (!err) {
+                    UtilService.closeModal('update-' + $scope.resourceType + '-modal');
+                    $state.reload();
+                } else {
+                    console.error(err, 'ERR');
+                }
+            }, grade);
+        };
+    }
+
+    createResources();
+    deleteResources();
+    updateResources();
+};
+exports.default = AdminCtrl;
 
 /***/ }),
 /* 111 */
@@ -67539,53 +67749,36 @@ exports.default = TeacherObservationCtrl;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-var AdminCtrl = function AdminCtrl($scope, $state, TeacherService, SchoolService, UtilService) {
-
-    //initialize models
-    $scope.resourceType;
-
-    // fetch data
-    TeacherService.fetchAllTeachers(function (err, res) {
-        if (!err) {
-            $scope.teachers = res.data.data;
-        } else {
-            console.error(err, 'ERROR');
-        }
-    });
-
-    SchoolService.fetchSchools(function (err, res) {
-        if (!err) {
-            $scope.schools = res.data;
-        } else {
-            console.error(err, 'ERROR');
-        }
-    });
-
-    $scope.showDeleteResourceModal = function (resource) {
-        UtilService.openModal('c-delete-resource-modal');
-    };
-};
-
-exports.default = AdminCtrl;
-
-/***/ }),
-/* 112 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
 var SchoolService = function SchoolService(BASE_URL, $resource, $http) {
 
-    var obj = $resource(BASE_URL + '/schools/:id', {
-        id: '@id'
-    });
+    var obj = $resource(BASE_URL + '/schools/:id', { id: '@id' });
 
     obj.fetchSchools = function (cb) {
-        $http.get(BASE_URL + '/schools').then(function (res) {
+        $http.get(BASE_URL + 'schools').then(function (res) {
+            cb(null, res);
+        }, function (err) {
+            cb(err);
+        });
+    };
+
+    obj.createSchool = function (cb, newSchool) {
+        $http.post(BASE_URL + 'schools', { school: newSchool }).then(function (res) {
+            cb(null, res);
+        }, function (err) {
+            cb(err);
+        });
+    };
+
+    obj.deleteSchool = function (cb, school) {
+        $http.delete(BASE_URL + 'schools/' + school.id).then(function (res) {
+            cb(null, res);
+        }, function (err) {
+            cb(err);
+        });
+    };
+
+    obj.updateSchool = function (cb, school) {
+        $http.put(BASE_URL + 'schools/' + school.id, { name: school.name }).then(function (res) {
             cb(null, res);
         }, function (err) {
             cb(err);
@@ -67598,7 +67791,7 @@ var SchoolService = function SchoolService(BASE_URL, $resource, $http) {
 exports.default = SchoolService;
 
 /***/ }),
-/* 113 */
+/* 112 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -67630,32 +67823,7 @@ var ObservationTypeService = function ObservationTypeService(BASE_URL, $resource
 exports.default = ObservationTypeService;
 
 /***/ }),
-/* 114 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-var GradeService = function GradeService(BASE_URL, $resource, $http) {
-
-    var obj = $resource(BASE_URL + '/schools/:id/grades', {
-        id: '@id'
-    }, {
-        'query': {
-            method: 'GET'
-        }
-    });
-
-    return obj;
-};
-
-exports.default = GradeService;
-
-/***/ }),
-/* 115 */
+/* 113 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -67698,13 +67866,43 @@ var TeacherService = function TeacherService(BASE_URL, $resource, $http) {
         });
     };
 
+    obj.deleteTeacher = function (cb, teacher) {
+        $http.delete(BASE_URL + 'teachers/' + teacher.id).then(function (res) {
+            cb(null, res);
+        }, function (err) {
+            cb(err);
+        });
+    };
+
+    obj.createTeacher = function (cb, teacher) {
+
+        var gradeIds = teacher.grades.map(function (el) {
+            return el.id.toString();
+        });
+
+        var subjectIds = teacher.subjects.map(function (el) {
+            return el.id.toString();
+        });
+
+        $http.post(BASE_URL + 'teachers/', {
+            name: teacher.firstName + ' ' + teacher.lastName,
+            schoolId: teacher.school.id,
+            grades: gradeIds,
+            subjects: subjectIds
+        }).then(function (res) {
+            cb(null, res);
+        }, function (err) {
+            cb(err);
+        });
+    };
+
     return obj;
 };
 
 exports.default = TeacherService;
 
 /***/ }),
-/* 116 */
+/* 114 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -67724,13 +67922,45 @@ var SubjectService = function SubjectService(BASE_URL, $resource, $http) {
         }
     });
 
+    obj.fetchSubjects = function (cb) {
+        $http.get(BASE_URL + 'subjects').then(function (res) {
+            cb(null, res);
+        }, function (err) {
+            cb(err);
+        });
+    };
+
+    obj.createSubject = function (cb, newSubject) {
+        $http.post(BASE_URL + 'subjects', { subject: newSubject }).then(function (res) {
+            cb(null, res);
+        }, function (err) {
+            cb(err);
+        });
+    };
+
+    obj.deleteSubject = function (cb, subject) {
+        $http.delete(BASE_URL + 'subjects/' + subject.id).then(function (res) {
+            cb(null, res);
+        }, function (err) {
+            cb(err);
+        });
+    };
+
+    obj.updateSubject = function (cb, subject) {
+        $http.put(BASE_URL + 'subjects/' + subject.id, { name: subject.name }).then(function (res) {
+            cb(null, res);
+        }, function (err) {
+            cb(err);
+        });
+    };
+
     return obj;
 };
 
 exports.default = SubjectService;
 
 /***/ }),
-/* 117 */
+/* 115 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -67774,7 +68004,7 @@ var ObservationService = function ObservationService(BASE_URL, $resource, $http)
 exports.default = ObservationService;
 
 /***/ }),
-/* 118 */
+/* 116 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -67817,7 +68047,7 @@ var ScoreService = function ScoreService(BASE_URL, $resource, $http) {
 exports.default = ScoreService;
 
 /***/ }),
-/* 119 */
+/* 117 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -67861,7 +68091,7 @@ var IndicatorScoreService = function IndicatorScoreService(BASE_URL, $resource, 
 exports.default = IndicatorScoreService;
 
 /***/ }),
-/* 120 */
+/* 118 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -67890,7 +68120,7 @@ var ElementService = function ElementService(BASE_URL, $resource, $http) {
 exports.default = ElementService;
 
 /***/ }),
-/* 121 */
+/* 119 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -67915,7 +68145,7 @@ var ClusterService = function ClusterService(BASE_URL, $resource, $http) {
 exports.default = ClusterService;
 
 /***/ }),
-/* 122 */
+/* 120 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -67940,7 +68170,7 @@ var AttachmentService = function AttachmentService(BASE_URL, $resource, $http) {
 exports.default = AttachmentService;
 
 /***/ }),
-/* 123 */
+/* 121 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -67953,11 +68183,13 @@ var UtilService = function UtilService($state) {
     var obj = {};
 
     obj.openModal = function (elementClassName) {
-        angular.element(document.getElementsByClassName(elementClassName)).css('display', 'flex');
+        var el = angular.element(document.getElementsByClassName(elementClassName));
+        el.css('display', 'flex');
     };
 
     obj.closeModal = function (elementClassName) {
-        angular.element(document.getElementsByClassName(elementClassName)).css('display', 'none');
+        var el = angular.element(document.getElementsByClassName(elementClassName));
+        el.css('display', 'none');
     };
 
     obj.cancelObservation = function (observation) {
@@ -67975,7 +68207,7 @@ var UtilService = function UtilService($state) {
 exports.default = UtilService;
 
 /***/ }),
-/* 124 */
+/* 122 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -67994,7 +68226,7 @@ var ObservationFactory = function ObservationFactory() {
 exports.default = ObservationFactory;
 
 /***/ }),
-/* 125 */
+/* 123 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -68023,7 +68255,7 @@ var BreadcrumbFactory = function BreadcrumbFactory() {
 exports.default = BreadcrumbFactory;
 
 /***/ }),
-/* 126 */
+/* 124 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -68084,7 +68316,7 @@ var PaginationFactory = function PaginationFactory() {
 exports.default = PaginationFactory;
 
 /***/ }),
-/* 127 */
+/* 125 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -68103,7 +68335,7 @@ var ScoreFactory = function ScoreFactory() {
 exports.default = ScoreFactory;
 
 /***/ }),
-/* 128 */
+/* 126 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";

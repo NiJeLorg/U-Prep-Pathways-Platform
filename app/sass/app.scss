@@ -6,7 +6,6 @@
 @import 'components/components';
 @import 'utilities/utilities';
 @import 'typography/typography';
-
 * {
 	font-family: 'Raleway', sans-serif;
 	outline: none;
@@ -15,14 +14,13 @@
 
 a {
 	text-decoration: none;
-}
+} 
 
 ul {
 	padding: 0;
 	list-style-type: none;
 	margin: 0;
 }
-
 
 .submit-buttons-holder {
 	margin-top: 30px;
@@ -33,4 +31,10 @@ ul {
 	.saved-button {
 		background: $light-purple;
 	}
+}
+
+// overwrite progress loading bar styles
+.checkboxContainer {
+	max-height: 120px;
+	overflow-y: scroll !important;
 }

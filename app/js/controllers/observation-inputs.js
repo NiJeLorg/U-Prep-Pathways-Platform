@@ -3,24 +3,18 @@
 const ObservationInputsCtrl = ($scope, $state, GradeService, $rootScope, UtilService, TeacherService, ObservationService, ObservationFactory, BreadcrumbFactory, workflow) => {
 
     $scope.templateUrl = `views/breadcrumbs/breadcrumbs.html`;
-    // $scope.breadcrumbs = BreadcrumbFactory;
-
-    console.log(workflow, 'workflow');
     BreadcrumbFactory['workflow'] = workflow;
-    BreadcrumbFactory['label_1'] = ObservationFactory.school.name;
+    BreadcrumbFactory['label_1'] = ObservationFactory.teacher.school.name;
     BreadcrumbFactory['label_3'] = 'Details';
     if (workflow === 'observations') {
         BreadcrumbFactory['label_2'] = ObservationFactory.observationType.name;
-
     } else {
         BreadcrumbFactory['label_2'] = 'Teachers';
     }
     $scope.breadcrumbs = BreadcrumbFactory;
 
-    $scope.grades = ObservationFactory.grades;
-    $scope.subjects = ObservationFactory.subjects;
-
-    console.log($scope.subjects, 'subjects');
+    $scope.grades = ObservationFactory.teacher.grades;
+    $scope.subjects = ObservationFactory.teacher.subjects;
 
     // disable teacher and subject select elements on load
     $scope.disableTeacherSelect = true;
@@ -42,11 +36,9 @@ const ObservationInputsCtrl = ($scope, $state, GradeService, $rootScope, UtilSer
 
 
     $scope.createObservation = () => {
-        console.log(ObservationFactory, 'observa-factory-new');
-
         if (ObservationFactory.grade && ObservationFactory.teacher && ObservationFactory.subject) {
             ObservationService.createObservation({
-                school_id: ObservationFactory.school.id,
+                school_id: ObservationFactory.teacher.school.id,
                 grade_id: ObservationFactory.grade.id,
                 subject_id: ObservationFactory.subject.id,
                 teacher_id: ObservationFactory.teacher.id,

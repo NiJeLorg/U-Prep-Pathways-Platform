@@ -46,11 +46,10 @@
 .c-light-box
     img.main-image(src='https://dev-uprep.nijel.org/{{selectedImageUrl}}')
 
+
+
 .ul-padding-30
-        .c-view-all-observations-header
-            .ul-cursor-pointer.l-flex(ui-sref='home')
-                img.ul-cursor-pointer(src='assets/icons/back-icon.svg')
-                p VIEW ALL OBSERVATIONS
+        .progress(id='progress')       
         .c-observation-observation-form
             .c-observation-observation-form__details
                 .edit-observation-name
@@ -79,17 +78,21 @@
             h2 Attachments
             p Add photos, videos, word documents, or pdf's to your observation
             .c-attachments-holder
-                .c-attachment-holder__add-attachment.ul-cursor-pointer(ngf-select='uploadFiles($files, $invalidFiles)' ngf-pattern="'image/*,video/*'" multiple accept='"image/*,video/*"' ng-hide='observation.status === 1')
+                .add-attachment.ul-cursor-pointer(ngf-select='uploadFiles($files, $invalidFiles)' ng-hide='observation.status === 1')
                     img(src='assets/icons/add-icon.svg')
-                div(ng-if='observation.attachments')
-                    .l-flex
-                        .l-flex(ng-repeat='attachment in observation.attachments')
-                            .c-attachment-holder__attachment.ul-cursor-pointer(style='background-size: 100%' ng-if='checkMediaType(attachment.link)'  ng-style="{background: 'url(https://dev-uprep.nijel.org/{{attachment.link}})'}" ng-click='selectAttachment(attachment.link)')
-                                img(src='assets/icons/x-icon-circle.svg' ng-click='removeAttachment(observation.attachments, attachment)')         
-                            div(ng-if='!checkMediaType(attachment.link)')
+                .attachments-container(ng-if='observation.attachments')
+                    .attachment(ng-repeat='attachment in observation.attachments')
+                        div
+                            .attachment__photo(ng-if='checkIfAttacmentIsImage(attachment)' ng-style="{background: 'url(https://dev-uprep.nijel.org/{{attachment.link}})'}" ng-click='selectAttachment(attachment.link)' )
+                            .attachment__video(ng-if='checkIfAttacmentIsVideo(attachment)')
                                 video(controls)
                                     source(src='https://dev-uprep.nijel.org/{{attachment.link}}')
-                                //- img(src='assets/icons/x-icon-circle.svg' ng-click='removeAttachment(observation.attachments, attachment)')         
+                            .attachment__document(ng-if='checkIfAttacmentIsDocument(attachment)')
+                                a(href='https://dev-uprep.nijel.org/{{attachment.link}}' target='_blank')
+                                    img(src="assets/icons/file-type.svg", alt="")
+                                p {{attachment.name}}
+                                //- p {{attachment.name}}
+                        img.remove-attachment(src='assets/icons/x-icon-circle.svg' ng-click='removeAttachment(observation.attachments, attachment)')      
         .ul-50-50
             .c-observation-form-input-group.ul-margin-bottom-20(ng-repeat='observationTypeProperty in observationTypeProperties' ng-if='observationTypeProperty.label != "Conclusions"')
                 h2 {{observationTypeProperty.label}}: {{observationTypeProperty.label_meta}}
@@ -99,7 +102,7 @@
                 h2 {{observationTypeProperty.label}}: {{observationTypeProperty.label_meta}}
                 p {{observationTypeProperty.help_text}}
                 textarea(name='property_{{observationTypeProperty.id}}' ng-model="observationTypeProperty.value" ng-disabled='observation.status === 1')
-        //- .c-clusters
+        .c-clusters
             .c-clusters__title
                 h3 Clusters Observed
                 span

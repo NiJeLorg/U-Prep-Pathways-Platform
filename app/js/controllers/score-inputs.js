@@ -2,12 +2,10 @@
 
 const ScoreInputCtrl = ($scope, $state, $rootScope, UtilService, TeacherService, BreadcrumbFactory, ScoreService, ScoreFactory, workflow) => {
 
-
     $scope.templateUrl = `views/breadcrumbs/breadcrumbs.html`;
 
-
     BreadcrumbFactory['workflow'] = workflow;
-    BreadcrumbFactory['label_1'] = ScoreFactory.school.name;
+    BreadcrumbFactory['label_1'] = ScoreFactory.teacher.school.name;
     BreadcrumbFactory['label_3'] = 'Step 3';
     if (workflow === 'scores') {
         BreadcrumbFactory['label_2'] = ScoreFactory.teacher.name;
@@ -17,8 +15,8 @@ const ScoreInputCtrl = ($scope, $state, $rootScope, UtilService, TeacherService,
     $scope.breadcrumbs = BreadcrumbFactory;
 
     // fetch data
-    $scope.grades = ScoreFactory.grades;
-    $scope.subjects = ScoreFactory.subjects;
+    $scope.grades = ScoreFactory.teacher.grades;
+    $scope.subjects = ScoreFactory.teacher.subjects;
     $scope.disableSubjectSelect = true;
 
     $scope.recordGrade = () => {
@@ -35,15 +33,13 @@ const ScoreInputCtrl = ($scope, $state, $rootScope, UtilService, TeacherService,
 
     $scope.scoreObservation = () => {
         ScoreService.createScore({
-            school_id: ScoreFactory.school.id,
+            school_id: ScoreFactory.teacher.school.id,
             grade_id: ScoreFactory.grade.id,
             subject_id: ScoreFactory.subject.id,
-            teacher_id: ScoreFactory.teacher.id,
+            teacher_id: ScoreFactory.teacher.id
         }, (err, res) => {
             if (!err) {
-                $state.go('scoreForm', {
-                    scoreId: res.data.data.id
-                });
+                $state.go('scoreForm', {scoreId: res.data.data.id});
             }
         })
     }

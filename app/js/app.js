@@ -7,15 +7,13 @@ import ngFileUpload from 'ng-file-upload';
 import _ from 'lodash';
 
 // load controllers
-import HomeCtrl from './controllers/home';
-import NewObservationCtrl from './controllers/new-observation';
-import ScoreInputCtrl from './controllers/score-inputs';
 import NavCtrl from './controllers/nav';
+import HomeCtrl from './controllers/home';
+import ScoreInputCtrl from './controllers/score-inputs';
 import ObservationInputsCtrl from './controllers/observation-inputs';
 import ObservationFormCtrl from './controllers/observation-form';
 import ScoreFormCtrl from './controllers/score-form';
 import TeacherCtrl from './controllers/teacher';
-import TeacherObservationCtrl from './controllers/teacher-observation';
 import AdminCtrl from './controllers/admin';
 
 // load services
@@ -38,7 +36,7 @@ import ScoreFactory from './factories/score-factory';
 import MakeScoreCtrl from './controllers/make-score';
 
 
-const uprepApp = angular.module('uprepApp', [uiRouter, ngFileUpload, ngResource]);
+const uprepApp = angular.module('uprepApp', ['isteven-multi-select', uiRouter, ngFileUpload, ngResource]);
 
 
 let url = 'https://dev-uprep.nijel.org/api/';
@@ -46,14 +44,11 @@ let url = 'https://dev-uprep.nijel.org/api/';
 uprepApp
   .controller('NavCtrl', NavCtrl)
   .controller('HomeCtrl', HomeCtrl)
-  .controller('NewObservationCtrl', NewObservationCtrl)
   .controller('ScoreInputCtrl', ScoreInputCtrl)
   .controller('ObservationInputsCtrl', ObservationInputsCtrl)
   .controller('ObservationFormCtrl', ObservationFormCtrl)
   .controller('ScoreFormCtrl', ScoreFormCtrl)
-  .controller('MakeScoreCtrl', MakeScoreCtrl)
   .controller('TeacherCtrl', TeacherCtrl)
-  .controller('TeacherObservationCtrl', TeacherObservationCtrl)
   .controller('AdminCtrl', AdminCtrl)
   .service('SchoolService', SchoolService)
   .service('ObservationTypeService', ObservationTypeService)
@@ -106,15 +101,10 @@ uprepApp.config(['$stateProvider', '$httpProvider',
         controller: 'HomeCtrl',
         templateUrl: 'views/home.html'
       })
-      .state('newObservation', {
-        url: '/new-observation',
-        controller: 'NewObservationCtrl',
-        templateUrl: 'views/new-observation.html'
-      })
-      .state('teacherObservation', {
-        url: '/teacher-observation/:teacherId',
-        controller: 'TeacherObservationCtrl',
-        templateUrl: 'views/teacher-observation.html',
+      .state('teacher', {
+        url: '/teacher/:teacherId',
+        controller: 'TeacherCtrl',
+        templateUrl: 'views/teacher.html',
         resolve: {
           teacher: ($stateParams, TeacherService) => {
             return TeacherService.query({
@@ -145,16 +135,6 @@ uprepApp.config(['$stateProvider', '$httpProvider',
           }
         }
       })
-      .state('score', {
-        url: '/score',
-        controller: 'MakeScoreCtrl',
-        templateUrl: 'views/score.html'
-      })
-      .state('teacher', {
-        url: '/teacher',
-        controller: 'TeacherCtrl',
-        templateUrl: 'views/teacher.html'
-      })
       .state('scoreDetails', {
         url: '/score-details?workflow',
         controller: 'ScoreInputCtrl',
@@ -182,19 +162,6 @@ uprepApp.config(['$stateProvider', '$httpProvider',
         templateUrl: 'views/admin.html',
         controller: 'AdminCtrl'
       })
-      .state('admin.schools', {
-        url: '/schools',
-        templateUrl: 'views/admin-schools.html',
-      })
-      .state('admin.subjects', {
-        url: '/subjects',
-        templateUrl: 'views/admin-subjects.html',
-      })
-      .state('admin.grades', {
-        url: '/grades',
-        templateUrl: 'views/admin-grades.html',
-      });
-
     $locationProvider.html5Mode(true);
   }
 ]);
