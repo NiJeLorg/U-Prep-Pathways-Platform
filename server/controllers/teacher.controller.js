@@ -9,8 +9,9 @@ import {
 import Sequelize from 'sequelize';
 const Op = Sequelize.Op;
 const get = async(req, res) => {
-    res.sendData(req.teacher);
+    res.sendData(req.teacher)
 };
+
 const list = async(req, res) => {
     const teachers = await teacher.all(getIncludes(req));
     res.sendData(teachers)
@@ -118,7 +119,7 @@ const create = async(req, res) => {
     const grades = req.body.grades;
     const subjects = req.body.subjects;
 
-    for (let grade of grades) {        
+    for (let grade of grades) {
         let gradeObj = await getGrade(grade);
         await teacherObj.addGrades(gradeObj);
         for (let subjectId of subjects) {
