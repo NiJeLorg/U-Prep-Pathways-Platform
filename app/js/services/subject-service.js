@@ -11,7 +11,7 @@ const SubjectService = (BASE_URL, $resource, $http) => {
 
     obj.fetchSubjects = (cb) => {
         $http
-            .get(BASE_URL + 'subjects')
+            .get(BASE_URL + '/subjects')
             .then((res) => {
                 cb(null, res);
             }, (err) => {
@@ -21,7 +21,7 @@ const SubjectService = (BASE_URL, $resource, $http) => {
 
     obj.createSubject = (cb, newSubject) => {
         $http
-            .post(BASE_URL + 'subjects', {subject: newSubject})
+            .post(BASE_URL + '/subjects', {subject: newSubject})
             .then((res) => {
                 cb(null, res);
             }, (err) => {
@@ -31,7 +31,7 @@ const SubjectService = (BASE_URL, $resource, $http) => {
 
     obj.deleteSubject = (cb, subject) => {
         $http
-            .delete(BASE_URL + 'subjects/' + subject.id,)
+            .delete(BASE_URL + '/subjects/' + subject.id,)
             .then((res) => {
                 cb(null, res);
             }, (err) => {
@@ -41,7 +41,7 @@ const SubjectService = (BASE_URL, $resource, $http) => {
 
     obj.updateSubject = (cb, subject) => {
         $http
-            .put(BASE_URL + 'subjects/' + subject.id, {name: subject.name})
+            .put(BASE_URL + '/subjects/' + subject.id, {name: subject.name})
             .then((res) => {
                 cb(null, res);
             }, (err) => {

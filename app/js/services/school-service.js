@@ -4,7 +4,7 @@ const SchoolService = (BASE_URL, $resource, $http) => {
 
     obj.fetchSchools = (cb) => {
         $http
-            .get(BASE_URL + 'schools')
+            .get(BASE_URL + '/schools')
             .then((res) => {
                 cb(null, res);
             }, (err) => {
@@ -14,7 +14,7 @@ const SchoolService = (BASE_URL, $resource, $http) => {
 
     obj.createSchool = (cb, newSchool) => {
         $http
-            .post(BASE_URL + 'schools', {school: newSchool})
+            .post(BASE_URL + '/schools', {school: newSchool})
             .then((res) => {
                 cb(null, res);
             }, (err) => {
@@ -24,7 +24,7 @@ const SchoolService = (BASE_URL, $resource, $http) => {
 
     obj.deleteSchool = (cb, school) => {
         $http
-            .delete(BASE_URL + 'schools/' + school.id,)
+            .delete(BASE_URL + '/schools/' + school.id,)
             .then((res) => {
                 cb(null, res);
             }, (err) => {
@@ -34,7 +34,7 @@ const SchoolService = (BASE_URL, $resource, $http) => {
 
     obj.updateSchool = (cb, school) => {
         $http
-            .put(BASE_URL + 'schools/' + school.id, {name: school.name})
+            .put(BASE_URL + '/schools/' + school.id, {name: school.name})
             .then((res) => {
                 cb(null, res);
             }, (err) => {

@@ -40,7 +40,7 @@ const TeacherService = (BASE_URL, $resource, $http) => {
 
     obj.deleteTeacher = (cb, teacher) => {
         $http
-            .delete(BASE_URL + 'teachers/' + teacher.id,)
+            .delete(BASE_URL + '/teachers/' + teacher.id,)
             .then((res) => {
                 cb(null, res);
             }, (err) => {
@@ -67,7 +67,7 @@ const TeacherService = (BASE_URL, $resource, $http) => {
             });
 
         $http
-            .post(BASE_URL + 'teachers/', {
+            .post(BASE_URL + '/teachers/', {
             name: teacher.firstName + ' ' + teacher.lastName,
             schoolId: teacher.school.id,
             grades: gradeIds,

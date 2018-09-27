@@ -10,7 +10,7 @@ const GradeService = (BASE_URL, $resource, $http) => {
 
     obj.fetchGrades = (cb) => {
         $http
-            .get(BASE_URL + 'grades')
+            .get(BASE_URL + '/grades')
             .then((res) => {
                 cb(null, res);
             }, (err) => {
@@ -20,7 +20,7 @@ const GradeService = (BASE_URL, $resource, $http) => {
 
     obj.createGrade = (cb, newGrade) => {
         $http
-            .post(BASE_URL + 'grades', {grade: newGrade})
+            .post(BASE_URL + '/grades', {grade: newGrade})
             .then((res) => {
                 cb(null, res);
             }, (err) => {
@@ -30,7 +30,7 @@ const GradeService = (BASE_URL, $resource, $http) => {
 
     obj.deleteGrade = (cb, grade) => {
         $http
-            .delete(BASE_URL + 'grades/' + grade.id,)
+            .delete(BASE_URL + '/grades/' + grade.id,)
             .then((res) => {
                 cb(null, res);
             }, (err) => {
@@ -40,7 +40,7 @@ const GradeService = (BASE_URL, $resource, $http) => {
 
     obj.updateGrade = (cb, grade) => {
         $http
-            .put(BASE_URL + 'grades/' + grade.id, {name: grade.name})
+            .put(BASE_URL + '/grades/' + grade.id, {name: grade.name})
             .then((res) => {
                 cb(null, res);
             }, (err) => {
