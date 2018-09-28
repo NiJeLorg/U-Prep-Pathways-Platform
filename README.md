@@ -1,4 +1,4 @@
-<div style='text-align:center'>
+<div style='text-align:center; background:#681c5b'>
     <img alt='Uprep Logo' src='public/assets/uprep-logo.svg'>
 </div>
 
@@ -54,15 +54,16 @@ To clone and run this application, you'll need to have installed the following f
 * Build the project by running `npm run build`,
 * Navigate to the address `http://localhost:3000` or `http://localhost:5000` for for browser-sync live reloading.
 
-## Seeding data
+## Seeding Data
 To seed data to your local db:
-    * Make sure you have the various/accompanied csv teachers files
-    * Run the various commands on the terminal in the same sequential order.
-        * `sequelize db:migrate`
-        * `sequelize db:all`
-        * `node uprep-data.js`
-  
-
+* Make sure you have the various/accompanied csv teachers files
+* Run the various commands on the terminal in the same sequential order.
+```
+    1. sequelize db:migrate
+    2. sequelize db:all
+    3. node uprep-data.js
+```
+        
 ## Frontend Framework
 - [Angular 1](https://angularjs.org/)
 
@@ -76,6 +77,3 @@ To seed data to your local db:
 
 ## Hosting
 The hosted version of the application can be found [**here**](https://uprep-platform.herokuapp.com)
-
-
-
