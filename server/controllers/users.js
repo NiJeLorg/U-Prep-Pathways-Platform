@@ -1,8 +1,7 @@
-'use strict';
-const User = require('../models').User;
+const user = require('../models/user')
 module.exports = {
     create(req, res) {
-        return User
+        return user
             .create({
                 username: req.body.username,
                 first_name: req.body.first_name,
@@ -16,7 +15,7 @@ module.exports = {
             .catch(error => res.status(400).send(error));
     },
     list(req, res) {
-        return User
+        return user
             .all()
             .then(users => res.status(200).send(users))
             .catch(error => res.status(400).send(error));

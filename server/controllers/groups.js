@@ -1,10 +1,10 @@
 'use strict';
-const Group = require('../models').Group,
-User = require('../models').User;
+const group = require('../models/group');
+const user = require('../models/user');
 
 module.exports = {
   create(req, res) {
-    return Group
+    return group
       .create({
         name: req.body.name,
       })
@@ -12,10 +12,10 @@ module.exports = {
       .catch(error => res.status(400).send(error));
   },
   list(req, res) {
-    return Group
+    return group
     .findAll({
         include: [{
-          model: User,
+          model: user,
           as: 'users',
         }],
     })

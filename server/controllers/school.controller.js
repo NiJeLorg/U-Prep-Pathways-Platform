@@ -1,4 +1,5 @@
-import {school, grade} from './../models';
+const school = require('../models/school'),
+    grade = require('../models/grade');
 
 const get = async(req, res) => {
     res.sendData(req.school);
@@ -40,7 +41,7 @@ const getIncludes = (req) => {
     return {include: ['grades']}
 };
 
-export default {
+module.exports = {
     get,
     load,
     list,

@@ -1,13 +1,13 @@
-import {
-    subject,
-    subject_teacher,
-    teacher,
-    observation,
-    school,
-    grade
-} from './../models';
-import Sequelize from 'sequelize';
+const subject = require('../models/subject'),
+    subject_teacher = require('../models/subject_teacher'),
+    teacher = require('../models/teacher'),
+    observation = require('../models/observation'),
+    school = require('../models/school'),
+    grade = require('../models/grade');
+    
+const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
+
 const get = async(req, res) => {
     res.sendData(req.teacher)
 };
@@ -130,7 +130,7 @@ const create = async(req, res) => {
     res.sendData(teacherObj);
 }
 
-export default {
+module.exports =  {
     get,
     load,
     list,

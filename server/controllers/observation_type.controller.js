@@ -1,4 +1,6 @@
-import {observation_type, observation_type_property} from './../models';
+const observation_type = require('../models/observation_type'),
+    observation_type_property = require('../models/observation_type_property');
+
 
 const get = async (req, res) => {
     res.sendData(req.observation_type);
@@ -23,4 +25,4 @@ const list = async (req, res) => {
     res.sendData(observationTypes);
 };
 
-export default {get, load, list};
+module.exports = {get, load, list};

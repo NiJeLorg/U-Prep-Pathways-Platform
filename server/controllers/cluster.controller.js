@@ -1,4 +1,4 @@
-import {cluster} from './../models';
+const cluster =  require('../models/cluster');
 
 const get = async (req, res) => {
     res.sendData(req.cluster);
@@ -22,4 +22,4 @@ const getIncludes = (req) => {
     }
 };
 
-export default {get, load, list};
+module.exports =  {get, load, list};

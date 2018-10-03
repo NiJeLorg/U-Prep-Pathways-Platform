@@ -1,4 +1,4 @@
-import {observation_evidence} from './../models';
+const observation_evidence = require('../models/observation_evidence');
 
 const load = async (req, res, next, id) => {
     const observationEvidence = await observation_evidence.findById(id);
@@ -15,4 +15,4 @@ const remove = async (req, res) => {
 };
 
 
-export default {load, remove};
+module.exports = {load, remove};

@@ -1,7 +1,6 @@
 'use strict';
 
-import {score} from './../models';
-import Sequelize from 'sequelize';
+const score = require('./../models');
 
 const get = async(req, res) => {
     res.sendData(req.score);
@@ -42,7 +41,7 @@ const remove = async(req, res) => {
     res.sendData(deletedScore)
 };
 
-export default {
+module.exports = {
     get,
     list,
     load,
