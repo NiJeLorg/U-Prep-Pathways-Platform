@@ -1,10 +1,15 @@
+const env = process.env.NODE_ENV || "development";
+if (env === "development") {
+    require("dotenv").load();
+}
+
 const gulp = require("gulp");
 const sass = require("gulp-sass");
 const pug = require("gulp-pug");
+const nodemon = require("nodemon");
 const browserSync = require("browser-sync");
 const webpack = require("webpack-stream");
-const config = require("dotenv").config();
-
+const path = require("path");
 const paths = {
     sass: "app/sass/**/*.scss",
     pug: ["!app/shared-views/**", "app/**/*.pug"],
@@ -35,9 +40,19 @@ gulp.task("bundleJS", () => {
         .pipe(browserSync.stream());
 });
 
-gulp.task("browser-sync", () => {
-    browserSync.init(null, {
-        proxy: "localhost:" + config.port,
+gulp.task("nodemon", () => {
+    nodemon({
+        script: path.join(__dirname, "index.js"),
+        env: { NODE_ENV: "development" },
+        ignore: ["app/", "node_modules/"]
+    }).on("restart", function() {
+        console.log(">> node restart");
+    });
+});
+
+gulp.task("browser-sync", ["sass2css", "pug2html", "bundleJS"], () => {
+    browserSync.init({
+        proxy: `localhost:${process.env.PORT}`,
         port: 5000,
         open: false
     });
@@ -46,6 +61,12 @@ gulp.task("browser-sync", () => {
     gulp.watch(paths.js, ["bundleJS"]);
 });
 
-gulp.task("build", ["pug2html", "sass2css", "bundleJS", "browser-sync"]);
+gulp.task("build", [
+    "pug2html",
+    "sass2css",
+    "bundleJS",
+    "nodemon",
+    "browser-sync"
+]);
 
 gulp.task("default", ["build"]);
