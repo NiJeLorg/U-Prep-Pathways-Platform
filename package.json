@@ -4,10 +4,8 @@
   "description": "This repository holds NiJeL's work with the University Preparatory Academy in Detroit, MI on the U Prep Pathways Platform",
   "main": "index.js",
   "scripts": {
-    "start": "node dist/index.js",
-    "test": "mocha --recursive server/test/",
-    "build": "gulp",
-    "dev": "npm run build && npm run start"
+    "dev": "nodemon ./bin/www",
+    "build": "gulp"
   },
   "repository": {
     "type": "git",

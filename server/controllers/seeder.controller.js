@@ -1,4 +1,3 @@
-import {teacher, subject, grade, school, grade_teacher, subject_teacher, grade_school} from './../models';
 const teacher = require('../models/teacher'),
     subject = require('../models/subject'),
     grade = require('../models/grade'),
