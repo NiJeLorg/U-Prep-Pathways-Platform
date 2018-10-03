@@ -1,15 +1,17 @@
 module.exports = {
     output: {
-        filename: 'bundle.js',
+        filename: "bundle.js"
     },
     module: {
-        loaders: [{
-            test: /\.js$/,
-            loader: 'babel-loader',
-            options: {
-                presets: ['env', 'es2015']
-            },
-            exclude: /node_modules/
-        }]
+        loaders: [
+            {
+                test: /\.js$/,
+                loader: "babel-loader",
+                options: {
+                    presets: ["@babel/env"]
+                },
+                exclude: /node_modules/
+            }
+        ]
     }
 };

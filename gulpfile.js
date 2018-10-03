@@ -6,20 +6,10 @@ const webpack = require("webpack-stream");
 const config = require("dotenv").config();
 
 const paths = {
-    app: ["app/**/*.{js,sass,pug}"],
     sass: "app/sass/**/*.scss",
     pug: ["!app/shared-views/**", "app/**/*.pug"],
     entryJs: "app/js/app.js",
-    server: [
-        "./**/**/*.js",
-        "!dist/**",
-        "!node_modules/**",
-        "!coverage/**",
-        "!app/**",
-        "!public/**"
-    ],
     js: "app/js/**/*.js",
-    nonJs: ["./package.json", "./.gitignore", "./.env"],
     public: "public"
 };
 
@@ -52,7 +42,7 @@ gulp.task("browser-sync", () => {
         open: false
     });
     gulp.watch(paths.sass, ["sass2css"]);
-    gulp.watch(paths.app, ["pug2html"]);
+    gulp.watch(paths.pug, ["pug2html"]);
     gulp.watch(paths.js, ["bundleJS"]);
 });
 

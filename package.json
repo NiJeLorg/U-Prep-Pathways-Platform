@@ -47,6 +47,9 @@
         "yamljs": "^0.3.0"
     },
     "devDependencies": {
+        "@babel/core": "^7.1.2",
+        "@babel/preset-env": "^7.1.0",
+        "babel-loader": "^8.0.4",
         "browser-sync": "^2.23.5",
         "gulp": "^3.9.1",
         "gulp-nodemon": "^2.0.6",
