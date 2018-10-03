@@ -1,13 +1,7 @@
 'use strict';
 // config should be imported before importing any other file
-import config from './config/config';
-import app from './config/express';
-import express from 'express';
-
-const debug = require('debug')('uprep-api:index');
-
-// Promise = require('bluebird');
-
+const config = require('dotenv').config();
+const app = require('./config/express');
 
 
 // Start the server
