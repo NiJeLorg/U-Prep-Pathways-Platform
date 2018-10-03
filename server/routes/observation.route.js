@@ -1,9 +1,9 @@
-import express from 'express';
-import observationCtrl from './../controllers/observation.controller';
-import path from 'path';
-import multer from 'multer';
-import crypto from 'crypto';
-import asyncHandler from 'express-async-handler';
+const express = require('express');
+const observationCtrl = require('./../controllers/observation.controller');
+const path = require('path');
+const multer = require('multer');
+const crypto = require('crypto');
+const asyncHandler = require('express-async-handler');
 
 const router = express.Router();
 const storage = multer.diskStorage({
@@ -33,4 +33,5 @@ router.route('/:observationId')
     .delete(asyncHandler(observationCtrl.remove));
 /** Load observation when API with observationId route parameter is hit */
 router.param('observationId', asyncHandler(observationCtrl.load));
-export default router;
+
+module.exports =  router;

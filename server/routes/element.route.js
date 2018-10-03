@@ -1,6 +1,6 @@
-import express from 'express';
-import elementCtrl from './../controllers/element.controller';
-import asyncHandler from 'express-async-handler';
+const express = require('express');
+const elementCtrl = require('./../controllers/element.controller');
+const asyncHandler = require('express-async-handler');
 
 const router = express.Router();
 
@@ -13,4 +13,6 @@ router.route('/:elementId')
     .get(asyncHandler(elementCtrl.get));
 /** Load element when API with elementId route parameter is hit */
 router.param('elementId', asyncHandler(elementCtrl.load));
-export default router;
+
+
+module.exports =  router;

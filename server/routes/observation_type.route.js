@@ -1,6 +1,6 @@
-import express from 'express';
-import observationTypeCtrl from './../controllers/observation_type.controller';
-import asyncHandler from 'express-async-handler';
+const express = require('express');
+const observationTypeCtrl = require('./../controllers/observation_type.controller');
+const asyncHandler = require('express-async-handler');
 
 const router = express.Router();
 
@@ -13,4 +13,6 @@ router.route('/:observationTypeId')
     .get(asyncHandler(observationTypeCtrl.get));
 /** Load observation type when API with observationTypeId route parameter is hit */
 router.param('observationTypeId', asyncHandler(observationTypeCtrl.load));
-export default router;
+
+
+module.exports =  router;

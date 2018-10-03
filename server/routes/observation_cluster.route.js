@@ -1,6 +1,6 @@
-import express from 'express';
-import observationClusterCtrl from './../controllers/observation_cluster.controller';
-import asyncHandler from 'express-async-handler';
+const express = require('express');
+const observationClusterCtrl = require('./../controllers/observation_cluster.controller');
+const asyncHandler = require('express-async-handler');
 
 const router = express.Router();
 router.route('/')
@@ -12,4 +12,5 @@ router.route('/:observationClusterId')
     .get(asyncHandler(observationClusterCtrl.get));
 
 router.param('observationClusterId', asyncHandler(observationClusterCtrl.load));
-export default router;
+
+module.exports = router;
