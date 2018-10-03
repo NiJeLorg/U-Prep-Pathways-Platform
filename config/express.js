@@ -1,7 +1,6 @@
 const express = require('express')
 const logger = require('morgan')
 const bodyParser = require('body-parser')
-const cookieParser = require('cookie-parser')
 const compress = require('compression')
 const methodOverride = require('method-override')
 const cors = require('cors')
@@ -22,7 +21,6 @@ if (config.env === 'development') {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(uprepResponse());
-app.use(cookieParser());
 app.use(compress());
 app.use(methodOverride());
 // secure apps by setting various HTTP headers
