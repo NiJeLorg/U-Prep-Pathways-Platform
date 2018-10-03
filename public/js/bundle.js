@@ -9906,7 +9906,7 @@ var GradeService = function GradeService(BASE_URL, $resource, $http) {
     });
 
     obj.fetchGrades = function (cb) {
-        $http.get(BASE_URL + 'grades').then(function (res) {
+        $http.get(BASE_URL + '/grades').then(function (res) {
             cb(null, res);
         }, function (err) {
             cb(err);
@@ -9914,7 +9914,7 @@ var GradeService = function GradeService(BASE_URL, $resource, $http) {
     };
 
     obj.createGrade = function (cb, newGrade) {
-        $http.post(BASE_URL + 'grades', { grade: newGrade }).then(function (res) {
+        $http.post(BASE_URL + '/grades', { grade: newGrade }).then(function (res) {
             cb(null, res);
         }, function (err) {
             cb(err);
@@ -9922,7 +9922,7 @@ var GradeService = function GradeService(BASE_URL, $resource, $http) {
     };
 
     obj.deleteGrade = function (cb, grade) {
-        $http.delete(BASE_URL + 'grades/' + grade.id).then(function (res) {
+        $http.delete(BASE_URL + '/grades/' + grade.id).then(function (res) {
             cb(null, res);
         }, function (err) {
             cb(err);
@@ -9930,7 +9930,7 @@ var GradeService = function GradeService(BASE_URL, $resource, $http) {
     };
 
     obj.updateGrade = function (cb, grade) {
-        $http.put(BASE_URL + 'grades/' + grade.id, { name: grade.name }).then(function (res) {
+        $http.put(BASE_URL + '/grades/' + grade.id, { name: grade.name }).then(function (res) {
             cb(null, res);
         }, function (err) {
             cb(err);
@@ -71531,7 +71531,7 @@ var TeacherService = function TeacherService(BASE_URL, $resource, $http) {
     };
 
     obj.deleteTeacher = function (cb, teacher) {
-        $http.delete(BASE_URL + 'teachers/' + teacher.id).then(function (res) {
+        $http.delete(BASE_URL + '/teachers/' + teacher.id).then(function (res) {
             cb(null, res);
         }, function (err) {
             cb(err);
@@ -71548,7 +71548,7 @@ var TeacherService = function TeacherService(BASE_URL, $resource, $http) {
             return el.id.toString();
         });
 
-        $http.post(BASE_URL + 'teachers/', {
+        $http.post(BASE_URL + '/teachers/', {
             name: teacher.firstName + ' ' + teacher.lastName,
             schoolId: teacher.school.id,
             grades: gradeIds,
@@ -71587,7 +71587,7 @@ var SubjectService = function SubjectService(BASE_URL, $resource, $http) {
     });
 
     obj.fetchSubjects = function (cb) {
-        $http.get(BASE_URL + 'subjects').then(function (res) {
+        $http.get(BASE_URL + '/subjects').then(function (res) {
             cb(null, res);
         }, function (err) {
             cb(err);
@@ -71595,7 +71595,7 @@ var SubjectService = function SubjectService(BASE_URL, $resource, $http) {
     };
 
     obj.createSubject = function (cb, newSubject) {
-        $http.post(BASE_URL + 'subjects', { subject: newSubject }).then(function (res) {
+        $http.post(BASE_URL + '/subjects', { subject: newSubject }).then(function (res) {
             cb(null, res);
         }, function (err) {
             cb(err);
@@ -71603,7 +71603,7 @@ var SubjectService = function SubjectService(BASE_URL, $resource, $http) {
     };
 
     obj.deleteSubject = function (cb, subject) {
-        $http.delete(BASE_URL + 'subjects/' + subject.id).then(function (res) {
+        $http.delete(BASE_URL + '/subjects/' + subject.id).then(function (res) {
             cb(null, res);
         }, function (err) {
             cb(err);
@@ -71611,7 +71611,7 @@ var SubjectService = function SubjectService(BASE_URL, $resource, $http) {
     };
 
     obj.updateSubject = function (cb, subject) {
-        $http.put(BASE_URL + 'subjects/' + subject.id, { name: subject.name }).then(function (res) {
+        $http.put(BASE_URL + '/subjects/' + subject.id, { name: subject.name }).then(function (res) {
             cb(null, res);
         }, function (err) {
             cb(err);
