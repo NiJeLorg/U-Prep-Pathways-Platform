@@ -44,7 +44,7 @@ gulp.task("nodemon", () => {
     nodemon({
         script: path.join(__dirname, "index.js"),
         env: { NODE_ENV: "development" },
-        ignore: ["app/", "node_modules/"]
+        ignore: ["node_modules/", "app/", "public/"]
     }).on("restart", function() {
         console.log(">> node restart");
     });

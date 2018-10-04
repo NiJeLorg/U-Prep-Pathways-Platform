@@ -4,7 +4,7 @@
     "description": "This repository holds NiJeL's work with the University Preparatory Academy in Detroit, MI on the U Prep Pathways Platform",
     "main": "index.js",
     "scripts": {
-        "dev": "nodemon ./bin/www",
+        "dev": "node ./bin/www",
         "build": "gulp"
     },
     "repository": {
