@@ -1,27 +1,16 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Observation_clusters', {
-      id: {
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true,
+    return queryInterface.createTable('observation_clusters', {
+      observation_id: {
         type: Sequelize.INTEGER
       },
-      name: {
-        type: Sequelize.STRING
-      },
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE
-      },
-      updatedAt: {
-        allowNull: false,
-        type: Sequelize.DATE
+      cluster_id: {
+        type: Sequelize.INTEGER
       }
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Observation_clusters');
+    return queryInterface.dropTable('observation_clusters');
   }
 };

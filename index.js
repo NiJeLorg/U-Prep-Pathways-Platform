@@ -1,47 +1,56 @@
-'use strict';
-let env = process.env.NODE_ENV || 'development';
-if (env === 'development') {
-    require('dotenv').load();
+const express = require('express')
+const logger = require('morgan')
+const bodyParser = require('body-parser')
+const compress = require('compression')
+const methodOverride = require('method-override')
+const cors = require('cors')
+const httpStatus = require('http-status')
+const uprepResponse = require('./server/middleware/response');
+const helmet = require('helmet')
+const routes = require('./server/routes/index.route');
+const config = require('./config/config');
+// const APIError = require('./../server/helpers/APIError')
+const path = require('path')
+
+const app = express();
+
+if (config.env === 'development') {
+    app.use(logger('dev'));
 }
-const express = require('express'),
-    morgan = require('morgan'),
-    bodyParser = require('body-parser'),
-    path = require('path'),
-    c = console,
-    // sequelize = require('./server/config/db.js'),
-    app = express();
-
-// // connect to the db
-// sequelize.authenticate().then(() => {
-//     c.log("Connection has been established successfully!");
-// }).catch((err) => {
-//     c.log('Unable to connect to the database', err);
-// });
-
-// log all requests to the console
-app.use(morgan('dev'));
-
-// parse incoming requests data
+// parse body params and attache them to req.body
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({
-    extended: false
-}));
-
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(uprepResponse());
+app.use(compress());
+app.use(methodOverride());
+// secure apps by setting various HTTP headers
+app.use(helmet());
+// enable CORS - Cross Origin Resource Sharing
+app.use(cors());
 // serve static files
 app.use(express.static(path.resolve('./public')));
+app.use('/uploads', express.static(path.resolve('./uploads')));
 
-// require('./server/routes')(app);
-
+// mount all routes on /api path
+app.use('/api', routes);
 // Setup a default catch-all route that sends back the index.html page
 app.get('*', (req, res) => {
-    res.sendFile('index.html', {
-        root: './public'
-    });
+    res.sendFile('index.html', { root: './public' });
 });
 
-// Start the server
-app.listen(process.env.PORT || 3000, () => {
-    c.log('server listening on port ' + process.env.PORT || 3000);
+// if error is not an instanceOf APIError, convert it.
+// app.use((err, req, res, next) => {
+//     if (!(err instanceof APIError)) {
+//         const apiError = new APIError(err.message, err.status, err.isPublic);
+//         return next(apiError);
+//     }
+//     return next(err);
+// });
+
+// catch 404 and forward to error handler
+app.use((req, res, next) => {
+    const err = new APIError('API not found', httpStatus.NOT_FOUND);
+    return next(err);
 });
 
 module.exports = app;

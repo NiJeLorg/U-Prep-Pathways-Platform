@@ -1,18 +1,85 @@
-.observations
-    section
-        .titles-container
-            h1.title Observations
-        .observations-buttons
-            button.huge-button(ng-click="observationType('Making Observations')" ui-sref='newObservation') Start a new observation
-            button.huge-button(ng-click="observationType('Scoring based on observations')" ui-sref='scoreObservation') Score based on observation
-    section
-        .titles-container
-            h1.title My Observations
-        .filter-observation
-            input(type='text' ng-model='searchText' placeholder='Filter Observations')
-        .saved-observation-container
-            .saved-observation(ng-repeat="observation in observations | orderBy: '-createdAt' | filter:searchText ", ng-click="showObservation(observation)", style="cursor:pointer; display: flex; flex-direction: column; padding: 20px")
-                p {{observation.observationKind}} Observation
-                span {{observation.grade}},  
-                span {{observation.teacher}}
-                p {{observation.readableDate}}
+.ul-padding-30
+    h2.main-heading Pathways
+    p.body-text Is a new tool to help teachers observe in classrooms and to make work pathways for improvement. Take a sentence or two to explain what is being done here. #[a.c-link(href='#') Watch a tutorial here].
+    div
+        .breadcrumbs-container
+            button.c-round-breadcrumb(ng-class="{'is-disabled': page == 'progress'}" ng-click="page='dashboard'") Dashboard
+            button.c-round-breadcrumb(ng-class="{'is-disabled': page == 'dashboard'}" ng-click="page='progress'") Progress
+        .filter-teachers-container
+            .c-input-group__text
+                span
+                    img(src='assets/icons/search-icon.svg')
+                input(type='text' placeholder='Search' name='search' ng-model='search')
+            .c-input-group
+                label Select By: 
+                .c-input-group__select
+                    select
+                        option Teacher
+                        option Teacher Group                  
+            .c-input-group
+                label Filter By: 
+                .c-input-group__select
+                    select(ng-model='selectedSchool' ng-options='school.name for school in schools' ng-change='fetchGrades(selectedSchool)')
+                        option(value='') Select School
+            .c-input-group
+                label Order By: 
+                .c-input-group__select
+                    select(ng-model='selectedGrade' ng-options='grade.name for grade in grades')
+                        option(value='') Select Grade
+        .teachers-container(ng-show='page === "dashboard"')
+            .c-teacher-card(ng-repeat='teacher in teachers | filter:search | filter:selectedSchool.name | teacherGradeFilter:selectedGrade.name | orderBy: "name" ')
+                .c-teacher-card__options
+                    i.fa.fa-2x.fa-ellipsis-v
+                .c-teacher-card__avatar
+                .c-teacher-card__details
+                    p.ul-cursor-pointer(ui-sref='teacher({teacherId: teacher.id})') {{teacher.name}}
+                    p(ng-class='{upaElementaryColor: teacher.school.name === "UPA Elementary", upsmElementaryColor: teacher.school.name === "UPSM Elementary"}') {{teacher.school.name}}                    
+                .c-teacher-card__switch-context
+                    .img-container.ul-cursor-pointer(ng-click='switchCardContext = !switchCardContext' ng-style='{background: switchCardContext ? "#EF4060" : "#5F2358"}')
+                        img(src='assets/icons/switch-arrows.svg')
+                .c-teacher-card__grade-context(ng-show='!switchCardContext')
+                    .titles
+                        h4 Grades
+                        h4 Subjects
+                    .items 
+                        .grades
+                            span Grades: 
+                            span(ng-repeat='grade in teacher.grades | orderBy:"name"') {{grade.name}}, &nbsp;
+                        .subjects
+                            ul 
+                                li(ng-repeat='subject in teacher.subjects | orderBy:"name"') {{subject.name}}
+                .c-teacher-card__teacher-groups-context(ng-show='switchCardContext')
+                    h4 Groups
+                    ul 
+                        li Awesome Group
+                        li Funky Lot
+                        li Science Crew
+                    //- .grades-subjects()
+                    //-     div
+                    //-         p.group-title Grades
+                    //-         span Grades: 
+                    //-         span(ng-repeat='grade in teacher.grades | orderBy:"name"') {{grade.name}}
+                    //-         //- ul
+                    //-         //-     //- li(ng-repeat='grade in teacher.grades | orderBy:"name"') {{grade.name}}
+                    //-         //-     li Grade: 1, 2
+                    //-     div
+                    //-         hp.group-title Subjects
+                    //-         ul
+                    //-             //- li(ng-repeat='subject in teacher.subjects | orderBy:"name"') {{subject.name}}
+                    //-             li Math
+                    //-             li English
+                    //-             li Science
+                    //-             li Geography
+                    //-             li History
+                    //- .teacher-groups()
+                    //-     p Teacher Groups
+                    //-     ul 
+                    //-         li Awesome Group
+                    //-         li Baddest Crew 
+                    //-         li Funky lot
+                .c-teacher__actions
+                    button(ng-click='newTeacherObservation(teacher)') Observe
+                    button(ng-click='newTeacherScore(teacher)') Score
+                        
+            .c-teacher-groups-container(ng-show='page ==="progress"')
+                p Progress

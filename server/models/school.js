@@ -1,18 +1,39 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  var School = sequelize.define('School', {
-    name: DataTypes.STRING,
-    address: DataTypes.STRING
-  });
-  School.associate = (models) => {
-    School.hasMany(models.Teacher, {
-      foreignKey: 'schoolId',
-      as: 'teachers',
+    let School = sequelize.define('school', {
+        name: DataTypes.STRING,
+        address: DataTypes.STRING
+    },{
+        underscored: true
     });
-    School.belongsTo(models.District, {
-      foreignKey: 'districtId',
-      onDelete: 'CASCADE',
-    });
-  };
-  return School;
+    School.associate = (models) => {
+        School.hasMany(models.teacher, {
+            foreignKey: 'school_id',
+            as: 'teachers',
+        });
+        School.hasMany(models.observation, {
+            foreignKey: 'school_id',
+            as: 'observations',
+        });
+        School.hasMany(models.score, {
+            foreignKey: 'school_id',
+            as: 'scores',
+        });
+        School.belongsToMany(models.grade, {
+            foreignKey: 'school_id',
+            through: models.grade_school,
+            onDelete: 'CASCADE',
+            as: 'grades'
+        });
+        School.belongsToMany(models.subject, {
+            foreignKey: 'school_id',
+            through: models.school_subject,
+            onDelete: 'CASCADE',
+            as: 'subjects'
+        });
+        School.belongsTo(models.district, {
+            foreignKey: 'district_id',
+        });
+    };
+    return School;
 };

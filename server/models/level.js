@@ -1,14 +1,15 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  var Level = sequelize.define('Level', {
-    name: DataTypes.STRING,
-    description: DataTypes.STRING
-  });
-  Level.associate = (models) => {
-    Level.belongsTo(models.Indicator, {
-      foreignKey: 'indicatorId',
-      onDelete: 'CASCADE',
-    });
-  };
-  return Level;
+    let Level = sequelize.define('level', {
+        name: DataTypes.STRING,
+        description: DataTypes.TEXT
+    }, {underscored: true});
+    Level.associate = (models) => {
+        Level.belongsToMany(models.indicator, {
+            foreignKey: 'level_id',
+            through: models.indicator_level,
+            onDelete: 'CASCADE',
+        });
+    };
+    return Level;
 };

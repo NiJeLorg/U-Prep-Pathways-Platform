@@ -1,110 +1,166 @@
-'use strict';
-
-import uiRouter from '@uirouter/angularjs';
 import angular from 'angular';
-import ngMaterial from 'angular-material';
+import uiRouter from '@uirouter/angularjs';
+import ngResource from 'angular-resource';
 import ngFileUpload from 'ng-file-upload';
-import angulaFire from 'angularfire';
-import uiBootstrap from 'angular-ui-bootstrap';
+import _ from 'lodash';
 
-// load controllers and services
-import AuthCtrl from './controllers/auth';
-import HomeCtrl from './controllers/home';
+// load controllers
 import NavCtrl from './controllers/nav';
-import NewObservationCtrl from './controllers/newObservation';
-import ScoreObservationCtrl from './controllers/scoreObservation';
-import ShowObservationCtrl from './controllers/showObservation'
-import DataService from './services/DataService';
-import TestData from './services/TestData';
+import HomeCtrl from './controllers/home';
+import ScoreInputCtrl from './controllers/score-inputs';
+import ObservationInputsCtrl from './controllers/observation-inputs';
+import ObservationFormCtrl from './controllers/observation-form';
+import ScoreFormCtrl from './controllers/score-form';
+import TeacherCtrl from './controllers/teacher';
+import AdminCtrl from './controllers/admin';
+
+// load services
+import SchoolService from './services/school-service';
+import ObservationTypeService from './services/observationType-service';
+import GradeService from './services/grade-service';
+import TeacherService from './services/teacher-service';
+import SubjectService from './services/subject-service';
+import ObservationService from './services/observation-service';
+import ScoreService from './services/score-service';
+import IndicatorScoreService from './services/indicator-score-service'
+import ElementService from './services/element-service';
+import ClusterService from './services/cluster-service';
+import AttachmentService from './services/attachment-service';
+import UtilService from './services/utilities-service';
+import ObservationFactory from './factories/observation-factory';
+import BreadcrumbFactory from './factories/breadcrumb-factory';
+import PaginationFactory from './factories/pagination-factory';
+import ScoreFactory from './factories/score-factory';
+import MakeScoreCtrl from './controllers/make-score';
 
 
-const uprepApp = angular.module('uprepApp', [uiRouter, ngMaterial, ngFileUpload, angulaFire, uiBootstrap, 'firebase']);
+const uprepApp = angular.module('uprepApp', ['isteven-multi-select', uiRouter, ngFileUpload, ngResource]);
+
+
+let url = 'https://dev-uprep.nijel.org/api';
+// let url = 'http://localhost:3000/api/';
 
 uprepApp
-  .controller('AuthCtrl', AuthCtrl)
   .controller('NavCtrl', NavCtrl)
   .controller('HomeCtrl', HomeCtrl)
-  .controller('NewObservationCtrl', NewObservationCtrl)
-  .controller('ScoreObservationCtrl', ScoreObservationCtrl)
-  .controller('ShowObservationCtrl', ShowObservationCtrl)
-  .service('DataService', DataService)
-  .service('TestData', TestData);
+  .controller('ScoreInputCtrl', ScoreInputCtrl)
+  .controller('ObservationInputsCtrl', ObservationInputsCtrl)
+  .controller('ObservationFormCtrl', ObservationFormCtrl)
+  .controller('ScoreFormCtrl', ScoreFormCtrl)
+  .controller('TeacherCtrl', TeacherCtrl)
+  .controller('AdminCtrl', AdminCtrl)
+  .service('SchoolService', SchoolService)
+  .service('ObservationTypeService', ObservationTypeService)
+  .service('GradeService', GradeService)
+  .service('TeacherService', TeacherService)
+  .service('ElementService', ElementService)
+  .service('SubjectService', SubjectService)
+  .service('ObservationService', ObservationService)
+  .service('ScoreService', ScoreService)
+  .service('IndicatorScoreService', IndicatorScoreService)
+  .service('ClusterService', ClusterService)
+  .service('AttachmentService', AttachmentService)
+  .service('UtilService', UtilService)
+  .factory('ObservationFactory', ObservationFactory)
+  .factory('ScoreFactory', ScoreFactory)
+  .factory('BreadcrumbFactory', BreadcrumbFactory)
+  .factory('PaginationFactory', PaginationFactory)
+  .filter('teacherGradeFilter', function () {
+
+    // In the return function, we must pass in a single parameter which will be the data we will work on.
+    // We have the ability to support multiple other parameters that can be passed into the filter optionally
+    return function (items, grade) {
+      let filtered = [];
+      if (grade === undefined) {
+        return items
+      } else {
+        angular.forEach(items, function (item) {
+          angular.forEach(item.grades, function (teacherGrade) {
+            if (teacherGrade.name === grade) {
+              filtered.push(item);
+            }
+          });
+
+        });
+      }
+      return filtered;
+    };
+
+  })
+  .constant('BASE_URL', url);
 
 uprepApp.config(['$stateProvider', '$httpProvider',
   '$urlRouterProvider', '$locationProvider', ($stateProvider, $httpProvider, $urlRouterProvider, $locationProvider) => {
 
     // For any unmatched url, redirect to home
-    $urlRouterProvider.otherwise('/home');
+    $urlRouterProvider.otherwise('/');
 
     $stateProvider.state('home', {
-        url: '/home',
+        url: '/',
         controller: 'HomeCtrl',
         templateUrl: 'views/home.html'
       })
-      .state('auth', {
-        url: '/auth',
-        controller: 'AuthCtrl',
-        templateUrl: 'views/auth.html'
+      .state('teacher', {
+        url: '/teacher/:teacherId',
+        controller: 'TeacherCtrl',
+        templateUrl: 'views/teacher.html',
+        resolve: {
+          teacher: ($stateParams, TeacherService) => {
+            return TeacherService.query({
+              id: $stateParams.teacherId
+            }).$promise
+          }
+        }
       })
-      .state('showObservation', {
-        url: '/show-observation/:id',
-        controller: 'ShowObservationCtrl',
-        templateUrl: 'views/show-observation.html'
-      }).state('newObservation', {
-        url: '/pick-observation',
-        controller: 'NewObservationCtrl',
-        templateUrl: 'views/pick-school.html'
-      }).state('newObservation.grade', {
-        url: '/pick-grade',
-        templateUrl: 'views/pick-grade.html'
-      }).state('newObservation.teacher', {
-        url: '/pick-teacher',
-        templateUrl: 'views/pick-teacher.html'
-      }).state('newObservation.subject', {
-        url: '/pick-subject',
-        templateUrl: 'views/pick-subject.html'
-      }).state('newObservation.observationKind', {
-        url: '/pick-observation-kind',
-        templateUrl: 'views/pick-observation-kind.html'
-      }).state('newObservation.observationForm', {
-        url: '/observation-form',
-        templateUrl: 'views/observation-form.html'
-      }).state('newObservation.clustersObserved', {
-        url: '/clusters-observed',
-        templateUrl: 'views/clusters-observed.html'
-      }).state('newObservation.nextOptions', {
-        url: '/next-options',
-        templateUrl: 'views/next-options.html'
-      }).state('scoreObservation', {
-        url: '/score-observation',
-        controller: 'ScoreObservationCtrl',
-        templateUrl: 'views/pick-school.html'
-      }).state('scoreObservation.grade', {
-        url: '/pick-grade',
-        templateUrl: 'views/pick-grade.html'
-      }).state('scoreObservation.teacher', {
-        url: '/pick-teacher',
-        templateUrl: 'views/pick-teacher.html'
-      }).state('scoreObservation.scoreBase', {
-        url: '/score-base',
-        templateUrl: 'views/score-base.html'
-      }).state('scoreObservation.element', {
-        url: '/pick-element',
-        templateUrl: 'views/pick-element.html'
-      }).state('scoreObservation.component', {
-        url: '/pick-component',
-        templateUrl: 'views/pick-component.html'
-      }).state('scoreObservation.attachEvidence', {
-        url: '/attach-evidence',
-        templateUrl: 'views/attach-evidence.html'
-      }).state('scoreObservation.attachEvidenceObservation', {
-        url: '/attach-evidence-observation',
-        templateUrl: 'views/attach-evidence-observation.html'
-      }).state('update-observation', {
-        url: '/update-observation',
-        templateUrl: 'views/update-observation.html'
-      });
-
+      .state('observationInputs', {
+        url: '/observation-inputs?workflow',
+        controller: 'ObservationInputsCtrl',
+        templateUrl: 'views/observation-inputs.html',
+        resolve: {
+          workflow: function ($stateParams) {
+            return $stateParams.workflow;
+          }
+        }
+      })
+      .state('observationForm', {
+        url: '/observation-form/:observationId',
+        controller: 'ObservationFormCtrl',
+        templateUrl: 'views/observation-form.html',
+        resolve: {
+          observation: ($stateParams, ObservationService) => {
+            return ObservationService.query({
+              id: $stateParams.observationId
+            }).$promise;
+          }
+        }
+      })
+      .state('scoreDetails', {
+        url: '/score-details?workflow',
+        controller: 'ScoreInputCtrl',
+        templateUrl: 'views/score-details.html',
+        resolve: {
+          workflow: function ($stateParams) {
+            return $stateParams.workflow;
+          }
+        }
+      })
+      .state('scoreForm', {
+        url: '/score-form/:scoreId',
+        controller: 'ScoreFormCtrl',
+        templateUrl: 'views/score-form.html',
+        resolve: {
+          score: ($stateParams, ScoreService) => {
+            return ScoreService.query({
+              id: $stateParams.scoreId
+            }).$promise;
+          }
+        }
+      })
+      .state('admin', {
+        url: '/admin',
+        templateUrl: 'views/admin.html',
+        controller: 'AdminCtrl'
+      })
     $locationProvider.html5Mode(true);
   }
 ]);

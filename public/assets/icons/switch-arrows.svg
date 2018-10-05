@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="12px" viewBox="0 0 16 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>ic_compare_arrows</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <path d="M6.7575,10.5 L1.5,10.5 L1.5,12 L6.7575,12 L6.7575,14.25 L9.75,11.25 L6.7575,8.25 L6.7575,10.5 L6.7575,10.5 Z M11.2425,9.75 L11.2425,7.5 L16.5,7.5 L16.5,6 L11.2425,6 L11.2425,3.75 L8.25,6.75 L11.2425,9.75 L11.2425,9.75 Z" id="path-1"></path>
+        <rect id="path-3" x="0" y="0" width="38" height="38"></rect>
+    </defs>
+    <g id="Tablet" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-233.000000, -244.000000)">
+        <g id="ic_compare_arrows" transform="translate(232.000000, 241.000000)">
+            <mask id="mask-2" fill="white">
+                <use xlink:href="#path-1"></use>
+            </mask>
+            <g id="Mask"></g>
+            <g id="Colors/Black" mask="url(#mask-2)">
+                <g transform="translate(-9.750000, -9.750000)">
+                    <mask id="mask-4" fill="white">
+                        <use xlink:href="#path-3"></use>
+                    </mask>
+                    <use id="Black" stroke="none" fill="#FFFFFF" fill-rule="evenodd" xlink:href="#path-3"></use>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,922 @@
+swagger: "2.0"
+info:
+  version: "0.0.1"
+  title: Uprep API
+  description: |
+    ## Structure
+
+    ### The Envelope
+    Every response is contained by an envelope. That is, each response has a
+    predictable set of keys with which you can expect to interact:
+    ```json
+    {
+        "meta": {
+            "code": 200
+        },
+        "data": {
+            ...
+        },
+        "pagination": {
+            "next_url": "...",
+            "next_max_id": "13872296"
+        }
+    }
+    ```
+
+    #### META
+    The meta key is used to communicate extra information about the response to
+    the developer. If all goes well, you'll only ever see a code key with value
+    200. However, sometimes things go wrong, and in that case you might see a
+    response like:
+    ```json
+    {
+        "meta": {
+            "error_type": "OAuthException",
+            "code": 400,
+            "error_message": "..."
+        }
+    }
+    ```
+
+    #### DATA
+    The data key is the meat of the response. It may be a list or dictionary,
+    but either way this is where you'll find the data you requested.
+    #### PAGINATION
+    Sometimes you just can't get enough. For this reason, we've provided a
+    convenient way to access more data in any request for sequential data.
+    Simply call the url in the next_url parameter and we'll respond with the
+    next set of data.
+    ```json
+    {
+        ...
+        "pagination": {
+            "next_url": "https://api.uprep.com/v1/observations?access_token=fb2e77d.47a0479900504cb3ab4a1f626d174d2d&max_id=13872296",
+            "next_max_id": "13872296"
+        }
+    }
+    ```
+    On views where pagination is present, we also support the "count" parameter.
+    Simply set this to the number of items you'd like to receive. Note that the
+    default values should be fine for most applications - but if you decide to
+    increase this number there is a maximum value defined on each endpoint.
+
+
+# during dev, should point to your local machine
+host: localhost:3000
+
+# dev-uprep.nijel.org
+# basePath prefixes all resource paths
+basePath: /api/
+#
+schemes:
+  # tip: remove http to make production-grade
+  # - https
+# format of bodies a client can send (Content-Type)
+consumes:
+  - application/json
+# format of the responses to the client (Accepts)
+produces:
+  - application/json
+tags:
+- name: "schools"
+  description: "Everything about schools"
+- name: "observations"
+  description: "Everything about observations"
+- name: "observation_types"
+  description: "Everything about observation types"
+- name: "grades"
+  description: "Everything about grades"
+- name: "teachers"
+  description: "Everything about teachers"
+- name: "subjects"
+  description: "Everything about subjects"
+- name: "clusters"
+  description: "Everything about clusters"
+- name: "scores"
+  description: "Everything about scores"
+- name: "indicator_scores"
+  description: "Everything about indicator scores"
+
+paths:
+  /schools:
+    get:
+      tags:
+      - "schools"
+      summary: "Get list of schools"
+      description: "Fetches a list of schools without any nested properties"
+      operationId: "getSchools"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              data:
+                type: "array"
+                items:
+                  $ref: "#/definitions/School"
+  /schools/{id}:
+    get:
+      tags:
+      - "schools"
+      summary: "Finds a school using its Id"
+      description: "Fetches a school using its Id including nested properties such as the grades available in the school"
+      operationId: "findSchoolById"
+      produces:
+      - "application/json"
+      parameters:
+        - name: id
+          in: path
+          description: ID of school to fetch
+          required: true
+          type: integer
+          format: int64
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              data:
+                type: "array"
+                items:
+                  $ref: "#/definitions/School"
+  /schools/{id}/grades:
+    get:
+      tags:
+      - "schools"
+      summary: "Gets all grades belonging to a particular school"
+      description: "Using the id of the school resource we will fetch all the grades available for that particular school"
+      operationId: "findGradesBySchool"
+      produces:
+      - "application/json"
+      parameters:
+        - name: id
+          in: path
+          description: ID of school
+          required: true
+          type: integer
+          format: int64
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              data:
+                type: "array"
+                items:
+                  $ref: "#/definitions/Grade"
+  /schools/{schoolId}/grades/{gradeId}:
+    get:
+      tags:
+      - "schools"
+      summary: "Gets details of a grade belonging to a particular school"
+      description: "This will return the grade including nested properties such as all teachers that teach that grade"
+      operationId: "findGradeBySchool"
+      produces:
+      - "application/json"
+      parameters:
+        - name: schoolId
+          in: path
+          description: ID of school
+          required: true
+          type: integer
+          format: int64
+        - name: gradeId
+          in: path
+          description: ID of grade
+          required: true
+          type: integer
+          format: int64
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              data:
+                type: "array"
+                items:
+                  $ref: "#/definitions/Grade"
+  /schools/{schoolId}/grades/{gradeId}/teachers:
+    get:
+      tags:
+      - "schools"
+      summary: "Gets all the teachers teaching a particular grade at a particular school"
+      description: "This will return the grade including nested properties such as all teachers that teach that grade"
+      operationId: "findGradeTeachersBySchool"
+      produces:
+      - "application/json"
+      parameters:
+        - name: schoolId
+          in: path
+          description: ID of school
+          required: true
+          type: integer
+          format: int64
+        - name: gradeId
+          in: path
+          description: ID of grade
+          required: true
+          type: integer
+          format: int64
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              data:
+                type: "array"
+                items:
+                  $ref: "#/definitions/Teacher"
+  /schools/{schoolId}/grades/{gradeId}/teachers/{teacherId}:
+    get:
+      tags:
+      - "schools"
+      summary: "Gets all the details for a particular teacher teaching a particular grade at a particular school"
+      description: "This will return the teacher details including the subjects they teach that particular grade"
+      operationId: "findGradeTeacherBySchool"
+      produces:
+      - "application/json"
+      parameters:
+        - name: schoolId
+          in: path
+          description: ID of school
+          required: true
+          type: integer
+          format: int64
+        - name: gradeId
+          in: path
+          description: ID of grade
+          required: true
+          type: integer
+          format: int64
+        - name: teacherId
+          in: path
+          description: ID of teacher
+          required: true
+          type: integer
+          format: int64
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              data:
+                type: "array"
+                items:
+                  $ref: "#/definitions/Teacher"
+  /observation_types:
+    get:
+      tags:
+      - "observation_types"
+      summary: "Get list of observation types"
+      description: "Gets a list of the different observation types"
+      operationId: "getObservationTypes"
+      produces:
+      - "application/json"
+      responses:
+        200:
+         description: OK
+         schema:
+           type: object
+           properties:
+             data:
+              type: "array"
+              items:
+                $ref: "#/definitions/ObservationType"
+
+  /grades:
+    get:
+      tags:
+      - "grades"
+      summary: "Gets list of available grades"
+      description: "Gets the full list of available grades which can be filtered using the school id"
+      operationId: "getGrades"
+      produces:
+      - "application/json"
+      parameters:
+      - name: schoolId
+        in: query
+        description: ID of school
+        type: integer
+        required: true
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              data:
+                type: "array"
+                items:
+                  $ref: "#/definitions/Grade"
+  /grades/{id}:
+    get:
+      tags:
+      - "grades"
+      summary: "Finds a grade using its id"
+      description: "Fetches details for a particular grade.If the schoolId is passed then the grade object loaded will include a list of teachers for that particular grade"
+      operationId: "findGradeById"
+      produces:
+      - "application/json"
+      parameters:
+      - name: id
+        in: path
+        description: ID of grade
+        type: integer
+        required: true
+      - name: schoolId
+        in: query
+        description: ID of school
+        type: integer
+        required: true
+      responses:
+        200:
+          description: OK
+          schema:
+            type: object
+            properties:
+              data:
+                type: "array"
+                items:
+
+                  $ref: "#/definitions/Grade"
+  /teachers:
+    get:
+      tags:
+      - "teachers"
+      summary: "Get list of available teachers"
+      description: "Gets a list of teachers which can be filtered down by passing both the schoolId and gradeId"
+      operationId: "getTeachers"
+      produces:
+      - "application/json"
+      parameters:
+      - name: schoolId
+        in: query
+        description: ID of school
+        type: integer
+        required: false
+      - name: gradeId
+        in: query
+        description: ID of grade
+        type: integer
+        required: false
+      responses:
+        200:
+         description: OK
+         schema:
+           type: object
+           properties:
+             data:
+              type: "array"
+              items:
+                $ref: "#/definitions/Teacher"
+  /teachers/{id}:
+    get:
+      tags:
+      - "teachers"
+      summary: "Finds a teacher using their id"
+      description: "Gets details for a particular teacher. If the schoolId and gradeId are passed the api will return the teacher object together with the subjects they teach for that particular grade"
+      operationId: "findTeacherById"
+      produces:
+      - "application/json"
+      parameters:
+      - name: id
+        in: path
+        description: ID of teacher
+        type: integer
+        required: true
+      - name: schoolId
+        in: query
+        description: ID of school
+        type: integer
+        required: false
+      - name: gradeId
+        in: query
+        description: ID of grade
+        type: integer
+      responses:
+        200:
+         description: OK
+         schema:
+           type: object
+           properties:
+             data:
+              type: "array"
+              items:
+                $ref: "#/definitions/Teacher"
+  /teachers/{id}/subjects:
+      get:
+        tags:
+        - "subjects"
+        summary: "Finds the subjects a particular teacher teaches"
+        description: "Gets a list of subjects taught by a particular teacher"
+        operationId: "findTeacherById"
+        produces:
+        - "application/json"
+        parameters:
+        - name: id
+          in: path
+          description: ID of teacher
+          type: integer
+          required: true
+        responses:
+          200:
+           description: OK
+           schema:
+             type: object
+             properties:
+               data:
+                type: "array"
+                items:
+                  $ref: "#/definitions/Subject"
+  /subjects:
+      get:
+        tags:
+        - "subjects"
+        summary: "Get list of subjects"
+        description: "Fetches a list of subjects without any nested properties. The list can be filtered using the teacher id"
+        operationId: "getSubjects"
+        produces:
+        - "application/json"
+        parameters:
+          - name: teacherId
+            in: body
+            description: ID of teacher
+            required: false
+            type: integer
+            format: int64
+        responses:
+          200:
+            description: OK
+            schema:
+              type: object
+              properties:
+                data:
+                  type: "array"
+                  items:
+                    $ref: "#/definitions/Subject"
+  /subjects/{id}:
+      get:
+        tags:
+        - "subjects"
+        summary: "Finds a subject using its Id"
+        description: "Fetch a subject using its Id "
+        operationId: "findSubjectById"
+        produces:
+        - "application/json"
+        parameters:
+          - name: id
+            in: path
+            description: ID of subject to fetch
+            required: true
+            type: integer
+            format: int64
+        responses:
+          200:
+            description: OK
+            schema:
+              type: object
+              properties:
+                data:
+                  type: "array"
+                  items:
+                    $ref: "#/definitions/Subject"
+  /clusters:
+      get:
+        tags:
+        - "clusters"
+        summary: "Get list of clusters"
+        description: "Fetches a list of cluster that can be observed on an observation"
+        operationId: "getClusters"
+        produces:
+        - "application/json"
+        responses:
+          200:
+            description: OK
+            schema:
+              type: object
+              properties:
+                data:
+                  type: "array"
+                  items:
+                    $ref: "#/definitions/Cluster"
+  /clusters/{id}:
+      get:
+        tags:
+        - "clusters"
+        summary: "Finds a cluster using its Id"
+        description: "Fetch a cluster using its Id "
+        operationId: "findClusterById"
+        produces:
+        - "application/json"
+        parameters:
+          - name: id
+            in: path
+            description: ID of cluster to fetch
+            required: true
+            type: integer
+            format: int64
+        responses:
+          200:
+            description: OK
+            schema:
+              type: object
+              properties:
+                data:
+                  type: "array"
+                  items:
+                    $ref: "#/definitions/Cluster"
+  /observation_evidences/{id}:
+    delete:
+      summary: "Deletes an observation evidence from the database"
+      tags:
+        - "observation_evidences"
+      operationId: "deleteObservationEvidenceById"
+      parameters:
+        - name: id
+          in: path
+          description: ID of observation evidence
+          type: integer
+          required: true
+      responses:
+        200:
+         description: OK
+         schema:
+           type: object
+           properties:
+             data:
+                $ref: "#/definitions/ObservationEvidence"
+  /observations/{id}:
+      get:
+        tags:
+        - "observations"
+        summary: "Finds an observaton using their id"
+        description: "Gets details for a particular observation."
+        operationId: "findObservationById"
+        produces:
+        - "application/json"
+        parameters:
+        - name: id
+          in: path
+          description: ID of observations
+          type: integer
+          required: true
+        responses:
+          200:
+           description: OK
+           schema:
+             type: object
+             properties:
+               data:
+                  $ref: "#/definitions/Observation"
+      put:
+        tags:
+          - "observations"
+        summary: "Update observation data"
+        operationId: "saveObservation"
+        parameters:
+        - name: id
+          in: path
+          description: ID of observation
+          type: integer
+          required: true
+        - in: body
+          name: body
+          description: "Observation data that needs to be saved"
+          schema:
+            type: object
+            properties:
+              name:
+                type: string
+              description:
+                type: string
+              school_id:
+                type: integer
+                required: true
+                format: int64
+              grade_id:
+                type: integer
+                format: int64
+              subject_id:
+                type: integer
+                format: int64
+              teacher_id:
+                type: integer
+                format: int64
+              status:
+                type: integer
+                format: int64
+              attachments:
+                type: array
+                items:
+                  $ref: "#/definitions/Image"
+        responses:
+          201:
+            description: OK
+      delete:
+        summary: "Deletes an observation from the database"
+        tags:
+          - "observations"
+        operationId: "deleteObservationById"
+        parameters:
+          - name: id
+            in: path
+            description: ID of observations
+            type: integer
+            required: true
+        responses:
+          200:
+           description: OK
+           schema:
+             type: object
+             properties:
+               data:
+                  $ref: "#/definitions/Observation"
+  /observations:
+    get:
+      tags:
+      - "observations"
+      summary: "Get list of schools"
+      description: "Multiple status values can be provided with comma separated strings"
+      operationId: "getObservations"
+      responses:
+        200:
+         description: OK
+         schema:
+           type: object
+           properties:
+             data:
+              type: "array"
+              items:
+                $ref: "#/definitions/Observation"
+    post:
+      tags:
+        - "observations"
+      summary: "Save observation data"
+      operationId: "saveObservation"
+      parameters:
+        - in: body
+          name: body
+          description: "Observation data that needs to be saved"
+          schema:
+            type: object
+            required:
+              - school_id
+              - observation_type_id
+              - user_id
+            properties:
+              id:
+                type: integer
+                format: int64
+              name:
+                type: string
+              description:
+                type: string
+              school_id:
+                type: integer
+                required: true
+                format: int64
+              grade_id:
+                type: integer
+                format: int64
+              subject_id:
+                type: integer
+                format: int64
+              user_id:
+                type: integer
+                format: int64
+              teacher_id:
+                type: integer
+                format: int64
+              observation_type_id:
+                type: integer
+                format: int64
+              status:
+                type: integer
+                format: int64
+              attachments:
+                type: array
+                items:
+                  $ref: "#/definitions/Image"
+      responses:
+        201:
+          description: OK
+  /scores:
+    get:
+      tags:
+        - "scores"
+      summary: 'Get list of scores'
+      description: 'Fetch a list of scores'
+      operationId: 'getScores'
+      responses: 
+        200: 
+          description: OK
+          schema: 
+            type: object
+            properties:
+              data: 
+                type: "array"
+                items:
+                  $ref: "#/definitions/Score"
+  # post:
+  #   tags: 
+  #     - "scores"
+  #   summary: "Save score data"
+  #   operationId: "saveScore"
+  #   parameters:
+  #     - in: body
+  #       name: body
+  #       description: "Score data that needs to be saved"
+  #       schema:
+  #         type: object
+  #         required:
+  #           - school_id
+  #           - user_id
+  #         properties:
+  #           id:
+  #             type: integer
+  #             format: int64
+  #           school_id:
+  #             type: integer
+  #             required: true
+  #             format: int64
+  #           grade_id:
+  #             type: integer
+  #             format: int64
+  #           subject_id:
+  #             type: integer
+  #             format: int64
+  #           user_id:
+  #             type: integer
+  #             format: int64 
+  #           teacher_id:
+  #             type: integer
+  #             format: int64
+  #           status:
+  #             type: integer
+  #             format: int64
+  #     responses:
+  #       200:
+  #         description: OK
+
+    /scores/{id}:
+      get:
+        tags: 
+        - "score"
+        summary: "Find a score using its id"
+        description: "Fetches a score using its Id including nested properties"
+        operationId: "findScoreById"
+        
+
+
+        
+
+
+
+# complex objects have schema definitions
+definitions:
+  Image:
+    type: object
+    properties:
+      width:
+        type: integer
+      height:
+        type: integer
+      url:
+        type: string
+  School:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+      grades:
+        type: "array"
+        items:
+          $ref: "#/definitions/Grade"
+  Teacher:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+      subjects:
+        type: "array"
+        items:
+          $ref: "#/definitions/Subject"
+  Cluster:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+  Subject:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+  Grade:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+      teachers:
+        type: "array"
+        items:
+          $ref: "#/definitions/Teacher"
+  ObservationType:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+      properties:
+        type: "array"
+        items:
+          $ref: "#/definitions/ObservationTypeProperty"
+  ObservationTypeProperty:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+          format: "int64"
+        name:
+          type: "string"
+        label:
+          type: "string"
+        help_text:
+          type: "string"
+  ObservationEvidence:
+      type: "object"
+      properties:
+        id:
+          type: "integer"
+          format: "int64"
+        name:
+          type: "string"
+        link:
+          type: "string"
+        observation_id:
+          type: integer
+  ObservationTypePropertyData:
+        type: "object"
+        properties:
+          observation_id:
+            type: "integer"
+            format: "int64"
+          observation_property_id:
+            type: "integer"
+            format: "int64"
+          value:
+            type: "string"
+  Score:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      created_at:
+        type: "string"
+      updated_at:
+        type: "string"
+      teacher_id:
+        type: "integer"
+        format: "int64"
+      grade_id:
+        type: "integer"
+        format: "int64"
+      subject_id:
+        type: "integer"
+        format: "int64"
+      school_id:
+        type: "integer"
+        format: "int64"
+      teacher:
+        $ref: "#/definitions/Teacher"
+      subject:
+        $ref: "#/definitions/Subject"
+      school:
+        $ref: "#/definitions/School"
+      grade:
+        $ref: "#/definitions/Grade"

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="8px" height="12px" viewBox="0 0 8 12" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>Shape</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Observation-Dashboard" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" transform="translate(-50.000000, -138.000000)">
+        <g id="ic_chevron_left_24px" transform="translate(42.000000, 132.000000)" fill="#808285" fill-rule="nonzero">
+            <polygon id="Shape" points="15.41 7.41 14 6 8 12 14 18 15.41 16.59 10.83 12"></polygon>
+        </g>
+    </g>
+</svg>

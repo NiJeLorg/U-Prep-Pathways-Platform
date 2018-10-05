@@ -1,13 +1,10 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  var Observation_cluster = sequelize.define('Observation_cluster', {
-    name: DataTypes.STRING
+  let ObservationCluster = sequelize.define('observation_cluster', {
+    observation_id: DataTypes.INTEGER,
+    cluster_id: DataTypes.INTEGER,
   }, {
-    classMethods: {
-      associate: function(models) {
-        // associations can be defined here
-      }
-    }
+    timestamps: false,
   });
-  return Observation_cluster;
+  return ObservationCluster;
 };

@@ -1,7 +1,7 @@
 'use strict';
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Levels', {
+    return queryInterface.createTable('levels', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -12,28 +12,28 @@ module.exports = {
         type: Sequelize.STRING
       },
       description: {
-        type: Sequelize.STRING
+        type: Sequelize.TEXT
       },
-      createdAt: {
+      created_at: {
         allowNull: false,
         type: Sequelize.DATE
       },
-      updatedAt: {
+      updated_at: {
         allowNull: false,
         type: Sequelize.DATE
       },
-      indicatorId: {
+       indicator_id: {
         type: Sequelize.INTEGER,
         onDelete: 'CASCADE',
         references: {
-          model: 'Indicators',
+          model: 'indicators',
           key: 'id',
-          as: 'indicatorId',
+          as: 'indicator_id',
         },
       },
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Levels');
+    return queryInterface.dropTable('levels');
   }
 };
