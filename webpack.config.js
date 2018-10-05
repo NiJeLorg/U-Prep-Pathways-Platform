@@ -29,6 +29,11 @@ const config = {
             inject: false
         })
     ],
+    stats: {
+        colors: true,
+        reasons: true,
+        chunks: false
+    },
     devServer: {
         hot: true,
         publicPath: "/public/",

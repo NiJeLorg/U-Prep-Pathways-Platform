@@ -35,6 +35,7 @@ import PaginationFactory from "./factories/pagination-factory";
 import ScoreFactory from "./factories/score-factory";
 import MakeScoreCtrl from "./controllers/make-score";
 
+
 const uprepApp = angular.module("uprepApp", [
     "isteven-multi-select",
     uiRouter,

@@ -1,14 +1,20 @@
-const ClusterService = (BASE_URL, $resource, $http) => {
+export default [
+    "BASE_URL",
+    "$resource",
+    "$http",
+    function(BASE_URL, $resource, $http) {
+        let obj = $resource(
+            BASE_URL + "/clusters/",
+            {
+                id: "@id"
+            },
+            {
+                query: {
+                    method: "GET"
+                }
+            }
+        );
 
-    let obj = $resource(BASE_URL+'/clusters/', {
-        id: '@id'
-    }, {
-        'query': {
-            method: 'GET'
-        }
-    });
-
-    return obj;
-};
-
-export default ClusterService;
+        return obj;
+    }
+];
