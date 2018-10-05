@@ -1,9 +1,9 @@
 html(ng-app='uprepApp')
-    include shared-views/head
+    include views/sv-head
     body
-        include shared-views/nav
+        include views/sv-nav
         ui-view(ng-cloak)
         footer
-            script(src='js/bundle.js')
+            script(src='bundle.js')
             script(src='https://cdn.rawgit.com/kimmobrunfeldt/progressbar.js/0.5.6/dist/progressbar.js')
             script(src='https://cdnjs.cloudflare.com/ajax/libs/angular-multi-select/4.0.0/isteven-multi-select.min.js')   

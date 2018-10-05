@@ -20,6 +20,7 @@ const NavCtrl = $scope => {
             showDropDown(dropdown);
         }
     };
+
 };
 
 export default NavCtrl;
