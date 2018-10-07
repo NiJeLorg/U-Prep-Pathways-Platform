@@ -1,10 +1,9 @@
-import styles from "../sass/app.scss";
 
 import angular from "angular";
 import uiRouter from "@uirouter/angularjs";
 import ngResource from "angular-resource";
 import ngFileUpload from "ng-file-upload";
-import _ from "lodash";
+import styles from "../sass/app.scss";
 
 // load controllers
 import NavCtrl from "./controllers/nav";
@@ -16,7 +15,6 @@ import ScoreFormCtrl from "./controllers/score-form";
 import TeacherCtrl from "./controllers/teacher";
 import AdminCtrl from "./controllers/admin";
 
-console.log('')
 // load services
 import SchoolService from "./services/school-service";
 import ObservationTypeService from "./services/observationType-service";
@@ -34,7 +32,6 @@ import ObservationFactory from "./factories/observation-factory";
 import BreadcrumbFactory from "./factories/breadcrumb-factory";
 import PaginationFactory from "./factories/pagination-factory";
 import ScoreFactory from "./factories/score-factory";
-import MakeScoreCtrl from "./controllers/make-score";
 
 const uprepApp = angular.module("uprepApp", [
     // "isteven-multi-select",
@@ -43,7 +40,7 @@ const uprepApp = angular.module("uprepApp", [
     ngResource
 ]);
 
-let url = "https://dev-uprep.nijel.org/api";
+const url = "https://dev-uprep.nijel.org/api";
 // let url = 'http://localhost:3000/api/';
 
 uprepApp
