@@ -4,10 +4,8 @@
     "description": "This repository holds NiJeL's work with the University Preparatory Academy in Detroit, MI on the U Prep Pathways Platform",
     "main": "index.js",
     "scripts": {
-        "build": "webpack",
-        "dev": "webpack-dev-server --port 3000",
-        "prod": "webpack --mode production",
-        "start:dev": "webpack-dev-server"
+        "dev": "webpack-dev-server",
+        "prod": "webpack --mode production"
     },
     "repository": {
         "type": "git",
@@ -44,6 +42,7 @@
         "ng-file-upload": "^12.2.13",
         "pg": "^7.4.1",
         "pg-hstore": "^2.3.2",
+        "pug-html-loader": "^1.1.5",
         "sequelize": "^4.31.2",
         "swagger-ui-express": "^2.0.14",
         "yamljs": "^0.3.0"
@@ -53,17 +52,21 @@
         "@babel/preset-env": "^7.1.0",
         "babel-loader": "^8.0.4",
         "css-loader": "^1.0.0",
+        "file-loader": "^2.0.0",
         "html-loader": "^0.5.5",
         "html-webpack-plugin": "^3.2.0",
+        "mini-css-extract-plugin": "^0.4.3",
         "node-sass": "^4.9.3",
         "prettier": "^1.14.3",
         "pug": "^2.0.3",
-        "pug-html-loader": "^1.1.5",
         "sass-loader": "^7.1.0",
         "sequelize-cli": "^3.2.0",
         "style-loader": "^0.23.0",
+        "url-loader": "^1.1.1",
         "webpack": "^4.20.2",
         "webpack-cli": "^3.1.2",
-        "webpack-dev-server": "^3.1.9"
+        "webpack-dev-middleware": "^3.4.0",
+        "webpack-dev-server": "^3.1.9",
+        "webpack-hot-middleware": "^2.24.2"
     }
 }

@@ -1,7 +1,7 @@
 .c-nav.l-flex-space-between(ng-controller='NavCtrl')
     .c-nav__logo-title.l-flex.ul-cursor-pointer(ui-sref='home')
-        img.logo(src='assets/uprep-logo.svg' alt='uprep logo')
-        h2.title UPrep Pathways Platform Show
+        //- img.logo(src='assets/uprep-logo.svg' alt='uprep logo')
+        h2.title UPrep Pathways Platform 
     .c-nav__links.l-flex
         .c-menu
             button.menu.ul-cursor-pointer(ng-click='toggleDropdown("menu", $event)') MENU
@@ -11,9 +11,9 @@
                 a(href='#') How Am I Doing?
                 a(ui-sref='admin') Admin
         .c-settings
-            img.ul-cursor-pointer.settings(src='assets/icons/settings-icon.svg' alt='settings icon' ng-click='toggleDropdown("settings", $event)')
+            //- img.ul-cursor-pointer.settings(src='assets/icons/settings-icon.svg' alt='settings icon' ng-click='toggleDropdown("settings", $event)')
             .c-dropdown.c-dropdown--settings
                 .l-flex
-                    img(src='assets/icons/profile-photo.svg')
+                    //- img(src='assets/icons/profile-photo.svg')
                     a(href='#') Account
                 a(href='#') Log Out

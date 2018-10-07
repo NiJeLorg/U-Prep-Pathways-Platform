@@ -16,6 +16,7 @@ import ScoreFormCtrl from "./controllers/score-form";
 import TeacherCtrl from "./controllers/teacher";
 import AdminCtrl from "./controllers/admin";
 
+console.log('')
 // load services
 import SchoolService from "./services/school-service";
 import ObservationTypeService from "./services/observationType-service";
@@ -35,9 +36,8 @@ import PaginationFactory from "./factories/pagination-factory";
 import ScoreFactory from "./factories/score-factory";
 import MakeScoreCtrl from "./controllers/make-score";
 
-
 const uprepApp = angular.module("uprepApp", [
-    "isteven-multi-select",
+    // "isteven-multi-select",
     uiRouter,
     ngFileUpload,
     ngResource

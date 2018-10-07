@@ -1,10 +1,10 @@
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const webpack = require("webpack");
 const path = require("path");
 const fs = require("fs");
-const env = process.env.NODE_ENV || "development";
-if (env === "development") {
-    require("dotenv").load();
-}
+const devMode = process.env.NODE_ENV !== "production";
+
 // read app/shared and views
 const createHTMLPlugin = (filename, template) => {
     return new HtmlWebpackPlugin({
@@ -16,28 +16,32 @@ const createHTMLPlugin = (filename, template) => {
 
 const config = {
     context: __dirname,
-    entry: "./app/js/app.js",
+    entry: [
+        "webpack-dev-server/client?http://localhost:8080",
+        "webpack/hot/only-dev-server",
+        "./app/js/app.js"
+    ],
+    mode: "development",
     output: {
         filename: "bundle.js",
-        path: path.join(__dirname, "public"),
-        publicPath: "/public/"
+        path: path.join(__dirname, "public")
     },
     plugins: [
+        new webpack.HotModuleReplacementPlugin(),
+        new webpack.NamedModulesPlugin(),
+        new MiniCssExtractPlugin({
+            filename: "[name].css",
+            chunkFilename: "[id].css"
+        }),
         new HtmlWebpackPlugin({
-            filename: "index.html",
-            template: "./app/index.pug",
-            inject: false
+            template: "./app/index.pug"
         })
     ],
-    stats: {
-        colors: true,
-        reasons: true,
-        chunks: false
-    },
     devServer: {
-        hot: true,
-        publicPath: "/public/",
-        historyApiFallback: true
+        historyApiFallback: true,
+        proxy: {
+            "/api": "http://localhost:3000"
+        }
     },
     module: {
         rules: [
@@ -48,11 +52,27 @@ const config = {
             },
             {
                 test: /\.pug$/,
-                use: ["html-loader?attrs=false", "pug-html-loader"]
+                use: ["html-loader", "pug-html-loader"]
+            },
+            {
+                test: /\.(png|jpg|gif|svg)$/,
+                use: [
+                    {
+                        loader: "url-loader",
+                        options: {
+                            limit: 8000, // Convert images < 8kb to base64 strings
+                            name: "images/[hash]-[name].[ext]"
+                        }
+                    }
+                ]
             },
             {
                 test: /\.(sa|sc|c)ss$/,
-                use: ["style-loader", "css-loader", "sass-loader"]
+                use: [
+                    devMode ? "style-loader" : MiniCssExtractPlugin.loader,
+                    "css-loader",
+                    "sass-loader"
+                ]
             }
         ]
     }
@@ -76,6 +96,8 @@ const readFile = folder =>
             });
         });
     });
+
+// module.exports = config;
 
 module.exports = new Promise((resolve, reject) => {
     readFile("./app/views").then(() => {
