@@ -1,19 +1,27 @@
 .c-nav.l-flex-space-between(ng-controller='NavCtrl')
     .c-nav__logo-title.l-flex.ul-cursor-pointer(ui-sref='home')
-        //- img.logo(src='assets/uprep-logo.svg' alt='uprep logo')
+        img.logo(src='assets/uprep-logo.svg' alt='uprep logo')
         h2.title UPrep Pathways Platform 
     .c-nav__links.l-flex
         .c-menu
-            button.menu.ul-cursor-pointer(ng-click='toggleDropdown("menu", $event)') MENU
-            .c-dropdown.c-dropdown--menu
-                a(href='#') Pathways
-                a(href='#') Getting Started
-                a(href='#') How Am I Doing?
-                a(ui-sref='admin') Admin
+            md-menu(md-position-mode='target-right target' md-offset='0 60')
+                md-button(ng-click='$mdMenu.open($event)') Menu
+                md-menu-content.c-dropdown(width='4')
+                    md-menu-item
+                        a(href='#') Pathways
+                    md-menu-item
+                        a(href='#') Getting Started
+                    md-menu-item
+                        a(href='#') How Am I Doing?
+                    md-menu-item
+                        a(ui-sref='admin') Admin
         .c-settings
-            //- img.ul-cursor-pointer.settings(src='assets/icons/settings-icon.svg' alt='settings icon' ng-click='toggleDropdown("settings", $event)')
-            .c-dropdown.c-dropdown--settings
-                .l-flex
-                    //- img(src='assets/icons/profile-photo.svg')
-                    a(href='#') Account
-                a(href='#') Log Out
+            md-menu(md-position-mode='target-right target' md-offset='0 60')
+                md-button(ng-click='$mdMenu.open($event)') 
+                    img.ul-cursor-pointer.settings(src='assets/icons/settings-icon.svg' alt='settings icon')
+                md-menu-content.c-dropdown(width='3')
+                    md-menu-item 
+                        //- img(src='assets/icons/profile-photo.svg')
+                        a(href='#') Account
+                    md-menu-item
+                        a(href='#') Log Out

@@ -1,8 +1,11 @@
-
 import angular from "angular";
+import ngMaterial from "angular-material";
 import uiRouter from "@uirouter/angularjs";
 import ngResource from "angular-resource";
 import ngFileUpload from "ng-file-upload";
+
+// import styles
+import ngStyles from "angular-material/angular-material.css";
 import styles from "../sass/app.scss";
 
 // load controllers
@@ -35,6 +38,7 @@ import ScoreFactory from "./factories/score-factory";
 
 const uprepApp = angular.module("uprepApp", [
     // "isteven-multi-select",
+    ngMaterial,
     uiRouter,
     ngFileUpload,
     ngResource
