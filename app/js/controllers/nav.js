@@ -1,26 +1,28 @@
-const NavCtrl = ($scope) => {
-    let isMenuDropdownVisible = false;
-    let isSettingsDropdownVisible = false;
+export default [
+    "$scope",
+    function($scope) {
+        let isDropdownOpen = false;
 
-    $scope.toggleMenuDropdown = () => {
-        if (!isMenuDropdownVisible) {
-            angular.element(document.getElementsByClassName('c-dropdown--menu')[0]).css('display', 'flex');
-            isMenuDropdownVisible = true;
-        } else {
-            isMenuDropdownVisible = false;
-            angular.element(document.getElementsByClassName('c-dropdown--menu')[0]).css('display', 'none');
+        function showDropDown(dropdown) {
+            angular
+                .element(
+                    document.getElementsByClassName(
+                        `c-dropdown--${dropdown}`
+                    )[0]
+                )
+                .css("display", "flex");
+            isDropdownOpen = true;
         }
-    };
 
-    $scope.toggleSettingsDropdown = () => {
-        if (!isSettingsDropdownVisible) {
-            angular.element(document.getElementsByClassName('c-dropdown--settings')[0]).css('display', 'flex');
-            isSettingsDropdownVisible = true;
-        } else {
-            isSettingsDropdownVisible = false;
-            angular.element(document.getElementsByClassName('c-dropdown--settings')[0]).css('display', 'none');
-        }
-    };
-};
-
-export default NavCtrl;
+        $scope.toggleDropdown = dropdown => {
+            if (!isDropdownOpen) {
+                showDropDown(dropdown);
+            } else {
+                document.querySelectorAll(".c-dropdown").forEach(elem => {
+                    angular.element(elem).css("display", "none");
+                });
+                showDropDown(dropdown);
+            }
+        };
+    }
+];

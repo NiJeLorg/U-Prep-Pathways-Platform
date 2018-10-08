@@ -1,7 +1,7 @@
 .c-modal.delete-observation-modal
     .c-modal__modal-content
         span.l-flex-flex-end
-            img.ul-cursor-pointer(src='assets/icons/x-icon.svg' ng-click='closeModal()')
+            //- img.ul-cursor-pointer(src='assets/icons/x-icon.svg' ng-click='closeModal()')
         h2 Delete This Observation?
         p This action cannot be reversed
         .c-buttons-holder
@@ -43,15 +43,15 @@
                         span.subject-color.ul-text-uppercase(ng-if='observation.subject.name') {{observation.subject.name}}
                     .c-observation__badge(ng-if='observation.status===1')
                         .holder
-                            img(src='assets/icons/submitted-badge-icon.svg')
+                            //- img(src='assets/icons/submitted-badge-icon.svg')
                             p SUBMITTED
                     .c-observation__badge(ng-if='observation.status===0')
                         .holder
-                            img(src='assets/icons/draft-badge-icon.svg')
+                            //- img(src='assets/icons/draft-badge-icon.svg')
                             p DRAFT
                     .c-observation__actions.l-flex-flex-end
-                        img.ul-cursor-pointer(ng-if='observation.status ===0' src='assets/icons/edit-icon.svg' ng-click='editObservation(observation)')
-                        img.ul-cursor-pointer(src='assets/icons/delete-icon.svg' ng-click='openModal(observation)')
+                        //- img.ul-cursor-pointer(ng-if='observation.status ===0' src='assets/icons/edit-icon.svg' ng-click='editObservation(observation)')
+                        //- img.ul-cursor-pointer(src='assets/icons/delete-icon.svg' ng-click='openModal(observation)')
             .scores(ng-show='subview ==="scores"')
                 .c-observation.ul-padding-30.l-flex-space-between(ng-repeat='score in teacher.scores')
                     .c-observation__date
@@ -62,8 +62,8 @@
                         span.grade-color  Grade 1
                         span.subject-color Math
                     .c-observation__actions.l-flex-flex-end
-                        img.ul-cursor-pointer(src='assets/icons/edit-icon.svg' ng-click='editScore(score)')
-                        img.ul-cursor-pointer(src='assets/icons/delete-icon.svg' ng-click='openModal(observation)')
+                        //- img.ul-cursor-pointer(src='assets/icons/edit-icon.svg' ng-click='editScore(score)')
+                        //- img.ul-cursor-pointer(src='assets/icons/delete-icon.svg' ng-click='openModal(observation)')
 
             
 
