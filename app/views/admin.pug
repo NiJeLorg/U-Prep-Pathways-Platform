@@ -142,13 +142,12 @@
 .c-admin-section
     aside
         .title Admin Resources
-        p Marriage 
         nav
             p.nav-link.ul-cursor-pointer(ui-sref='admin.teacher' ng-click='resourceType = "teacher"') Teachers
             p.nav-link.ul-cursor-pointer(ui-sref='admin.school' ng-click='resourceType="school"') Schools
             p.nav-link.ul-cursor-pointer(ui-sref='admin.subjects' ng-click='resourceType="subject"') Subjects
             p.nav-link.ul-cursor-pointer(ui-sref='admin.grades' ng-click='resourceType="grade"') Grades                                
-    main
+    main(ng-init='resourceType="teacher"')
         .l-flex-space-between(ng-if='resourceType')
             h1 {{resourceType}}s
             span(ng-click='openModal()')
