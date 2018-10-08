@@ -1,5 +1,12 @@
-import {teacher, subject, grade, school, grade_teacher, subject_teacher, grade_school} from './../models';
-import Sequelize from 'sequelize';
+const teacher = require('../models/teacher'),
+    subject = require('../models/subject'),
+    grade = require('../models/grade'),
+    school = require('../models/school'),
+    grade_teacher = require('../models/grade_teacher'),
+    subject_teacher = require('../models/subject_teacher'),
+    grade_school = require('../models/grade_school');
+
+const Sequelize  =  require('sequelize');
 
 const Op = Sequelize.Op;
 
@@ -142,4 +149,4 @@ const getSubject = async (subjectStr) => {
 };
 
 
-export default {seedTeacher, seedGrades, seedSubjects};
+module.exports =  {seedTeacher, seedGrades, seedSubjects};

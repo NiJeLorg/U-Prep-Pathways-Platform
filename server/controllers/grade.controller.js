@@ -1,4 +1,6 @@
-import {grade, teacher, school} from './../models';
+const grade = require('../models/grade');
+const teacher = require('../models/teacher');
+const school = require('../models/school');
 
 const get = async(req, res) => {
     res.sendData(req.grade);
@@ -71,7 +73,7 @@ const getIncludes = (req) => {
     return includes;
 };
 
-export default {
+module.exports =  {
     get,
     load,
     list,

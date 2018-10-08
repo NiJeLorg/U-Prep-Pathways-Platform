@@ -1,4 +1,3 @@
-let csv = require("fast-csv");
 let fs = require('fs');
 let csv2json = require('csvtojson');
 const axios = require('axios');

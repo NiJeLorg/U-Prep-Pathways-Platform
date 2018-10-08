@@ -1,19 +1,19 @@
-import express from 'express';
-import gradeRoutes from './grade.route';
-import schoolRoutes from './school.route';
-import subjectRoutes from './subject.route';
-import seedRoutes from './seeder.route';
-import teacherRoutes from './teacher.route';
-import elementRoutes from './element.route';
-import observationRoutes from './observation.route';
-import observationTypeRoutes from './observation_type.route';
-import observationEvidenceRoutes from './observation_evidence.route';
-import observationClusterRoutes from './observation_cluster.route';
-import scoreRoutes from './score.route';
-import indicatorScoreRoutes from './indicator_score.route'
-import clusterRoutes from './cluster.route';
-import YAML from 'yamljs';
-import swaggerUi from 'swagger-ui-express';
+const express = require('express');
+const gradeRoutes = require('./grade.route');
+const schoolRoutes = require('./school.route');
+const subjectRoutes = require('./subject.route');
+const seedRoutes = require('./seeder.route');
+const teacherRoutes = require('./teacher.route');
+const elementRoutes = require('./element.route');
+const observationRoutes = require('./observation.route');
+const observationTypeRoutes = require('./observation_type.route');
+const observationEvidenceRoutes = require('./observation_evidence.route');
+const observationClusterRoutes = require('./observation_cluster.route');
+const scoreRoutes = require('./score.route');
+const indicatorScoreRoutes = require('./indicator_score.route');
+const clusterRoutes = require('./cluster.route');
+const YAML = require('yamljs');
+const swaggerUi = require('swagger-ui-express');
 
 const router = express.Router();
 const swaggerDocument = YAML.load('./server/swagger/swagger.yaml');
@@ -38,4 +38,4 @@ router.use('/indicator_scores', indicatorScoreRoutes);
 router.use('/clusters', clusterRoutes);
 router.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
-export default router;
+module.exports = router;

@@ -1,6 +1,6 @@
-import express from 'express';
-import scoreCtrl from './../controllers/score.controller';
-import asyncHandler from 'express-async-handler';
+const express = require('express');
+const scoreCtrl = require('./../controllers/score.controller');
+const asyncHandler = require('express-async-handler');
 
 const router = express.Router();
 
@@ -14,4 +14,5 @@ router.route('/:scoreId')
 
 
 router.param('scoreId', asyncHandler(scoreCtrl.load));
-export default router;
+
+module.exports = router;

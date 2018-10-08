@@ -1,4 +1,6 @@
-import {subject, teacher} from './../models';
+const subject = require('../models/subject'),
+    teacher = require('../models/teacher');
+
 
 const get = async(req, res) => {
     res.sendData(req.subject);
@@ -67,7 +69,7 @@ const getIncludes = (req) => {
     return includes;
 };
 
-export default {
+module.exports =  {
     get,
     load,
     list,

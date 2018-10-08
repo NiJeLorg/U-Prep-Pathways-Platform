@@ -1,4 +1,6 @@
-import {element, component, indicator} from './../models';
+const element = require('../models/element');
+const component = require('../models/component');
+const indicator = require('../models/indicator');
 
 const get = async (req, res) => {
     res.sendData(req.element);
@@ -27,7 +29,4 @@ const list = async (req, res) => {
     res.sendData(elements);
 };
 
-
-
-
-export default {get, load, list};
+module.exports = {get, load, list};

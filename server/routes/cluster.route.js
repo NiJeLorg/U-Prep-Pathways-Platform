@@ -1,6 +1,6 @@
-import express from 'express';
-import clusterCtrl from './../controllers/cluster.controller';
-import asyncHandler from 'express-async-handler';
+const express  = require('express');
+const clusterCtrl  = require('./../controllers/cluster.controller');
+const asyncHandler  = require('express-async-handler');
 
 const router = express.Router();
 
@@ -13,4 +13,6 @@ router.route('/:schoolId')
     .get(asyncHandler(clusterCtrl.get));
 /** Load school when API with schoolId route parameter is hit */
 router.param('schoolId', asyncHandler(clusterCtrl.load));
-export default router;
+
+
+module.exports =  router;
