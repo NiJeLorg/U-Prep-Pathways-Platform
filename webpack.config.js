@@ -38,6 +38,7 @@ const config = {
         })
     ],
     devServer: {
+        contentBase: "./public",
         historyApiFallback: true,
         proxy: {
             "/api": "http://localhost:3000"
@@ -52,7 +53,7 @@ const config = {
             },
             {
                 test: /\.pug$/,
-                use: ["html-loader", "pug-html-loader"]
+                use: ["html-loader?attrs=false", "pug-html-loader"]
             },
             {
                 test: /\.(png|jpg|gif|svg)$/,

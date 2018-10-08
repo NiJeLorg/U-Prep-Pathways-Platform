@@ -8,7 +8,7 @@
         .filter-teachers-container
             .c-input-group__text
                 span
-                    //- img(src='assets/icons/search-icon.svg')
+                    img(src='assets/icons/search-icon.svg')
                 input(type='text' placeholder='Search' name='search' ng-model='search')
             .c-input-group
                 label Select By: 
@@ -36,7 +36,7 @@
                     p(ng-class='{upaElementaryColor: teacher.school.name === "UPA Elementary", upsmElementaryColor: teacher.school.name === "UPSM Elementary"}') {{teacher.school.name}}                    
                 .c-teacher-card__switch-context
                     .img-container.ul-cursor-pointer(ng-click='switchCardContext = !switchCardContext' ng-style='{background: switchCardContext ? "#EF4060" : "#5F2358"}')
-                        //- img(src='assets/icons/switch-arrows.svg')
+                        img(src='assets/icons/switch-arrows.svg')
                 .c-teacher-card__grade-context(ng-show='!switchCardContext')
                     .titles
                         h4 Grades

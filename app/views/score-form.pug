@@ -2,7 +2,7 @@
     .c-modal__modal-content
         header.l-flex-space-between
             p.indicator-name {{selectedIndicator}}
-            //- img.ul-cursor-pointer(src='assets/icons/x-icon.svg' ng-click='closeIndicatorLevelsModal()')
+            img.ul-cursor-pointer(src='assets/icons/x-icon.svg' ng-click='closeIndicatorLevelsModal()')
         h4.level 0
         p.level-info Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisinuli.
         h4.level Level 1
@@ -18,7 +18,7 @@
 .c-modal.delete-score-modal
     .c-modal__modal-content
         span.l-flex-flex-end
-            //- img.ul-cursor-pointer(src='assets/icons/x-icon.svg' ng-click='closeModal()')
+            img.ul-cursor-pointer(src='assets/icons/x-icon.svg' ng-click='closeModal()')
         h2 Delete This Score?
         p This action cannot be reversed
         .c-buttons-holder
@@ -30,7 +30,7 @@
     .c-modal__modal-content
         .l-flex
             .c-modal__badge
-                //- img(src='assets/icons/submitted-badge-icon.svg')
+                img(src='assets/icons/submitted-badge-icon.svg')
             span(style='margin-left: 60px')
                 h2 Thank you for Submitting Your Score
 
@@ -52,7 +52,7 @@
                 p  CREATED ON {{score.created_at | date: 'shortDate'}} {{score.created_at | date: 'shortTime'}}
             .c-observation-observation-form__actions
                     button(ng-click='openSubmitScoreModal()') Submit
-                    //- img.ul-cursor-pointer(src='assets/icons/delete-icon.svg' ng-click='showDeleteScoreModal()')
+                    img.ul-cursor-pointer(src='assets/icons/delete-icon.svg' ng-click='showDeleteScoreModal()')
         
         .c-element(ng-repeat='element in elements track by element.id')
             .title
@@ -61,7 +61,7 @@
             .c-element__component(ng-repeat='component in element.components track by component.id')
                 .title
                     h3 {{component.name}}
-                    //- img(src="assets/icons/question-mark.svg")
+                    img(src="assets/icons/question-mark.svg")
                 .indicator-groups
                     .c-element__indicator(ng-repeat='indicator in component.indicators track by indicator.id')
                         p {{indicator.name}}
