@@ -58,18 +58,11 @@ export default [
                 );
         };
 
-        obj.deleteTeacher = (cb, teacher) => {
-            $http.delete(BASE_URL + "/teachers/" + teacher.id).then(
-                res => {
-                    cb(null, res);
-                },
-                err => {
-                    cb(err);
-                }
-            );
+        obj.deleteTeacher = teacher => {
+            return $http.delete(BASE_URL + "/teachers/" + teacher.id);
         };
 
-        obj.createTeacher = (cb, teacher) => {
+        obj.createTeacher = teacher => {
             let gradeIds = teacher.grades.map(el => {
                 return el.id.toString();
             });
@@ -78,21 +71,12 @@ export default [
                 return el.id.toString();
             });
 
-            $http
-                .post(BASE_URL + "/teachers/", {
-                    name: teacher.firstName + " " + teacher.lastName,
-                    schoolId: teacher.school.id,
-                    grades: gradeIds,
-                    subjects: subjectIds
-                })
-                .then(
-                    res => {
-                        cb(null, res);
-                    },
-                    err => {
-                        cb(err);
-                    }
-                );
+            return $http.post(BASE_URL + "/teachers/", {
+                name: teacher.firstName + " " + teacher.lastName,
+                schoolId: teacher.school.id,
+                grades: gradeIds,
+                subjects: subjectIds
+            });
         };
 
         return obj;

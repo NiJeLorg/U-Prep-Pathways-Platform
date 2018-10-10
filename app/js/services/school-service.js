@@ -16,26 +16,12 @@ export default [
             );
         };
 
-        obj.createSchool = (cb, newSchool) => {
-            $http.post(BASE_URL + "/schools", { school: newSchool }).then(
-                res => {
-                    cb(null, res);
-                },
-                err => {
-                    cb(err);
-                }
-            );
+        obj.createSchool = newSchool => {
+            return $http.post(BASE_URL + "/schools", { school: newSchool });
         };
 
-        obj.deleteSchool = (cb, school) => {
-            $http.delete(BASE_URL + "/schools/" + school.id).then(
-                res => {
-                    cb(null, res);
-                },
-                err => {
-                    cb(err);
-                }
-            );
+        obj.deleteSchool = school => {
+            return $http.delete(BASE_URL + "/schools/" + school.id);
         };
 
         obj.updateSchool = (cb, school) => {
