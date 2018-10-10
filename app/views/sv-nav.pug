@@ -17,11 +17,10 @@
                         a(ui-sref='admin') Admin
         .c-settings
             md-menu(md-position-mode='target-right target' md-offset='0 60')
-                md-button(ng-click='$mdMenu.open($event)' aria-label='Open Settings Dropdown') 
-                    img.ul-cursor-pointer.settings(src='assets/icons/settings-icon.svg' alt='settings icon')
+                img.ul-cursor-pointer.settings(src='assets/icons/settings-icon.svg' alt='settings icon' ng-click='$mdMenu.open($event)' aria-label='Open Settings Dropdown')
                 md-menu-content.c-dropdown(width='3')
                     md-menu-item 
-                        img(src='assets/icons/profile-photo.svg')
+                        //- img(src='assets/icons/profile-photo.svg')
                         a(href='#') Account
                     md-menu-item
                         a(href='#') Log Out
