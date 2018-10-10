@@ -27,8 +27,8 @@ export default [
 
         function getResources() {
             // fetch data
-            TeacherService.fetchAllTeachers((err, res) => {
-                if (!err) {
+            TeacherService.fetchAllTeachers().then(
+                res => {
                     $scope.teachers = res.data.data;
                     $scope.teachers.map((el, index) => {
                         var lastName = el.name
@@ -37,10 +37,11 @@ export default [
                             .join(" ");
                         el.lastName = lastName;
                     });
-                } else {
+                },
+                err => {
                     console.error(err, "ERROR");
                 }
-            });
+            );
 
             SchoolService.fetchSchools((err, res) => {
                 if (!err) {

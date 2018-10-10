@@ -1,11 +1,11 @@
 export default [
-    '$scope',
-   ' $state',
-    'UtilService',
-    'ObservationService',
-    'ObservationTypeService',
-    'ObservationFactory',
-    'teacher',
+    "$scope",
+    "$state",
+    "UtilService",
+    "ObservationService",
+    "ObservationTypeService",
+    "ObservationFactory",
+    "teacher",
     function(
         $scope,
         $state,

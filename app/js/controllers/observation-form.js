@@ -1,17 +1,17 @@
 export default [
-    '$scope',
-    '$state',
-    '$timeout',
-    'observation',
-    'Upload',
-    'GradeService',
-    'TeacherService',
-    'ObservationTypeService',
-    'ObservationService',
-    'ClusterService',
-    'AttachmentService',
-    'UtilService',
-    'BASE_URL',
+    "$scope",
+    "$state",
+    "$timeout",
+    "observation",
+    "Upload",
+    "GradeService",
+    "TeacherService",
+    "ObservationTypeService",
+    "ObservationService",
+    "ClusterService",
+    "AttachmentService",
+    "UtilService",
+    "BASE_URL",
 
     function(
         $scope,
@@ -28,8 +28,6 @@ export default [
         UtilService,
         BASE_URL
     ) {
-        var line = new ProgressBar.Line("#progress", { color: "#5F2358" });
-
         let observationToBeDeleted,
             cluster_ids = [];
         $scope.observation = observation.data;
@@ -190,16 +188,11 @@ export default [
                     }
                 });
 
-                line.animate(0.5);
                 file.upload.then(
                     res => {
                         $timeout(() => {
                             $scope.observation.attachments =
                                 res.data.data.attachments;
-                            line.animate(1.0);
-                            setTimeout(function() {
-                                line.animate(0);
-                            }, 2000);
                         });
                     },
                     res => {

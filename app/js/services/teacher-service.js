@@ -15,16 +15,7 @@ export default [
             }
         );
 
-        obj.fetchAllTeachers = cb => {
-            $http.get(BASE_URL + "/teachers").then(
-                res => {
-                    cb(null, res);
-                },
-                err => {
-                    cb(err);
-                }
-            );
-        };
+        obj.fetchAllTeachers = () => $http.get(BASE_URL + "/teachers");
 
         obj.fetchSchoolTeachers = (schoolId, cb) => {
             $http.get(BASE_URL + "/teachers?schoolId=" + schoolId).then(
@@ -58,9 +49,8 @@ export default [
                 );
         };
 
-        obj.deleteTeacher = teacher => {
-            return $http.delete(BASE_URL + "/teachers/" + teacher.id);
-        };
+        obj.deleteTeacher = teacher =>
+            $http.delete(BASE_URL + "/teachers/" + teacher.id);
 
         obj.createTeacher = teacher => {
             let gradeIds = teacher.grades.map(el => {
