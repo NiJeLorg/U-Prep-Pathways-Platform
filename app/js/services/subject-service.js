@@ -35,19 +35,10 @@ export default [
             return $http.delete(BASE_URL + "/subjects/" + subject.id);
         };
 
-        obj.updateSubject = (cb, subject) => {
-            $http
-                .put(BASE_URL + "/subjects/" + subject.id, {
-                    name: subject.name
-                })
-                .then(
-                    res => {
-                        cb(null, res);
-                    },
-                    err => {
-                        cb(err);
-                    }
-                );
+        obj.updateSubject = subject => {
+            return $http.put(BASE_URL + "/subjects/" + subject.id, {
+                name: subject.name
+            });
         };
 
         return obj;

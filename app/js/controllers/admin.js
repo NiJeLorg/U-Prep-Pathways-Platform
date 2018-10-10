@@ -253,42 +253,42 @@ export default [
             };
 
             $scope.updateSchool = school => {
-                SchoolService.updateSchool((err, res) => {
-                    if (!err) {
+                SchoolService.updateSchool(school).then(
+                    res => {
                         UtilService.closeModal(
                             `update-${$scope.resourceType}-modal`
                         );
-                        $state.reload();
-                    } else {
+                    },
+                    err => {
                         console.error(err, "ERR");
                     }
-                }, school);
+                );
             };
 
             $scope.updateSubject = subject => {
-                SubjectService.updateSubject((err, res) => {
-                    if (!err) {
+                SubjectService.updateSubject(subject).then(
+                    res => {
                         UtilService.closeModal(
                             `update-${$scope.resourceType}-modal`
                         );
-                        $state.reload();
-                    } else {
+                    },
+                    err => {
                         console.error(err, "ERR");
                     }
-                }, subject);
+                );
             };
 
             $scope.updateGrade = grade => {
-                GradeService.updateGrade((err, res) => {
-                    if (!err) {
+                GradeService.updateGrade(grade).then(
+                    res => {
                         UtilService.closeModal(
                             `update-${$scope.resourceType}-modal`
                         );
-                        $state.reload();
-                    } else {
+                    },
+                    err => {
                         console.error(err, "ERR");
                     }
-                }, grade);
+                );
             };
         }
 

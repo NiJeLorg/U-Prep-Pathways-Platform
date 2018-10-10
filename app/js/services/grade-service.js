@@ -31,21 +31,14 @@ export default [
             return $http.post(BASE_URL + "/grades", { grade: newGrade });
         };
 
-        obj.deleteGrade = (grade) => {
+        obj.deleteGrade = grade => {
             return $http.delete(BASE_URL + "/grades/" + grade.id);
         };
 
-        obj.updateGrade = (cb, grade) => {
-            $http
-                .put(BASE_URL + "/grades/" + grade.id, { name: grade.name })
-                .then(
-                    res => {
-                        cb(null, res);
-                    },
-                    err => {
-                        cb(err);
-                    }
-                );
+        obj.updateGrade = grade => {
+            return $http.put(BASE_URL + "/grades/" + grade.id, {
+                name: grade.name
+            });
         };
 
         return obj;

@@ -24,17 +24,10 @@ export default [
             return $http.delete(BASE_URL + "/schools/" + school.id);
         };
 
-        obj.updateSchool = (cb, school) => {
-            $http
-                .put(BASE_URL + "/schools/" + school.id, { name: school.name })
-                .then(
-                    res => {
-                        cb(null, res);
-                    },
-                    err => {
-                        cb(err);
-                    }
-                );
+        obj.updateSchool = school => {
+            return $http.put(BASE_URL + "/schools/" + school.id, {
+                name: school.name
+            });
         };
 
         return obj;
