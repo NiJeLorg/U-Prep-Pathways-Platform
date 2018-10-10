@@ -28,8 +28,9 @@ export default [
         UtilService,
         BASE_URL
     ) {
-        let observationToBeDeleted,
-            cluster_ids = [];
+        // Progress Bar
+        $scope.progressBarActive = false;
+
         $scope.observation = observation.data;
         $scope.editObservationName = false;
         $scope.isImage;
@@ -180,6 +181,7 @@ export default [
             $scope.errFiles = errFiles;
 
             angular.forEach(files, file => {
+                $scope.progressBarActive = true;
                 file.upload = Upload.upload({
                     url: BASE_URL + "/observations/" + $scope.observation.id,
                     method: "PUT",
@@ -190,10 +192,9 @@ export default [
 
                 file.upload.then(
                     res => {
-                        $timeout(() => {
-                            $scope.observation.attachments =
-                                res.data.data.attachments;
-                        });
+                        $scope.observation.attachments =
+                            res.data.data.attachments;
+                        $scope.progressBarActive = false;
                     },
                     res => {
                         if (res.status > 0) {
