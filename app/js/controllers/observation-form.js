@@ -176,33 +176,27 @@ export default [
                 $scope.selectedImageUrl = "";
             });
 
-        $scope.uploadFiles = (files, errFiles) => {
-            $scope.files = files;
-            $scope.errFiles = errFiles;
-
-            angular.forEach(files, file => {
-                $scope.progressBarActive = true;
-                file.upload = Upload.upload({
-                    url: BASE_URL + "/observations/" + $scope.observation.id,
-                    method: "PUT",
-                    data: {
-                        attachments: file
-                    }
-                });
-
-                file.upload.then(
-                    res => {
-                        $scope.observation.attachments =
-                            res.data.data.attachments;
-                        $scope.progressBarActive = false;
-                    },
-                    res => {
-                        if (res.status > 0) {
-                            $scope.errMessage = res.status + ": " + res.data;
-                        }
-                    }
-                );
-            });
+        $scope.upload = file => {
+            $scope.progressBarActive = true;
+            Upload.upload({
+                url: BASE_URL + "/observations/" + $scope.observation.id,
+                method: "PUT",
+                data: {
+                    attachments: file
+                }
+            }).then(
+                res => {
+                    res.data.data.attachments.map(el => {
+                        console.log((el.name));
+                    });
+                    // // $scope.observation.attachments =
+                    // //     res.data.data.attachments;
+                    // $scope.progressBarActive = false;
+                },
+                err => {
+                    $scope.errMessage = res.status + ": " + res.data;
+                }
+            );
         };
 
         $scope.isSelectedCluster = cluster_id => {

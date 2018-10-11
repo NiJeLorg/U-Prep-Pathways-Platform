@@ -77,7 +77,7 @@ md-progress-linear(md-mode='intermediate' ng-if='progressBarActive')
         h2 Attachments
         p Add photos, videos, word documents, or pdf's to your observation
         .c-attachments-holder
-            .add-attachment.ul-cursor-pointer(ngf-select='uploadFiles($files, $invalidFiles)' ng-hide='observation.status === 1')
+            .add-attachment.ul-cursor-pointer(ngf-select='upload($file)' ng-model='file' name='file' ng-hide='observation.status === 1')
                 img(src='assets/icons/add-icon.svg')
             .attachments-container(ng-if='observation.attachments')
                 .attachment(ng-repeat='attachment in observation.attachments')
