@@ -4,8 +4,6 @@ const webpack = require("webpack");
 const path = require("path");
 const fs = require("fs");
 
-const devMode = process.env.NODE_ENV !== "production";
-
 // read app/shared and views
 const createHTMLPlugin = (filename, template) => {
     return new HtmlWebpackPlugin({
@@ -71,7 +69,7 @@ const config = {
             {
                 test: /\.(sa|sc|c)ss$/,
                 use: [
-                    devMode ? "style-loader" : MiniCssExtractPlugin.loader,
+                    MiniCssExtractPlugin.loader,
                     "css-loader?url=false",
                     "sass-loader"
                 ]
