@@ -2,7 +2,8 @@ export default [
     "BASE_URL",
     "$resource",
     "$http",
-    function(BASE_URL, $resource, $http) {
+    "$q",
+    function(BASE_URL, $resource, $http, $q) {
         let obj = $resource(
             BASE_URL + "/schools/:id/grades",
             {
@@ -26,39 +27,18 @@ export default [
             );
         };
 
-        obj.createGrade = (cb, newGrade) => {
-            $http.post(BASE_URL + "/grades", { grade: newGrade }).then(
-                res => {
-                    cb(null, res);
-                },
-                err => {
-                    cb(err);
-                }
-            );
+        obj.createGrade = newGrade => {
+            return $http.post(BASE_URL + "/grades", { grade: newGrade });
         };
 
-        obj.deleteGrade = (cb, grade) => {
-            $http.delete(BASE_URL + "/grades/" + grade.id).then(
-                res => {
-                    cb(null, res);
-                },
-                err => {
-                    cb(err);
-                }
-            );
+        obj.deleteGrade = grade => {
+            return $http.delete(BASE_URL + "/grades/" + grade.id);
         };
 
-        obj.updateGrade = (cb, grade) => {
-            $http
-                .put(BASE_URL + "/grades/" + grade.id, { name: grade.name })
-                .then(
-                    res => {
-                        cb(null, res);
-                    },
-                    err => {
-                        cb(err);
-                    }
-                );
+        obj.updateGrade = grade => {
+            return $http.put(BASE_URL + "/grades/" + grade.id, {
+                name: grade.name
+            });
         };
 
         return obj;

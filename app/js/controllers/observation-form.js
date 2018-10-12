@@ -1,17 +1,17 @@
 export default [
-    '$scope',
-    '$state',
-    '$timeout',
-    'observation',
-    'Upload',
-    'GradeService',
-    'TeacherService',
-    'ObservationTypeService',
-    'ObservationService',
-    'ClusterService',
-    'AttachmentService',
-    'UtilService',
-    'BASE_URL',
+    "$scope",
+    "$state",
+    "$timeout",
+    "observation",
+    "Upload",
+    "GradeService",
+    "TeacherService",
+    "ObservationTypeService",
+    "ObservationService",
+    "ClusterService",
+    "AttachmentService",
+    "UtilService",
+    "BASE_URL",
 
     function(
         $scope,
@@ -28,10 +28,9 @@ export default [
         UtilService,
         BASE_URL
     ) {
-        var line = new ProgressBar.Line("#progress", { color: "#5F2358" });
+        // Progress Bar
+        $scope.progressBarActive = false;
 
-        let observationToBeDeleted,
-            cluster_ids = [];
         $scope.observation = observation.data;
         $scope.editObservationName = false;
         $scope.isImage;
@@ -177,38 +176,23 @@ export default [
                 $scope.selectedImageUrl = "";
             });
 
-        $scope.uploadFiles = (files, errFiles) => {
-            $scope.files = files;
-            $scope.errFiles = errFiles;
-
-            angular.forEach(files, file => {
-                file.upload = Upload.upload({
-                    url: BASE_URL + "/observations/" + $scope.observation.id,
-                    method: "PUT",
-                    data: {
-                        attachments: file
-                    }
-                });
-
-                line.animate(0.5);
-                file.upload.then(
-                    res => {
-                        $timeout(() => {
-                            $scope.observation.attachments =
-                                res.data.data.attachments;
-                            line.animate(1.0);
-                            setTimeout(function() {
-                                line.animate(0);
-                            }, 2000);
-                        });
-                    },
-                    res => {
-                        if (res.status > 0) {
-                            $scope.errMessage = res.status + ": " + res.data;
-                        }
-                    }
-                );
-            });
+        $scope.upload = file => {
+            $scope.progressBarActive = true;
+            Upload.upload({
+                url: BASE_URL + "/observations/" + $scope.observation.id,
+                method: "PUT",
+                data: {
+                    attachments: file
+                }
+            }).then(
+                res => {
+                    $scope.observation.attachments = res.data.data.attachments;
+                    $scope.progressBarActive = false;
+                },
+                err => {
+                    $scope.errMessage = res.status + ": " + res.data;
+                }
+            );
         };
 
         $scope.isSelectedCluster = cluster_id => {

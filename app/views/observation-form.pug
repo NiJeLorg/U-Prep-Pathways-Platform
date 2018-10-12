@@ -2,7 +2,7 @@
     .c-modal__modal-content
         .l-flex-space-between
             h2 Lesson Observation Settings
-            //- img.ul-cursor-pointer(src='assets/icons/x-icon.svg' ng-click='closeEditObservationModal()')
+            img.ul-cursor-pointer(src='assets/icons/x-icon.svg' ng-click='closeEditObservationModal()')
         p CREATED {{observation.created_at | date:'short'}}
         h3 Observation Details
         div
@@ -18,7 +18,7 @@
 .c-modal.delete-observation-modal
     .c-modal__modal-content
         .l-flex-flex-end
-            //- img.ul-cursor-pointer(src='assets/icons/x-icon.svg' ng-click='closeDeleteModal()')
+            img.ul-cursor-pointer(src='assets/icons/x-icon.svg' ng-click='closeDeleteModal()')
         h2 Delete This Observation?
         p This action cannot be reversed
         .c-buttons-holder
@@ -27,7 +27,7 @@
 .c-modal.submit-observation-modal
     .c-modal__modal-content
         .l-flex-flex-end
-            //- img.ul-cursor-pointer(src='assets/icons/x-icon.svg' ng-click='closeSubmitObservationModal()')
+            img.ul-cursor-pointer(src='assets/icons/x-icon.svg' ng-click='closeSubmitObservationModal()')
         h2 Ready to Submit Your Observation?
         p Once submitted, you will not be able to make any more changes to this observation and it will be used for Scoring.
         .c-buttons-holder-flex
@@ -38,80 +38,79 @@
     .c-modal__modal-content
         .l-flex
             .c-modal__badge
-                //- img(src='assets/icons/submitted-badge-icon.svg')
+                img(src='assets/icons/submitted-badge-icon.svg')
             span(style='margin-left: 60px')
                 h2 Thank you for Submitting Your Observation
                 p Your observation will now be used for Scoring.
 .c-light-box-overlay
 .c-light-box
-    //- img.main-image(src='https://dev-uprep.nijel.org/{{selectedImageUrl}}')
+    img.main-image(src='https://dev-uprep.nijel.org/{{selectedImageUrl}}')
 
 
-
+md-progress-linear(md-mode='intermediate' ng-if='progressBarActive')
 .ul-padding-30
-        .progress(id='progress')       
-        .c-observation-observation-form
-            .c-observation-observation-form__details
-                .edit-observation-name
-                    h3(ng-show='!editObservationName') {{observation.name || observation.observation_type.name}}
-                    input.c-input(type='text' placeholder='{{observation.name}}' ng-show='editObservationName' ng-model='observation.name')
-                    //- img.ul-cursor-pointer(src='assets/icons/edit-icon.svg' ng-show='!editObservationName' ng-click='editObservationName = true' ng-hide='observation.status === 1')
-                span.grade-color.ul-text-uppercase Grade: {{observation.grade.name}}
-                span.teacher-color.ul-text-uppercase {{observation.teacher.name}}
-                span.subject-color.ul-text-uppercase {{observation .subject.name}}
-                p CREATED {{observation.created_at | date:'short'}}
-            .c-observation-observation-form__actions
-                .l-flex
-                    span.submitted(ng-if='observation.status == 1') SUBMITTED
-                    span.draft(ng-if='observation.status == 0') DRAFT
-                    span(ng-hide='observation.status === 1')
-                        button(ng-click='openSubmitObservationModal()') Submit
-                        //- img.ul-cursor-pointer(src='assets/icons/settings-small-icon.svg' ng-click='openEditObservationModal()')
-                        //- img.ul-cursor-pointer(src='assets/icons/duplicate-icon.svg')
-                        //- img.ul-cursor-pointer(src='assets/icons/delete-icon.svg' ng-click='openDeleteModal()')
+    .c-observation-observation-form
+        .c-observation-observation-form__details
+            .edit-observation-name
+                h3(ng-show='!editObservationName') {{observation.name || observation.observation_type.name}}
+                input.c-input(type='text' placeholder='{{observation.name}}' ng-show='editObservationName' ng-model='observation.name')
+                img.ul-cursor-pointer(src='assets/icons/edit-icon.svg' ng-show='!editObservationName' ng-click='editObservationName = true' ng-hide='observation.status === 1')
+            span.grade-color.ul-text-uppercase Grade: {{observation.grade.name}}
+            span.teacher-color.ul-text-uppercase {{observation.teacher.name}}
+            span.subject-color.ul-text-uppercase {{observation .subject.name}}
+            p CREATED {{observation.created_at | date:'short'}}
+        .c-observation-observation-form__actions
+            .l-flex
+                span.submitted(ng-if='observation.status == 1') SUBMITTED
+                span.draft(ng-if='observation.status == 0') DRAFT
+                span(ng-hide='observation.status === 1')
+                    button(ng-click='openSubmitObservationModal()') Submit
+                    img.ul-cursor-pointer(src='assets/icons/settings-small-icon.svg' ng-click='openEditObservationModal()')
+                    img.ul-cursor-pointer(src='assets/icons/duplicate-icon.svg')
+                    img.ul-cursor-pointer(src='assets/icons/delete-icon.svg' ng-click='openDeleteModal()')
 
-        .c-observation-form-input-group.ul-margin-bottom-20
-            h2 Observation Description
-            p What's the theme/goal/focus?
-            textarea(ng-model='observation.description' ng-disabled='observation.status === 1')
-        .c-observation-form-input-group.ul-margin-bottom-20
-            h2 Attachments
-            p Add photos, videos, word documents, or pdf's to your observation
-            .c-attachments-holder
-                .add-attachment.ul-cursor-pointer(ngf-select='uploadFiles($files, $invalidFiles)' ng-hide='observation.status === 1')
-                    //- img(src='assets/icons/add-icon.svg')
-                .attachments-container(ng-if='observation.attachments')
-                    .attachment(ng-repeat='attachment in observation.attachments')
-                        div
-                            .attachment__photo(ng-if='checkIfAttacmentIsImage(attachment)' ng-style="{background: 'url(https://dev-uprep.nijel.org/{{attachment.link}})'}" ng-click='selectAttachment(attachment.link)' )
-                            .attachment__video(ng-if='checkIfAttacmentIsVideo(attachment)')
-                                video(controls)
-                                    source(src='https://dev-uprep.nijel.org/{{attachment.link}}')
-                            .attachment__document(ng-if='checkIfAttacmentIsDocument(attachment)')
-                                a(href='https://dev-uprep.nijel.org/{{attachment.link}}' target='_blank')
-                                    //- img(src="assets/icons/file-type.svg", alt="")
-                                p {{attachment.name}}
-                                //- p {{attachment.name}}
-                        //- img.remove-attachment(src='assets/icons/x-icon-circle.svg' ng-click='removeAttachment(observation.attachments, attachment)')      
-        .ul-50-50
-            .c-observation-form-input-group.ul-margin-bottom-20(ng-repeat='observationTypeProperty in observationTypeProperties' ng-if='observationTypeProperty.label != "Conclusions"')
-                h2 {{observationTypeProperty.label}}: {{observationTypeProperty.label_meta}}
-                p {{observationTypeProperty.help_text}}
-                textarea(name='property_{{observationTypeProperty.id}}' ng-model="observationTypeProperty.value" ng-disabled='observation.status === 1')
-        .c-observation-form-input-group.ul-margin-bottom-20(ng-repeat='observationTypeProperty in observationTypeProperties' ng-if='observationTypeProperty.label == "Conclusions"')
-                h2 {{observationTypeProperty.label}}: {{observationTypeProperty.label_meta}}
-                p {{observationTypeProperty.help_text}}
-                textarea(name='property_{{observationTypeProperty.id}}' ng-model="observationTypeProperty.value" ng-disabled='observation.status === 1')
-        .c-clusters
-            .c-clusters__title
-                h3 Clusters Observed
-                span
-                    h3 YES
-                    h3 NO
-            .c-radio-group.l-flex.ul-margin-bottom-20(ng-repeat='cluster in clusters track by cluster.id')
-                p {{cluster.name}}
-                input(type='radio' name='{{cluster.name}}' value='true' ng-change='selectCluster(true, cluster)' ng-model="cluster.selected" ng-disabled='observation.status === 1')
-                input(type='radio' name='{{cluster.name}}' value='false' ng-change='selectCluster(false, cluster)' ng-model="cluster.selected" ng-disabled='observation.status === 1')
-        .submit-buttons-holder(ng-hide='observation.status === 1')
-            button.submit-button(ng-click='openSubmitObservationModal()') Submit
+    .c-observation-form-input-group.ul-margin-bottom-20
+        h2 Observation Description
+        p What's the theme/goal/focus?
+        textarea(ng-model='observation.description' ng-disabled='observation.status === 1')
+    .c-observation-form-input-group.ul-margin-bottom-20
+        h2 Attachments
+        p Add photos, videos, word documents, or pdf's to your observation
+        .c-attachments-holder
+            .add-attachment.ul-cursor-pointer(ngf-select='upload($file)' ng-model='file' name='file' ng-hide='observation.status === 1')
+                img(src='assets/icons/add-icon.svg')
+            .attachments-container(ng-if='observation.attachments')
+                .attachment(ng-repeat='attachment in observation.attachments')
+                    div
+                        .attachment__photo(ng-if='checkIfAttacmentIsImage(attachment)' ng-style="{background: 'url(https://dev-uprep.nijel.org/{{attachment.link}})'}" ng-click='selectAttachment(attachment.link)' )
+                        .attachment__video(ng-if='checkIfAttacmentIsVideo(attachment)')
+                            video(controls)
+                                source(src='https://dev-uprep.nijel.org/{{attachment.link}}')
+                        .attachment__document(ng-if='checkIfAttacmentIsDocument(attachment)')
+                            a(href='https://dev-uprep.nijel.org/{{attachment.link}}' target='_blank')
+                                img(src="assets/icons/file-type.svg", alt="")
+                            p {{attachment.name}}
+                            //- p {{attachment.name}}
+                    img.remove-attachment(src='assets/icons/x-icon-circle.svg' ng-click='removeAttachment(observation.attachments, attachment)')      
+    .ul-50-50
+        .c-observation-form-input-group.ul-margin-bottom-20(ng-repeat='observationTypeProperty in observationTypeProperties' ng-if='observationTypeProperty.label != "Conclusions"')
+            h2 {{observationTypeProperty.label}}: {{observationTypeProperty.label_meta}}
+            p {{observationTypeProperty.help_text}}
+            textarea(name='property_{{observationTypeProperty.id}}' ng-model="observationTypeProperty.value" ng-disabled='observation.status === 1')
+    .c-observation-form-input-group.ul-margin-bottom-20(ng-repeat='observationTypeProperty in observationTypeProperties' ng-if='observationTypeProperty.label == "Conclusions"')
+            h2 {{observationTypeProperty.label}}: {{observationTypeProperty.label_meta}}
+            p {{observationTypeProperty.help_text}}
+            textarea(name='property_{{observationTypeProperty.id}}' ng-model="observationTypeProperty.value" ng-disabled='observation.status === 1')
+    .c-clusters
+        .c-clusters__title
+            h3 Clusters Observed
+            span
+                h3 YES
+                h3 NO
+        .c-radio-group.l-flex.ul-margin-bottom-20(ng-repeat='cluster in clusters track by cluster.id')
+            p {{cluster.name}}
+            input(type='radio' name='{{cluster.name}}' value='true' ng-change='selectCluster(true, cluster)' ng-model="cluster.selected" ng-disabled='observation.status === 1')
+            input(type='radio' name='{{cluster.name}}' value='false' ng-change='selectCluster(false, cluster)' ng-model="cluster.selected" ng-disabled='observation.status === 1')
+    .submit-buttons-holder(ng-hide='observation.status === 1')
+        button.submit-button(ng-click='openSubmitObservationModal()') Submit
 

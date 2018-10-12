@@ -7,7 +7,6 @@ export default [
     "GradeService",
     "ObservationFactory",
     "ScoreFactory",
-    "PaginationFactory",
     function(
         $scope,
         $state,
@@ -17,7 +16,6 @@ export default [
         GradeService,
         ObservationFactory,
         ScoreFactory,
-        PaginationFactory
     ) {
         $scope.page = "dashboard";
         $scope.pager = {};
@@ -25,9 +23,10 @@ export default [
         let observationTypes;
 
         // fetch data
-        TeacherService.fetchAllTeachers((err, res) => {
-            let reg = /^(\w+)\s(\w+)$/;
-            if (!err) {
+        TeacherService.fetchAllTeachers().then(
+            res => {
+                let reg = /^(\w+)\s(\w+)$/;
+
                 $scope.teachers = res.data.data;
                 res.data.data.forEach((elem, index) => {
                     if (
@@ -37,10 +36,11 @@ export default [
                         elem.name = elem.name.replace(reg, "$2 $1");
                     }
                 });
-            } else {
+            },
+            err => {
                 console.error(err, "ERROR");
             }
-        });
+        )
 
         SchoolService.fetchSchools((err, res) => {
             if (!err) {

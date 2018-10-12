@@ -2,7 +2,7 @@
     .c-modal__modal-content
         .l-flex-space-between
             h2 New Teacher        
-            //- img.ul-cursor-pointer(src='assets/icons/x-icon.svg' ng-click='closeModal()')
+            img.ul-cursor-pointer(src='assets/icons/x-icon.svg' ng-click='closeModal()')
         form
             .input-group
                 label First Name
@@ -13,7 +13,6 @@
             .input-group
                 label School
                 select(ng-model='newTeacher.school' ng-options='school as school.name for school in schools track by school.id')
-                    //- option(ng-repeat='school in schools') {{school.name}}
             .input-group
                 label Grades
                 div(isteven-multi-select input-model="grades" output-model="newTeacher.grades"  button-label="name" item-label="name" tick-property="ticked")
@@ -29,7 +28,7 @@
     .c-modal__modal-content
         .l-flex-space-between
             h2 New School        
-            //- img.ul-cursor-pointer(src='assets/icons/x-icon.svg' ng-click='closeModal()')
+            img.ul-cursor-pointer(src='assets/icons/x-icon.svg' ng-click='closeModal()')
         form 
             .input-group 
                 label School Name
@@ -41,7 +40,7 @@
     .c-modal__modal-content
         .l-flex-space-between
             h2 New Subject        
-            //- img.ul-cursor-pointer(src='assets/icons/x-icon.svg' ng-click='closeModal()')
+            img.ul-cursor-pointer(src='assets/icons/x-icon.svg' ng-click='closeModal()')
         form
             .input-group
                 label Subject Name
@@ -54,7 +53,7 @@
     .c-modal__modal-content
         .l-flex-space-between
             h2 New Grade        
-            //- img.ul-cursor-pointer(src='assets/icons/x-icon.svg' ng-click='closeModal()')
+            img.ul-cursor-pointer(src='assets/icons/x-icon.svg' ng-click='closeModal()')
         form
             .input-group
                 label Grade Name
@@ -67,25 +66,24 @@
     .c-modal__modal-content
         .l-flex-space-between
             h2 Update Teacher        
-            //- img.ul-cursor-pointer(src='assets/icons/x-icon.svg' ng-click='closeEditResourceModal()')
+            img.ul-cursor-pointer(src='assets/icons/x-icon.svg' ng-click='closeEditResourceModal()')
         form
             .input-group
                 label First Name
-                input(type='text' ng-model='teacher.firstName')
+                input(type='text' ng-model='updatedTeacher.firstName')
             .input-group
                 label Last Name
-                input(type='text' ng-model='teacher.lastName')
+                input(type='text' ng-model='updatedTeacher.lastName')
             .input-group
                 label School
-                //- p(ng-repeat='school in schools') {{school}}
-                select(ng-model='teacher.school')
-                    option(ng-repeat='school in schools') {{school.name}}
+                p {{updatedTeacher.school.name}}
+                select(ng-model='updatedTeacher.school.name' ng-options='school.name for school in schools')
             .input-group
                 label Grades
-                div(isteven-multi-select input-model="grades" output-model="teacher.grades"  button-label="name" item-label="name" tick-property="ticked")
+                div(isteven-multi-select input-model="grades" output-model="updatedTeacher.grades"  button-label="name" item-label="name" tick-property="ticked")
             .input-group
                 label Subjects
-                div(isteven-multi-select input-model="subjects" output-model="teacher.subjects" button-label="name" item-label="name"  tick-property="ticked")
+                div(isteven-multi-select input-model="subjects" output-model="updatedTeacher.subjects" button-label="name" item-label="name"  tick-property="ticked")
             .action-buttons
                 button.submit Submit 
                 button.cancel(ng-click='closeEditResourceModal()') Cancel
@@ -95,7 +93,7 @@
     .c-modal__modal-content
         .l-flex-space-between
             h2 Update School        
-            //- img.ul-cursor-pointer(src='assets/icons/x-icon.svg' ng-click='closeEditResourceModal()')
+            img.ul-cursor-pointer(src='assets/icons/x-icon.svg' ng-click='closeEditResourceModal()')
         form 
             .input-group 
                 label School Name
@@ -107,7 +105,7 @@
     .c-modal__modal-content
         .l-flex-space-between
             h2 Update Subject        
-            //- img.ul-cursor-pointer(src='assets/icons/x-icon.svg' ng-click='closeEditResourceModal()')
+            img.ul-cursor-pointer(src='assets/icons/x-icon.svg' ng-click='closeEditResourceModal()')
         form
             .input-group
                 label Subject Name
@@ -120,7 +118,7 @@
     .c-modal__modal-content
         .l-flex-space-between
             h2 Update Grade        
-            //- img.ul-cursor-pointer(src='assets/icons/x-icon.svg' ng-click='closeEditResourceModal()')
+            img.ul-cursor-pointer(src='assets/icons/x-icon.svg' ng-click='closeEditResourceModal()')
         form
             .input-group
                 label Grade Name
@@ -142,13 +140,12 @@
 .c-admin-section
     aside
         .title Admin Resources
-        p Marriage 
         nav
             p.nav-link.ul-cursor-pointer(ui-sref='admin.teacher' ng-click='resourceType = "teacher"') Teachers
             p.nav-link.ul-cursor-pointer(ui-sref='admin.school' ng-click='resourceType="school"') Schools
             p.nav-link.ul-cursor-pointer(ui-sref='admin.subjects' ng-click='resourceType="subject"') Subjects
             p.nav-link.ul-cursor-pointer(ui-sref='admin.grades' ng-click='resourceType="grade"') Grades                                
-    main
+    main(ng-init='resourceType="teacher"')
         .l-flex-space-between(ng-if='resourceType')
             h1 {{resourceType}}s
             span(ng-click='openModal()')
@@ -158,7 +155,7 @@
                 .filter-teachers-container
                     .c-input-group__text
                         span
-                            //- img(src='assets/icons/search-icon.svg')
+                            img(src='assets/icons/search-icon.svg')
                         input(type='text' placeholder='Search' name='search' ng-model='search')          
                     .c-input-group
                         label Filter By: 
@@ -173,24 +170,24 @@
                 li(ng-repeat='teacher in teachers | orderBy:"lastName" | filter:search | filter:selectedSchool.name | filter:selectedGrade.name')
                     p {{teacher.name}}
                     .action-items
-                        //- img(src='assets/icons/edit-icon.svg' ng-click='openEditResoureModal(teacher)')
-                        //- img(src='assets/icons/delete-icon.svg' ng-click='openDeleteResourceModal(teacher)')
+                        img(src='assets/icons/edit-icon.svg' ng-click='openEditResoureModal(teacher)')
+                        img(src='assets/icons/delete-icon.svg' ng-click='openDeleteResourceModal(teacher)')
             ul(ng-if='resourceType == "school"')
                 li(ng-repeat='school in schools')
                     p {{school.name}}
                     .action-items
-                        //- img(src='assets/icons/edit-icon.svg' ng-click='openEditResoureModal(school)')
-                        //- img(src='assets/icons/delete-icon.svg' ng-click='openDeleteResourceModal(school)')
+                        img(src='assets/icons/edit-icon.svg' ng-click='openEditResoureModal(school)')
+                        img(src='assets/icons/delete-icon.svg' ng-click='openDeleteResourceModal(school)')
             ul(ng-if='resourceType == "subject"')
                 li(ng-repeat='subject in subjects')
                     p {{subject.name}}
                     .action-items
-                        //- img(src='assets/icons/edit-icon.svg' ng-click='openEditResoureModal(subject)')
-                        //- img(src='assets/icons/delete-icon.svg' ng-click='openDeleteResourceModal(subject)')
+                        img(src='assets/icons/edit-icon.svg' ng-click='openEditResoureModal(subject)')
+                        img(src='assets/icons/delete-icon.svg' ng-click='openDeleteResourceModal(subject)')
             ul(ng-if='resourceType == "grade"')
                 li(ng-repeat='grade in grades')
                     p {{grade.name}}
                     .action-items
-                        //- img(src='assets/icons/edit-icon.svg' ng-click='openEditResoureModal(grade)')
-                        //- img(src='assets/icons/delete-icon.svg' ng-click='openDeleteResourceModal(grade)')
+                        img(src='assets/icons/edit-icon.svg' ng-click='openEditResoureModal(grade)')
+                        img(src='assets/icons/delete-icon.svg' ng-click='openDeleteResourceModal(grade)')
         //- section(ui-view='')

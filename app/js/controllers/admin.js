@@ -6,6 +6,7 @@ export default [
     "GradeService",
     "SubjectService",
     "UtilService",
+    "$q",
     function(
         $scope,
         $state,
@@ -13,70 +14,78 @@ export default [
         SchoolService,
         GradeService,
         SubjectService,
-        UtilService
+        UtilService,
+        $q
     ) {
         //initialize models
         $scope.resourceType;
-        let toBeDeletedResource;
 
-        // fetch data
-        TeacherService.fetchAllTeachers((err, res) => {
-            if (!err) {
-                $scope.teachers = res.data.data;
-                $scope.teachers.map((el, index) => {
-                    var lastName = el.name
-                        .split(" ")
-                        .slice(-1)
-                        .join(" ");
-                    el.lastName = lastName;
-                });
-            } else {
-                console.error(err, "ERROR");
-            }
-        });
+        // utility functions
+        function deleteItemFromArray(arr, obj) {
+            return arr.filter(el => el.id !== obj.id);
+        }
 
-        SchoolService.fetchSchools((err, res) => {
-            if (!err) {
-                $scope.schools = res.data.data;
-            } else {
-                console.error(err, "ERROR");
-            }
-        });
+        function getResources() {
+            // fetch data
+            TeacherService.fetchAllTeachers().then(
+                res => {
+                    $scope.teachers = res.data.data;
+                    $scope.teachers.map((el, index) => {
+                        var lastName = el.name
+                            .split(" ")
+                            .slice(-1)
+                            .join(" ");
+                        el.lastName = lastName;
+                    });
+                },
+                err => {
+                    console.error(err, "ERROR");
+                }
+            );
 
-        GradeService.fetchGrades((err, res) => {
-            if (!err) {
-                $scope.grades = res.data.data;
-            } else {
-                console.error(err, "ERROR");
-            }
-        });
+            SchoolService.fetchSchools((err, res) => {
+                if (!err) {
+                    $scope.schools = res.data.data;
+                } else {
+                    console.error(err, "ERROR");
+                }
+            });
 
-        SubjectService.fetchSubjects((err, res) => {
-            if (!err) {
-                $scope.subjects = res.data.data;
-            } else {
-                console.error(err, "ERROR");
-            }
-        });
+            GradeService.fetchGrades((err, res) => {
+                if (!err) {
+                    $scope.grades = res.data.data;
+                } else {
+                    console.error(err, "ERROR");
+                }
+            });
 
-        // event handlders
-        $scope.fetchGrades = school => {
-            if (school !== null) {
-                GradeService.query(
-                    {
-                        id: school.id
-                    },
-                    res => {
-                        $scope.grades = res.data;
-                    },
-                    err => {
-                        console.error(err, "ERROR");
-                    }
-                );
-            } else {
-                $scope.grades = [];
-            }
-        };
+            SubjectService.fetchSubjects((err, res) => {
+                if (!err) {
+                    $scope.subjects = res.data.data;
+                } else {
+                    console.error(err, "ERROR");
+                }
+            });
+
+            // event handlders
+            $scope.fetchGrades = school => {
+                if (school !== null) {
+                    GradeService.query(
+                        {
+                            id: school.id
+                        },
+                        res => {
+                            $scope.grades = res.data;
+                        },
+                        err => {
+                            console.error(err, "ERROR");
+                        }
+                    );
+                } else {
+                    $scope.grades = [];
+                }
+            };
+        }
 
         // crete resource
         function createResources() {
@@ -90,60 +99,66 @@ export default [
             };
 
             $scope.createSchool = newSchool => {
-                SchoolService.createSchool((err, res) => {
-                    if (!err) {
+                SchoolService.createSchool(newSchool).then(
+                    res => {
                         UtilService.closeModal(
                             `create-${$scope.resourceType}-modal`
                         );
-                        $state.reload();
-                    } else {
+                        $scope.schools.push(res.data.data);
+                    },
+                    err => {
                         console.error(err, "ERROR");
                     }
-                }, newSchool);
+                );
             };
 
             $scope.createGrade = newGrade => {
-                GradeService.createGrade((err, res) => {
-                    if (!err) {
+                GradeService.createGrade(newGrade).then(
+                    res => {
                         UtilService.closeModal(
                             `create-${$scope.resourceType}-modal`
                         );
-                        $state.reload();
-                    } else {
+                        $scope.grades.push(res.data.data);
+                    },
+                    err => {
                         console.error(err, "ERROR");
                     }
-                }, newGrade);
+                );
             };
 
             $scope.createSubject = newSubject => {
-                SubjectService.createSubject((err, res) => {
-                    if (!err) {
+                SubjectService.createSubject(newSubject).then(
+                    res => {
                         UtilService.closeModal(
                             `create-${$scope.resourceType}-modal`
                         );
-                        $state.reload();
-                    } else {
+                        $scope.subjects.push(res.data.data);
+                    },
+                    err => {
                         console.error(err, "ERROR");
                     }
-                }, newSubject);
+                );
             };
 
             $scope.createTeacher = newTeacher => {
-                TeacherService.createTeacher((err, res) => {
-                    if (!err) {
+                TeacherService.createTeacher(newTeacher).then(
+                    res => {
                         UtilService.closeModal(
                             `create-${$scope.resourceType}-modal`
                         );
-                        $state.reload();
-                    } else {
+                        $scope.teachers.push(res.data.data);
+                    },
+                    err => {
                         console.error(err, "ERROR");
                     }
-                }, newTeacher);
+                );
             };
         }
 
         function deleteResources() {
-            // delete resources
+            let toBeDeletedResource;
+
+            // delete resources modals
             $scope.openDeleteResourceModal = resource => {
                 UtilService.openModal("delete-resource-modal");
                 toBeDeletedResource = resource;
@@ -153,46 +168,62 @@ export default [
                 UtilService.closeModal("delete-resource-modal");
             };
 
-            $scope.deleteResource = resource => {
-                if (resource == "school") {
-                    SchoolService.deleteSchool((err, res) => {
-                        if (!err) {
+            $scope.deleteResource = () => {
+                if ($scope.resourceType == "school") {
+                    SchoolService.deleteSchool(toBeDeletedResource).then(
+                        res => {
                             UtilService.closeModal("delete-resource-modal");
-                            $state.reload();
-                        } else {
+                            $scope.schools = deleteItemFromArray(
+                                $scope.schools,
+                                toBeDeletedResource
+                            );
+                        },
+                        err => {
                             console.error(err, "ERR");
                         }
-                    }, toBeDeletedResource);
+                    );
                 }
-                if (resource == "teacher") {
-                    TeacherService.deleteTeacher((err, res) => {
-                        if (!err) {
+                if ($scope.resourceType == "teacher") {
+                    TeacherService.deleteTeacher(toBeDeletedResource).then(
+                        res => {
                             UtilService.closeModal("delete-resource-modal");
-                            $state.reload();
-                        } else {
+                            $scope.teachers = deleteItemFromArray(
+                                $scope.teachers,
+                                toBeDeletedResource
+                            );
+                        },
+                        err => {
                             console.error(err, "ERR");
                         }
-                    }, toBeDeletedResource);
+                    );
                 }
-                if (resource == "grade") {
-                    GradeService.deleteGrade((err, res) => {
-                        if (!err) {
+                if ($scope.resourceType == "grade") {
+                    GradeService.deleteGrade(toBeDeletedResource).then(
+                        res => {
                             UtilService.closeModal("delete-resource-modal");
-                            $state.reload();
-                        } else {
+                            $scope.grades = deleteItemFromArray(
+                                $scope.grades,
+                                toBeDeletedResource
+                            );
+                        },
+                        err => {
                             console.error(err, "ERR");
                         }
-                    }, toBeDeletedResource);
+                    );
                 }
-                if (resource == "subject") {
-                    SubjectService.deleteSubject((err, res) => {
-                        if (!err) {
+                if ($scope.resourceType == "subject") {
+                    SubjectService.deleteSubject(toBeDeletedResource).then(
+                        err => {
                             UtilService.closeModal("delete-resource-modal");
-                            $state.reload();
-                        } else {
+                            $scope.subjects = deleteItemFromArray(
+                                $scope.subjects,
+                                toBeDeletedResource
+                            );
+                        },
+                        err => {
                             console.error(err, "ERR");
                         }
-                    }, toBeDeletedResource);
+                    );
                 }
             };
         }
@@ -203,6 +234,9 @@ export default [
                 UtilService.openModal(`update-${$scope.resourceType}-modal`);
                 if ($scope.resourceType == "teacher") {
                     $scope.updatedTeacher = obj;
+                    $scope.updatedTeacher.firstName = $scope.updatedTeacher.name.split(
+                        " "
+                    )[0];
                 }
                 if ($scope.resourceType == "school") {
                     $scope.updatedSchool = obj;
@@ -220,45 +254,46 @@ export default [
             };
 
             $scope.updateSchool = school => {
-                SchoolService.updateSchool((err, res) => {
-                    if (!err) {
+                SchoolService.updateSchool(school).then(
+                    res => {
                         UtilService.closeModal(
                             `update-${$scope.resourceType}-modal`
                         );
-                        $state.reload();
-                    } else {
+                    },
+                    err => {
                         console.error(err, "ERR");
                     }
-                }, school);
+                );
             };
 
             $scope.updateSubject = subject => {
-                SubjectService.updateSubject((err, res) => {
-                    if (!err) {
+                SubjectService.updateSubject(subject).then(
+                    res => {
                         UtilService.closeModal(
                             `update-${$scope.resourceType}-modal`
                         );
-                        $state.reload();
-                    } else {
+                    },
+                    err => {
                         console.error(err, "ERR");
                     }
-                }, subject);
+                );
             };
 
             $scope.updateGrade = grade => {
-                GradeService.updateGrade((err, res) => {
-                    if (!err) {
+                GradeService.updateGrade(grade).then(
+                    res => {
                         UtilService.closeModal(
                             `update-${$scope.resourceType}-modal`
                         );
-                        $state.reload();
-                    } else {
+                    },
+                    err => {
                         console.error(err, "ERR");
                     }
-                }, grade);
+                );
             };
         }
 
+        getResources();
         createResources();
         deleteResources();
         updateResources();

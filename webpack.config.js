@@ -3,6 +3,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const webpack = require("webpack");
 const path = require("path");
 const fs = require("fs");
+
 const devMode = process.env.NODE_ENV !== "production";
 
 // read app/shared and views
@@ -17,8 +18,8 @@ const createHTMLPlugin = (filename, template) => {
 const config = {
     context: __dirname,
     entry: [
-        "webpack-dev-server/client?http://localhost:8080",
-        "webpack/hot/only-dev-server",
+        // "webpack-dev-server/client?http://localhost:8080",
+        // "webpack/hot/only-dev-server",
         "./app/js/app.js"
     ],
     mode: "development",
@@ -38,6 +39,7 @@ const config = {
         })
     ],
     devServer: {
+        contentBase: "./public",
         historyApiFallback: true,
         proxy: {
             "/api": "http://localhost:3000"
@@ -52,7 +54,7 @@ const config = {
             },
             {
                 test: /\.pug$/,
-                use: ["html-loader", "pug-html-loader"]
+                use: ["html-loader?attrs=false", "pug-html-loader"]
             },
             {
                 test: /\.(png|jpg|gif|svg)$/,
@@ -70,7 +72,7 @@ const config = {
                 test: /\.(sa|sc|c)ss$/,
                 use: [
                     devMode ? "style-loader" : MiniCssExtractPlugin.loader,
-                    "css-loader",
+                    "css-loader?url=false",
                     "sass-loader"
                 ]
             }

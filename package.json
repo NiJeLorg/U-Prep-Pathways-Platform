@@ -5,7 +5,7 @@
     "main": "index.js",
     "scripts": {
         "dev": "webpack-dev-server",
-        "prod": "webpack --mode production"
+        "prod": "webpack --mode development"
     },
     "repository": {
         "type": "git",
@@ -20,6 +20,10 @@
     "dependencies": {
         "@uirouter/angularjs": "^1.0.13",
         "angular": "^1.6.8",
+        "angular-animate": "^1.7.5",
+        "angular-aria": "^1.7.5",
+        "angular-material": "^1.1.10",
+        "angular-messages": "^1.7.5",
         "angular-resource": "^1.6.9",
         "axios": "^0.18.0",
         "bluebird": "^3.5.1",
@@ -65,6 +69,7 @@
         "node-sass": "^4.9.3",
         "prettier": "^1.14.3",
         "pug": "^2.0.3",
+        "resolve-url-loader": "^3.0.0",
         "sass-loader": "^7.1.0",
         "sequelize-cli": "^3.2.0",
         "style-loader": "^0.23.0",

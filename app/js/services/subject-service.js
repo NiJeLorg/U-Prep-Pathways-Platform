@@ -27,41 +27,18 @@ export default [
             );
         };
 
-        obj.createSubject = (cb, newSubject) => {
-            $http.post(BASE_URL + "/subjects", { subject: newSubject }).then(
-                res => {
-                    cb(null, res);
-                },
-                err => {
-                    cb(err);
-                }
-            );
+        obj.createSubject = newSubject => {
+            return $http.post(BASE_URL + "/subjects", { subject: newSubject });
         };
 
-        obj.deleteSubject = (cb, subject) => {
-            $http.delete(BASE_URL + "/subjects/" + subject.id).then(
-                res => {
-                    cb(null, res);
-                },
-                err => {
-                    cb(err);
-                }
-            );
+        obj.deleteSubject = subject => {
+            return $http.delete(BASE_URL + "/subjects/" + subject.id);
         };
 
-        obj.updateSubject = (cb, subject) => {
-            $http
-                .put(BASE_URL + "/subjects/" + subject.id, {
-                    name: subject.name
-                })
-                .then(
-                    res => {
-                        cb(null, res);
-                    },
-                    err => {
-                        cb(err);
-                    }
-                );
+        obj.updateSubject = subject => {
+            return $http.put(BASE_URL + "/subjects/" + subject.id, {
+                name: subject.name
+            });
         };
 
         return obj;
