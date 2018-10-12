@@ -1,289 +1,350 @@
-'use strict';
+export default [
+    "$scope",
+    "$state",
+    "$timeout",
+    "observation",
+    "Upload",
+    "GradeService",
+    "TeacherService",
+    "ObservationTypeService",
+    "ObservationService",
+    "ClusterService",
+    "AttachmentService",
+    "UtilService",
+    "BASE_URL",
 
-const ObservationFormCtrl = function ($scope, $state, $stateParams, $timeout, observation, Upload, GradeService, TeacherService, ObservationTypeService, ObservationService, ClusterService, AttachmentService, UtilService, ObservationFactory, BASE_URL,) {
+    function(
+        $scope,
+        $state,
+        $timeout,
+        observation,
+        Upload,
+        GradeService,
+        TeacherService,
+        ObservationTypeService,
+        ObservationService,
+        ClusterService,
+        AttachmentService,
+        UtilService,
+        BASE_URL
+    ) {
+        // Progress Bar
+        $scope.progressBarActive = false;
 
-    var line = new ProgressBar.Line('#progress', {color: '#5F2358'});
+        $scope.observation = observation.data;
+        $scope.editObservationName = false;
+        $scope.isImage;
+        $scope.selectedImageUrl;
+        $scope.attachmentFormat;
 
-    let observationToBeDeleted,
-        cluster_ids = [];
-    $scope.observation = observation.data;
-    $scope.editObservationName = false;
-    $scope.isImage;
-    $scope.selectedImageUrl;
-    $scope.attachmentFormat;
-
-    // fetch data
-    ObservationTypeService.get({
-        id: $scope.observation.observation_type_id
-    }, (res) => {
-        $scope.observationTypeProperties = res
-            .data
-            .observation_type_properties
-            .map((property) => {
-                property.value = $scope.getObservationTypePropertyVal(property.id);
-                return property;
-            });
-    }, (err) => {
-        console.error(err, 'ERROR');
-    });
-
-    GradeService.query({
-        id: $scope.observation.school.id
-    }, (res) => {
-        $scope.grades = res.data;
-        $scope.updateTeachersBasedOnSelectedGrade();
-        $scope.updateSubjectsBasedOnSelectedTeacher();
-    }, (err) => {
-        console.error(err, 'ERROR');
-    });
-
-    ClusterService.query((res) => {
-        $scope.clusters = res
-            .data
-            .map((cluster) => {
-                cluster.selected = `${$scope
-                    .observation
-                    .cluster_ids
-                    .includes(cluster.id)}`;
-                return cluster;
-            });
-    }, (err) => {
-        console.errror(err, 'ERROR');
-    });
-
-    $scope.selectCluster = (value, cluster) => {
-        if (value === true) {
-            if (!$scope.observation.cluster_ids.includes(cluster.id)) 
-                $scope.observation.cluster_ids.push(cluster.id);
-            cluster.selected = "true";
-        } else {
-            cluster.selected = "false";
-            if ($scope.observation.cluster_ids.indexOf(cluster.id) !== -1) {
-                $scope
-                    .observation
-                    .cluster_ids
-                    .splice($scope.observation.cluster_ids.indexOf(cluster.id), 1);
+        // fetch data
+        ObservationTypeService.get(
+            {
+                id: $scope.observation.observation_type_id
+            },
+            res => {
+                $scope.observationTypeProperties = res.data.observation_type_properties.map(
+                    property => {
+                        property.value = $scope.getObservationTypePropertyVal(
+                            property.id
+                        );
+                        return property;
+                    }
+                );
+            },
+            err => {
+                console.error(err, "ERROR");
             }
-        }
-    };
+        );
 
-    $scope.checkIfAttacmentIsImage = (file) => {
-        let commonImageTypes = ['bmp', 'gif', 'jpeg', 'jpg', 'png'];
+        GradeService.query(
+            {
+                id: $scope.observation.school.id
+            },
+            res => {
+                $scope.grades = res.data;
+                $scope.updateTeachersBasedOnSelectedGrade();
+                $scope.updateSubjectsBasedOnSelectedTeacher();
+            },
+            err => {
+                console.error(err, "ERROR");
+            }
+        );
 
-        if (commonImageTypes.some(el => file.name.substr(file.name.indexOf(".") + 1).toLowerCase().includes(el))) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+        ClusterService.query(
+            res => {
+                $scope.clusters = res.data.map(cluster => {
+                    cluster.selected = `${$scope.observation.cluster_ids.includes(
+                        cluster.id
+                    )}`;
+                    return cluster;
+                });
+            },
+            err => {
+                console.errror(err, "ERROR");
+            }
+        );
 
-    $scope.checkIfAttacmentIsDocument = (file) => {
-        let commonDocumentTypes = ['pdf', 'doc', 'docx'];
+        $scope.selectCluster = (value, cluster) => {
+            if (value === true) {
+                if (!$scope.observation.cluster_ids.includes(cluster.id))
+                    $scope.observation.cluster_ids.push(cluster.id);
+                cluster.selected = "true";
+            } else {
+                cluster.selected = "false";
+                if ($scope.observation.cluster_ids.indexOf(cluster.id) !== -1) {
+                    $scope.observation.cluster_ids.splice(
+                        $scope.observation.cluster_ids.indexOf(cluster.id),
+                        1
+                    );
+                }
+            }
+        };
 
-        if (commonDocumentTypes.some(el => file.name.substr(file.name.indexOf(".") + 1).toLowerCase().includes(el))) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+        $scope.checkIfAttacmentIsImage = file => {
+            let commonImageTypes = ["bmp", "gif", "jpeg", "jpg", "png"];
 
-    $scope.checkIfAttacmentIsVideo = (file) => {
-        let commonVideoTypes = ['mov', 'mp4'];
+            if (
+                commonImageTypes.some(el =>
+                    file.name
+                        .substr(file.name.indexOf(".") + 1)
+                        .toLowerCase()
+                        .includes(el)
+                )
+            ) {
+                return true;
+            } else {
+                return false;
+            }
+        };
 
-        if (commonVideoTypes.some(el => file.name.substr(file.name.indexOf(".") + 1).toLowerCase().includes(el))) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+        $scope.checkIfAttacmentIsDocument = file => {
+            let commonDocumentTypes = ["pdf", "doc", "docx"];
 
-    $scope.selectAttachment = (link) => {
-        $scope.selectedImageUrl = link;
-        angular
-            .element(document.getElementsByClassName('c-light-box-overlay'))
-            .css('display', 'block');
-        angular
-            .element(document.getElementsByClassName('c-light-box'))
-            .css('display', 'flex');
-    };
+            if (
+                commonDocumentTypes.some(el =>
+                    file.name
+                        .substr(file.name.indexOf(".") + 1)
+                        .toLowerCase()
+                        .includes(el)
+                )
+            ) {
+                return true;
+            } else {
+                return false;
+            }
+        };
 
-    angular
-        .element(document.getElementsByClassName('c-light-box-overlay'))
-        .on('click', function () {
+        $scope.checkIfAttacmentIsVideo = file => {
+            let commonVideoTypes = ["mov", "mp4"];
+
+            if (
+                commonVideoTypes.some(el =>
+                    file.name
+                        .substr(file.name.indexOf(".") + 1)
+                        .toLowerCase()
+                        .includes(el)
+                )
+            ) {
+                return true;
+            } else {
+                return false;
+            }
+        };
+
+        $scope.selectAttachment = link => {
+            $scope.selectedImageUrl = link;
             angular
-                .element(document.getElementsByClassName('c-light-box-overlay'))
-                .css('display', 'none');
+                .element(document.getElementsByClassName("c-light-box-overlay"))
+                .css("display", "block");
             angular
-                .element(document.getElementsByClassName('c-light-box'))
-                .css('display', 'none');
-            $scope.selectedImageUrl = "";
-        });
+                .element(document.getElementsByClassName("c-light-box"))
+                .css("display", "flex");
+        };
 
-    $scope.uploadFiles = (files, errFiles) => {
-        $scope.files = files;
-        $scope.errFiles = errFiles;
-    
+        angular
+            .element(document.getElementsByClassName("c-light-box-overlay"))
+            .on("click", function() {
+                angular
+                    .element(
+                        document.getElementsByClassName("c-light-box-overlay")
+                    )
+                    .css("display", "none");
+                angular
+                    .element(document.getElementsByClassName("c-light-box"))
+                    .css("display", "none");
+                $scope.selectedImageUrl = "";
+            });
 
-        angular.forEach(files, (file) => {
-            file.upload = Upload.upload({
-                url: (BASE_URL + '/observations/' + $scope.observation.id),
-                method: 'PUT',
+        $scope.upload = file => {
+            $scope.progressBarActive = true;
+            Upload.upload({
+                url: BASE_URL + "/observations/" + $scope.observation.id,
+                method: "PUT",
                 data: {
                     attachments: file
                 }
-            });
+            }).then(
+                res => {
+                    $scope.observation.attachments = res.data.data.attachments;
+                    $scope.progressBarActive = false;
+                },
+                err => {
+                    $scope.errMessage = res.status + ": " + res.data;
+                }
+            );
+        };
 
-            line.animate(0.5)
-            file
-                .upload
-                .then((res) => {
-                    $timeout(() => {
-                        $scope.observation.attachments = res.data.data.attachments;
-                        line.animate(1.0)
-                        setTimeout(function () {
-                            line.animate(0);
-                        }, 2000);                      
-                    });
-                }, (res) => {
-                    if (res.status > 0) {
-                        $scope.errMessage = res.status + ': ' + res.data;
+        $scope.isSelectedCluster = cluster_id => {
+            return $scope.observation.cluster_ids.includes(cluster_id);
+        };
+        $scope.updateTeachersBasedOnSelectedGrade = () => {
+            TeacherService.query(
+                {
+                    schoolId: $scope.observation.school.id,
+                    gradeId: $scope.observation.grade.id
+                },
+                res => {
+                    $scope.teachers = res.data;
+                    $scope.subjects = [];
+                }
+            );
+        };
+
+        $scope.updateSubjectsBasedOnSelectedTeacher = () => {
+            TeacherService.fetchTeacher(
+                $scope.observation.teacher.id,
+                $scope.observation.school.id,
+                $scope.observation.grade.id,
+                (err, res) => {
+                    if (!err) {
+                        $scope.subjects = res.data.data.subjects;
+                    } else {
+                        console.error(err, "errr");
                     }
-                });
-        });
-    };
+                }
+            );
+        };
 
-    $scope.isSelectedCluster = (cluster_id) => {
-        return $scope
-            .observation
-            .cluster_ids
-            .includes(cluster_id);
-    };
-    $scope.updateTeachersBasedOnSelectedGrade = () => {
-        TeacherService.query({
-            schoolId: $scope.observation.school.id,
-            gradeId: $scope.observation.grade.id
-        }, (res) => {
-            $scope.teachers = res.data;
-            $scope.subjects = []
-        });
-    };
+        $scope.deleteObservation = () => {
+            ObservationService.remove(
+                {
+                    id: $scope.observation.id
+                },
+                res => {
+                    UtilService.closeModal("delete-observation-modal");
+                    $state.go("home");
+                }
+            );
+        };
 
-    $scope.updateSubjectsBasedOnSelectedTeacher = () => {
-        TeacherService.fetchTeacher($scope.observation.teacher.id, $scope.observation.school.id, $scope.observation.grade.id, (err, res) => {
-            if (!err) {
-                $scope.subjects = res.data.data.subjects;
-            } else {
-                console.error(err, 'errr');
-            }
-        });
-    };
+        $scope.editObservation = () => {
+            ObservationService.update(
+                {
+                    id: $scope.observation.id
+                },
+                {
+                    grade_id: $scope.observation.grade.id,
+                    teacher_id: $scope.observation.teacher.id,
+                    subject_id: $scope.observation.subject.id
+                },
+                res => {
+                    UtilService.closeModal("edit-observation-modal");
+                },
+                err => {
+                    UtilService.closeModal("edit-observation-modal");
+                }
+            );
+        };
 
-    $scope.deleteObservation = () => {
-        ObservationService.remove({
-            id: $scope.observation.id
-        }, (res) => {
-            UtilService.closeModal('delete-observation-modal');
-            $state.go('home');
-        });
-    };
-
-    $scope.editObservation = () => {
-        ObservationService.update({
-            id: $scope.observation.id
-        }, {
-            grade_id: $scope.observation.grade.id,
-            teacher_id: $scope.observation.teacher.id,
-            subject_id: $scope.observation.subject.id
-        }, (res) => {
-            UtilService.closeModal('edit-observation-modal');
-        }, (err) => {
-            UtilService.closeModal('edit-observation-modal');
-        });
-    };
-
-    $scope.getPropertyData = () => {
-        return $scope
-            .observationTypeProperties
-            .map((property) => {
+        $scope.getPropertyData = () => {
+            return $scope.observationTypeProperties.map(property => {
                 return {
                     [property.id]: property.value
                 };
             });
-    };
+        };
 
-    $scope.getObservationTypePropertyVal = (id) => {
-        const property = $scope
-            .observation
-            .observation_type_property_data
-            .filter((property) => {
-                return property[id];
-            });
-        if (property.length > 0) {
-            return property[0][id];
-        }
-        return '';
-    };
-
-    $scope.submitObservation = (status) => {
-        ObservationService.update({
-            id: $scope.observation.id
-        }, {
-            name: $scope.observation.name,
-            description: $scope.observation.description,
-            cluster_ids: $scope.observation.cluster_ids,
-            status: status,
-            observation_type_property_data: $scope.getPropertyData()
-        }, (res) => {
-            UtilService.closeModal('submit-observation-modal');
-            UtilService.openModal('submitted-observation-modal');
-            $timeout(() => {
-                UtilService.closeModal('submitted-observation-modal');
-                $state.go('home');
-            }, 4000);
-        }, (err) => {
-            console.log(err, 'err');
-        });
-    };
-
-    $scope.removeAttachment = (obj, file) => {
-        obj.forEach((elem, index) => {
-            if (elem.name === file.name) {
-                obj.splice(index, 1);
+        $scope.getObservationTypePropertyVal = id => {
+            const property = $scope.observation.observation_type_property_data.filter(
+                property => {
+                    return property[id];
+                }
+            );
+            if (property.length > 0) {
+                return property[0][id];
             }
-        });
+            return "";
+        };
 
-        AttachmentService.delete({
-            id: file.id
-        }, (res) => {
-            console.log(res, 'attachment-delete')
-        }, (err) => {
-            console.error(err, 'ERROR');
-        });
-    };
+        $scope.submitObservation = status => {
+            ObservationService.update(
+                {
+                    id: $scope.observation.id
+                },
+                {
+                    name: $scope.observation.name,
+                    description: $scope.observation.description,
+                    cluster_ids: $scope.observation.cluster_ids,
+                    status: status,
+                    observation_type_property_data: $scope.getPropertyData()
+                },
+                res => {
+                    UtilService.closeModal("submit-observation-modal");
+                    UtilService.openModal("submitted-observation-modal");
+                    $timeout(() => {
+                        UtilService.closeModal("submitted-observation-modal");
+                        $state.go("home");
+                    }, 4000);
+                },
+                err => {
+                    console.log(err, "err");
+                }
+            );
+        };
 
-    $scope.openSubmitObservationModal = () => {
-        UtilService.openModal('submit-observation-modal');
-    };
+        $scope.removeAttachment = (obj, file) => {
+            obj.forEach((elem, index) => {
+                if (elem.name === file.name) {
+                    obj.splice(index, 1);
+                }
+            });
 
-    $scope.closeSubmitObservationModal = () => {
-        UtilService.closeModal('submit-observation-modal');
-    };
+            AttachmentService.delete(
+                {
+                    id: file.id
+                },
+                res => {
+                    console.log(res, "attachment-delete");
+                },
+                err => {
+                    console.error(err, "ERROR");
+                }
+            );
+        };
 
-    $scope.openEditObservationModal = () => {
-        UtilService.openModal('edit-observation-modal');
-    };
+        $scope.openSubmitObservationModal = () => {
+            UtilService.openModal("submit-observation-modal");
+        };
 
-    $scope.closeEditObservationModal = () => {
-        UtilService.closeModal('edit-observation-modal');
-    };
+        $scope.closeSubmitObservationModal = () => {
+            UtilService.closeModal("submit-observation-modal");
+        };
 
-    $scope.openDeleteModal = () => {
-        UtilService.openModal('delete-observation-modal');
-    };
+        $scope.openEditObservationModal = () => {
+            UtilService.openModal("edit-observation-modal");
+        };
 
-    $scope.closeDeleteModal = () => {
-        UtilService.closeModal('delete-observation-modal');
-    };
-};
+        $scope.closeEditObservationModal = () => {
+            UtilService.closeModal("edit-observation-modal");
+        };
 
-export default ObservationFormCtrl;
+        $scope.openDeleteModal = () => {
+            UtilService.openModal("delete-observation-modal");
+        };
+
+        $scope.closeDeleteModal = () => {
+            UtilService.closeModal("delete-observation-modal");
+        };
+    }
+];

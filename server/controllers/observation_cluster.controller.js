@@ -1,5 +1,4 @@
-import {observation_cluster} from './../models';
-
+const observation_cluster = require('../models/observation_cluster')
 
 const get = async (req, res) => {
     return res.sendData(req.observation_cluster);
@@ -32,4 +31,4 @@ const remove = async (req, res) => {
 };
 
 
-export default {get, load, list, create, remove};
+module.exports = {get, load, list, create, remove};

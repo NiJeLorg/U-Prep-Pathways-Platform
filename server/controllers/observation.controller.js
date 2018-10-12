@@ -1,8 +1,11 @@
-"use strict";
-import {school, observation, observation_evidence, observation_cluster, cluster, observation_type, observation_type_property_data, observation_type_property} from './../models';
-import Sequelize from 'sequelize';
-
-const Op = Sequelize.Op;
+const school = require('../models/school'),
+    observation = require("../models/observation"),
+    observation_evidence = require("../models/observation_evidence"),
+    observation_cluster = require("../models/observation_cluster"),
+    cluster = require("../models/cluster"),
+    observation_type = require("../models/observation_type"),
+    observation_type_property_data = require("../models/observation_type_property_data"),
+    observation_type_property = require("../models/observation_type_property");
 
 const get = async (req, res) => {
     res.sendData(req.observation);
@@ -56,8 +59,7 @@ const update = async (req, res, next) => {
     await observation_evidence.bulkCreate(attachments);
     const cluster_ids = req.body.cluster_ids;
     const observation_type_property_data = req.body.observation_type_property_data;
-    // console.log(observation_type_property_data, "TADADADASD");
-    // console.log(observation_type_property_data[0]['1'], "TADADADASD");
+ 
 
     //Save property Data
     if(observation_type_property_data){
@@ -168,4 +170,4 @@ const create = async (req, res, next) => {
 
 };
 
-export default {get, load, create, list, update, remove};
+module.exports =  {get, load, create, list, update, remove};

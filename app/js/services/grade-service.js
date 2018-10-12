@@ -1,55 +1,46 @@
-const GradeService = (BASE_URL, $resource, $http) => {
+export default [
+    "BASE_URL",
+    "$resource",
+    "$http",
+    "$q",
+    function(BASE_URL, $resource, $http, $q) {
+        let obj = $resource(
+            BASE_URL + "/schools/:id/grades",
+            {
+                id: "@id"
+            },
+            {
+                query: {
+                    method: "GET"
+                }
+            }
+        );
 
-    let obj = $resource(BASE_URL + '/schools/:id/grades', {
-        id: '@id'
-    }, {
-        'query': {
-            method: 'GET'
-        }
-    });
+        obj.fetchGrades = cb => {
+            $http.get(BASE_URL + "/grades").then(
+                res => {
+                    cb(null, res);
+                },
+                err => {
+                    cb(err);
+                }
+            );
+        };
 
-    obj.fetchGrades = (cb) => {
-        $http
-            .get(BASE_URL + '/grades')
-            .then((res) => {
-                cb(null, res);
-            }, (err) => {
-                cb(err);
+        obj.createGrade = newGrade => {
+            return $http.post(BASE_URL + "/grades", { grade: newGrade });
+        };
+
+        obj.deleteGrade = grade => {
+            return $http.delete(BASE_URL + "/grades/" + grade.id);
+        };
+
+        obj.updateGrade = grade => {
+            return $http.put(BASE_URL + "/grades/" + grade.id, {
+                name: grade.name
             });
+        };
+
+        return obj;
     }
-
-    obj.createGrade = (cb, newGrade) => {
-        $http
-            .post(BASE_URL + '/grades', {grade: newGrade})
-            .then((res) => {
-                cb(null, res);
-            }, (err) => {
-                cb(err);
-            })
-    }
-
-    obj.deleteGrade = (cb, grade) => {
-        $http
-            .delete(BASE_URL + '/grades/' + grade.id,)
-            .then((res) => {
-                cb(null, res);
-            }, (err) => {
-                cb(err);
-            })
-    }
-
-    obj.updateGrade = (cb, grade) => {
-        $http
-            .put(BASE_URL + '/grades/' + grade.id, {name: grade.name})
-            .then((res) => {
-                cb(null, res);
-            }, (err) => {
-                cb(err);
-            })
-    }
-
-
-    return obj;
-};
-
-export default GradeService;
+];

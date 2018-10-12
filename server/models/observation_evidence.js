@@ -1,6 +1,7 @@
 'use strict';
-import path from 'path';
-import fs from 'fs';
+const path = require('path');
+const fs = require('fs');
+
 module.exports = (sequelize, DataTypes) => {
     const ObservationEvidence = sequelize.define('observation_evidence', {
         name: DataTypes.STRING,

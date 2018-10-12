@@ -13,7 +13,6 @@
             .input-group
                 label School
                 select(ng-model='newTeacher.school' ng-options='school as school.name for school in schools track by school.id')
-                    //- option(ng-repeat='school in schools') {{school.name}}
             .input-group
                 label Grades
                 div(isteven-multi-select input-model="grades" output-model="newTeacher.grades"  button-label="name" item-label="name" tick-property="ticked")
@@ -71,21 +70,20 @@
         form
             .input-group
                 label First Name
-                input(type='text' ng-model='teacher.firstName')
+                input(type='text' ng-model='updatedTeacher.firstName')
             .input-group
                 label Last Name
-                input(type='text' ng-model='teacher.lastName')
+                input(type='text' ng-model='updatedTeacher.lastName')
             .input-group
                 label School
-                //- p(ng-repeat='school in schools') {{school}}
-                select(ng-model='teacher.school')
-                    option(ng-repeat='school in schools') {{school.name}}
+                p {{updatedTeacher.school.name}}
+                select(ng-model='updatedTeacher.school.name' ng-options='school.name for school in schools')
             .input-group
                 label Grades
-                div(isteven-multi-select input-model="grades" output-model="teacher.grades"  button-label="name" item-label="name" tick-property="ticked")
+                div(isteven-multi-select input-model="grades" output-model="updatedTeacher.grades"  button-label="name" item-label="name" tick-property="ticked")
             .input-group
                 label Subjects
-                div(isteven-multi-select input-model="subjects" output-model="teacher.subjects" button-label="name" item-label="name"  tick-property="ticked")
+                div(isteven-multi-select input-model="subjects" output-model="updatedTeacher.subjects" button-label="name" item-label="name"  tick-property="ticked")
             .action-buttons
                 button.submit Submit 
                 button.cancel(ng-click='closeEditResourceModal()') Cancel
@@ -147,7 +145,7 @@
             p.nav-link.ul-cursor-pointer(ui-sref='admin.school' ng-click='resourceType="school"') Schools
             p.nav-link.ul-cursor-pointer(ui-sref='admin.subjects' ng-click='resourceType="subject"') Subjects
             p.nav-link.ul-cursor-pointer(ui-sref='admin.grades' ng-click='resourceType="grade"') Grades                                
-    main
+    main(ng-init='resourceType="teacher"')
         .l-flex-space-between(ng-if='resourceType')
             h1 {{resourceType}}s
             span(ng-click='openModal()')

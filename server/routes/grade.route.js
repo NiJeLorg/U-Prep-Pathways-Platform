@@ -1,6 +1,6 @@
-import express from 'express';
-import gradeCtrl from './../controllers/grade.controller';
-import asyncHandler from 'express-async-handler';
+const express = require('express');
+const gradeCtrl = require('./../controllers/grade.controller');
+const asyncHandler = require('express-async-handler');
 
 const router = express.Router({mergeParams: true});
 
@@ -17,4 +17,5 @@ router.route('/:gradeId')
 
 /** Load grade when API with gradeId route parameter is hit */
 router.param('gradeId', asyncHandler(gradeCtrl.load));
-export default router;
+
+module.exports =  router;

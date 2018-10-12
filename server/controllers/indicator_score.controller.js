@@ -1,9 +1,5 @@
-'use strict';
 
-import {
-    indicator_score
-} from './../models';
-import Sequelize from 'sequelize';
+const indicator_score = require('../models/indicator_score')
 
 const get = async (req, res) => {
     res.sendData(req.indicator_score);
@@ -23,7 +19,6 @@ const create = async (req, res) => {
             indicator_id: req.body.indicator_id 
         }
     });
-    console.log(indicatorScoreObject);
     if(indicatorScoreObject !== null){
         await indicatorScoreObject.update({
             value: req.body.value
@@ -39,7 +34,7 @@ const create = async (req, res) => {
     res.sendData(indicatorScoreObject);
 };
 
-export default {
+module.exports = {
     get,
     list,
     create,
