@@ -15,7 +15,7 @@ export default [
         ScoreFactory,
         workflow
     ) {
-        $scope.templateUrl = `views/breadcrumbs/breadcrumbs.html`;
+        $scope.templateUrl = `views/breadcrumbs.html`;
 
         BreadcrumbFactory["workflow"] = workflow;
         BreadcrumbFactory["label_1"] = ScoreFactory.teacher.school.name;
