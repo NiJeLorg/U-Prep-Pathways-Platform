@@ -1,9 +1,9 @@
 const express = require("express");
 const observationCtrl = require("./../controllers/observation.controller");
-const path = require("path");
 const multer = require("multer");
-const crypto = require("crypto");
 const asyncHandler = require("express-async-handler");
+
+console.log("here");
 
 const router = express.Router();
 const storage = multer.diskStorage({
@@ -11,7 +11,6 @@ const storage = multer.diskStorage({
         callback(null, "./uploads");
     },
     filename: function(file, callback) {
-        console.log(file, 'file')
         callback(null, file.originalName);
     }
 });

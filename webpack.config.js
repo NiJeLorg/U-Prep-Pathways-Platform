@@ -18,8 +18,8 @@ const createHTMLPlugin = (filename, template) => {
 const config = {
     context: __dirname,
     entry: [
-        "webpack-dev-server/client?http://localhost:8080",
-        "webpack/hot/only-dev-server",
+        // "webpack-dev-server/client?http://localhost:8080",
+        // "webpack/hot/only-dev-server",
         "./app/js/app.js"
     ],
     mode: "development",

@@ -186,12 +186,8 @@ export default [
                 }
             }).then(
                 res => {
-                    res.data.data.attachments.map(el => {
-                        console.log((el.name));
-                    });
-                    // // $scope.observation.attachments =
-                    // //     res.data.data.attachments;
-                    // $scope.progressBarActive = false;
+                    $scope.observation.attachments = res.data.data.attachments;
+                    $scope.progressBarActive = false;
                 },
                 err => {
                     $scope.errMessage = res.status + ": " + res.data;
