@@ -50,7 +50,17 @@
             md-tab
                 md-tab-label Scores
                 md-tab-body
-                    p Score Tings
+                    .c-observation.ul-padding-30.l-flex-space-between(ng-repeat='score in teacher.scores')
+                        .c-observation__date
+                            p Created
+                            p {{score.created_at | date: 'shortDate'}}
+                        .c-observation__details
+                            h3 1st Score
+                            span.grade-color  Grade 1
+                            span.subject-color Math
+                        .c-observation__actions.l-flex-flex-end
+                            img.ul-cursor-pointer(src='assets/icons/edit-icon.svg' ng-click='editScore(score)')
+                            img.ul-cursor-pointer(src='assets/icons/delete-icon.svg' ng-click='openModal(observation)')
 
     //- .c-teacher-observation
         .c-teacher-header.l-flex-space-between

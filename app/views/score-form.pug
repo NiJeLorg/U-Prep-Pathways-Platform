@@ -42,8 +42,6 @@
             button(ng-click='submitScore()') Yes
             button(ng-click='closeSubmitScoreModal()') Cancel
 
-
-
 .ul-padding-30
     .ul-padding-30
         .c-observation-observation-form
@@ -67,22 +65,7 @@
                         .indicator
                             p.ul-cursor-pointer(ng-click='displayIndicatorLevelsModal(indicator)') {{indicator.name}}
                             .ratings
-                                label.c-accordion-radio-group-label(ng-repeat='value in indicatorValue')
+                                label.c-accordion-radio-group-label(ng-repeat='value in indicatorValue' ng-class="{'checked-input': value == indicator.value}")
                                     input(type='radio' name='{{indicator.name}}' value='{{value}}' ng-model='indicator.value' ng-click='storeIndicatorScore(value, indicator)')
                                     div.radio-label(ng-if='value == null') N/A
                                     div.radio-label(ng-if='value != null') {{value}}                           
-                        //- .c-accordion-actions
-                        //-     button.c-accordion_actions_button.add
-                        //-     button.c-accordion_actions_button.attach(ng-if="indicator.name === 'Grading'")
-
-
-
-                                       //- .c-element__component(ng-repeat='component in element.components track by component.id')
-            //-     .title
-            //-         h3 {{component.name}}
-            //-         img(src="assets/icons/question-mark.svg")
-            //-     .indicator-groups
-            //-         .c-element__indicator(ng-repeat='indicator in component.indicators track by indicator.id')
-            //-             p {{indicator.name}}
-            //-             .ratings
-            //-                 input(type='radio' ng-repeat='value in indicatorValue')

@@ -85,21 +85,18 @@ export default [
             let matched_indicator_score = $scope.score.indicator_scores.filter(
                 indicator_score => indicator_score.indicator_id === indicator.id
             );
-            console.log(matched_indicator_score);
             return false;
         };
 
         $scope.storeIndicatorScore = (value, indicator) => {
+
             IndicatorScoreService.createIndicatorScore(
                 {
                     value: value,
                     score_id: $scope.score.id,
                     indicator_id: indicator.id
                 },
-                (err, res) => {
-                    // console.log(res, 'res');
-                    // console.log(err, 'err');
-                }
+                (err, res) => {}
             );
         };
     }

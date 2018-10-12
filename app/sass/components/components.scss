@@ -678,6 +678,9 @@
         justify-content: center;
         align-items: center;
     }
+}
+
+.checked-input {
     input:checked ~ .radio-label {
         background: $light-button-pressed;
         color: white;

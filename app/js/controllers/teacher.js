@@ -5,6 +5,7 @@ export default [
     "ObservationService",
     "ObservationTypeService",
     "ObservationFactory",
+    "ScoreFactory",
     "teacher",
     function(
         $scope,
@@ -13,6 +14,7 @@ export default [
         ObservationService,
         ObservationTypeService,
         ObservationFactory,
+        ScoreFactory,
         teacher
     ) {
         $scope.teacher = teacher.data;
@@ -34,7 +36,7 @@ export default [
         };
 
         $scope.newTeacherScore = teacher => {
-            ObservationFactory.teacher = teacher;
+            ScoreFactory.teacher = teacher;
             $state.go("scoreDetails", { workflow: "scores" });
         };
 
