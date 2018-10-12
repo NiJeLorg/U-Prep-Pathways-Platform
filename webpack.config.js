@@ -4,6 +4,8 @@ const webpack = require("webpack");
 const path = require("path");
 const fs = require("fs");
 
+const devMode = process.env.NODE_ENV !== "production";
+
 // read app/shared and views
 const createHTMLPlugin = (filename, template) => {
     return new HtmlWebpackPlugin({
@@ -16,8 +18,8 @@ const createHTMLPlugin = (filename, template) => {
 const config = {
     context: __dirname,
     entry: [
-        // "webpack-dev-server/client?http://localhost:8080",
-        // "webpack/hot/only-dev-server",
+        "webpack-dev-server/client?http://localhost:8080",
+        "webpack/hot/only-dev-server",
         "./app/js/app.js"
     ],
     mode: "development",
@@ -69,7 +71,7 @@ const config = {
             {
                 test: /\.(sa|sc|c)ss$/,
                 use: [
-                    MiniCssExtractPlugin.loader,
+                    devMode ? "style-loader" : MiniCssExtractPlugin.loader,
                     "css-loader?url=false",
                     "sass-loader"
                 ]
