@@ -1,21 +1,17 @@
 export default [
     "$scope",
-    "$state",
     "TeacherService",
     "SchoolService",
     "GradeService",
     "SubjectService",
     "UtilService",
-    "$q",
     function(
         $scope,
-        $state,
         TeacherService,
         SchoolService,
         GradeService,
         SubjectService,
         UtilService,
-        $q
     ) {
         //initialize models
         $scope.resourceType;

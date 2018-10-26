@@ -77,7 +77,7 @@
             .input-group
                 label School
                 p {{updatedTeacher.school.name}}
-                select(ng-model='updatedTeacher.school.name' ng-options='school.name for school in schools')
+                select(ng-model='updatedTeacher.school' ng-options='school.name for school in schools')
             .input-group
                 label Grades
                 div(isteven-multi-select input-model="grades" output-model="updatedTeacher.grades"  button-label="name" item-label="name" tick-property="ticked")
