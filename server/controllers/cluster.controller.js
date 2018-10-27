@@ -1,4 +1,4 @@
-const cluster =  require('../models/cluster');
+const cluster = require("../models/index").cluster;
 
 const get = async (req, res) => {
     res.sendData(req.cluster);
@@ -8,8 +8,7 @@ const list = async (req, res) => {
     res.sendData(clusters);
 };
 const load = async (req, res, next, id) => {
-    const clusterObj = await cluster
-        .findById(id, getIncludes(req));
+    const clusterObj = await cluster.findById(id, getIncludes(req));
     if (!clusterObj) {
         return res.sendNotFound();
     }
@@ -17,9 +16,8 @@ const load = async (req, res, next, id) => {
     return next();
 };
 
-const getIncludes = (req) => {
-    return {
-    }
+const getIncludes = req => {
+    return {};
 };
 
-module.exports =  {get, load, list};
+module.exports = { get, load, list };

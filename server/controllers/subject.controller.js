@@ -1,5 +1,6 @@
-const subject = require("../models/subject"),
-    teacher = require("../models/teacher");
+const models = require("../models/index"),
+    subject = models.subject,
+    teacher = models.teacher;
 
 const get = async (req, res) => {
     res.sendData(req.subject);

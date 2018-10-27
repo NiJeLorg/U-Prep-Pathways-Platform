@@ -1,9 +1,10 @@
-const subject = require("../models/subject"),
-    subject_teacher = require("../models/subject_teacher"),
-    teacher = require("../models/teacher"),
-    observation = require("../models/observation"),
-    school = require("../models/school"),
-    grade = require("../models/grade");
+const models = require("../models/index"),
+    subject = models.subject,
+    subject_teacher = models.subject_teacher,
+    teacher = models.teacher,
+    observation = models.observation,
+    school = models.school,
+    grade = models.grade;
 
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
