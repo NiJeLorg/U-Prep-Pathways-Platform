@@ -57,18 +57,6 @@ const config = {
                 use: ["html-loader?attrs=false", "pug-html-loader"]
             },
             {
-                test: /\.(png|jpg|gif|svg)$/,
-                use: [
-                    {
-                        loader: "url-loader",
-                        options: {
-                            limit: 8000, // Convert images < 8kb to base64 strings
-                            name: "images/[hash]-[name].[ext]"
-                        }
-                    }
-                ]
-            },
-            {
                 test: /\.(sa|sc|c)ss$/,
                 use: [
                     devMode ? "style-loader" : MiniCssExtractPlugin.loader,

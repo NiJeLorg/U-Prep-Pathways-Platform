@@ -44,8 +44,8 @@ const uprepApp = angular.module("uprepApp", [
     ngResource
 ]);
 
-const url = "https://dev-uprep.nijel.org/api";
-// let url = 'http://localhost:3000/api/';
+// const url = "https://dev-uprep.nijel.org/api";
+let url = "http://localhost:3000/api/";
 
 uprepApp
     .controller("NavCtrl", NavCtrl)

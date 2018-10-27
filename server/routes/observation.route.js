@@ -3,8 +3,6 @@ const observationCtrl = require("./../controllers/observation.controller");
 const multer = require("multer");
 const asyncHandler = require("express-async-handler");
 
-console.log("here");
-
 const router = express.Router();
 const storage = multer.diskStorage({
     destination: function(req, file, callback) {

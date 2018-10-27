@@ -1,31 +1,33 @@
 let fs = require('fs');
 let csv2json = require('csvtojson');
 const axios = require('axios');
-const BASE_URL = 'http://localhost:3000/api/';
+const BASE_URL = 'http://localhost:3000/api';
 const _ = require('lodash');
 
 function seedSchoolGradeData(school, grades) {
   axios.post(BASE_URL + '/seed/grades', {name: school, grades: grades}).then(function (result) {
-    console.log(result);
+    console.log('here')
+    // console.log(result);
   }).catch(function (error) {
-    console.log(error);
+    console.log('error', error)
+    // console.log(error);
   });
 }
 
 function seedSubjectData(school, subjects) {
   axios.post(BASE_URL + '/seed/subjects', {name: school, subjects: subjects}).then(function (result) {
-    console.log(result);
+    // console.log(result);
   }).catch(function (error) {
-    console.log(error);
+    // console.log(error);
   });
 }
 
 function seedSchoolTeacherData(teachers) {
   for (let teacher of teachers) {
     axios.post(BASE_URL + '/seed/teachers', teacher).then(function (result) {
-      console.log(result);
+      // console.log(result);
     }).catch(function (error) {
-      console.log(error);
+      // console.log(error);
     });
   }
 
@@ -61,9 +63,7 @@ function importSchoolCoreData(school, filename) {
       };
     });
     seedSchoolTeacherData(teachers);
-
   });
-
 }
 
 importSchoolCoreData('UPA HS', 'UPA-HS.csv');
