@@ -229,6 +229,7 @@ export default [
             $scope.openEditResoureModal = obj => {
                 UtilService.openModal(`update-${$scope.resourceType}-modal`);
                 if ($scope.resourceType == "teacher") {
+                    console.log(obj, "obj");
                     $scope.updatedTeacher = obj;
                     $scope.updatedTeacher.firstName = $scope.updatedTeacher.name.split(
                         " "

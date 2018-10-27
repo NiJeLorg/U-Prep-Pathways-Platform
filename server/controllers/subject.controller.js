@@ -1,16 +1,11 @@
-const subject = require('../models/subject'),
-    teacher = require('../models/teacher');
+const subject = require("../models/subject"),
+    teacher = require("../models/teacher");
 
-
-const get = async(req, res) => {
+const get = async (req, res) => {
     res.sendData(req.subject);
 };
 
-/**
- * Loads an existing subject based on its ID
- * @returns {subject}
- */
-const load = async(req, res, next, id) => {
+const load = async (req, res, next, id) => {
     const subjectObj = await subject.findById(id, getIncludes(req));
     if (!subjectObj) {
         return res.sendNotFound();
@@ -19,36 +14,27 @@ const load = async(req, res, next, id) => {
     return next();
 };
 
-/**
- * Gets List of subjects
- * @returns {subjects}
- */
-const list = async(req, res) => {
-
+const list = async (req, res) => {
     const subjects = await subject.all(getIncludes(req));
-    res.sendData(subjects)
+    res.sendData(subjects);
 };
 
-const create = async(req, res) => {
-    const subjectObj = await subject.create({name: req.body.subject});
-    res.sendData(subjectObj);
-}
-
-const destroy = async(req, res) => {
-    const subjectObj = req
-        .subject
-        .destroy();
+const create = async (req, res) => {
+    const subjectObj = await subject.create({ name: req.body.subject });
     res.sendData(subjectObj);
 };
 
-const update = async(req, res) => {
-    const subjectObj = req
-        .subject
-        .update({name: req.body.name});
+const destroy = async (req, res) => {
+    const subjectObj = req.subject.destroy();
     res.sendData(subjectObj);
-}
+};
 
-const getIncludes = (req) => {
+const update = async (req, res) => {
+    const subjectObj = req.subject.update({ name: req.body.name });
+    res.sendData(subjectObj);
+};
+
+const getIncludes = req => {
     const teacherId = req.params.teacherId || req.query.teacherId;
     let includes = {};
     if (teacherId) {
@@ -58,7 +44,7 @@ const getIncludes = (req) => {
                     attributes: [],
                     required: true,
                     model: teacher,
-                    as: 'teachers',
+                    as: "teachers",
                     where: {
                         id: teacherId
                     }
@@ -69,7 +55,7 @@ const getIncludes = (req) => {
     return includes;
 };
 
-module.exports =  {
+module.exports = {
     get,
     load,
     list,

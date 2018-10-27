@@ -11,10 +11,6 @@ const get = async (req, res) => {
     res.sendData(req.observation);
 };
 
-/**
- * Gets List of Observations
- * @returns {observations}
- */
 const list = async (req, res) => {
     const observations = await observation
         .all({
@@ -23,10 +19,7 @@ const list = async (req, res) => {
     res.sendData(observations)
 };
 
-/**
- * Loads an existing observation based on its ID
- * @returns {observation}
- */
+
 const load = async (req, res, next, id) => {
     const observationObj = await observation
         .findById(req.params.observationId, {
@@ -39,11 +32,6 @@ const load = async (req, res, next, id) => {
     return next();
 };
 
-
-/**
- * Update existing observation
- * @returns {observation}
- */
 
 const update = async (req, res, next) => {
     let observation = req.observation;
@@ -91,20 +79,13 @@ const saveObservationTypePropertyData = async(data)=>{
     await observation_type_property_data.bulkCreate(data);
 };
 
-/**
- * Delete observation.
- * @returns {observation}
- */
 const remove = async (req, res, next) => {
     const observation = req.observation;
     let deletedObservation = await observation.destroy();
     res.sendData(deletedObservation)
 };
 
-/**
- * Generates array of attachment objects
- * @returns {attachments}
- */
+
 function generateAttachments(req, observation) {
     let attachments = [];
     if (req.files) {
@@ -146,10 +127,6 @@ const getObservationTypePropertyDataFromReqBody = (req, observationId) => {
 };
 
 
-/**
- * Saves a new observation
- * @returns {observation}
- */
 const create = async (req, res, next) => {
     const observationObj = await observation
         .create({
