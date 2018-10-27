@@ -11,7 +11,7 @@ export default [
         SchoolService,
         GradeService,
         SubjectService,
-        UtilService,
+        UtilService
     ) {
         //initialize models
         $scope.resourceType;
@@ -233,6 +233,30 @@ export default [
                     $scope.updatedTeacher.firstName = $scope.updatedTeacher.name.split(
                         " "
                     )[0];
+
+                    $scope.grades.map(grade => {
+                        grade.ticked = false;
+                    });
+
+                    $scope.subjects.map(subject => {
+                        subject.ticked = false;
+                    });
+
+                    $scope.grades.map(grade => {
+                        $scope.updatedTeacher.grades.map(el => {
+                            if (grade.name === el.name) {
+                                grade.ticked = true;
+                            }
+                        });
+                    });
+
+                    $scope.subjects.map(subject => {
+                        $scope.updatedTeacher.subjects.map(el => {
+                            if (subject.name === el.name) {
+                                subject.ticked = true;
+                            }
+                        });
+                    });
                 }
                 if ($scope.resourceType == "school") {
                     $scope.updatedSchool = obj;
