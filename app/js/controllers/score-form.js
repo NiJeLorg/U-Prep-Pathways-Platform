@@ -17,12 +17,17 @@ export default [
     ) {
         $scope.score = score.data;
         $scope.indicatorValue = [null, 1, 2, 3, 4];
+        $scope.isAccordionOpen = false;
+        let uniqueComponentIds;
 
         ElementService.fetchElements((err, res) => {
             if (!err) {
                 $scope.elements = res.data.data;
+                uniqueComponentIds = getComponentsThatShouldBeOpen(
+                    res.data.data
+                );
             } else {
-                console.error(err, res.data);
+                console.error(err);
             }
         });
 
@@ -53,7 +58,6 @@ export default [
         };
 
         $scope.showDeleteScoreModal = () => {
-            console.log("yoo");
             UtilService.openModal("delete-score-modal");
         };
 
@@ -89,7 +93,6 @@ export default [
         };
 
         $scope.storeIndicatorScore = (value, indicator) => {
-
             IndicatorScoreService.createIndicatorScore(
                 {
                     value: value,
@@ -98,6 +101,36 @@ export default [
                 },
                 (err, res) => {}
             );
+        };
+
+        function getComponentsThatShouldBeOpen(elements) {
+            let componentIds = [];
+            elements.forEach(element => {
+                element.components.forEach(component => {
+                    component.indicators.forEach(indicator => {
+                        score.data.indicator_scores.forEach(indicator_score => {
+                            if (indicator_score.indicator_id === indicator.id) {
+                                componentIds.push(indicator.component_id);
+                            }
+                        });
+                    });
+                });
+            });
+            return [...new Set(componentIds)];
+        }
+
+        $scope.toggleAccordion = function(component) {
+            let result;
+            if (!status) {
+                uniqueComponentIds.map(id => {
+                    if (id === component.id) {
+                        result = true;
+                    }
+                });
+            } else {
+                result = !status;
+            }
+            return result;
         };
     }
 ];

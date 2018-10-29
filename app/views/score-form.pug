@@ -24,8 +24,6 @@
         .c-buttons-holder
             button(ng-click='deleteScore()') Yes
             button(ng-click='closeModal()') Cancel
-
-
 .c-modal.submitted-score-popup
     .c-modal__modal-content
         .l-flex
@@ -33,7 +31,6 @@
                 img(src='assets/icons/submitted-badge-icon.svg')
             span(style='margin-left: 60px')
                 h2 Thank you for Submitting Your Score
-
 .c-modal.sumbit-score-modal
     .c-modal__modal-content
         p(style='font-size:21px') Thank You. 
@@ -41,7 +38,6 @@
         .c-buttons-holder
             button(ng-click='submitScore()') Yes
             button(ng-click='closeSubmitScoreModal()') Cancel
-
 .ul-padding-30
     .ul-padding-30
         .c-observation-observation-form
@@ -56,8 +52,8 @@
             .title
                 h2 Section {{element.id}} of 5: {{element.name}} &nbsp;
                 p Score the teacher from 1-4 stars on the following indicator
-            .c-accordion.tab-content(ng-class="{'c-accordion-collapsed': !toggleAccordion}" ng-repeat='component in element.components track by component.id')
-                .c-accordion-header(ng-click="toggleAccordion = !toggleAccordion")
+            .c-accordion.tab-content(ng-class="{'c-accordion-collapsed': !toggleAccordion(component)}" ng-repeat='component in element.components track by component.id')
+                .c-accordion-header(ng-click='toggleAccordion = !toggleAccordion')
                     span.accordion-title {{component.name}} &nbsp;
                     img(src="assets/icons/question-mark.svg")
                 .c-accordion-content
