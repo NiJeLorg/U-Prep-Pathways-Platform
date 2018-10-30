@@ -1,23 +1,11 @@
 export default [
     "BASE_URL",
-    "$resource",
     "$http",
-    function(BASE_URL, $resource, $http) {
-        let obj = $resource(BASE_URL + "/elements/:id", {
-            id: "@id"
-        });
-
-        obj.fetchElements = cb => {
-            $http.get(BASE_URL + "/elements").then(
-                res => {
-                    cb(null, res);
-                },
-                err => {
-                    cb(err);
-                }
-            );
+    function(BASE_URL, $http) {
+        return {
+            fetchElements() {
+                return $http.get(BASE_URL + "/elements");
+            }
         };
-
-        return obj;
     }
 ];

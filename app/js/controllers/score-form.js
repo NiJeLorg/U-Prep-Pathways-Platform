@@ -1,76 +1,125 @@
 export default [
     "$scope",
-    "$state",
+    "$mdDialog",
     "score",
     "ElementService",
     "IndicatorScoreService",
-    "UtilService",
-    "ScoreService",
-    function(
-        $scope,
-        $state,
-        score,
-        ElementService,
-        IndicatorScoreService,
-        UtilService,
-        ScoreService
-    ) {
+    function($scope, $mdDialog, score, ElementService, IndicatorScoreService) {
         $scope.score = score.data;
         $scope.indicatorValue = [null, 1, 2, 3, 4];
-        $scope.isAccordionOpen = false;
-        let uniqueComponentIds;
 
-        ElementService.fetchElements((err, res) => {
-            if (!err) {
+        // fetch data
+        ElementService.fetchElements().then(
+            res => {
                 $scope.elements = res.data.data;
-                uniqueComponentIds = getComponentsThatShouldBeOpen(
-                    res.data.data
-                );
-            } else {
-                console.error(err);
-            }
-        });
+                checkComponentsToBeExpanded($scope.elements);
+            },
+            err => console.error(err, "ERROR")
+        );
 
-        // event listeners
-        $scope.displayIndicatorLevelsModal = indicator => {
-            $scope.selectedIndicator = indicator.name;
-            UtilService.openModal("indicator-levels-modal");
-        };
+        const checkComponentsToBeExpanded = elements => {
+            const { indicator_scores } = $scope.score;
+            const filtered = indicator_scores.map(indicatorScore => {
+                const { indicator_id } = indicatorScore;
+                return indicator_id;
+            });
 
-        $scope.closeIndicatorLevelsModal = () => {
-            UtilService.closeModal("indicator-levels-modal");
-        };
-
-        $scope.openSubmitScoreModal = () => {
-            UtilService.openModal("sumbit-score-modal");
-        };
-
-        $scope.closeSubmitScoreModal = () => {
-            UtilService.closeModal("submitted-score-popup");
-        };
-
-        $scope.submitScore = () => {
-            UtilService.closeModal("sumbit-score-modal");
-            UtilService.openModal("submitted-score-popup");
-            setTimeout(function() {
-                $state.go("home");
-            }, 3000);
-        };
-
-        $scope.showDeleteScoreModal = () => {
-            UtilService.openModal("delete-score-modal");
-        };
-
-        $scope.deleteScore = () => {
-            ScoreService.remove(
-                {
-                    id: $scope.score.id
-                },
-                res => {
-                    $state.go("home");
+            for (let i = 0; i < elements.length; i++) {
+                const { components } = elements[i];
+                for (let j = 0; j < components.length; j++) {
+                    const { indicators } = components[j];
+                    components[j].expanded = checkIndicator(
+                        filtered,
+                        indicators
+                    );
                 }
-            );
+            }
+
+            function checkIndicator(filtered, indicators) {
+                let exists = false;
+                for (let i = 0; i < indicators.length; i++) {
+                    const { id } = indicators[i];
+                    if (filtered.includes(id)) {
+                        exists = true;
+                        break;
+                    }
+                }
+                return exists;
+            }
         };
+
+        // show modals
+        $scope.showIndicatorLevelsModal = ev => {
+            $mdDialog.show({
+                templateUrl: "views/modal-indicatorLevels.html",
+                parent: angular.element(document.body),
+                targetEvent: ev,
+                clickOutsideToClose: true
+            });
+        };
+
+        $scope.showDeleteScoreModal = ev => {
+            $mdDialog.show({
+                locals: { score: $scope.score },
+                controller: ModalController,
+                templateUrl: "views/modal-deleteScore.html",
+                parent: angular.element(document.body),
+                targetEvent: ev,
+                clickOutsideToClose: true
+            });
+        };
+
+        $scope.showSubmitScoreModal = ev => {
+            $mdDialog.show({
+                locals: { score: $scope.score },
+                controller: ModalController,
+                templateUrl: "views/modal-submitScore.html",
+                parent: angular.element(document.body),
+                targetEvent: ev,
+                clickOutsideToClose: true
+            });
+        };
+
+        function ModalController(
+            $scope,
+            $mdDialog,
+            $state,
+            ScoreService,
+            score
+        ) {
+            $scope.cancelDeleteScore = () => {
+                $mdDialog.cancel();
+            };
+
+            $scope.cancelSubmitScoreModal = () => {
+                $mdDialog.cancel();
+            };
+
+            $scope.submitScore = ev => {
+                $mdDialog.show({
+                    templateUrl: "views/modal-submittedScoreToast.html",
+                    parent: angular.element(document.body),
+                    targetEvent: ev,
+                    clickOutsideToClose: true
+                });
+                setTimeout(() => {
+                    $mdDialog.hide();
+                    $state.go("home");
+                }, 2000);
+            };
+
+            $scope.deleteScore = () => {
+                ScoreService.remove(
+                    {
+                        id: score.id
+                    },
+                    res => {
+                        $mdDialog.hide();
+                        $state.go("home");
+                    }
+                );
+            };
+        }
 
         $scope.getAddSelectedIndicators = indicators => {
             let indicators_mapped = indicators.map(indicator => {
@@ -101,36 +150,6 @@ export default [
                 },
                 (err, res) => {}
             );
-        };
-
-        function getComponentsThatShouldBeOpen(elements) {
-            let componentIds = [];
-            elements.forEach(element => {
-                element.components.forEach(component => {
-                    component.indicators.forEach(indicator => {
-                        score.data.indicator_scores.forEach(indicator_score => {
-                            if (indicator_score.indicator_id === indicator.id) {
-                                componentIds.push(indicator.component_id);
-                            }
-                        });
-                    });
-                });
-            });
-            return [...new Set(componentIds)];
-        }
-
-        $scope.toggleAccordion = function(component) {
-            let result;
-            if (!status) {
-                uniqueComponentIds.map(id => {
-                    if (id === component.id) {
-                        result = true;
-                    }
-                });
-            } else {
-                result = !status;
-            }
-            return result;
         };
     }
 ];
