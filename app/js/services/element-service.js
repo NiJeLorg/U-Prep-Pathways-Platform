@@ -1,11 +1,8 @@
 export default [
-    "BASE_URL",
     "$http",
-    function(BASE_URL, $http) {
+    function($http) {
         return {
-            fetchElements() {
-                return $http.get(BASE_URL + "/elements");
-            }
+            fetchElements: () => $http.get("/api/elements")
         };
     }
 ];

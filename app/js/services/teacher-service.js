@@ -1,10 +1,9 @@
 export default [
-    "BASE_URL",
     "$resource",
     "$http",
-    function(BASE_URL, $resource, $http) {
+    function($resource, $http) {
         let obj = $resource(
-            BASE_URL + "/teachers/:id",
+            "/api/teachers/:id",
             {
                 id: "@id"
             },
@@ -15,42 +14,15 @@ export default [
             }
         );
 
-        obj.fetchAllTeachers = () => $http.get(BASE_URL + "/teachers");
+        obj.fetchAllTeachers = () => $http.get("/api/teachers");
 
-        obj.fetchSchoolTeachers = (schoolId, cb) => {
-            $http.get(BASE_URL + "/teachers?schoolId=" + schoolId).then(
-                res => {
-                    cb(null, res);
-                },
-                err => {
-                    cb(err);
-                }
+        obj.fetchTeacher = obj => {
+            return $http.get(
+                `/api/teachers/${obj.teacherId}?schoolId=${
+                    obj.schoolId
+                }&gradeId=${obj.gradeId}`
             );
         };
-
-        obj.fetchTeacher = (teacherId, schoolId, gradeId, cb) => {
-            $http
-                .get(
-                    BASE_URL +
-                        "/teachers/" +
-                        teacherId +
-                        "?schoolId=" +
-                        schoolId +
-                        "&gradeId=" +
-                        gradeId
-                )
-                .then(
-                    res => {
-                        cb(null, res);
-                    },
-                    err => {
-                        cb(err);
-                    }
-                );
-        };
-
-        obj.deleteTeacher = teacher =>
-            $http.delete(BASE_URL + "/teachers/" + teacher.id);
 
         obj.createTeacher = teacher => {
             let gradeIds = teacher.grades.map(el => {
@@ -61,7 +33,7 @@ export default [
                 return el.id.toString();
             });
 
-            return $http.post(BASE_URL + "/teachers/", {
+            return $http.post("/api/teachers/", {
                 name: teacher.firstName + " " + teacher.lastName,
                 schoolId: teacher.school.id,
                 grades: gradeIds,

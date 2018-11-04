@@ -1,10 +1,9 @@
 export default [
-    "BASE_URL",
     "$resource",
     "$http",
-    function(BASE_URL, $resource, $http) {
+    function($resource, $http) {
         let obj = $resource(
-            BASE_URL + "/scores/:id",
+            "/api/scores/:id",
             {
                 id: "@id"
             },
@@ -18,27 +17,9 @@ export default [
             }
         );
 
-        obj.fetchScores = cb => {
-            $http.get(BASE_URL + "/scores").then(
-                res => {
-                    cb(null, res);
-                },
-                err => {
-                    cb(err);
-                }
-            );
-        };
+        obj.fetchScores = () => $http.get("/api/scores");
 
-        obj.createScore = (data, cb) => {
-            $http.post(BASE_URL + "/scores", data).then(
-                res => {
-                    cb(null, res);
-                },
-                err => {
-                    cb(err);
-                }
-            );
-        };
+        obj.createScore = data => $http.post("/api/scores", data);
 
         return obj;
     }
