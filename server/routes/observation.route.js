@@ -1,15 +1,17 @@
 const express = require("express");
+const path = require("path");
 const observationCtrl = require("./../controllers/observation.controller");
 const multer = require("multer");
 const asyncHandler = require("express-async-handler");
 
 const router = express.Router();
 const storage = multer.diskStorage({
-    destination: function(req, file, callback) {
-        callback(null, "./uploads");
+    destination: function(req, file, cb) {
+        cb(null, path.resolve(__dirname, "../../uploads"));
     },
-    filename: function(file, callback) {
-        callback(null, file.originalName);
+    filename: function(req, file, cb) {
+        const fileName = file.originalname.replace(/\s+/g, "");
+        cb(null, fileName);
     }
 });
 const upload = multer({ storage: storage });
