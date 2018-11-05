@@ -14,19 +14,15 @@ export default [
         SchoolService,
         ObservationTypeService,
         GradeService,
-        ObservationFactory,
-        ScoreFactory,
+        ObservationFactory
+        // ScoreFactory
     ) {
-        $scope.page = "dashboard";
-        $scope.pager = {};
         $scope.switchCardContext = false;
-        let observationTypes;
 
         // fetch data
         TeacherService.fetchAllTeachers().then(
             res => {
                 let reg = /^(\w+)\s(\w+)$/;
-
                 $scope.teachers = res.data.data;
                 res.data.data.forEach((elem, index) => {
                     if (
@@ -38,25 +34,27 @@ export default [
                 });
             },
             err => {
-                console.error(err, "ERROR");
+                console.error(err);
             }
-        )
+        );
 
-        SchoolService.fetchSchools((err, res) => {
-            if (!err) {
+        SchoolService.fetchSchools().then(
+            res => {
                 $scope.schools = res.data.data;
-            } else {
-                console.error(err, "ERROR");
+            },
+            err => {
+                console.error(err);
             }
-        });
+        );
 
-        ObservationTypeService.fetchObservationTypes((err, res) => {
-            if (!err) {
-                observationTypes = res.data.data;
-            } else {
-                console.error(err, "ERROR");
+        ObservationTypeService.fetchObservationTypes().then(
+            res => {
+                $scope.observationTypes = res.data.data;
+            },
+            err => {
+                console.error(err);
             }
-        });
+        );
 
         // event handlders
         $scope.fetchGrades = school => {
@@ -69,7 +67,7 @@ export default [
                         $scope.grades = res.data;
                     },
                     err => {
-                        console.error(err, "ERROR");
+                        console.error(err);
                     }
                 );
             } else {
@@ -80,12 +78,14 @@ export default [
         $scope.newTeacherScore = teacher => {
             ScoreFactory.teacher = teacher;
             $state.go("scoreDetails", { workflow: "scores" });
+            localStorage.setItem("scoreParentRoute", "home");
         };
 
         $scope.newTeacherObservation = teacher => {
             ObservationFactory.teacher = teacher;
-            ObservationFactory["observationType"] = observationTypes[1];
+            ObservationFactory["observationType"] = $scope.observationTypes[1];
             $state.go("observationInputs", { workflow: "observations" });
+            localStorage.setItem("observationParentRoute", "home");
         };
     }
 ];
