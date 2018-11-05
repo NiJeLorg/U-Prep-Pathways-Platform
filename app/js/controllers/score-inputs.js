@@ -46,17 +46,19 @@ export default [
         };
 
         $scope.scoreObservation = () => {
-            ScoreService.createScore(
-                {
-                    school_id: ScoreFactory.teacher.school.id,
-                    grade_id: ScoreFactory.grade.id,
-                    subject_id: ScoreFactory.subject.id,
-                    teacher_id: ScoreFactory.teacher.id
+            ScoreService.createScore({
+                school_id: ScoreFactory.teacher.school.id,
+                grade_id: ScoreFactory.grade.id,
+                subject_id: ScoreFactory.subject.id,
+                teacher_id: ScoreFactory.teacher.id
+            }).then(
+                res => {
+                    $state.go("scoreForm", {
+                        scoreId: res.data.data.id
+                    });
                 },
-                (err, res) => {
-                    if (!err) {
-                        $state.go("scoreForm", { scoreId: res.data.data.id });
-                    }
+                err => {
+                    console.error(err);
                 }
             );
         };
