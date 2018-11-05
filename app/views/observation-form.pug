@@ -85,8 +85,8 @@ md-progress-linear(md-mode='intermediate' ng-if='progressBarActive')
                     div
                         .attachment__photo(ng-if='checkIfAttacmentIsImage(attachment)' ng-style="{background: 'url({{selectedDomain}}/uploads/{{attachment.name}})'}" ng-click='selectAttachment(attachment)' )
                         .attachment__video(ng-if='checkIfAttacmentIsVideo(attachment)')
-                            video(controls)
-                                source(ng-src='{{selectedDomain}}/uploads/{{attachment.name}}')
+                            video(controls ng-src='{{selectedDomain}}/uploads/{{attachment.name}}')
+                                //- source()
                         a(ng-href='{{selectedDomain}}/uploads/{{attachment.name}}' target='_blank' ng-if='checkIfAttacmentIsDocument(attachment)').attachment__document
                             img(src="assets/icons/file-type.svg", alt="")
                             p(title='{{attachment.name}}') {{attachment.name}}
