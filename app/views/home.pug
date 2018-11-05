@@ -26,7 +26,7 @@
                 .c-input-group__select
                     select(ng-model='selectedGrade' ng-options='grade.name for grade in grades')
                         option(value='') Select Grade
-        .teachers-container(ng-show='page === "dashboard"')
+        .teachers-container
             .c-teacher-card(ng-repeat='teacher in teachers | filter:search | filter:selectedSchool.name | teacherGradeFilter:selectedGrade.name | orderBy: "name" ')
                 .c-teacher-card__options
                     i.fa.fa-2x.fa-ellipsis-v
