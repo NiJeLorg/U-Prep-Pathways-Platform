@@ -39,29 +39,32 @@ export default [
                 }
             );
 
-            SchoolService.fetchSchools((err, res) => {
-                if (!err) {
+            SchoolService.fetchSchools().then(
+                res => {
                     $scope.schools = res.data.data;
-                } else {
-                    console.error(err, "ERROR");
+                },
+                err => {
+                    console.error(err);
                 }
-            });
+            );
 
-            GradeService.fetchGrades((err, res) => {
-                if (!err) {
+            GradeService.fetchGrades().then(
+                res => {
                     $scope.grades = res.data.data;
-                } else {
-                    console.error(err, "ERROR");
+                },
+                err => {
+                    console.error(err);
                 }
-            });
+            );
 
-            SubjectService.fetchSubjects((err, res) => {
-                if (!err) {
+            SubjectService.fetchSubjects().then(
+                res => {
                     $scope.subjects = res.data.data;
-                } else {
-                    console.error(err, "ERROR");
+                },
+                err => {
+                    console.error(err);
                 }
-            });
+            );
 
             // event handlders
             $scope.fetchGrades = school => {
@@ -235,29 +238,29 @@ export default [
                         " "
                     )[0];
 
-                    // $scope.grades.map(grade => {
-                    //     grade.ticked = false;
-                    // });
+                    $scope.grades.map(grade => {
+                        grade.ticked = false;
+                    });
 
-                    // $scope.subjects.map(subject => {
-                    //     subject.ticked = false;
-                    // });
+                    $scope.subjects.map(subject => {
+                        subject.ticked = false;
+                    });
 
-                    // $scope.grades.map(grade => {
-                    //     $scope.updatedTeacher.grades.map(el => {
-                    //         if (grade.name === el.name) {
-                    //             grade.ticked = true;
-                    //         }
-                    //     });
-                    // });
+                    $scope.grades.map(grade => {
+                        $scope.updatedTeacher.grades.map(el => {
+                            if (grade.name === el.name) {
+                                grade.ticked = true;
+                            }
+                        });
+                    });
 
-                    // $scope.subjects.map(subject => {
-                    //     $scope.updatedTeacher.subjects.map(el => {
-                    //         if (subject.name === el.name) {
-                    //             subject.ticked = true;
-                    //         }
-                    //     });
-                    // });
+                    $scope.subjects.map(subject => {
+                        $scope.updatedTeacher.subjects.map(el => {
+                            if (subject.name === el.name) {
+                                subject.ticked = true;
+                            }
+                        });
+                    });
                 }
                 if ($scope.resourceType == "school") {
                     $scope.updatedSchool = obj;
