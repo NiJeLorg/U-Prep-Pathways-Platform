@@ -87,7 +87,7 @@ md-progress-linear(md-mode='intermediate' ng-if='progressBarActive')
                         .attachment__video(ng-if='checkIfAttacmentIsVideo(attachment)')
                             video(controls)
                                 source(ng-src='{{selectedDomain}}/uploads/{{attachment.name}}')
-                        a(ng-href='{{selectedDomain}}/uploads/{{attachment.name}}' target='_blank').attachment__document(ng-if='checkIfAttacmentIsDocument(attachment)')
+                        a(ng-href='{{selectedDomain}}/uploads/{{attachment.name}}' target='_blank' ng-if='checkIfAttacmentIsDocument(attachment)').attachment__document
                             img(src="assets/icons/file-type.svg", alt="")
                             p(title='{{attachment.name}}') {{attachment.name}}
                     img.remove-attachment(src='assets/icons/x-icon-circle.svg' ng-click='removeAttachment(observation.attachments, attachment)')      
