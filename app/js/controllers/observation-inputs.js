@@ -53,38 +53,33 @@ export default [
                 ObservationFactory.teacher &&
                 ObservationFactory.subject
             ) {
-                ObservationService.createObservation(
-                    {
-                        school_id: ObservationFactory.teacher.school.id,
-                        grade_id: ObservationFactory.grade.id,
-                        subject_id: ObservationFactory.subject.id,
-                        teacher_id: ObservationFactory.teacher.id,
-                        observation_type_id:
-                            ObservationFactory.observationType.id
+                ObservationService.createObservation({
+                    school_id: ObservationFactory.teacher.school.id,
+                    grade_id: ObservationFactory.grade.id,
+                    subject_id: ObservationFactory.subject.id,
+                    teacher_id: ObservationFactory.teacher.id,
+                    observation_type_id: ObservationFactory.observationType.id
+                }).then(
+                    res => {
+                        ObservationService.query(
+                            {
+                                id: res.data.data.id
+                            },
+                            res => {
+                                $state.go("observationForm", {
+                                    observationId: res.data.id
+                                });
+                            }
+                        );
                     },
-                    (err, res) => {
-                        if (!err) {
-                            ObservationService.query(
-                                {
-                                    id: res.data.data.id
-                                },
-                                res => {
-                                    $state.go("observationForm", {
-                                        observationId: res.data.id
-                                    });
-                                }
-                            );
-                        }
+                    err => {
+                        console.error(err);
                     }
                 );
             } else {
                 $scope.errorMessage =
                     "Make sure you select all the necessary fields";
             }
-        };
-
-        $scope.cancel = () => {
-            UtilService.cancelObservation(ObservationFactory);
         };
     }
 ];
