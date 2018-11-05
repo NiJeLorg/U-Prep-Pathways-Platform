@@ -7,6 +7,8 @@ const models = require("../models/index"),
     observation_type = models.observation_type,
     observation_type_property_data = models.observation_type_property_data,
     observation_type_property = models.observation_type_property;
+const Sequelize = require("sequelize");
+const Op = Sequelize.Op;
 
 const get = async (req, res) => {
     res.sendData(req.observation);
