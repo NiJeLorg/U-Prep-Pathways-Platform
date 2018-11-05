@@ -104,7 +104,14 @@ export default [
                 });
                 setTimeout(() => {
                     $mdDialog.hide();
-                    $state.go("home");
+                    let transitionTo = localStorage.getItem("scoreParentRoute");
+                    if (transitionTo == "teacher") {
+                        $state.go(transitionTo, {
+                            teacherId: score.teacher_id
+                        });
+                    } else {
+                        $state.go(transitionTo);
+                    }
                 }, 2000);
             };
 
