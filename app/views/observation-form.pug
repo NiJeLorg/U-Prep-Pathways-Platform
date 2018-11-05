@@ -87,10 +87,9 @@ md-progress-linear(md-mode='intermediate' ng-if='progressBarActive')
                         .attachment__video(ng-if='checkIfAttacmentIsVideo(attachment)')
                             video(controls)
                                 source(ng-src='{{selectedDomain}}/uploads/{{attachment.name}}')
-                        .attachment__document(ng-if='checkIfAttacmentIsDocument(attachment)')
-                            a(ng-href='{{selectedDomain}}/uploads/{{attachment.name}}' target='_blank')
-                                img(src="assets/icons/file-type.svg", alt="")
-                            p {{attachment.name}}
+                        a(ng-href='{{selectedDomain}}/uploads/{{attachment.name}}' target='_blank').attachment__document(ng-if='checkIfAttacmentIsDocument(attachment)')
+                            img(src="assets/icons/file-type.svg", alt="")
+                            p(title='{{attachment.name}}') {{attachment.name}}
                     img.remove-attachment(src='assets/icons/x-icon-circle.svg' ng-click='removeAttachment(observation.attachments, attachment)')      
     .ul-50-50
         .c-observation-form-input-group.ul-margin-bottom-20(ng-repeat='observationTypeProperty in observationTypeProperties' ng-if='observationTypeProperty.label != "Conclusions"')
