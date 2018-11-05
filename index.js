@@ -8,7 +8,7 @@ const cors = require("cors");
 const uprepResponse = require("./server/middleware/response");
 const routes = require("./server/routes/index.route");
 
-// const APIError = require('./../server/helpers/APIError')
+// const APIError = require("./server/helpers/APIError");
 const path = require("path");
 
 const app = express();
@@ -30,19 +30,19 @@ app.get("*", (req, res) => {
     res.sendFile("index.html", { root: "./public" });
 });
 
-// if error is not an instanceOf APIError, convert it.
-app.use((err, req, res, next) => {
-    if (!(err instanceof APIError)) {
-        const apiError = new APIError(err.message, err.status, err.isPublic);
-        return next(apiError);
-    }
-    return next(err);
-});
+// // if error is not an instanceOf APIError, convert it.
+// app.use((err, req, res, next) => {
+//     if (!(err instanceof APIError)) {
+//         const apiError = new APIError(err.message, err.status, err.isPublic);
+//         return next(apiError);
+//     }
+//     return next(err);
+// });
 
-// catch 404 and forward to error handler
-app.use((req, res, next) => {
-    const err = new APIError("API not found", httpStatus.NOT_FOUND);
-    return next(err);
-});
+// // catch 404 and forward to error handler
+// app.use((req, res, next) => {
+//     const err = new APIError("API not found", httpStatus.NOT_FOUND);
+//     return next(err);
+// });
 
 module.exports = app;
