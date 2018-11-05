@@ -479,6 +479,8 @@
                     margin-top: 15px;
                     width: 100%;
                     text-align: center;
+                    text-overflow: ellipsis;
+                    overflow: hidden;
                 }
                 img {
                     width: 30px;
