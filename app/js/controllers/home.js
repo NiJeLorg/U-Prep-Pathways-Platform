@@ -14,8 +14,8 @@ export default [
         SchoolService,
         ObservationTypeService,
         GradeService,
-        ObservationFactory
-        // ScoreFactory
+        ObservationFactory,
+        ScoreFactory
     ) {
         $scope.switchCardContext = false;
 
