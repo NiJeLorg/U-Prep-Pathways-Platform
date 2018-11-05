@@ -44,7 +44,8 @@
                 p Your observation will now be used for Scoring.
 .c-light-box-overlay
 .c-light-box
-    img.main-image(src='https://dev-uprep.nijel.org/{{selectedImageUrl}}')
+    img.main-image(ng-src='{{selectedDomain}}/uploads/{{selectedImageUrl}}')
+    //- img.main-image(src='/uploads/{{selectedImageUrl}}')
 
 
 md-progress-linear(md-mode='intermediate' ng-if='progressBarActive')
@@ -82,15 +83,14 @@ md-progress-linear(md-mode='intermediate' ng-if='progressBarActive')
             .attachments-container(ng-if='observation.attachments')
                 .attachment(ng-repeat='attachment in observation.attachments')
                     div
-                        .attachment__photo(ng-if='checkIfAttacmentIsImage(attachment)' ng-style="{background: 'url(https://dev-uprep.nijel.org/{{attachment.link}})'}" ng-click='selectAttachment(attachment.link)' )
+                        .attachment__photo(ng-if='checkIfAttacmentIsImage(attachment)' ng-style="{background: 'url({{selectedDomain}}/uploads/{{attachment.name}})'}" ng-click='selectAttachment(attachment)' )
                         .attachment__video(ng-if='checkIfAttacmentIsVideo(attachment)')
                             video(controls)
-                                source(src='https://dev-uprep.nijel.org/{{attachment.link}}')
+                                source(ng-src='{{selectedDomain}}/uploads/{{attachment.name}}')
                         .attachment__document(ng-if='checkIfAttacmentIsDocument(attachment)')
-                            a(href='https://dev-uprep.nijel.org/{{attachment.link}}' target='_blank')
+                            a(ng-href='{{selectedDomain}}/uploads/{{attachment.name}}' target='_blank')
                                 img(src="assets/icons/file-type.svg", alt="")
                             p {{attachment.name}}
-                            //- p {{attachment.name}}
                     img.remove-attachment(src='assets/icons/x-icon-circle.svg' ng-click='removeAttachment(observation.attachments, attachment)')      
     .ul-50-50
         .c-observation-form-input-group.ul-margin-bottom-20(ng-repeat='observationTypeProperty in observationTypeProperties' ng-if='observationTypeProperty.label != "Conclusions"')

@@ -11,8 +11,6 @@ export default [
     "ClusterService",
     "AttachmentService",
     "UtilService",
-    "BASE_URL",
-
     function(
         $scope,
         $state,
@@ -25,12 +23,11 @@ export default [
         ObservationService,
         ClusterService,
         AttachmentService,
-        UtilService,
-        BASE_URL
+        UtilService
     ) {
+        $scope.selectedDomain = window.location.origin;
         // Progress Bar
         $scope.progressBarActive = false;
-
         $scope.observation = observation.data;
         $scope.editObservationName = false;
         $scope.isImage;
@@ -53,7 +50,7 @@ export default [
                 );
             },
             err => {
-                console.error(err, "ERROR");
+                console.error(err, "ERROR-OBSVE-TYPE");
             }
         );
 
@@ -152,8 +149,9 @@ export default [
             }
         };
 
-        $scope.selectAttachment = link => {
-            $scope.selectedImageUrl = link;
+        $scope.selectAttachment = attachment => {
+            $scope.selectedImageUrl = attachment.name;
+
             angular
                 .element(document.getElementsByClassName("c-light-box-overlay"))
                 .css("display", "block");
@@ -179,7 +177,7 @@ export default [
         $scope.upload = file => {
             $scope.progressBarActive = true;
             Upload.upload({
-                url: BASE_URL + "/observations/" + $scope.observation.id,
+                url: `/api/observations/${$scope.observation.id}`,
                 method: "PUT",
                 data: {
                     attachments: file
@@ -294,7 +292,16 @@ export default [
                     UtilService.openModal("submitted-observation-modal");
                     $timeout(() => {
                         UtilService.closeModal("submitted-observation-modal");
-                        $state.go("home");
+                        let transitionTo = localStorage.getItem(
+                            "observationParentRoute"
+                        );
+                        if (transitionTo == "teacher") {
+                            $state.go(transitionTo, {
+                                teacherId: $scope.observation.teacher_id
+                            });
+                        } else {
+                            $state.go(transitionTo);
+                        }
                     }, 4000);
                 },
                 err => {
