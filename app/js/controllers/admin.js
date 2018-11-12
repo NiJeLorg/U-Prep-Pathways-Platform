@@ -152,7 +152,7 @@ export default [
                         UtilService.closeModal(
                             `create-${$scope.resourceType}-modal`
                         );
-                        TeacherService.query(
+                        TeacherService.get(
                             { id: res.data.data.id },
                             res => {
                                 $scope.teachers.push(res.data);
@@ -172,7 +172,8 @@ export default [
         function deleteResources() {
             $scope.deleteResource = () => {
                 if ($scope.resourceType == "school") {
-                    SchoolService.deleteSchool(toBeDeletedResource).then(
+                    SchoolService.remove(
+                        { id: toBeDeletedResource.id },
                         res => {
                             UtilService.closeModal("delete-resource-modal");
                             $scope.schools = deleteItemFromArray(
@@ -186,7 +187,7 @@ export default [
                     );
                 }
                 if ($scope.resourceType == "teacher") {
-                    TeacherService.delete(
+                    TeacherService.remove(
                         { id: toBeDeletedResource.id },
                         res => {
                             UtilService.closeModal("delete-resource-modal");
@@ -201,7 +202,8 @@ export default [
                     );
                 }
                 if ($scope.resourceType == "grade") {
-                    GradeService.deleteGrade(toBeDeletedResource).then(
+                    GradeService.remove(
+                        { id: toBeDeletedResource.id },
                         res => {
                             UtilService.closeModal("delete-resource-modal");
                             $scope.grades = deleteItemFromArray(
@@ -215,8 +217,9 @@ export default [
                     );
                 }
                 if ($scope.resourceType == "subject") {
-                    SubjectService.deleteSubject(toBeDeletedResource).then(
-                        err => {
+                    SubjectService.remove(
+                        { id: toBeDeletedResource.id },
+                        res => {
                             UtilService.closeModal("delete-resource-modal");
                             $scope.subjects = deleteItemFromArray(
                                 $scope.subjects,
