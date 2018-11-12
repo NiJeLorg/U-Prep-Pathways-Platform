@@ -109,7 +109,7 @@ uprepApp.config([
                 templateUrl: "views/teacher.html",
                 resolve: {
                     teacher: ($stateParams, TeacherService) => {
-                        return TeacherService.query({
+                        return TeacherService.get({
                             id: $stateParams.teacherId
                         }).$promise;
                     }
