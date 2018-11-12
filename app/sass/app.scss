@@ -36,3 +36,16 @@ ul {
 .multiSelect > button {
     text-transform: capitalize;
 }
+
+
+// make sure footer sticks to the bottom
+body {
+    display: flex;
+    flex-direction: column;
+    main {
+        flex: 1 0 auto;
+    }
+    footer {
+        flex-shrink: 0;
+    }
+}
