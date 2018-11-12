@@ -15,15 +15,13 @@
                 select(ng-model='newTeacher.school' ng-options='school as school.name for school in schools track by school.id')
             .input-group
                 label Grades
-                div(isteven-multi-select input-model="grades" output-model="newTeacher.grades"  button-label="name" item-label="name" tick-property="ticked")
+                div(isteven-multi-select input-model="newGrades" output-model="newTeacher.grades"  button-label="name" item-label="name" tick-property="ticked")
             .input-group
                 label Subjects
-                div(isteven-multi-select input-model="subjects" output-model="newTeacher.subjects" button-label="name" item-label="name"  tick-property="ticked")
+                div(isteven-multi-select input-model="newSubjects" output-model="newTeacher.subjects" button-label="name" item-label="name"  tick-property="ticked")
             .action-buttons
                 button.submit(ng-click='createTeacher(newTeacher)') Submit 
-                button.cancel(ng-click='closeModal()') Cancel
-                
-                
+                button.cancel(ng-click='closeModal()') Cancel                              
 .c-modal.create-school-modal
     .c-modal__modal-content
         .l-flex-space-between
@@ -69,11 +67,8 @@
             img.ul-cursor-pointer(src='assets/icons/x-icon.svg' ng-click='closeEditResourceModal()')
         form
             .input-group
-                label First Name
-                input(type='text' ng-model='updatedTeacher.firstName')
-            .input-group
-                label Last Name
-                input(type='text' ng-model='updatedTeacher.lastName')
+                label Name
+                input(type='text' ng-model='updatedTeacher.name')
             .input-group
                 label School
                 p {{updatedTeacher.school.name}}
@@ -85,10 +80,9 @@
                 label Subjects
                 div(isteven-multi-select input-model="subjects" output-model="updatedTeacher.subjects" button-label="name" item-label="name"  tick-property="ticked")
             .action-buttons
-                button.submit Submit 
+                button.submit(ng-click='updateTeacher(updatedTeacher)') Submit 
                 button.cancel(ng-click='closeEditResourceModal()') Cancel
-                
-                
+                            
 .c-modal.update-school-modal
     .c-modal__modal-content
         .l-flex-space-between
