@@ -24,7 +24,6 @@ const destroy = async (req, res) => {
 };
 
 const update = async (req, res) => {
-    console.log(req.body, "bodyd tings");
     const schoolObj = req.school.update({ name: req.body.name });
     res.sendData(schoolObj);
 };
