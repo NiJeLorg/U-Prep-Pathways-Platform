@@ -2,17 +2,9 @@ export default [
     "$resource",
     "$http",
     function($resource, $http) {
-        let obj = $resource(
-            "/api/teachers/:id",
-            {
-                id: "@id"
-            },
-            {
-                query: {
-                    method: "GET"
-                }
-            }
-        );
+        const returnIds = (prop, obj) => obj[prop].map(el => el.id.toString());
+
+        let obj = $resource("/api/teachers/:id");
 
         obj.fetchAllTeachers = () => $http.get("/api/teachers");
 
@@ -25,19 +17,24 @@ export default [
         };
 
         obj.createTeacher = teacher => {
-            let gradeIds = teacher.grades.map(el => {
-                return el.id.toString();
-            });
-
-            let subjectIds = teacher.subjects.map(el => {
-                return el.id.toString();
+            let grades = teacher.grades.map(el => {
+                return el.name;
             });
 
             return $http.post("/api/teachers/", {
                 name: teacher.firstName + " " + teacher.lastName,
                 schoolId: teacher.school.id,
-                grades: gradeIds,
-                subjects: subjectIds
+                grades: grades,
+                subjects: returnIds("subjects", teacher)
+            });
+        };
+
+        obj.updateTeacher = teacher => {
+            return $http.put(`/api/teachers/${teacher.id}`, {
+                name: teacher.name,
+                schoolId: teacher.school.id,
+                grades: returnIds("grades", teacher),
+                subjects: returnIds("subjects", teacher)
             });
         };
 
