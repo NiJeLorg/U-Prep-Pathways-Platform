@@ -280,6 +280,19 @@ export default [
                 UtilService.closeModal(`update-${$scope.resourceType}-modal`);
             };
 
+            $scope.updateTeacher = teacher => {
+                TeacherService.updateTeacher(teacher).then(
+                    res => {
+                        UtilService.closeModal(
+                            `update-${$scope.resourceType}-modal`
+                        );
+                    },
+                    err => {
+                        console.error(err);
+                    }
+                );
+            };
+
             $scope.updateSchool = school => {
                 SchoolService.updateSchool(school).then(
                     res => {
@@ -288,7 +301,7 @@ export default [
                         );
                     },
                     err => {
-                        console.error(err, "ERR");
+                        console.error(err);
                     }
                 );
             };
@@ -301,7 +314,7 @@ export default [
                         );
                     },
                     err => {
-                        console.error(err, "ERR");
+                        console.error(err);
                     }
                 );
             };
@@ -314,7 +327,7 @@ export default [
                         );
                     },
                     err => {
-                        console.error(err, "ERR");
+                        console.error(err);
                     }
                 );
             };
