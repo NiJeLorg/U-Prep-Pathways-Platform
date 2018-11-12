@@ -13,12 +13,33 @@ export default [
         SubjectService,
         UtilService
     ) {
-        //initialize models
+        //initialize state
         $scope.resourceType;
+        let toBeDeletedResource;
+        $scope.newGrades, $scope.newSubjects;
 
         // utility functions
         function deleteItemFromArray(arr, obj) {
             return arr.filter(el => el.id !== obj.id);
+        }
+
+        function modalsHandlers() {
+            $scope.openModal = () => {
+                UtilService.openModal(`create-${$scope.resourceType}-modal`);
+            };
+
+            $scope.closeModal = () => {
+                UtilService.closeModal(`create-${$scope.resourceType}-modal`);
+            };
+
+            $scope.openDeleteResourceModal = resource => {
+                UtilService.openModal("delete-resource-modal");
+                toBeDeletedResource = resource;
+            };
+
+            $scope.closeDeleteResourceModal = () => {
+                UtilService.closeModal("delete-resource-modal");
+            };
         }
 
         function getResources() {
@@ -26,16 +47,9 @@ export default [
             TeacherService.fetchAllTeachers().then(
                 res => {
                     $scope.teachers = res.data.data;
-                    $scope.teachers.map((el, index) => {
-                        var lastName = el.name
-                            .split(" ")
-                            .slice(-1)
-                            .join(" ");
-                        el.lastName = lastName;
-                    });
                 },
                 err => {
-                    console.error(err, "ERROR");
+                    console.error(err);
                 }
             );
 
@@ -51,6 +65,7 @@ export default [
             GradeService.fetchGrades().then(
                 res => {
                     $scope.grades = res.data.data;
+                    $scope.newGrades = angular.copy(res.data.data);
                 },
                 err => {
                     console.error(err);
@@ -60,6 +75,7 @@ export default [
             SubjectService.fetchSubjects().then(
                 res => {
                     $scope.subjects = res.data.data;
+                    $scope.newSubjects = angular.copy(res.data.data);
                 },
                 err => {
                     console.error(err);
@@ -68,7 +84,7 @@ export default [
 
             // event handlders
             $scope.fetchGrades = school => {
-                if (school !== null) {
+                if (school) {
                     GradeService.query(
                         {
                             id: school.id
@@ -77,7 +93,7 @@ export default [
                             $scope.grades = res.data;
                         },
                         err => {
-                            console.error(err, "ERROR");
+                            console.error(err);
                         }
                     );
                 } else {
@@ -88,15 +104,6 @@ export default [
 
         // crete resource
         function createResources() {
-            // event handlers
-            $scope.openModal = () => {
-                UtilService.openModal(`create-${$scope.resourceType}-modal`);
-            };
-
-            $scope.closeModal = () => {
-                UtilService.closeModal(`create-${$scope.resourceType}-modal`);
-            };
-
             $scope.createSchool = newSchool => {
                 SchoolService.createSchool(newSchool).then(
                     res => {
@@ -120,7 +127,7 @@ export default [
                         $scope.grades.push(res.data.data);
                     },
                     err => {
-                        console.error(err, "ERROR");
+                        console.error(err);
                     }
                 );
             };
@@ -134,7 +141,7 @@ export default [
                         $scope.subjects.push(res.data.data);
                     },
                     err => {
-                        console.error(err, "ERROR");
+                        console.error(err);
                     }
                 );
             };
@@ -145,28 +152,24 @@ export default [
                         UtilService.closeModal(
                             `create-${$scope.resourceType}-modal`
                         );
-                        $scope.teachers.push(res.data.data);
+                        TeacherService.query(
+                            { id: res.data.data.id },
+                            res => {
+                                $scope.teachers.push(res.data);
+                            },
+                            err => {
+                                console.error(err);
+                            }
+                        );
                     },
                     err => {
-                        console.error(err, "ERROR");
+                        console.error(err);
                     }
                 );
             };
         }
 
         function deleteResources() {
-            let toBeDeletedResource;
-
-            // delete resources modals
-            $scope.openDeleteResourceModal = resource => {
-                UtilService.openModal("delete-resource-modal");
-                toBeDeletedResource = resource;
-            };
-
-            $scope.closeDeleteResourceModal = () => {
-                UtilService.closeModal("delete-resource-modal");
-            };
-
             $scope.deleteResource = () => {
                 if ($scope.resourceType == "school") {
                     SchoolService.deleteSchool(toBeDeletedResource).then(
@@ -178,12 +181,13 @@ export default [
                             );
                         },
                         err => {
-                            console.error(err, "ERR");
+                            console.error(err);
                         }
                     );
                 }
                 if ($scope.resourceType == "teacher") {
-                    TeacherService.deleteTeacher(toBeDeletedResource).then(
+                    TeacherService.delete(
+                        { id: toBeDeletedResource.id },
                         res => {
                             UtilService.closeModal("delete-resource-modal");
                             $scope.teachers = deleteItemFromArray(
@@ -192,7 +196,7 @@ export default [
                             );
                         },
                         err => {
-                            console.error(err, "ERR");
+                            console.error(err);
                         }
                     );
                 }
@@ -206,7 +210,7 @@ export default [
                             );
                         },
                         err => {
-                            console.error(err, "ERR");
+                            console.error(err);
                         }
                     );
                 }
@@ -220,7 +224,7 @@ export default [
                             );
                         },
                         err => {
-                            console.error(err, "ERR");
+                            console.error(err);
                         }
                     );
                 }
@@ -232,11 +236,7 @@ export default [
             $scope.openEditResoureModal = obj => {
                 UtilService.openModal(`update-${$scope.resourceType}-modal`);
                 if ($scope.resourceType == "teacher") {
-                    console.log(obj, "obj");
                     $scope.updatedTeacher = obj;
-                    $scope.updatedTeacher.firstName = $scope.updatedTeacher.name.split(
-                        " "
-                    )[0];
 
                     $scope.grades.map(grade => {
                         grade.ticked = false;
@@ -316,7 +316,7 @@ export default [
                 );
             };
         }
-
+        modalsHandlers();
         getResources();
         createResources();
         deleteResources();
