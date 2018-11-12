@@ -15,10 +15,11 @@ const get = async (req, res) => {
 
 const list = async (req, res) => {
     const teachers = await teacher.all(getIncludes(req));
-    console.log(res.sendData(teachers));
+    res.sendData(teachers);
 };
 const load = async (req, res, next, id) => {
     const teacherObj = await teacher.findById(id, getIncludes(req));
+
     if (!teacherObj) {
         return res.sendNotFound();
     }
@@ -106,8 +107,7 @@ const create = async (req, res) => {
         name: req.body.name,
         school_id: req.body.schoolId
     });
-    const grades = req.body.grades;
-    const subjects = req.body.subjects;
+    const { grades, subjects } = req.body;
 
     for (let grade of grades) {
         let gradeObj = await getGrade(grade);
@@ -124,10 +124,30 @@ const create = async (req, res) => {
     res.sendData(teacherObj);
 };
 
+const update = async (req, res) => {
+    const { name, schoolId: school_id, grades = [], subjects = [] } = req.body;
+    const teacherObj = await req.teacher.update({
+        name,
+        school_id
+    });
+    const { id } = teacherObj;
+    if (grades) {
+        teacherObj.setGrades(grades);
+    }
+    grades.map(grade => {
+        subjects.map(subject => {
+            teacherObj.addSubject(subject, { through: { grade_id: grade } });
+        });
+    });
+
+    res.sendData(teacherObj);
+};
+
 module.exports = {
     get,
     load,
     list,
     create,
+    update,
     destroy
 };
