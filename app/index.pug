@@ -1,5 +1,8 @@
 html(ng-app='uprepApp')
     include views/sv-head
     body
-        include views/sv-nav
-        ui-view(ng-cloak)
+        main
+            include views/sv-nav
+            ui-view(ng-cloak)
+        footer.c-footer
+            p © UPrep 2018  
