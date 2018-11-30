@@ -27,7 +27,7 @@
                             div(ng-if='isImage(attachment.name)')
                                 .attachment-select(ng-click='selectAttachment($event, attachment)')
                                     img(src='assets/icons/select-attachment-icon.svg' alt='Select Attachment Icon')
-                                .attachment.attachment-img(ng-style="{backgroundImage: 'url(http://localhost:3000/uploads/{{attachment.name}})'}")
+                                .attachment.attachment-img(ng-style="{backgroundImage: 'url(/uploads/{{attachment.name}})'}")
                             div(ng-if='isDocument(attachment.name)')
                                 .attachment-select(ng-click='selectAttachment($event, attachment)')
                                     img(src='assets/icons/select-attachment-icon.svg')
