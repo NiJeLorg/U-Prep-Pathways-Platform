@@ -20,7 +20,8 @@ const create = async (req, res) => {
     });
     if (indicatorScoreObject !== null) {
         await indicatorScoreObject.update({
-            value: req.body.value
+            value: req.body.value,
+            note: req.body.note
         });
     } else {
         indicatorScoreObject = await indicator_score.create({
