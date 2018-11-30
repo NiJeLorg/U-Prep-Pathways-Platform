@@ -1,64 +1,70 @@
-'use strict';
+"use strict";
 module.exports = (sequelize, DataTypes) => {
-    const Observation = sequelize.define('observation', {
-        name: DataTypes.STRING,
-        description: DataTypes.TEXT,
-        status: DataTypes.INTEGER
-    }, {
-        underscored: true,
-        getterMethods: {
-            cluster_ids: function (){
-                if(this.clusters)
-                    return this.clusters.map(cluster => cluster.id);
-                return [];
-            },
-            observation_type_property_data: function (){
-                if(this.observation_type_property){
-                    return this.observation_type_property.map((property) => {
-                       return  {[property.id]: property.observation_type_property_data.value}
-                    })
-                }
-                return [];
-            }
+    const Observation = sequelize.define(
+        "observation",
+        {
+            name: DataTypes.STRING,
+            description: DataTypes.TEXT,
+            status: DataTypes.INTEGER
         },
-    });
-    Observation.associate = (models) => {
+        {
+            underscored: true,
+            getterMethods: {
+                cluster_ids: function() {
+                    if (this.clusters)
+                        return this.clusters.map(cluster => cluster.id);
+                    return [];
+                },
+                observation_type_property_data: function() {
+                    if (this.observation_type_property) {
+                        return this.observation_type_property.map(property => {
+                            return {
+                                [property.id]:
+                                    property.observation_type_property_data
+                                        .value
+                            };
+                        });
+                    }
+                    return [];
+                }
+            }
+        }
+    );
+    Observation.associate = models => {
         Observation.belongsTo(models.observation_type, {
-            foreignKey: 'observation_type_id',
+            foreignKey: "observation_type_id"
         });
         Observation.belongsTo(models.school, {
-            foreignKey: 'school_id',
+            foreignKey: "school_id"
         });
         Observation.belongsTo(models.teacher, {
-            foreignKey: 'teacher_id',
+            foreignKey: "teacher_id"
         });
         Observation.belongsTo(models.subject, {
-            foreignKey: 'subject_id',
+            foreignKey: "subject_id"
         });
         Observation.belongsTo(models.grade, {
-            foreignKey: 'grade_id',
+            foreignKey: "grade_id"
         });
         Observation.belongsToMany(models.cluster, {
-            foreignKey: 'observation_id',
+            foreignKey: "observation_id",
             through: models.observation_cluster,
-            as: 'clusters',
-            onDelete: 'CASCADE'
+            as: "clusters",
+            onDelete: "CASCADE"
         });
 
         Observation.hasMany(models.observation_evidence, {
-            foreignKey: 'observation_id',
-            as: 'attachments',
-            onDelete: 'CASCADE',
+            foreignKey: "observation_id",
+            as: "attachments",
+            onDelete: "CASCADE",
             hooks: true
         });
 
-
-
         Observation.belongsToMany(models.observation_type_property, {
-            foreignKey: 'observation_id',
+            foreignKey: "observation_id",
             through: models.observation_type_property_data,
-            as: 'observation_type_property',
-            onDelete: 'CASCADE',
+            as: "observation_type_property",
+            onDelete: "CASCADE"
         });
     };
     return Observation;
