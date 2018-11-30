@@ -26,6 +26,40 @@ export default [
             score = {};
             $state.go("home");
         };
+
+        // obj.openAccordion = elem => {
+        //     angular.element(el)
+        // };
+
+        obj.isDocument = fileName => {
+            const documentFormats = ["pdf", "doc", "docx"];
+            return documentFormats.includes(
+                fileName
+                    .split(".")
+                    .pop()
+                    .toLowerCase()
+            );
+        };
+
+        obj.isImage = fileName => {
+            const imageFormats = ["jpeg", "jpg", "png", "gif"];
+            return imageFormats.includes(
+                fileName
+                    .split(".")
+                    .pop()
+                    .toLowerCase()
+            );
+        };
+
+        obj.isVideo = fileName => {
+            const videoFormats = ["mov", "mp4"];
+            return videoFormats.includes(
+                fileName
+                    .split(".")
+                    .pop()
+                    .toLowerCase()
+            );
+        };
         return obj;
     }
 ];
