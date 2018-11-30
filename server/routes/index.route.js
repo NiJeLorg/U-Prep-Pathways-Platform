@@ -11,6 +11,7 @@ const observationEvidenceRoutes = require("./observation_evidence.route");
 const observationClusterRoutes = require("./observation_cluster.route");
 const scoreRoutes = require("./score.route");
 const indicatorScoreRoutes = require("./indicator_score.route");
+const evidenceRoutes = require("./evidence.route");
 const clusterRoutes = require("./cluster.route");
 const YAML = require("yamljs");
 const swaggerUi = require("swagger-ui-express");
@@ -37,6 +38,7 @@ router.use("/observation_types", observationTypeRoutes);
 router.use("/scores", scoreRoutes);
 router.use("/indicator_scores", indicatorScoreRoutes);
 router.use("/clusters", clusterRoutes);
+router.use("/evidences", evidenceRoutes);
 router.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 module.exports = router;
