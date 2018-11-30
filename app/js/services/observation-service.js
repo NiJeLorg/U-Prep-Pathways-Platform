@@ -21,6 +21,9 @@ export default [
 
         obj.createObservation = data => $http.post("/api/observations", data);
 
+        obj.fetchTeacherObservations = teacherId =>
+            $http.get(`/api/teachers/${teacherId}/observations`);
+
         return obj;
     }
 ];
