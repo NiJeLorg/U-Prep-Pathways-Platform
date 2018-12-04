@@ -1,0 +1,31 @@
+.ul-padding-30
+    .ul-padding-30
+        .c-observation-observation-form
+            .c-observation-observation-form__details
+                h3.ul-text-capitalize(style='font-weight:bold; color: #681C5B') {{score.teacher.name}}
+                p  CREATED ON {{score.created_at | date: 'shortDate'}} {{score.created_at | date: 'shortTime'}}
+            .c-observation-observation-form__actions
+                    button(ng-click='showSubmitScoreModal()') Submit
+                    img.ul-cursor-pointer(src='assets/icons/delete-icon.svg' ng-click='showDeleteScoreModal()')
+        
+        .c-element(ng-repeat='element in elements track by element.id')
+            .title
+                h2 Section {{element.id}} of 5: {{element.name}} &nbsp;
+                p Score the teacher from 1-4 stars on the following indicator
+            .c-accordion.tab-content(ng-class="{'c-accordion-collapsed': !component.expanded}" ng-repeat='component in element.components track by component.id; ')
+                .c-accordion-header(ng-click='component.expanded = !component.expanded')
+                    span.accordion-title {{component.name}} &nbsp;
+                    img(src="assets/icons/question-mark.svg")
+                .c-accordion-content
+                    .c-radio-group.c-accordion-radio-group.l-flex.ul-margin-bottom-20(ng-repeat="indicator in getAddSelectedIndicators(component.indicators) track by indicator.id")
+                        .indicator
+                            p.ul-cursor-pointer(ng-click='showIndicatorLevelsModal($event)') {{indicator.name}}
+                            .ratings
+                                label.c-accordion-radio-group-label(ng-repeat='value in indicatorValue' ng-class="{'checked-input': value  == indicator.value}")
+                                    input(type='radio' name='{{indicator.name}}' value='{{value}}' ng-model='indicator.value' ng-click='storeIndicatorScore(value, indicator)')
+                                    div.radio-label(ng-if='value == null') N/A
+                                    div.radio-label(ng-if='value != null') {{ value }}
+                        .attach-evidence
+                            img(src='assets/icons/add-evidence-icon.svg' alt='Add Evidence Icon' ng-click='showAttachEvidenceModal($event, indicator)')
+                            img(src='assets/icons/check-evidence-icon.svg' alt='Check Evidence Icon')
+                        

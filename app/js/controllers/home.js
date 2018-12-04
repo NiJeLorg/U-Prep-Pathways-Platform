@@ -1,31 +1,91 @@
-'use strict';
+export default [
+    "$scope",
+    "$state",
+    "TeacherService",
+    "SchoolService",
+    "ObservationTypeService",
+    "GradeService",
+    "ObservationFactory",
+    "ScoreFactory",
+    function(
+        $scope,
+        $state,
+        TeacherService,
+        SchoolService,
+        ObservationTypeService,
+        GradeService,
+        ObservationFactory,
+        ScoreFactory
+    ) {
+        $scope.switchCardContext = false;
 
-import moment from 'moment';
+        // fetch data
+        TeacherService.fetchAllTeachers().then(
+            res => {
+                let reg = /^(\w+)\s(\w+)$/;
+                $scope.teachers = res.data.data;
+                res.data.data.forEach((elem, index) => {
+                    if (
+                        elem.school.name === "UPA HS" ||
+                        elem.school.name === "UPA MS"
+                    ) {
+                        elem.name = elem.name.replace(reg, "$2 $1");
+                    }
+                });
+            },
+            err => {
+                console.error(err);
+            }
+        );
 
-const HomeCtrl = ($scope, $rootScope, $state, DataService) => {
+        SchoolService.fetchSchools().then(
+            res => {
+                $scope.schools = res.data.data;
+            },
+            err => {
+                console.error(err);
+            }
+        );
 
-    // check if token extsts
-    let token = localStorage.getItem('token');
-    if (!token) {
-        $state.go('auth');
-    } else {
-        DataService.$loaded((obj) => {
-            obj.map((observation, index) => {
-                observation.readableDate = moment(observation.createdAt).format('MMMM Do YYYY, h:mm:ss a');
-            });
-            $scope.observations = obj;
-        });
+        ObservationTypeService.fetchObservationTypes().then(
+            res => {
+                $scope.observationTypes = res.data.data;
+            },
+            err => {
+                console.error(err);
+            }
+        );
 
-        $scope.observationType = function (type) {
-            $rootScope.observationType = type;
+        // event handlders
+        $scope.fetchGrades = school => {
+            if (school !== null) {
+                GradeService.query(
+                    {
+                        id: school.id
+                    },
+                    res => {
+                        $scope.grades = res.data;
+                    },
+                    err => {
+                        console.error(err);
+                    }
+                );
+            } else {
+                $scope.grades = [];
+            }
         };
 
-        $scope.showObservation = function (observation) {
-            $state.go('showObservation', {
-                id: observation.$id
-            });
+        $scope.newTeacherScore = teacher => {
+            ScoreFactory.teacher = teacher;
+            $state.go("scoreDetails", { workflow: "scores" });
+            localStorage.setItem("scoreParentRoute", "home");
+        };
+
+        $scope.newTeacherObservation = teacher => {
+            ObservationFactory.teacher = teacher;
+            ObservationFactory["observationType"] = $scope.observationTypes[1];
+            $state.go("observationInputs", { workflow: "observations" });
+            localStorage.setItem("observationParentRoute", "home");
         };
     }
-};
-
-export default HomeCtrl;
+];

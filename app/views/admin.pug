@@ -1,0 +1,187 @@
+.c-modal.create-teacher-modal
+    .c-modal__modal-content
+        .l-flex-space-between
+            h2 New Teacher        
+            img.ul-cursor-pointer(src='assets/icons/x-icon.svg' ng-click='closeModal()')
+        form
+            .input-group
+                label First Name
+                input(type='text' ng-model='newTeacher.firstName')
+            .input-group
+                label Last Name
+                input(type='text' ng-model='newTeacher.lastName')
+            .input-group
+                label School
+                select(ng-model='newTeacher.school' ng-options='school as school.name for school in schools track by school.id')
+            .input-group
+                label Grades
+                div(isteven-multi-select input-model="newGrades" output-model="newTeacher.grades"  button-label="name" item-label="name" tick-property="ticked")
+            .input-group
+                label Subjects
+                div(isteven-multi-select input-model="newSubjects" output-model="newTeacher.subjects" button-label="name" item-label="name"  tick-property="ticked")
+            .action-buttons
+                button.submit(ng-click='createTeacher(newTeacher)') Submit 
+                button.cancel(ng-click='closeModal()') Cancel                              
+.c-modal.create-school-modal
+    .c-modal__modal-content
+        .l-flex-space-between
+            h2 New School        
+            img.ul-cursor-pointer(src='assets/icons/x-icon.svg' ng-click='closeModal()')
+        form 
+            .input-group 
+                label School Name
+                input(type='text' ng-model='newSchool')
+            .action-buttons
+                button.submit(ng-click='createSchool(newSchool)') Submit 
+                button.cancel(ng-click='closeModal()') Cancel
+.c-modal.create-subject-modal
+    .c-modal__modal-content
+        .l-flex-space-between
+            h2 New Subject        
+            img.ul-cursor-pointer(src='assets/icons/x-icon.svg' ng-click='closeModal()')
+        form
+            .input-group
+                label Subject Name
+                input(type="text" ng-model='newSubject')
+            .action-buttons
+                button.submit(ng-click='createSubject(newSubject)') Submit 
+                button.cancel(ng-click='closeModal()') Cancel
+        
+.c-modal.create-grade-modal
+    .c-modal__modal-content
+        .l-flex-space-between
+            h2 New Grade        
+            img.ul-cursor-pointer(src='assets/icons/x-icon.svg' ng-click='closeModal()')
+        form
+            .input-group
+                label Grade Name
+                input(type="text" ng-model='newGrade')
+            .action-buttons
+                button.submit(ng-click='createGrade(newGrade)') Submit 
+                button.cancel(ng-click='closeModal()') Cancel
+
+.c-modal.update-teacher-modal
+    .c-modal__modal-content
+        .l-flex-space-between
+            h2 Update Teacher        
+            img.ul-cursor-pointer(src='assets/icons/x-icon.svg' ng-click='closeEditResourceModal()')
+        form
+            .input-group
+                label Name
+                input(type='text' ng-model='updatedTeacher.name')
+            .input-group
+                label School
+                p {{updatedTeacher.school.name}}
+                select(ng-model='updatedTeacher.school' ng-options='school.name for school in schools')
+            .input-group
+                label Grades
+                div(isteven-multi-select input-model="grades" output-model="updatedTeacher.grades"  button-label="name" item-label="name" tick-property="ticked")
+            .input-group
+                label Subjects
+                div(isteven-multi-select input-model="subjects" output-model="updatedTeacher.subjects" button-label="name" item-label="name"  tick-property="ticked")
+            .action-buttons
+                button.submit(ng-click='updateTeacher(updatedTeacher)') Submit 
+                button.cancel(ng-click='closeEditResourceModal()') Cancel
+                            
+.c-modal.update-school-modal
+    .c-modal__modal-content
+        .l-flex-space-between
+            h2 Update School        
+            img.ul-cursor-pointer(src='assets/icons/x-icon.svg' ng-click='closeEditResourceModal()')
+        form 
+            .input-group 
+                label School Name
+                input(type='text' ng-model='updatedSchool.name')
+            .action-buttons
+                button.submit(ng-click='updateSchool(updatedSchool)') Submit 
+                button.cancel(ng-click='closeEditResourceModal()') Cancel
+.c-modal.update-subject-modal
+    .c-modal__modal-content
+        .l-flex-space-between
+            h2 Update Subject        
+            img.ul-cursor-pointer(src='assets/icons/x-icon.svg' ng-click='closeEditResourceModal()')
+        form
+            .input-group
+                label Subject Name
+                input(type="text" ng-model='updatedSubject.name')
+            .action-buttons 
+                button.submit(ng-click='updateSubject(updatedSubject)') Submit 
+                button.cancel(ng-click='closeEditResourceModal()') Cancel
+        
+.c-modal.update-grade-modal
+    .c-modal__modal-content
+        .l-flex-space-between
+            h2 Update Grade        
+            img.ul-cursor-pointer(src='assets/icons/x-icon.svg' ng-click='closeEditResourceModal()')
+        form
+            .input-group
+                label Grade Name
+                input(type="text" ng-model='updatedGrade.name')
+            .action-buttons
+                button.submit(ng-click='updateGrade(updatedGrade)') Submit 
+                button.cancel(ng-click='closeEditResourceModal()') Cancel
+
+
+.c-modal.delete-resource-modal
+    .c-modal__modal-content
+        h2 Delete?
+        p This action cannot be reversed.
+        .c-modal__action-buttons
+            button(ng-click='deleteResource(resourceType)') Yes
+            button(ng-click='closeDeleteResourceModal()') Cancel
+
+
+.c-admin-section
+    aside
+        .title Admin Resources
+        nav
+            p.nav-link.ul-cursor-pointer(ui-sref='admin.teacher' ng-click='resourceType = "teacher"') Teachers
+            p.nav-link.ul-cursor-pointer(ui-sref='admin.school' ng-click='resourceType="school"') Schools
+            p.nav-link.ul-cursor-pointer(ui-sref='admin.subjects' ng-click='resourceType="subject"') Subjects
+            p.nav-link.ul-cursor-pointer(ui-sref='admin.grades' ng-click='resourceType="grade"') Grades                                
+    main(ng-init='resourceType="teacher"')
+        .l-flex-space-between(ng-if='resourceType')
+            h1 {{resourceType}}s
+            span(ng-click='openModal()')
+                i.ul-cursor-pointer.fas.fa-plus-circle.fa-3x(style='color: #681C5B')
+        .c-list-resources
+            ul(ng-if='resourceType =="teacher"')
+                .filter-teachers-container
+                    .c-input-group__text
+                        span
+                            img(src='assets/icons/search-icon.svg')
+                        input(type='text' placeholder='Search' name='search' ng-model='search')          
+                    .c-input-group
+                        label Filter By: 
+                        .c-input-group__select
+                            select(ng-model='selectedSchool' ng-options='school.name for school in schools' ng-change='fetchGrades(selectedSchool)')
+                                option(value='') Select School
+                    .c-input-group
+                        label Order By: 
+                        .c-input-group__select
+                            select(ng-model='selectedGrade' ng-options='grade.name for grade in grades')
+                                option(value='') Select Grade
+                li(ng-repeat='teacher in teachers | orderBy:"lastName" | filter:search | filter:selectedSchool.name | filter:selectedGrade.name')
+                    p {{teacher.name}}
+                    .action-items
+                        img(src='assets/icons/edit-icon.svg' ng-click='openEditResoureModal(teacher)')
+                        img(src='assets/icons/delete-icon.svg' ng-click='openDeleteResourceModal(teacher)')
+            ul(ng-if='resourceType == "school"')
+                li(ng-repeat='school in schools')
+                    p {{school.name}}
+                    .action-items
+                        img(src='assets/icons/edit-icon.svg' ng-click='openEditResoureModal(school)')
+                        img(src='assets/icons/delete-icon.svg' ng-click='openDeleteResourceModal(school)')
+            ul(ng-if='resourceType == "subject"')
+                li(ng-repeat='subject in subjects')
+                    p {{subject.name}}
+                    .action-items
+                        img(src='assets/icons/edit-icon.svg' ng-click='openEditResoureModal(subject)')
+                        img(src='assets/icons/delete-icon.svg' ng-click='openDeleteResourceModal(subject)')
+            ul(ng-if='resourceType == "grade"')
+                li(ng-repeat='grade in grades')
+                    p {{grade.name}}
+                    .action-items
+                        img(src='assets/icons/edit-icon.svg' ng-click='openEditResoureModal(grade)')
+                        img(src='assets/icons/delete-icon.svg' ng-click='openDeleteResourceModal(grade)')
+        //- section(ui-view='')

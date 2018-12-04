@@ -1,47 +1,48 @@
-'use strict';
-let env = process.env.NODE_ENV || 'development';
-if (env === 'development') {
-    require('dotenv').load();
-}
-const express = require('express'),
-    morgan = require('morgan'),
-    bodyParser = require('body-parser'),
-    path = require('path'),
-    c = console,
-    // sequelize = require('./server/config/db.js'),
-    app = express();
+const express = require("express");
+const bodyParser = require("body-parser");
+const methodOverride = require("method-override");
+const httpStatus = require("http-status");
+const helmet = require("helmet");
+const pino = require("express-pino-logger")();
+const cors = require("cors");
+const uprepResponse = require("./server/middleware/response");
+const routes = require("./server/routes/index.route");
 
-// // connect to the db
-// sequelize.authenticate().then(() => {
-//     c.log("Connection has been established successfully!");
-// }).catch((err) => {
-//     c.log('Unable to connect to the database', err);
+// const APIError = require("./server/helpers/APIError");
+const path = require("path");
+
+const app = express();
+
+app.use(cors());
+app.use(methodOverride());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(uprepResponse());
+app.use(pino);
+app.use(helmet());
+app.use(express.static(path.resolve(__dirname, "public")));
+app.use("/uploads", express.static(path.resolve(__dirname, "uploads")));
+
+// mount all routes on /api path
+app.use("/api", routes);
+// Setup a default catch-all route that sends back the index.html page
+app.get("*", (req, res) => {
+    res.sendFile("index.html", { root: "./public" });
+});
+
+// // if error is not an instanceOf APIError, convert it.
+// app.use((err, req, res, next) => {
+//     if (!(err instanceof APIError)) {
+//         const apiError = new APIError(err.message, err.status, err.isPublic);
+//         return next(apiError);
+//     }
+//     return next(err);
 // });
 
-// log all requests to the console
-app.use(morgan('dev'));
-
-// parse incoming requests data
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({
-    extended: false
-}));
-
-// serve static files
-app.use(express.static(path.resolve('./public')));
-
-// require('./server/routes')(app);
-
-// Setup a default catch-all route that sends back the index.html page
-app.get('*', (req, res) => {
-    res.sendFile('index.html', {
-        root: './public'
-    });
-});
-
-// Start the server
-app.listen(process.env.PORT || 3000, () => {
-    c.log('server listening on port ' + process.env.PORT || 3000);
-});
+// // catch 404 and forward to error handler
+// app.use((req, res, next) => {
+//     const err = new APIError("API not found", httpStatus.NOT_FOUND);
+//     return next(err);
+// });
 
 module.exports = app;

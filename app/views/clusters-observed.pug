@@ -1,9 +1,0 @@
-.clusters-observed
-    .titles-container
-        h1.title Clusters Observed
-    .group
-        .switch(ng-repeat='(key, value) in data.clustersObserved')
-            md-switch(ng-model="clustersObserved.learningTargets") {{key}}
-            i.fa.fa-question-circle.fa-2x(ng-click='clusterModal($event, key)')
-        button.publish-observation-btn(ng-click='publishObservation()') Publish Observation
-

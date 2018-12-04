@@ -1,20 +1,17 @@
 'use strict';
 module.exports = (sequelize, DataTypes) => {
-  var Indicator = sequelize.define('Indicator', {
-    name: DataTypes.STRING,
-    description: DataTypes.STRING
-  });
+    let Indicator = sequelize.define('indicator', {
+        name: DataTypes.STRING,
+        description: DataTypes.TEXT
+    }, {underscored: true});
 
-  Indicator.associate = (models) => {
-    Indicator.hasMany(models.Level, {
-      foreignKey: 'indicatorId',
-      as: 'levels',
-    });
-    Indicator.belongsTo(models.Component, {
-      foreignKey: 'componentId',
-      onDelete: 'CASCADE',
-    });
-  };
+    Indicator.associate = (models) => {
+        Indicator.belongsToMany(models.level, {
+            foreignKey: 'indicator_id',
+            through: models.indicator_level,
+            onDelete: 'CASCADE',
+        });
+    };
 
-  return Indicator;
+    return Indicator;
 };

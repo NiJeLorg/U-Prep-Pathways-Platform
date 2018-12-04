@@ -1,51 +1,115 @@
-.titles-container
-    h2.secondary-title {{observation.school}}
-    h2.secondary-title {{observationType}}
-    h2.secondary-title {{observation.grade}}
-    h2.secondary-title {{observation.teacher}}
-    h2.secondary-title {{observation.subject}}
-    h2.secondary-title {{observation.observationKind}} Observation
-form(name="observation-form")
-    .upload-media
-        button(ngf-select="ngf-select", ng-model="file", name="file", ngf-pattern="'image/*'", ngf-accept="'image/*'", ngf-max-size="5MB", ngf-resize="{width:150, height: auto}")
-            i.fa.fa-camera.fa-3x
-        button
-            i.fa.fa-video-camera.fa-3x
-    .thumbnails
-        img(ngf-thumbnail="file || '/thumb.jpg'")
-    .form-group(ng-if='observation.observationKind === "Crew"')
-        p.title Crew Name
-        input(type="text", placeholder="Crew Name", ng-model="form.crewName")
-    .form-group
-        p.title Content
-        p(ng-if='observation.observationKind === "Lesson"') Level and Complexity
-        p.label(ng-if='observation.observationKind === "Crew"') What's the crew working on? Is there a theme/goal/focus?
-        p.label(ng-if='observation.observationKind === "Lesson"') What is the task at hand? What are the targets and standards?
-        textarea(name="", cols="50", rows="10", ng-model="form.content")
-    .form-group
-        p.title Teacher
-        p Knowledge and Skill
-        p.label What is the teacher doing? What is the teacher saying?
-        textarea(name="", cols="50", rows="10", ng-model="form.teacher")
-    .form-group
-        p.title Student
-        p(ng-if='observation.observationKind === "Crew"') Role in Crew
-        p(ng-if='observation.observationKind === "Lesson"') Role in Instruction
-        p.label What are the students doing? What are the students saying?
-        textarea(name="", cols="50", rows="10", ng-model="form.student")
-    .form-group
-        p.title Conclusions
-        p.label Best when... Better if...
-        textarea(name="", cols="50", rows="10", ng-model="form.conclusions")
-    .form-group(ng-if='observation.observationKind === "Lesson"')
-        p.title How many students are in the class?
-        input(type='text' ng-model='form.noOfStudents')
-    .form-group(ng-if='observation.observationKind === "Lesson"')
-        p.title How much time did you spend observing?
-        select(ng-model='form.timeSpentObserving')
-            option(value='0 - 15 minutes') 0-15 minutes
-            option(value='15 - 30 minutes') 15 - 30 minutes
-            option(value='30 - 45 minutes') 30 - 45 minutes
-            option(value='45 minutes - 1 hour') 45 minutes - 1 hour
-            option(value='More than 1 hour') More than 1 hour
-    button(type="submit", ng-click="goToClustersObservedView(file)") NEXT
+.c-modal.edit-observation-modal
+    .c-modal__modal-content
+        .l-flex-space-between
+            h2 Lesson Observation Settings
+            img.ul-cursor-pointer(src='assets/icons/x-icon.svg' ng-click='closeEditObservationModal()')
+        p CREATED {{observation.created_at | date:'short'}}
+        h3 Observation Details
+        div
+            .c-select-group.ul-margin-bottom-20
+                select.grade-color(ng-model='observation.grade' ng-change='updateTeachersBasedOnSelectedGrade()' ng-options='grade.name for grade in grades track by grade.id')
+            .c-select-group.ul-margin-bottom-20
+                select.teacher-color(ng-model='observation.teacher' ng-change='updateSubjectsBasedOnSelectedTeacher()' ng-options='teacher.name for teacher in teachers track by teacher.id')
+                    option(value="" disabled selected) Select Teacher
+            .c-select-group.ul-margin-bottom-20
+                select.subject-color(ng-model='observation.subject' ng-options='subject.name for subject in subjects track by subject.id')
+                    option(value="" disabled selected) Select Subject
+            button(ng-click='editObservation()') Save
+.c-modal.delete-observation-modal
+    .c-modal__modal-content
+        .l-flex-flex-end
+            img.ul-cursor-pointer(src='assets/icons/x-icon.svg' ng-click='closeDeleteModal()')
+        h2 Delete This Observation?
+        p This action cannot be reversed
+        .c-buttons-holder
+            button(ng-click='deleteObservation()') Yes
+            button(ng-click='closeDeleteModal()') Cancel
+.c-modal.submit-observation-modal
+    .c-modal__modal-content
+        .l-flex-flex-end
+            img.ul-cursor-pointer(src='assets/icons/x-icon.svg' ng-click='closeSubmitObservationModal()')
+        h2 Ready to Submit Your Observation?
+        p Once submitted, you will not be able to make any more changes to this observation and it will be used for Scoring.
+        .c-buttons-holder-flex
+            button(ng-click='submitObservation(1)') Publish
+            button(ng-click='submitObservation(0)') Save as Draft
+            button(ng-click='closeSubmitObservationModal()') Cancel
+.c-modal.submitted-observation-modal
+    .c-modal__modal-content
+        .l-flex
+            .c-modal__badge
+                img(src='assets/icons/submitted-badge-icon.svg')
+            span(style='margin-left: 60px')
+                h2 Thank you for Submitting Your Observation
+                p Your observation will now be used for Scoring.
+.c-light-box-overlay
+.c-light-box
+    img.main-image(ng-src='{{selectedDomain}}/uploads/{{selectedImageUrl}}')
+    //- img.main-image(src='/uploads/{{selectedImageUrl}}')
+
+
+md-progress-linear(md-mode='intermediate' ng-if='progressBarActive')
+.ul-padding-30
+    .c-observation-observation-form
+        .c-observation-observation-form__details
+            .edit-observation-name
+                h3(ng-show='!editObservationName') {{observation.name || observation.observation_type.name}}
+                input.c-input(type='text' placeholder='{{observation.name}}' ng-show='editObservationName' ng-model='observation.name')
+                img.ul-cursor-pointer(src='assets/icons/edit-icon.svg' ng-show='!editObservationName' ng-click='editObservationName = true' ng-hide='observation.status === 1')
+            span.grade-color.ul-text-uppercase Grade: {{observation.grade.name}}
+            span.teacher-color.ul-text-uppercase {{observation.teacher.name}}
+            span.subject-color.ul-text-uppercase {{observation .subject.name}}
+            p CREATED {{observation.created_at | date:'short'}}
+        .c-observation-observation-form__actions
+            .l-flex
+                span.submitted(ng-if='observation.status == 1') SUBMITTED
+                span.draft(ng-if='observation.status == 0') DRAFT
+                span(ng-hide='observation.status === 1')
+                    button(ng-click='openSubmitObservationModal()') Submit
+                    img.ul-cursor-pointer(src='assets/icons/settings-small-icon.svg' ng-click='openEditObservationModal()')
+                    img.ul-cursor-pointer(src='assets/icons/duplicate-icon.svg')
+                    img.ul-cursor-pointer(src='assets/icons/delete-icon.svg' ng-click='openDeleteModal()')
+
+    .c-observation-form-input-group.ul-margin-bottom-20
+        h2 Observation Description
+        p What's the theme/goal/focus?
+        textarea(ng-model='observation.description' ng-disabled='observation.status === 1')
+    .c-observation-form-input-group.ul-margin-bottom-20
+        h2 Attachments
+        p Add photos, videos, word documents, or pdf's to your observation
+        .c-attachments-holder
+            .add-attachment.ul-cursor-pointer(ngf-select='upload($file)' ng-model='file' name='file' ng-hide='observation.status === 1')
+                img(src='assets/icons/add-icon.svg')
+            .attachments-container(ng-if='observation.attachments')
+                .attachment(ng-repeat='attachment in observation.attachments')
+                    div
+                        .attachment__photo(ng-if='checkIfAttacmentIsImage(attachment)' ng-style="{background: 'url({{selectedDomain}}/uploads/{{attachment.name}})'}" ng-click='selectAttachment(attachment)' )
+                        .attachment__video(ng-if='checkIfAttacmentIsVideo(attachment)')
+                            video(controls ng-src='{{selectedDomain}}/uploads/{{attachment.name}}')
+                                //- source()
+                        a(ng-href='{{selectedDomain}}/uploads/{{attachment.name}}' target='_blank' ng-if='checkIfAttacmentIsDocument(attachment)').attachment__document
+                            img(src="assets/icons/file-type.svg", alt="")
+                            p(title='{{attachment.name}}') {{attachment.name}}
+                    img.remove-attachment(src='assets/icons/x-icon-circle.svg' ng-click='removeAttachment(observation.attachments, attachment)')      
+    .ul-50-50
+        .c-observation-form-input-group.ul-margin-bottom-20(ng-repeat='observationTypeProperty in observationTypeProperties' ng-if='observationTypeProperty.label != "Conclusions"')
+            h2 {{observationTypeProperty.label}}: {{observationTypeProperty.label_meta}}
+            p {{observationTypeProperty.help_text}}
+            textarea(name='property_{{observationTypeProperty.id}}' ng-model="observationTypeProperty.value" ng-disabled='observation.status === 1')
+    .c-observation-form-input-group.ul-margin-bottom-20(ng-repeat='observationTypeProperty in observationTypeProperties' ng-if='observationTypeProperty.label == "Conclusions"')
+            h2 {{observationTypeProperty.label}}: {{observationTypeProperty.label_meta}}
+            p {{observationTypeProperty.help_text}}
+            textarea(name='property_{{observationTypeProperty.id}}' ng-model="observationTypeProperty.value" ng-disabled='observation.status === 1')
+    .c-clusters
+        .c-clusters__title
+            h3 Clusters Observed
+            span
+                h3 YES
+                h3 NO
+        .c-radio-group.l-flex.ul-margin-bottom-20(ng-repeat='cluster in clusters track by cluster.id')
+            p {{cluster.name}}
+            input(type='radio' name='{{cluster.name}}' value='true' ng-change='selectCluster(true, cluster)' ng-model="cluster.selected" ng-disabled='observation.status === 1')
+            input(type='radio' name='{{cluster.name}}' value='false' ng-change='selectCluster(false, cluster)' ng-model="cluster.selected" ng-disabled='observation.status === 1')
+    .submit-buttons-holder(ng-hide='observation.status === 1')
+        button.submit-button(ng-click='openSubmitObservationModal()') Submit
+

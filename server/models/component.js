@@ -1,18 +1,24 @@
-'use strict';
+"use strict";
 module.exports = (sequelize, DataTypes) => {
-  var Component = sequelize.define('Component', {
-    name: DataTypes.STRING,
-    description: DataTypes.STRING
-  });
-  Component.associate = (models) => {
-    Component.hasMany(models.Indicator, {
-      foreignKey: 'componentId',
-      as: 'indicators',
-    });
-    Component.belongsTo(models.Element, {
-      foreignKey: 'elementId',
-      onDelete: 'CASCADE',
-    });
-  };
-  return Component;
+    let Component = sequelize.define(
+        "component",
+        {
+            name: DataTypes.STRING,
+            description: DataTypes.TEXT
+        },
+        {
+            underscored: true
+        }
+    );
+    Component.associate = models => {
+        Component.hasMany(models.indicator, {
+            foreignKey: "component_id",
+            as: "indicators"
+        });
+        Component.belongsTo(models.element, {
+            foreignKey: "element_id",
+            onDelete: "CASCADE"
+        });
+    };
+    return Component;
 };
