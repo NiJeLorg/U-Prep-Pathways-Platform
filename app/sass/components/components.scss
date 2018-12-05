@@ -1357,6 +1357,22 @@
     }
 }
 
+.attachment-video {
+    border: 1px solid #a3a3a3;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    img {
+        position: absolute;
+        width: 60px;
+    }
+    video {
+        height: 100%;
+        width: 100%;
+    }
+}
+
 .accordion {
     &--collapsed {
         max-height: 85px;

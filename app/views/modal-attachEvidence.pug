@@ -4,7 +4,7 @@
     p.title Attach Evidence for 
         span {{indicator.name}}
     .add-note
-        textarea(placeholder='Add Note To Indicator Score' rows='4')
+        textarea(placeholder='Add Note To Indicator Score' rows='4' ng-blur='attachNote($event)')
     .observations
         .c-observation-card(ng-repeat='observation in observations' ng-class="{'accordion--collapsed': !observation.expanded}")
             .group(ng-click='observation.expanded = !observation.expanded')
@@ -27,13 +27,24 @@
                             div(ng-if='isImage(attachment.name)')
                                 .attachment-select(ng-click='selectAttachment($event, attachment)')
                                     img(src='assets/icons/select-attachment-icon.svg' alt='Select Attachment Icon')
-                                .attachment.attachment-img(ng-style="{backgroundImage: 'url(/uploads/{{attachment.name}})'}")
+                                .attachment.attachment-img(ng-style="{backgroundImage: 'url(http://localhost:3000/uploads/{{attachment.name}})'}")
                             div(ng-if='isDocument(attachment.name)')
                                 .attachment-select(ng-click='selectAttachment($event, attachment)')
                                     img(src='assets/icons/select-attachment-icon.svg')
                                 .attachment.attachment-doc
                                     img(src='assets/icons/file-type.svg' alt='File Type')
                                     p {{attachment.name}}
+                            div(ng-if='isVideo(attachment.name)')
+                                .attachment-select(ng-click='selectAttachment($event, attachment)')
+                                    img(src='assets/icons/select-attachment-icon.svg' alt='Select Attachment Icon')
+                                .attachment.attachment-video
+                                    img(src='assets/icons/videocamera-sign-icon.svg')
+                                    video
+                                        source(src='http://localhost:3000/uploads/{{attachment.name}}')
+
+                                
+
+
             .panel-group
                 .panel(ng-repeat='observationTypeProperty in observation.observation_type_property | orderBy:"-label"' ng-if='observationTypeProperty.observation_type_property_data.value' ng-style='')
                     h3 {{observationTypeProperty.label}}: {{observationTypeProperty.label_meta}}
