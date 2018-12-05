@@ -1,17 +1,17 @@
-'use strict';
+"use strict";
 module.exports = {
     up: (queryInterface, Sequelize) => {
-        return queryInterface.createTable('observation_type_property_data', {
+        return queryInterface.createTable("observation_type_property_data", {
             observation_id: {
                 allowNull: false,
                 type: Sequelize.INTEGER
             },
             observation_type_property_id: {
                 type: Sequelize.INTEGER,
-                allowNull: false,
+                allowNull: false
             },
             value: {
-                type: Sequelize.STRING,
+                type: Sequelize.TEXT
             },
             created_at: {
                 allowNull: false,
@@ -24,6 +24,6 @@ module.exports = {
         });
     },
     down: (queryInterface, Sequelize) => {
-        return queryInterface.dropTable('observation_type_property_data');
+        return queryInterface.dropTable("observation_type_property_data");
     }
 };
