@@ -30,6 +30,7 @@ import IndicatorScoreService from "./services/indicator-score-service";
 import ElementService from "./services/element-service";
 import ClusterService from "./services/cluster-service";
 import AttachmentService from "./services/attachment-service";
+import AttachEvidenceService from "./services/attachEvidence-service";
 import UtilService from "./services/utilities-service";
 import ObservationFactory from "./factories/observation-factory";
 import BreadcrumbFactory from "./factories/breadcrumb-factory";
@@ -65,6 +66,7 @@ uprepApp
     .service("ClusterService", ClusterService)
     .service("AttachmentService", AttachmentService)
     .service("UtilService", UtilService)
+    .service("AttachEvidenceService", AttachEvidenceService)
     .factory("ObservationFactory", ObservationFactory)
     .factory("ScoreFactory", ScoreFactory)
     .factory("BreadcrumbFactory", BreadcrumbFactory)

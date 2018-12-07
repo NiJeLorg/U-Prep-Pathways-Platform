@@ -2,11 +2,11 @@
     .close-modal
         img(src='assets/icons/x-icon.svg' alt='Cancel Modal' ng-click='closeModal()')
     p.title Attach Evidence for 
-        span {{indicator.name}}
+        span {{indicatorScore.indicator.name}}
     .add-note
-        textarea(placeholder='Add Note To Indicator Score' rows='4' ng-blur='attachNote($event)')
+        textarea(placeholder='Add Note To Indicator Score' rows='4' ng-blur='attachNote()' ng-model='indicatorScore.note')
     .observations
-        .c-observation-card(ng-repeat='observation in observations' ng-class="{'accordion--collapsed': !observation.expanded}")
+        .c-observation-card(ng-repeat='observation in observations' ng-class="{'accordion--collapsed': !observation.expanded}" ng-if='observation.teacher_id == teacher.id')
             .group(ng-click='observation.expanded = !observation.expanded')
                 .date-time
                     p   {{observation.created_at | date: 'shortDate'}}
@@ -17,39 +17,36 @@
                         span.grade-color Grade: {{observation.grade.name}}
                         span.teacher-color {{teacher.name}}
                         span.subject-color {{observation.subject.name}}
-                img.accordion-toggle(src='assets/icons/down-facing-caret-icon.svg' alt='Downward Facing Caret Icon' ng-class="{'accordion-toggle--collapsed' :observation.expanded}")
+                img.accordion-toggle(src='assets/icons/down-facing-caret-icon.svg' alt='Downward Facing Caret Icon' ng-class="{'accordion-toggle--collapsed' :observation.expanded}" ng-show='observation.attachments.length')
             
             .panel-group
-                .panel(ng-if='observation.attachments.length > 0')
+                .panel(ng-if='observation.attachments.length')
                     h3 Attachments
                     .attachments
                         .attachment-group(ng-repeat='attachment in observation.attachments')
                             div(ng-if='isImage(attachment.name)')
-                                .attachment-select(ng-click='selectAttachment($event, attachment)')
+                                .attachment-select(ng-click='selectAttachment($event, attachment)' ng-class='{"attachment-select-opacity": attachment.toggle == true}')
                                     img(src='assets/icons/select-attachment-icon.svg' alt='Select Attachment Icon')
                                 .attachment.attachment-img(ng-style="{backgroundImage: 'url(http://localhost:3000/uploads/{{attachment.name}})'}")
                             div(ng-if='isDocument(attachment.name)')
-                                .attachment-select(ng-click='selectAttachment($event, attachment)')
+                                .attachment-select(ng-click='selectAttachment($event, attachment)' ng-class='{"attachment-select-opacity": attachment.toggle == true}' )
                                     img(src='assets/icons/select-attachment-icon.svg')
                                 .attachment.attachment-doc
                                     img(src='assets/icons/file-type.svg' alt='File Type')
                                     p {{attachment.name}}
                             div(ng-if='isVideo(attachment.name)')
-                                .attachment-select(ng-click='selectAttachment($event, attachment)')
+                                .attachment-select(ng-click='selectAttachment($event, attachment)' ng-class='{"attachment-select-opacity": attachment.toggle == true}')
                                     img(src='assets/icons/select-attachment-icon.svg' alt='Select Attachment Icon')
                                 .attachment.attachment-video
                                     img(src='assets/icons/videocamera-sign-icon.svg')
                                     video
                                         source(src='http://localhost:3000/uploads/{{attachment.name}}')
-
-                                
-
-
+            
             .panel-group
                 .panel(ng-repeat='observationTypeProperty in observation.observation_type_property | orderBy:"-label"' ng-if='observationTypeProperty.observation_type_property_data.value' ng-style='')
                     h3 {{observationTypeProperty.label}}: {{observationTypeProperty.label_meta}}
                     .attachment-group
-                        .attachment-select(ng-click='selectAttachment($event, observationTypeProperty)')
+                        .attachment-select()
                             img(src='assets/icons/select-attachment-icon.svg')
                         p {{observationTypeProperty.observation_type_property_data.value}}
     .action-buttons
