@@ -1,21 +1,25 @@
-'use strict';
+"use strict";
 module.exports = (sequelize, DataTypes) => {
-    let Grade = sequelize.define('grade', {
-        name: DataTypes.STRING
-    }, {
-        underscored: true
-    });
+    let Grade = sequelize.define(
+        "grade",
+        {
+            name: DataTypes.STRING
+        },
+        {
+            underscored: true
+        }
+    );
 
-    Grade.associate = (models) => {
+    Grade.associate = models => {
         Grade.belongsToMany(models.teacher, {
-            foreignKey: 'grade_id',
+            foreignKey: "grade_id",
             through: models.grade_teacher,
-            as: 'teachers'
+            as: "teachers"
         });
         Grade.belongsToMany(models.school, {
-            foreignKey: 'grade_id',
+            foreignKey: "grade_id",
             through: models.grade_school,
-            as: 'schools'
+            as: "schools"
         });
     };
     return Grade;

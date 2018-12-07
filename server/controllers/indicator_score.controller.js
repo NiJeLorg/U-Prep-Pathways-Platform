@@ -1,12 +1,23 @@
 const indicator_score = require("../models/index").indicator_score;
 
 const get = async (req, res) => {
-    res.sendData(req.indicator_score);
+    res.sendData(req.indicatorScore);
+};
+
+const load = async (req, res, next, id) => {
+    const indicatorScoreObj = await indicator_score.findById(id, {
+        include: [{ all: true }]
+    });
+    if (!indicatorScoreObj) {
+        return res.sendNotFound();
+    }
+    req.indicatorScore = indicatorScoreObj;
+    return next();
 };
 
 const list = async (req, res) => {
-    const indicatorScores = await indicator_score.all({
-        include: ["score", "indicator"]
+    const indicatorScores = await indicator_score.findAll({
+        include: [{ all: true }]
     });
     res.sendData(indicatorScores);
 };
@@ -35,6 +46,7 @@ const create = async (req, res) => {
 };
 
 module.exports = {
+    load,
     get,
     list,
     create

@@ -18,14 +18,14 @@
                     img(src="assets/icons/question-mark.svg")
                 .c-accordion-content
                     .c-radio-group.c-accordion-radio-group.l-flex.ul-margin-bottom-20(ng-repeat="indicator in getAddSelectedIndicators(component.indicators) track by indicator.id")
-                        .indicator
+                        .indicator(ng-class="{'indicator-invalid': indicator.indicatorScore.value == 'null'}")
                             p.ul-cursor-pointer(ng-click='showIndicatorLevelsModal($event)') {{indicator.name}}
                             .ratings
-                                label.c-accordion-radio-group-label(ng-repeat='value in indicatorValue' ng-class="{'checked-input': value  == indicator.value}")
-                                    input(type='radio' name='{{indicator.name}}' value='{{value}}' ng-model='indicator.value' ng-click='storeIndicatorScore(value, indicator)')
-                                    div.radio-label(ng-if='value == null') N/A
+                                label.c-accordion-radio-group-label(ng-repeat='value in indicatorValue' ng-class="{'checked-input': value == indicator.indicatorScore.value}")
+                                    input(type='radio' name='{{indicator.name}}' value='{{value}}' ng-model='indicator.indicatorScore.value' ng-click='storeIndicatorScore(value, indicator)')
+                                    div.radio-label(ng-if='value === null' ng-class="{'radio-label-invalid': indicator.indicatorScore.value == 'null'}") N/A
                                     div.radio-label(ng-if='value != null') {{ value }}
-                        .attach-evidence
+                        .attach-evidence(ng-hide='indicator.indicatorScore.value == "null"')
                             img(src='assets/icons/add-evidence-icon.svg' alt='Add Evidence Icon' ng-click='showAttachEvidenceModal($event, indicator)')
                             img(src='assets/icons/check-evidence-icon.svg' alt='Check Evidence Icon')
                         

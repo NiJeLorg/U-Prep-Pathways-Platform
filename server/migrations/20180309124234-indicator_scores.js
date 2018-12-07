@@ -1,7 +1,7 @@
-'use strict';
+"use strict";
 module.exports = {
     up: (queryInterface, Sequelize) => {
-        return queryInterface.createTable('indicator_scores', {
+        return queryInterface.createTable("indicator_scores", {
             id: {
                 allowNull: false,
                 autoIncrement: true,
@@ -12,13 +12,17 @@ module.exports = {
                 allowNull: false,
                 type: Sequelize.INTEGER
             },
-            score_id:{
+            score_id: {
                 allowNull: false,
                 type: Sequelize.INTEGER
             },
             value: {
                 type: Sequelize.INTEGER,
-                allowNull: true,
+                allowNull: true
+            },
+            note: {
+                type: Sequelize.TEXT,
+                allowNull: true
             },
             created_at: {
                 allowNull: false,
@@ -31,6 +35,6 @@ module.exports = {
         });
     },
     down: (queryInterface, Sequelize) => {
-        return queryInterface.dropTable('indicator_scores');
+        return queryInterface.dropTable("indicator_scores");
     }
 };
