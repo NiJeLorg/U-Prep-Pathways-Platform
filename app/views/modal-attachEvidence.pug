@@ -27,7 +27,7 @@
                             div(ng-if='isImage(attachment.name)')
                                 .attachment-select(ng-click='selectAttachment($event, attachment)' ng-class='{"attachment-select-opacity": attachment.toggle == true}')
                                     img(src='assets/icons/select-attachment-icon.svg' alt='Select Attachment Icon')
-                                .attachment-score.attachment-img(ng-style="{backgroundImage: 'url(http://localhost:3000/uploads/{{attachment.name}})'}")
+                                .attachment-score.attachment-img(ng-style="{backgroundImage: 'url(/uploads/{{attachment.name}})'}")
                             div(ng-if='isDocument(attachment.name)')
                                 .attachment-select(ng-click='selectAttachment($event, attachment)' ng-class='{"attachment-select-opacity": attachment.toggle == true}' )
                                     img(src='assets/icons/select-attachment-icon.svg')
@@ -40,7 +40,7 @@
                                 .attachment-score.attachment-video
                                     img(src='assets/icons/videocamera-sign-icon.svg')
                                     video
-                                        source(src='http://localchost:3000/uploads/{{attachment.name}}')
+                                        source(src='/uploads/{{attachment.name}}')
             
             .panel-group()
                 .panel(ng-repeat='property in properties | orderBy:"-label"' ng-style='')
