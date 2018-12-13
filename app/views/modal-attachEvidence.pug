@@ -6,8 +6,8 @@
     .add-note
         textarea(placeholder='Add Note To Indicator Score' rows='4' ng-blur='attachNote()' ng-model='indicatorScore.note')
     .observations
-        .c-observation-card(ng-repeat='observation in observations' ng-class="{'accordion--collapsed': !observation.expanded}" ng-if='observation.teacher_id == teacher.id')
-            .group(ng-click='observation.expanded = !observation.expanded')
+        .c-observation-card(ng-repeat='observation in observations' ng-class="{'accordion--collapsed': !observation.expanded}")
+            .group(ng-click='expandObservation(observation)')
                 .date-time
                     p   {{observation.created_at | date: 'shortDate'}}
                     p   {{observation.created_at | date: 'shortTime'}}
@@ -27,28 +27,28 @@
                             div(ng-if='isImage(attachment.name)')
                                 .attachment-select(ng-click='selectAttachment($event, attachment)' ng-class='{"attachment-select-opacity": attachment.toggle == true}')
                                     img(src='assets/icons/select-attachment-icon.svg' alt='Select Attachment Icon')
-                                .attachment.attachment-img(ng-style="{backgroundImage: 'url(/uploads/{{attachment.name}})'}")
+                                .attachment-score.attachment-img(ng-style="{backgroundImage: 'url(http://localhost:3000/uploads/{{attachment.name}})'}")
                             div(ng-if='isDocument(attachment.name)')
                                 .attachment-select(ng-click='selectAttachment($event, attachment)' ng-class='{"attachment-select-opacity": attachment.toggle == true}' )
                                     img(src='assets/icons/select-attachment-icon.svg')
-                                .attachment.attachment-doc
+                                .attachment-score.attachment-doc
                                     img(src='assets/icons/file-type.svg' alt='File Type')
                                     p {{attachment.name}}
                             div(ng-if='isVideo(attachment.name)')
                                 .attachment-select(ng-click='selectAttachment($event, attachment)' ng-class='{"attachment-select-opacity": attachment.toggle == true}')
                                     img(src='assets/icons/select-attachment-icon.svg' alt='Select Attachment Icon')
-                                .attachment.attachment-video
+                                .attachment-score.attachment-video
                                     img(src='assets/icons/videocamera-sign-icon.svg')
                                     video
-                                        source(src='/uploads/{{attachment.name}}')
+                                        source(src='http://localchost:3000/uploads/{{attachment.name}}')
             
-            .panel-group
-                .panel(ng-repeat='observationTypeProperty in observation.observation_type_property | orderBy:"-label"' ng-if='observationTypeProperty.observation_type_property_data.value' ng-style='')
-                    h3 {{observationTypeProperty.label}}: {{observationTypeProperty.label_meta}}
-                    .attachment-group
-                        .attachment-select()
+            .panel-group()
+                .panel(ng-repeat='property in properties | orderBy:"-label"' ng-style='')
+                    h3 {{property.label}}: {{property.label_meta}}
+                    .attachment-group(ng-if='property.value')
+                        .attachment-select(ng-click='selectAttachmentObservationProperty($event, property)' ng-class='{"attachment-select-opacity": property.selected == true}')
                             img(src='assets/icons/select-attachment-icon.svg')
-                        p {{observationTypeProperty.observation_type_property_data.value}}
+                        p {{property.value}} {{property.selected}}
     .action-buttons
         button(ng-click='attachEvidence()') Submit
         button(ng-click='closeModal()') Cancel

@@ -30,8 +30,6 @@ const destroy = async (req, res) => {
             }
         });
     }
-
-    console.log(indicatorScoreEvidence, "yooo");
 };
 
 module.exports = {

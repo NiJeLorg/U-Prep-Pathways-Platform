@@ -5,7 +5,7 @@ const models = require("../models/index"),
     observation_cluster = models.observation_cluster,
     cluster = models.cluster,
     observation_type = models.observation_type,
-    observation_type_property_data = models.observation_type_property_data,
+    property_data = models.property_data,
     observation_type_property = models.observation_type_property;
 const Sequelize = require("sequelize");
 const Op = Sequelize.Op;
@@ -24,7 +24,7 @@ const list = async (req, res) => {
             "teacher",
             "grade",
             "observation_type",
-            "observation_type_property"
+            "properties_data",
         ]
     });
     res.sendData(observations);
@@ -42,7 +42,7 @@ const load = async (req, res, next, id) => {
                 "grade",
                 "observation_type",
                 "clusters",
-                "observation_type_property"
+                "properties_data"
             ]
         }
     );
@@ -69,56 +69,33 @@ const update = async (req, res, next) => {
     const observation_type_property_data =
         req.body.observation_type_property_data;
 
-    //Save property Data
-    if (observation_type_property_data) {
-        for (let propertyData of observation_type_property_data) {
-            const oType = await observation_type_property.findById(
-                Object.keys(propertyData)[0]
-            );
-            if (oType) {
-                await oType.addObservations(observation, {
-                    through: { value: Object.values(propertyData)[0] }
-                });
-            }
-        }
-    }
-
-    if (cluster_ids) {
-        await observation_cluster.destroy({
-            where: {
-                observation_id: observation.id,
-                cluster_id: { [Op.notIn]: cluster_ids }
-            }
-        });
-        const existing_observed_cluster = observation.clusters.map(
-            cluster => cluster.id
+    observation_type_property_data.map(observationData => {
+        updateOrCreate(
+            property_data,
+            { id: observationData.id },
+            observationData
         );
-        const new_observed_clusters = cluster_ids.map(cluster_id => {
-            if (
-                !(
-                    existing_observed_cluster !== undefined &&
-                    existing_observed_cluster.includes(cluster_id)
-                )
-            )
-                return {
-                    observation_id: observation.id,
-                    cluster_id: cluster_id
-                };
-        });
-        await observation_cluster.bulkCreate(new_observed_clusters);
-    }
-    await savedObseravtion.reload();
-    res.sendData(savedObseravtion);
-};
+    });
 
-const saveObservationTypePropertyData = async data => {
-    await observation_type_property_data.bulkCreate(data);
+    res.sendData(savedObseravtion);
 };
 
 const remove = async (req, res, next) => {
     const observation = req.observation;
     let deletedObservation = await observation.destroy();
     res.sendData(deletedObservation);
+};
+
+const updateOrCreate = (model, where, item) => {
+    model.findOne({ where: where }).then(obj => {
+        if (!obj) {
+            model.create(item);
+        } else {
+            model.update(item, {
+                where: where
+            });
+        }
+    });
 };
 
 function generateAttachments(req, observation) {
@@ -137,37 +114,6 @@ function generateAttachments(req, observation) {
     }
     return attachments;
 }
-
-const getClusterIdFromReqBody = async req => {
-    const clusters = cluster.all({ attributes: ["id"], raw: true });
-    let matchedClusters = clusters.filter(cluster => {
-        return (
-            Object.prototype.hasOwnProperty.call(
-                req.body,
-                `cluster_${cluster.id}`
-            ) === true
-        );
-    });
-    return matchedClusters.map(cluster => {
-        return cluster.id;
-    });
-};
-
-const extractDynamicProperties = (req, pattern) => {
-    return Object.entries(req.body).filter(entry => {
-        return entry[0].match(pattern) !== null;
-    });
-};
-const getObservationTypePropertyDataFromReqBody = (req, observationId) => {
-    const propertData = extractDynamicProperties(req, /property_[0-9]+$/);
-    return propertData.map(entry => {
-        return {
-            observation_id: observationId,
-            observation_type_property_id: parseInt(entry[0].split("_")[1]),
-            value: entry[1]
-        };
-    });
-};
 
 const create = async (req, res, next) => {
     const observationObj = await observation.create(

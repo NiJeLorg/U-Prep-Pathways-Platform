@@ -4,11 +4,8 @@ export default [
     "$timeout",
     "observation",
     "Upload",
-    "GradeService",
-    "TeacherService",
     "ObservationTypeService",
     "ObservationService",
-    "ClusterService",
     "AttachmentService",
     "UtilService",
     function(
@@ -17,11 +14,8 @@ export default [
         $timeout,
         observation,
         Upload,
-        GradeService,
-        TeacherService,
         ObservationTypeService,
         ObservationService,
-        ClusterService,
         AttachmentService,
         UtilService
     ) {
@@ -34,6 +28,7 @@ export default [
         $scope.selectedImageUrl;
         $scope.attachmentFormat;
 
+        console.log($scope.observation);
         // fetch data
         ObservationTypeService.get(
             {
@@ -41,113 +36,35 @@ export default [
             },
             res => {
                 $scope.observationTypeProperties = res.data.observation_type_properties.map(
-                    property => {
-                        property.value = $scope.getObservationTypePropertyVal(
-                            property.id
+                    observationProperty => {
+                        observation.data.properties_data.map(
+                            observationData => {
+                                if (
+                                    observationProperty.id ==
+                                    observationData.observation_type_property_id
+                                ) {
+                                    observationProperty.value =
+                                        observationData.value;
+                                    observationProperty.observationDataId =
+                                        observationData.id;
+                                }
+                            }
                         );
-                        return property;
+                        return observationProperty;
                     }
                 );
             },
             err => {
-                console.error(err, "ERROR-OBSVE-TYPE");
+                console.error(err);
             }
         );
 
-        GradeService.query(
-            {
-                id: $scope.observation.school.id
-            },
-            res => {
-                $scope.grades = res.data;
-                $scope.updateTeachersBasedOnSelectedGrade();
-                $scope.updateSubjectsBasedOnSelectedTeacher();
-            },
-            err => {
-                console.error(err, "ERROR");
-            }
-        );
+        $scope.checkIfAttacmentIsImage = file => UtilService.isImage(file.name);
 
-        ClusterService.query(
-            res => {
-                $scope.clusters = res.data.map(cluster => {
-                    cluster.selected = `${$scope.observation.cluster_ids.includes(
-                        cluster.id
-                    )}`;
-                    return cluster;
-                });
-            },
-            err => {
-                console.errror(err, "ERROR");
-            }
-        );
+        $scope.checkIfAttacmentIsDocument = file =>
+            UtilService.isDocument(file.name);
 
-        $scope.selectCluster = (value, cluster) => {
-            if (value === true) {
-                if (!$scope.observation.cluster_ids.includes(cluster.id))
-                    $scope.observation.cluster_ids.push(cluster.id);
-                cluster.selected = "true";
-            } else {
-                cluster.selected = "false";
-                if ($scope.observation.cluster_ids.indexOf(cluster.id) !== -1) {
-                    $scope.observation.cluster_ids.splice(
-                        $scope.observation.cluster_ids.indexOf(cluster.id),
-                        1
-                    );
-                }
-            }
-        };
-
-        $scope.checkIfAttacmentIsImage = file => {
-            let commonImageTypes = ["bmp", "gif", "jpeg", "jpg", "png"];
-
-            if (
-                commonImageTypes.some(el =>
-                    file.name
-                        .substr(file.name.indexOf(".") + 1)
-                        .toLowerCase()
-                        .includes(el)
-                )
-            ) {
-                return true;
-            } else {
-                return false;
-            }
-        };
-
-        $scope.checkIfAttacmentIsDocument = file => {
-            let commonDocumentTypes = ["pdf", "doc", "docx"];
-
-            if (
-                commonDocumentTypes.some(el =>
-                    file.name
-                        .substr(file.name.indexOf(".") + 1)
-                        .toLowerCase()
-                        .includes(el)
-                )
-            ) {
-                return true;
-            } else {
-                return false;
-            }
-        };
-
-        $scope.checkIfAttacmentIsVideo = file => {
-            let commonVideoTypes = ["mov", "mp4"];
-
-            if (
-                commonVideoTypes.some(el =>
-                    file.name
-                        .substr(file.name.indexOf(".") + 1)
-                        .toLowerCase()
-                        .includes(el)
-                )
-            ) {
-                return true;
-            } else {
-                return false;
-            }
-        };
+        $scope.checkIfAttacmentIsVideo = file => UtilService.isVideo(file.name);
 
         $scope.selectAttachment = attachment => {
             $scope.selectedImageUrl = attachment.name;
@@ -188,38 +105,7 @@ export default [
                     $scope.progressBarActive = false;
                 },
                 err => {
-                    $scope.errMessage = res.status + ": " + res.data;
-                }
-            );
-        };
-
-        $scope.isSelectedCluster = cluster_id => {
-            return $scope.observation.cluster_ids.includes(cluster_id);
-        };
-        $scope.updateTeachersBasedOnSelectedGrade = () => {
-            TeacherService.query(
-                {
-                    schoolId: $scope.observation.school.id,
-                    gradeId: $scope.observation.grade.id
-                },
-                res => {
-                    $scope.teachers = res.data;
-                    $scope.subjects = [];
-                }
-            );
-        };
-
-        $scope.updateSubjectsBasedOnSelectedTeacher = () => {
-            TeacherService.fetchTeacher(
-                $scope.observation.teacher.id,
-                $scope.observation.school.id,
-                $scope.observation.grade.id,
-                (err, res) => {
-                    if (!err) {
-                        $scope.subjects = res.data.data.subjects;
-                    } else {
-                        console.error(err, "errr");
-                    }
+                    console.log(err);
                 }
             );
         };
@@ -258,7 +144,10 @@ export default [
         $scope.getPropertyData = () => {
             return $scope.observationTypeProperties.map(property => {
                 return {
-                    [property.id]: property.value
+                    id: property.observationDataId,
+                    observation_type_property_id: property.id,
+                    value: property.value,
+                    observation_id: $scope.observation.id
                 };
             });
         };
@@ -283,7 +172,6 @@ export default [
                 {
                     name: $scope.observation.name,
                     description: $scope.observation.description,
-                    cluster_ids: $scope.observation.cluster_ids,
                     status: status,
                     observation_type_property_data: $scope.getPropertyData()
                 },
@@ -321,9 +209,7 @@ export default [
                 {
                     id: file.id
                 },
-                res => {
-                    console.log(res, "attachment-delete");
-                },
+                res => {},
                 err => {
                     console.error(err, "ERROR");
                 }

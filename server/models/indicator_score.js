@@ -23,6 +23,11 @@ module.exports = (sequelize, DataTypes) => {
             through: models.indicator_score_evidence,
             as: "evidences"
         });
+        IndicatorScore.belongsToMany(models.property_data, {
+            foreignKey: "indicator_score_id",
+            through: models.indicator_score_observation_evidence,
+            as: "observationsEvidences"
+        });
     };
     return IndicatorScore;
 };

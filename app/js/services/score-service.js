@@ -13,6 +13,9 @@ export default [
                 },
                 update: {
                     method: "PUT"
+                },
+                delete: {
+                    method: "DELETE"
                 }
             }
         );
