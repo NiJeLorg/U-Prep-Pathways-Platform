@@ -244,6 +244,7 @@ export default [
             $scope.indicatorScore = indicatorScore;
             $scope.teacher = teacher;
             $scope.observations = observations;
+            console.log($scope.observations, 'obsv')
 
             // Reset First
             observations.map(observation => {

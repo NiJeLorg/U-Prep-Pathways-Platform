@@ -42,7 +42,7 @@
                                     video
                                         source(src='/uploads/{{attachment.name}}')
             
-            .panel-group()
+            .panel-group(ng-if='observation.properties_data.length')
                 .panel(ng-repeat='property in properties | orderBy:"-label"' ng-style='')
                     h3 {{property.label}}: {{property.label_meta}}
                     .attachment-group(ng-if='property.value')
