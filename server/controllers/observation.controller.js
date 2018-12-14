@@ -24,7 +24,7 @@ const list = async (req, res) => {
             "teacher",
             "grade",
             "observation_type",
-            "properties_data",
+            "properties_data"
         ]
     });
     res.sendData(observations);
@@ -64,19 +64,22 @@ const update = async (req, res, next) => {
     observation.status = req.body.status;
     let savedObseravtion = await observation.save();
     const attachments = generateAttachments(req, savedObseravtion);
-    await observation_evidence.bulkCreate(attachments);
-    const cluster_ids = req.body.cluster_ids;
     const observation_type_property_data =
         req.body.observation_type_property_data;
 
-    observation_type_property_data.map(observationData => {
-        updateOrCreate(
-            property_data,
-            { id: observationData.id },
-            observationData
-        );
-    });
+    if (observation_type_property_data) {
+        observation_type_property_data.map(observationData => {
+            updateOrCreate(
+                property_data,
+                { id: observationData.id },
+                observationData
+            );
+        });
+    }
 
+    await observation_evidence.bulkCreate(attachments);
+
+    await savedObseravtion.reload();
     res.sendData(savedObseravtion);
 };
 

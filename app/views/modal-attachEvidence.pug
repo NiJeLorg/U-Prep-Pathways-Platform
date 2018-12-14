@@ -6,7 +6,7 @@
     .add-note
         textarea(placeholder='Add Note To Indicator Score' rows='4' ng-blur='attachNote()' ng-model='indicatorScore.note')
     .observations
-        .c-observation-card(ng-repeat='observation in observations' ng-class="{'accordion--collapsed': !observation.expanded}")
+        .c-observation-card(ng-repeat='observation in observations' ng-if='observation.teacher.id === teacher.id' ng-class="{'accordion--collapsed': !observation.expanded}")
             .group(ng-click='expandObservation(observation)')
                 .date-time
                     p   {{observation.created_at | date: 'shortDate'}}
@@ -15,7 +15,7 @@
                     p.observation-title {{observation.observation_type.name}} Observation
                     div
                         span.grade-color Grade: {{observation.grade.name}}
-                        span.teacher-color {{teacher.name}}
+                        span.teacher-color {{observation.teacher.name}}
                         span.subject-color {{observation.subject.name}}
                 img.accordion-toggle(src='assets/icons/down-facing-caret-icon.svg' alt='Downward Facing Caret Icon' ng-class="{'accordion-toggle--collapsed' :observation.expanded}" ng-show='observation.attachments.length')
             

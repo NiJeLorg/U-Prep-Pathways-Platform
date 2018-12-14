@@ -101,7 +101,9 @@ export default [
                 }
             }).then(
                 res => {
+                    // console.log(res, "res");
                     $scope.observation.attachments = res.data.data.attachments;
+
                     $scope.progressBarActive = false;
                 },
                 err => {
