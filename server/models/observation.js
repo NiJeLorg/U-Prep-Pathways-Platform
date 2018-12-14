@@ -44,7 +44,8 @@ module.exports = (sequelize, DataTypes) => {
         Observation.hasMany(models.property_data, {
             foreignKey: "observation_id",
             as: "properties_data",
-            onDelete: "CASCADE"
+            onDelete: "CASCADE",
+            hooks: true
         });
 
         // Observation.belongsToMany(models.observation_type_property, {
