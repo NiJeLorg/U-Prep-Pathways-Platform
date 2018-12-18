@@ -48,7 +48,7 @@
                     .attachment-group(ng-if='property.value')
                         .attachment-select(ng-click='selectAttachmentObservationProperty($event, property)' ng-class='{"attachment-select-opacity": property.selected == true}')
                             img(src='assets/icons/select-attachment-icon.svg')
-                        p {{property.value}} {{property.selected}}
+                        p {{property.value}}
     .action-buttons
         button(ng-click='attachEvidence()') Submit
         button(ng-click='closeModal()') Cancel

@@ -70,10 +70,10 @@ md-progress-linear(md-mode='intermediate' ng-if='progressBarActive')
                     img.ul-cursor-pointer(src='assets/icons/duplicate-icon.svg')
                     img.ul-cursor-pointer(src='assets/icons/delete-icon.svg' ng-click='openDeleteModal()')
 
-    .c-observation-form-input-group.ul-margin-bottom-20
-        h2 Observation Description
-        p What's the theme/goal/focus?
-        textarea(ng-model='observation.description' ng-disabled='observation.status === 1')
+    .c-observation-form-input-group.ul-margin-bottom-20(ng-if='observationTypeProperties[0]')
+        h2 {{observationTypeProperties[0].label}}
+        p {{observationTypeProperties[0].help_text}}
+        textarea(name='property_{{observationTypeProperties[0].id}}' ng-model="observationTypeProperties[0].value" ng-disabled='observation.status === 1')
     .c-observation-form-input-group.ul-margin-bottom-20
         h2 Attachments
         p Add photos, videos, word documents, or pdf's to your observation
@@ -91,7 +91,7 @@ md-progress-linear(md-mode='intermediate' ng-if='progressBarActive')
                             p(title='{{attachment.name}}') {{attachment.name}}
                     img.remove-attachment(src='assets/icons/x-icon-circle.svg' ng-click='removeAttachment(observation.attachments, attachment)')      
     .ul-50-50
-        .c-observation-form-input-group.ul-margin-bottom-20(ng-repeat='observationTypeProperty in observationTypeProperties' ng-if='observationTypeProperty.label != "Conclusions"')
+        .c-observation-form-input-group.ul-margin-bottom-20(ng-repeat='observationTypeProperty in observationTypeProperties' ng-if='observationTypeProperty.label != "Conclusions" && observationTypeProperty.label != "Observation Description" ')
             h2 {{observationTypeProperty.label}}: {{observationTypeProperty.label_meta}}
             p {{observationTypeProperty.help_text}}
             textarea(name='property_{{observationTypeProperty.id}}' ng-model="observationTypeProperty.value" ng-disabled='observation.status === 1')

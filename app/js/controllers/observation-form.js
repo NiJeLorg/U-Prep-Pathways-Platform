@@ -27,8 +27,6 @@ export default [
         $scope.isImage;
         $scope.selectedImageUrl;
         $scope.attachmentFormat;
-
-        console.log($scope.observation);
         // fetch data
         ObservationTypeService.get(
             {
