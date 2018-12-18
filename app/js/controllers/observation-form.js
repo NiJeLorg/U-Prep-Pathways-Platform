@@ -141,7 +141,7 @@ export default [
             );
         };
 
-        $scope.getPropertyData = () => {
+        function getPropertyData() {
             return $scope.observationTypeProperties.map(property => {
                 return {
                     id: property.observationDataId,
@@ -150,7 +150,7 @@ export default [
                     observation_id: $scope.observation.id
                 };
             });
-        };
+        }
 
         $scope.getObservationTypePropertyVal = id => {
             const property = $scope.observation.observation_type_property_data.filter(
@@ -173,7 +173,7 @@ export default [
                     name: $scope.observation.name,
                     description: $scope.observation.description,
                     status: status,
-                    observation_type_property_data: $scope.getPropertyData()
+                    observation_type_property_data: getPropertyData()
                 },
                 res => {
                     UtilService.closeModal("submit-observation-modal");

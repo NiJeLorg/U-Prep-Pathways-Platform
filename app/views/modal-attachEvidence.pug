@@ -43,9 +43,9 @@
                                         source(src='/uploads/{{attachment.name}}')
             
             .panel-group(ng-if='observation.properties_data.length')
-                .panel(ng-repeat='property in properties | orderBy:"-label"' ng-style='')
+                .panel(ng-repeat='property in properties | orderBy:"-label"' ng-if='property.value')
                     h3 {{property.label}}: {{property.label_meta}}
-                    .attachment-group(ng-if='property.value')
+                    .attachment-group
                         .attachment-select(ng-click='selectAttachmentObservationProperty($event, property)' ng-class='{"attachment-select-opacity": property.selected == true}')
                             img(src='assets/icons/select-attachment-icon.svg')
                         p {{property.value}}
