@@ -1,7 +1,6 @@
 export default [
     "$scope",
     "$state",
-    "UtilService",
     "ObservationService",
     "ObservationFactory",
     "BreadcrumbFactory",
@@ -10,7 +9,6 @@ export default [
     function(
         $scope,
         $state,
-        UtilService,
         ObservationService,
         ObservationFactory,
         BreadcrumbFactory,
@@ -61,7 +59,7 @@ export default [
                     observation_type_id: ObservationFactory.observationType.id
                 }).then(
                     res => {
-                        ObservationService.query(
+                        ObservationService.get(
                             {
                                 id: res.data.data.id
                             },

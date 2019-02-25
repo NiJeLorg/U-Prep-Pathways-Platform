@@ -9,7 +9,8 @@ export default [
             },
             {
                 query: {
-                    method: "GET"
+                    method: "GET",
+                    isArray: false
                 },
                 update: {
                     method: "PUT"
