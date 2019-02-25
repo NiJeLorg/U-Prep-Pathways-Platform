@@ -24,7 +24,9 @@ module.exports = (sequelize, DataTypes) => {
         });
         Score.hasMany(models.indicator_score, {
             foreignKey: "score_id",
-            as: "indicator_scores"
+            as: "indicator_scores",
+            onDelete: "CASCADE",
+            hooks: true
         });
     };
     return Score;

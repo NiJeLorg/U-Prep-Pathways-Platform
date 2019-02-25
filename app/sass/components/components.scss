@@ -588,24 +588,32 @@
     input {
         flex-basis: 10%;
     }
-    .indicator {
-        border-bottom: 1px solid #808285;
-        background: #fff;
-        padding: 10px;
-        display: flex;
-        width: 100%;
-        justify-content: space-between;
-        align-items: center;
-        .ratings {
-            display: flex;
-        }
-    }
     .attach-evidence {
         display: flex;
         & * {
             cursor: pointer;
             margin: 0 5px;
         }
+    }
+}
+
+.indicator {
+    border-bottom: 1px solid #808285;
+    background: #fff;
+    padding: 10px;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    .ratings {
+        display: flex;
+    }
+}
+
+.indicator-invalid {
+    background: rgba(203, 205, 208, 0.4);
+    p {
+        color: #808285;
     }
 }
 
@@ -688,6 +696,14 @@
         justify-content: center;
         align-items: center;
     }
+}
+
+.radio-label-invalid {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: rgba(128, 130, 133, 0.5);
+    color: #fff;
 }
 
 .checked-input {
@@ -1313,28 +1329,34 @@
     margin: 0 20px 20px 0;
     border-radius: 4px;
     cursor: pointer;
-    .attachment-select {
-        display: flex;
-        width: 100%;
-        height: 100%;
-        justify-content: center;
-        align-items: center;
-        position: absolute;
-        z-index: 1;
-        background: rgba(104, 28, 91, 0.6);
-        border-radius: 4px;
-        opacity: 0;
-        img {
-            pointer-events: none;
-        }
-    }
-    .attachment {
-        width: 130px;
-        height: 110px;
-        border-radius: 4px;
+}
+.attachment-select {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    z-index: 1;
+    background: rgba(104, 28, 91, 0.6);
+    border-radius: 4px;
+    opacity: 0;
+    img {
         pointer-events: none;
     }
 }
+
+.attachment-select-opacity {
+    opacity: 1;
+}
+
+.attachment-score {
+    width: 130px;
+    height: 110px;
+    border-radius: 4px;
+    pointer-events: none;
+}
+
 
 .attachment-img {
     background-size: 100%;
@@ -1353,6 +1375,22 @@
         overflow: hidden;
         white-space: nowrap;
         text-overflow: ellipsis;
+        width: 100%;
+    }
+}
+
+.attachment-video {
+    border: 1px solid #a3a3a3;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    img {
+        position: absolute;
+        width: 60px;
+    }
+    video {
+        height: 100%;
         width: 100%;
     }
 }

@@ -1,4 +1,6 @@
 .c-nav {
+    display: flex;
+    justify-content: space-between;
     padding: 25px;
     background: $purple;
     .c-nav__logo-title {
@@ -9,11 +11,10 @@
     }
 }
 
-
 .c-dropdown {
-    background: rgb(255,255,255);
-    box-shadow: 0 2px 2px 0 rgba(0,0,0,0.20);
-    border: 1px solid rgba(0,0,0,0.25);
+    background: rgb(255, 255, 255);
+    box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(0, 0, 0, 0.25);
     overflow-y: hidden;
     box-sizing: border-box;
     img {
@@ -43,5 +44,3 @@
         height: 40px;
     }
 }
-
-

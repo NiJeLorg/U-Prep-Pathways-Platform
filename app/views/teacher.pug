@@ -1,11 +1,11 @@
-.c-modal.delete-observation-modal
+.c-modal.delete-modal
     .c-modal__modal-content
         span.l-flex-flex-end
             img.ul-cursor-pointer(src='assets/icons/x-icon.svg' ng-click='closeModal()')
-        h2 Delete This Observation?
+        h2 Delete This {{toBeDeleted.type}}?
         p This action cannot be reversed
         .c-buttons-holder
-            button(ng-click='deleteObservation()') Yes
+            button(ng-click='deleteObject()') Yes
             button(ng-click='closeModal()') Cancel
 
 .teacher-view
@@ -32,7 +32,7 @@
                             p Created
                             p {{observation.created_at | date: 'shortDate'}}
                         .c-observation__details
-                            h3(ng-if='!observation.name') {{observation.observation_type.name }} Observation
+                            h3.ul-cursor-pointer(ng-if='!observation.name') {{observation.observation_type.name }} Observation
                             span.grade-color.ul-text-uppercase(ng-if='observation.grade.name') Grade: {{observation.grade.name}}
                             span.teacher-color.ul-text-uppercase(ng-if='observation.teacher.name') {{observation.teacher.name}}
                             span.subject-color.ul-text-uppercase(ng-if='observation.subject.name') {{observation.subject.name}}
@@ -46,7 +46,7 @@
                                 p DRAFT
                         .c-observation__actions.l-flex-flex-end
                             img.ul-cursor-pointer(ng-if='observation.status ===0' src='assets/icons/edit-icon.svg' ng-click='editObservation(observation)')
-                            img.ul-cursor-pointer(src='assets/icons/delete-icon.svg' ng-click='openModal(observation)')
+                            img.ul-cursor-pointer(src='assets/icons/delete-icon.svg' ng-click='openDeleteModal(observation, "observation")')
             md-tab
                 md-tab-label Scores
                 md-tab-body
@@ -55,72 +55,13 @@
                             p Created
                             p {{score.created_at | date: 'shortDate'}}
                         .c-observation__details
-                            h3 1st Score
+                            h3.ul-cursor-pointer 1st Score
                             span.grade-color  Grade 1
                             span.subject-color Math
                         .c-observation__actions.l-flex-flex-end
                             img.ul-cursor-pointer(src='assets/icons/edit-icon.svg' ng-click='editScore(score)')
-                            img.ul-cursor-pointer(src='assets/icons/delete-icon.svg' ng-click='openModal(observation)')
+                            img.ul-cursor-pointer(src='assets/icons/delete-icon.svg' ng-click='openDeleteModal(score, "score")')
 
-    //- .c-teacher-observation
-        .c-teacher-header.l-flex-space-between
-            h2.ul-capitalize {{teacher.name}}
-            button EDIT PROFILE
-        .c-teacher-contents.l-flex-space-between
-            .details
-                .l-flex
-                    p Grades: 
-                    p.ul-capitalize(ng-repeat='grade in teacher.grades') {{grade.name}}
-                .l-flex
-                    p Subjects: 
-                    p.ul-capitalize(ng-repeat='subject in teacher.subjects') {{subject.name}}
-                p(ng-class='{upaElementaryColor: teacher.school.name === "UPA Elementary", upsmElementaryColor: teacher.school.name === "UPSM Elementary"}') {{teacher.school.name}}
-            .actions
-                button() New Observation
-                button() New Score
-        .c-observation-reports
-            .header
-                button.c-round-breadcrumb(ng-class="{'is-disabled': subview == ('scores' || 'progress')}" ng-click="subview='observations'") OBSERVATIONS
-                button.c-round-breadcrumb(ng-class="{'is-disabled': subview == ('observations' || 'progress')}" ng-click="subview='scores'") SCORES
-                //- button.c-round-breadcrumb(ng-class="{'is-disabled': subview == ('observations' || 'scores')}" ng-click="page='progress'") PROGRESS
-            .observations(ng-show='subview === "observations"')
-                .c-observation.ul-padding-30.l-flex-space-between(ng-repeat='observation in teacher.observations')
-                    .c-observation__date
-                        p Created
-                        p {{observation.created_at | date: 'shortDate'}}
-                    .c-observation__details
-                        h3 {{observation.name}}
-                        h3(ng-if='!observation.name') {{observation.observation_type.name }} Observation
-                        span.grade-color.ul-text-uppercase(ng-if='observation.grade.name') Grade: {{observation.grade.name}}
-                        span.teacher-color.ul-text-uppercase(ng-if='observation.teacher.name') {{observation.teacher.name}}
-                        span.subject-color.ul-text-uppercase(ng-if='observation.subject.name') {{observation.subject.name}}
-                    .c-observation__badge(ng-if='observation.status===1')
-                        .holder
-                            img(src='assets/icons/submitted-badge-icon.svg')
-                            p SUBMITTED
-                    .c-observation__badge(ng-if='observation.status===0')
-                        .holder
-                            img(src='assets/icons/draft-badge-icon.svg')
-                            p DRAFT
-                    .c-observation__actions.l-flex-flex-end
-                        img.ul-cursor-pointer(ng-if='observation.status ===0' src='assets/icons/edit-icon.svg' ng-click='editObservation(observation)')
-                        img.ul-cursor-pointer(src='assets/icons/delete-icon.svg' ng-click='openModal(observation)')
-            .scores(ng-show='subview ==="scores"')
-                .c-observation.ul-padding-30.l-flex-space-between(ng-repeat='score in teacher.scores')
-                    .c-observation__date
-                        p Created
-                        p {{score.created_at | date: 'shortDate'}}
-                    .c-observation__details
-                        h3 1st Score
-                        span.grade-color  Grade 1
-                        span.subject-color Math
-                    .c-observation__actions.l-flex-flex-end
-                        img.ul-cursor-pointer(src='assets/icons/edit-icon.svg' ng-click='editScore(score)')
-                        img.ul-cursor-pointer(src='assets/icons/delete-icon.svg' ng-click='openModal(observation)')
-
-            
-
-            .reports
 
         
 

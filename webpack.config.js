@@ -83,8 +83,6 @@ const readFile = folder =>
         });
     });
 
-// module.exports = config;
-
 module.exports = new Promise((resolve, reject) => {
     readFile("./app/views").then(() => {
         resolve(config);

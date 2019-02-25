@@ -4,6 +4,7 @@ export default [
     "UtilService",
     "ObservationService",
     "ObservationTypeService",
+    "ScoreService",
     "ObservationFactory",
     "ScoreFactory",
     "teacher",
@@ -13,12 +14,13 @@ export default [
         UtilService,
         ObservationService,
         ObservationTypeService,
+        ScoreService,
         ObservationFactory,
         ScoreFactory,
         teacher
     ) {
         $scope.teacher = teacher.data;
-        let observationToBeDeleted;
+        $scope.toBeDeleted = {};
         $scope.subview = "observations";
 
         ObservationTypeService.fetchObservationTypes().then(
@@ -26,7 +28,7 @@ export default [
                 $scope.observationTypes = res.data.data;
             },
             err => {
-                console.error(err, "ERROR");
+                console.error(err);
             }
         );
 
@@ -53,31 +55,51 @@ export default [
             localStorage.setItem("scoreParentRoute", "teacher");
         };
 
-        $scope.openModal = observation => {
-            UtilService.openModal("delete-observation-modal");
-            observationToBeDeleted = observation;
+        $scope.openDeleteModal = (obj, type) => {
+            UtilService.openModal("delete-modal");
+            $scope.toBeDeleted = {
+                obj,
+                type
+            };
         };
 
         $scope.closeModal = () => {
-            UtilService.closeModal("delete-observation-modal");
+            UtilService.closeModal("delete-modal");
         };
 
-        $scope.deleteObservation = () => {
+        $scope.deleteObject = () => {
             let index;
-            ObservationService.remove(
-                {
-                    id: observationToBeDeleted.id
-                },
-                res => {
-                    index = $scope.teacher.observations.findIndex(elem => {
-                        if (elem.id == observationToBeDeleted.id) {
-                            return elem;
-                        }
-                    });
-                    $scope.teacher.observations.splice(index, 1);
-                    UtilService.closeModal("delete-observation-modal");
-                }
-            );
+            $scope.toBeDeleted.type === "observation"
+                ? ObservationService.remove(
+                      {
+                          id: $scope.toBeDeleted.obj.id
+                      },
+                      res => {
+                          index = $scope.teacher.observations.findIndex(
+                              elem => {
+                                  if (elem.id == $scope.toBeDeleted.obj.id) {
+                                      return elem;
+                                  }
+                              }
+                          );
+                          $scope.teacher.observations.splice(index, 1);
+                      }
+                  )
+                : ScoreService.delete(
+                      {
+                          id: $scope.toBeDeleted.obj.id
+                      },
+                      res => {
+                          index = $scope.teacher.scores.findIndex(elem => {
+                              if (elem.id == $scope.toBeDeleted.obj.id) {
+                                  return elem;
+                              }
+                          });
+                          $scope.teacher.scores.splice(index, 1);
+                      }
+                  );
+
+            UtilService.closeModal("delete-modal");
         };
     }
 ];

@@ -1,6 +1,5 @@
 export default [
     "$scope",
-    "$controller",
     "$mdDialog",
     "score",
     "ElementService",
@@ -12,7 +11,6 @@ export default [
     "$stateParams",
     function(
         $scope,
-        $controller,
         $mdDialog,
         score,
         ElementService,
@@ -37,14 +35,6 @@ export default [
             err => console.error(err)
         );
 
-        const fetchScore = () => {
-            ScoreService.query({
-                id: $stateParams.scoreId
-            }).$promise.then(res => {
-                $scope.score = res.data;
-            });
-        };
-
         TeacherService.get(
             {
                 id: $scope.score.teacher_id
@@ -67,6 +57,14 @@ export default [
                 console.error(err);
             }
         );
+
+        const fetchScore = () => {
+            ScoreService.query({
+                id: $stateParams.scoreId
+            }).$promise.then(res => {
+                $scope.score = res.data;
+            });
+        };
 
         const checkComponentsToBeExpanded = elements => {
             const { indicator_scores } = $scope.score;
@@ -100,24 +98,15 @@ export default [
         };
 
         $scope.getAddSelectedIndicators = indicators => {
-            let indicators_mapped = indicators.map(indicator => {
-                let matched_indicator = $scope.score.indicator_scores.filter(
-                    indicator_score =>
-                        indicator_score.indicator_id === indicator.id
-                );
-                if (matched_indicator.length > 0) {
-                    indicator.value = "" + matched_indicator[0].value;
-                }
-                return indicator;
+            indicators.map(indicator => {
+                $scope.score.indicator_scores.map(indicator_score => {
+                    if (indicator_score.indicator_id === indicator.id) {
+                        indicator_score.value = "" + indicator_score.value;
+                        indicator.indicatorScore = indicator_score;
+                    }
+                });
             });
-            // console.log(indicators_mapped);
-            return indicators_mapped;
-        };
-        $scope.checkIndicatorScore = (indicator, value) => {
-            let matched_indicator_score = $scope.score.indicator_scores.filter(
-                indicator_score => indicator_score.indicator_id === indicator.id
-            );
-            return false;
+            return indicators;
         };
 
         $scope.storeIndicatorScore = (value, indicator) => {
@@ -136,53 +125,64 @@ export default [
         };
 
         // show modals
-        $scope.showIndicatorLevelsModal = ev => {
-            $mdDialog.show({
-                templateUrl: "views/modal-indicatorLevels.html",
-                parent: angular.element(document.body),
-                targetEvent: ev,
-                clickOutsideToClose: true
-            });
-        };
 
-        $scope.showDeleteScoreModal = ev => {
-            $mdDialog.show({
-                locals: { score: $scope.score },
-                controller: ModalController,
-                templateUrl: "views/modal-deleteScore.html",
-                parent: angular.element(document.body),
-                targetEvent: ev,
-                clickOutsideToClose: true
-            });
-        };
+        function showModals() {
+            $scope.showIndicatorLevelsModal = ev => {
+                $mdDialog.show({
+                    templateUrl: "views/modal-indicatorLevels.html",
+                    parent: angular.element(document.body),
+                    targetEvent: ev,
+                    clickOutsideToClose: true
+                });
+            };
 
-        $scope.showSubmitScoreModal = ev => {
-            $mdDialog.show({
-                locals: { score: $scope.score },
-                controller: ModalController,
-                templateUrl: "views/modal-submitScore.html",
-                parent: angular.element(document.body),
-                targetEvent: ev,
-                clickOutsideToClose: true
-            });
-        };
+            $scope.showDeleteScoreModal = ev => {
+                $mdDialog.show({
+                    locals: { score: $scope.score },
+                    controller: ModalController,
+                    templateUrl: "views/modal-deleteScore.html",
+                    parent: angular.element(document.body),
+                    targetEvent: ev,
+                    clickOutsideToClose: true
+                });
+            };
 
-        $scope.showAttachEvidenceModal = (ev, indicator) => {
-            $mdDialog.show({
-                locals: {
-                    score: $scope.score,
-                    indicator,
-                    teacher,
-                    observations
-                },
-                controller: AttachEvidenceController,
-                templateUrl: "views/modal-attachEvidence.html",
-                parent: angular.element(document.body),
-                targetEvent: ev,
-                clickOutsideToClose: true
-            });
-        };
+            $scope.showSubmitScoreModal = ev => {
+                $mdDialog.show({
+                    locals: { score: $scope.score },
+                    controller: ModalController,
+                    templateUrl: "views/modal-submitScore.html",
+                    parent: angular.element(document.body),
+                    targetEvent: ev,
+                    clickOutsideToClose: true
+                });
+            };
 
+            $scope.showAttachEvidenceModal = (ev, indicator) => {
+                IndicatorScoreService.query(
+                    { id: indicator.indicatorScore.id },
+                    res => {
+                        $mdDialog.show({
+                            locals: {
+                                indicatorScore: res.data,
+                                observations,
+                                teacher
+                            },
+                            controller: AttachEvidenceController,
+                            templateUrl: "views/modal-attachEvidence.html",
+                            parent: angular.element(document.body),
+                            targetEvent: ev,
+                            clickOutsideToClose: true
+                        });
+                    },
+                    err => {
+                        console.error(err);
+                    }
+                );
+            };
+        }
+
+        showModals();
         function ModalController(
             $scope,
             $mdDialog,
@@ -234,38 +234,151 @@ export default [
         function AttachEvidenceController(
             $scope,
             $mdDialog,
-            indicator,
-            teacher,
             observations,
-            IndicatorScoreService
+            indicatorScore,
+            teacher,
+            IndicatorScoreService,
+            AttachEvidenceService,
+            ObservationTypeService
         ) {
-            $scope.indicator = indicator;
+            $scope.indicatorScore = indicatorScore;
             $scope.teacher = teacher;
             $scope.observations = observations;
 
-            $scope.selectAttachment = (e, attachment) => {
-                attachment.toggle
-                    ? angular.element(e.target).css("opacity", "0")
-                    : angular.element(e.target).css("opacity", "1");
-                attachment.toggle = attachment.toggle ? false : true;
-            };
+            // Reset First
+            observations.map(observation => {
+                observation.expanded = false;
+                observation.attachments.map(attachment => {
+                    attachment.toggle = false;
+                });
+            });
 
-            $scope.closeModal = () => {
-                $mdDialog.cancel();
-            };
+            observations.map(observation => {
+                return observation.attachments.map(attachment => {
+                    indicatorScore.evidences.map(evidence => {
+                        if (attachment.id === evidence.id) {
+                            attachment.toggle = true;
+                        }
+                    });
+                });
+            });
 
-            $scope.attachEvidence = () => {
-                IndicatorScoreService.update(
+            $scope.expandObservation = observation => {
+                ObservationTypeService.get(
                     {
-                        
+                        id: observation.observation_type_id
                     },
                     res => {
-                        console.log(res);
+                        $scope.properties = res.data.observation_type_properties
+                            .map(prop => {
+                                observation.properties_data.map(propData => {
+                                    if (
+                                        prop.id ===
+                                        propData.observation_type_property_id
+                                    ) {
+                                        prop.value = propData.value;
+                                        prop.propertyData = {
+                                            id: propData.id
+                                        };
+                                    }
+                                });
+                                return prop;
+                            })
+                            .map(prop => {
+                                $scope.indicatorScore.observationsEvidences.map(
+                                    observationEvidence => {
+                                        if (
+                                            prop.propertyData.id ===
+                                            observationEvidence.id
+                                        ) {
+                                            prop.selected = true;
+                                        }
+                                    }
+                                );
+                                return prop;
+                            });
                     },
                     err => {
                         console.error(err);
                     }
                 );
+                observation.expanded = !observation.expanded;
+            };
+
+            $scope.selectAttachment = (e, attachment) => {
+                attachment.toggle
+                    ? angular.element(e.target).css("opacity", "0")
+                    : angular.element(e.target).css("opacity", "1");
+
+                attachment.toggle = attachment.toggle ? false : true;
+
+                attachment.toggle
+                    ? AttachEvidenceService.createIndicatorScoreEvidence({
+                          observation_evidence_id: attachment.id,
+                          indicator_score_id: indicatorScore.id
+                      }).then(
+                          res => {},
+                          err => {
+                              console.error(err);
+                          }
+                      )
+                    : AttachEvidenceService.deleteIndicatorScoreEvidence({
+                          observation_evidence_id: attachment.id,
+                          indicator_score_id: indicatorScore.id
+                      }).then(
+                          res => {},
+                          err => {
+                              console.error(err);
+                          }
+                      );
+            };
+
+            $scope.selectAttachmentObservationProperty = (e, property) => {
+                property.selected = !property.selected;
+                property.selected
+                    ? AttachEvidenceService.createIndicatorScoreObservationEvidence(
+                          {
+                              indicator_score_id: $scope.indicatorScore.id,
+                              property_data_id: property.propertyData.id
+                          }
+                      ).then(
+                          res => {},
+                          err => {
+                              console.log(err);
+                          }
+                      )
+                    : AttachEvidenceService.deleteIndicatorScoreObservationEvidence(
+                          {
+                              indicator_score_id: $scope.indicatorScore.id,
+                              property_data_id: property.propertyData.id
+                          }
+                      ).then(
+                          res => {},
+                          err => {
+                              console.log(err);
+                          }
+                      );
+            };
+
+            $scope.attachNote = () => {
+                IndicatorScoreService.createIndicatorScore({
+                    note: indicatorScore.note,
+                    score_id: indicatorScore.score.id,
+                    indicator_id: indicatorScore.indicator.id
+                }).then(
+                    res => {},
+                    err => {
+                        console.error(err);
+                    }
+                );
+            };
+
+            $scope.attachEvidence = () => {
+                $mdDialog.cancel();
+            };
+
+            $scope.closeModal = () => {
+                $mdDialog.cancel();
             };
 
             $scope.isDocument = fileName => UtilService.isDocument(fileName);
