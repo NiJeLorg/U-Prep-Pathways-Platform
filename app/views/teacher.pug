@@ -32,7 +32,7 @@
                             p Created
                             p {{observation.created_at | date: 'shortDate'}}
                         .c-observation__details
-                            h3(ng-if='!observation.name') {{observation.observation_type.name }} Observation
+                            h3.ul-cursor-pointer(ng-if='!observation.name') {{observation.observation_type.name }} Observation
                             span.grade-color.ul-text-uppercase(ng-if='observation.grade.name') Grade: {{observation.grade.name}}
                             span.teacher-color.ul-text-uppercase(ng-if='observation.teacher.name') {{observation.teacher.name}}
                             span.subject-color.ul-text-uppercase(ng-if='observation.subject.name') {{observation.subject.name}}
@@ -55,7 +55,7 @@
                             p Created
                             p {{score.created_at | date: 'shortDate'}}
                         .c-observation__details
-                            h3 1st Score
+                            h3.ul-cursor-pointer 1st Score
                             span.grade-color  Grade 1
                             span.subject-color Math
                         .c-observation__actions.l-flex-flex-end
