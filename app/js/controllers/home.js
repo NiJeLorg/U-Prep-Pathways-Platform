@@ -17,61 +17,58 @@ export default [
         ObservationFactory,
         ScoreFactory
     ) {
-        $scope.switchCardContext = false;
-
         // fetch data
-        TeacherService.fetchAllTeachers().then(
-            res => {
-                let reg = /^(\w+)\s(\w+)$/;
-                $scope.teachers = res.data.data;
-                res.data.data.forEach((elem, index) => {
-                    if (
-                        elem.school.name === "UPA HS" ||
-                        elem.school.name === "UPA MS"
-                    ) {
-                        elem.name = elem.name.replace(reg, "$2 $1");
-                    }
-                });
-            },
-            err => {
-                console.error(err);
-            }
-        );
+        function fetchTeachers() {
+            TeacherService.fetchAllTeachers().then(
+                response => {
+                    $scope.teachers = response.data.data;
+                },
+                err => {
+                    console.error(err);
+                }
+            );
+        }
+        fetchTeachers();
 
-        SchoolService.fetchSchools().then(
-            res => {
-                $scope.schools = res.data.data;
-            },
-            err => {
-                console.error(err);
-            }
-        );
+        function fetchSchools() {
+            SchoolService.fetchSchools().then(
+                response => {
+                    $scope.schools = response.data.data;
+                },
+                err => {
+                    console.error(err);
+                }
+            );
+        }
+        fetchSchools();
 
-        ObservationTypeService.fetchObservationTypes().then(
-            res => {
-                $scope.observationTypes = res.data.data;
-            },
-            err => {
-                console.error(err);
-            }
-        );
+        function fetchObservationTypes() {
+            ObservationTypeService.fetchObservationTypes(
+                response => {
+                    $scope.observationTypes = response.data.data;
+                },
+                err => {
+                    console.error(err);
+                }
+            );
+        }
+        fetchObservationTypes();
+
+        function fetchGrades() {
+            GradeService.fetchGrades().then(
+                response => {
+                    $scope.grades = response.data.data;
+                },
+                err => {
+                    console.error(err);
+                }
+            );
+        }
 
         // event handlders
-        $scope.fetchGrades = school => {
-            if (school !== null) {
-                GradeService.query(
-                    {
-                        id: school.id
-                    },
-                    res => {
-                        $scope.grades = res.data;
-                    },
-                    err => {
-                        console.error(err);
-                    }
-                );
-            } else {
-                $scope.grades = [];
+        $scope.handleSchoolChange = school => {
+            if (school) {
+                fetchGrades();
             }
         };
 
