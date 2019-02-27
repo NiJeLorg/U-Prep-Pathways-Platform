@@ -43,9 +43,10 @@ export default [
         fetchSchools();
 
         function fetchObservationTypes() {
-            ObservationTypeService.fetchObservationTypes(
+            ObservationTypeService.fetchObservationTypes().then(
                 response => {
                     $scope.observationTypes = response.data.data;
+                    console.log(response);
                 },
                 err => {
                     console.error(err);
