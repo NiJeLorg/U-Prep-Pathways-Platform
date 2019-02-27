@@ -1,15 +1,19 @@
 const BreadcrumbFactory = () => {
-
-    let obj = {};
-    obj.workflow = 'default';
-    obj.label_1 = 'Step One';
-    obj.label_2 = 'Step Two';
-    obj.label_3 = 'Step Three';
-    obj.title = ()=>{
-        if(obj.workflow === 'observations'){
-            return 'Make an Observation';
+    let obj = {
+        title: "",
+        label1: "",
+        label2: ""
+    };
+    obj.setupBreadCrumb = (workflow, entity) => {
+        obj.label1 = entity.teacher.school.name;
+        if (workflow === "observations") {
+            obj.title = "Make an Observation";
+            obj.label2 = entity.observationType.name;
+        } else if (workflow === "scores") {
+            obj.title = "Score an Observation";
+            obj.label2 = "Teachers";
         }
-        return 'Score an Observation';
+        return obj;
     };
 
     return obj;
