@@ -45,7 +45,7 @@ export default [
             localStorage.setItem("scoreParentRoute", "teacher");
         };
 
-        $scope.editObservation = observation => {
+        $scope.openOrEditObservation = observation => {
             $state.go("observationForm", { observationId: observation.id });
             localStorage.setItem("observationParentRoute", "teacher");
         };

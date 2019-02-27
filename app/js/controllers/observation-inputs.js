@@ -14,70 +14,75 @@ export default [
         BreadcrumbFactory,
         workflow
     ) {
+        const observation = Object.assign({}, ObservationFactory);
+
         $scope.templateUrl = `views/breadcrumbs.html`;
-        BreadcrumbFactory["workflow"] = workflow;
-        BreadcrumbFactory["label_1"] = ObservationFactory.teacher.school.name;
-        BreadcrumbFactory["label_3"] = "Details";
-        if (workflow === "observations") {
-            BreadcrumbFactory["label_2"] =
-                ObservationFactory.observationType.name;
-        } else {
-            BreadcrumbFactory["label_2"] = "Teachers";
+        $scope.isSubjectSelectInputDisabled = true;
+
+        $scope.grades = observation.teacher.grades.map(grade => grade);
+        $scope.subjects = observation.teacher.subjects.map(subject => subject);
+
+        function setupBreadCrumb() {
+            $scope.breadcrumbs = BreadcrumbFactory.setupBreadCrumb(
+                workflow,
+                observation
+            );
         }
-        $scope.breadcrumbs = BreadcrumbFactory;
+        setupBreadCrumb();
 
-        $scope.grades = ObservationFactory.teacher.grades;
-        $scope.subjects = ObservationFactory.teacher.subjects;
-
-        // disable teacher and subject select elements on load
-        $scope.disableTeacherSelect = true;
-        $scope.disableSubjectSelect = true;
-
-        $scope.recordGrade = () => {
-            if ($scope.grade) {
-                ObservationFactory["grade"] = JSON.parse($scope.grade);
-                // disable subject select
-                $scope.disableSubjectSelect = false;
+        $scope.recordGrade = grade => {
+            if (grade) {
+                observation.recordedGrade = JSON.parse(grade);
+                $scope.isSubjectSelectInputDisabled = false;
             }
         };
 
-        $scope.recordSubject = () => {
-            ObservationFactory["subject"] = JSON.parse($scope.subject);
+        $scope.recordSubject = subject => {
+            if (subject) {
+                observation.recordedSubject = JSON.parse(subject);
+            }
         };
 
         $scope.createObservation = () => {
-            if (
-                ObservationFactory.grade &&
-                ObservationFactory.teacher &&
-                ObservationFactory.subject
-            ) {
-                ObservationService.createObservation({
-                    school_id: ObservationFactory.teacher.school.id,
-                    grade_id: ObservationFactory.grade.id,
-                    subject_id: ObservationFactory.subject.id,
-                    teacher_id: ObservationFactory.teacher.id,
-                    observation_type_id: ObservationFactory.observationType.id
-                }).then(
-                    res => {
-                        ObservationService.get(
-                            {
-                                id: res.data.data.id
-                            },
-                            res => {
-                                $state.go("observationForm", {
-                                    observationId: res.data.id
-                                });
-                            }
-                        );
-                    },
-                    err => {
-                        console.error(err);
-                    }
-                );
-            } else {
-                $scope.errorMessage =
-                    "Make sure you select all the necessary fields";
-            }
+            ObservationService.createObservation({
+                school_id: observation.teacher.school.id,
+                grade_id: observation.recordedGrade.id,
+                subject_id: observation.recordedSubject.id,
+                teacher_id: observation.teacher.id,
+                observation_type_id: observation.observationType.id
+            }).then(
+                res => {
+                    fetchObservation(res.data.data);
+                },
+                err => {
+                    console.error(err);
+                }
+            );
         };
+
+        function fetchObservation(observation) {
+            ObservationService.get(
+                {
+                    id: observation.id
+                },
+                res => {
+                    transitionToObservationFormView(observation);
+                },
+                err => {
+                    console.error(err);
+                }
+            );
+        }
+
+        function transitionToObservationFormView(observation) {
+            $state.go("observationForm", {
+                observationId: observation.id
+            });
+        }
+
+        function showErrorMessage() {
+            $scope.errorMessage =
+                "Make sure you select all the necessary fields";
+        }
     }
 ];

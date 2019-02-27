@@ -1,7 +1,5 @@
 const ObservationFactory = () => {
-
     let obj = {};
-
     return obj;
 };
 

@@ -8,13 +8,12 @@ export default [
 
         obj.fetchAllTeachers = () => $http.get("/api/teachers");
 
-        obj.fetchTeacher = obj => {
-            return $http.get(
+        obj.fetchTeacher = obj =>
+            $http.get(
                 `/api/teachers/${obj.teacherId}?schoolId=${
                     obj.schoolId
                 }&gradeId=${obj.gradeId}`
             );
-        };
 
         obj.createTeacher = teacher => {
             let grades = teacher.grades.map(el => {
@@ -29,14 +28,13 @@ export default [
             });
         };
 
-        obj.updateTeacher = teacher => {
-            return $http.put(`/api/teachers/${teacher.id}`, {
+        obj.updateTeacher = teacher =>
+            $http.put(`/api/teachers/${teacher.id}`, {
                 name: teacher.name,
                 schoolId: teacher.school.id,
                 grades: returnIds("grades", teacher),
                 subjects: returnIds("subjects", teacher)
             });
-        };
 
         return obj;
     }
