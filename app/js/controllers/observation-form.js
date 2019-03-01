@@ -19,202 +19,210 @@ export default [
         AttachmentService,
         UtilService
     ) {
-        $scope.selectedDomain = window.location.origin;
-        // Progress Bar
-        $scope.progressBarActive = false;
-        $scope.observation = observation.data;
-        $scope.editObservationName = false;
-        $scope.isImage;
-        $scope.selectedImageUrl;
-        $scope.attachmentFormat;
+        $scope.observation = { ...observation.data };
+
+        // $scope.selectedDomain = window.location.origin;
+        // // Progress Bar
+        // $scope.progressBarActive = false;
+        // $scope.observation = observation.data;
+        // $scope.editObservationName = false;
+        // $scope.isImage;
+        // $scope.selectedImageUrl;
+        // $scope.attachmentFormat;
         // fetch data
-        ObservationTypeService.get(
-            {
-                id: $scope.observation.observation_type_id
-            },
-            res => {
-                $scope.observationTypeProperties = res.data.observation_type_properties.map(
-                    observationProperty => {
-                        observation.data.properties_data.map(
-                            observationData => {
-                                if (
-                                    observationProperty.id ==
-                                    observationData.observation_type_property_id
-                                ) {
-                                    observationProperty.value =
-                                        observationData.value;
-                                    observationProperty.observationDataId =
-                                        observationData.id;
-                                }
-                            }
-                        );
-                        return observationProperty;
-                    }
-                );
-            },
-            err => {
-                console.error(err);
-            }
-        );
-
-        $scope.checkIfAttacmentIsImage = file => UtilService.isImage(file.name);
-
-        $scope.checkIfAttacmentIsDocument = file =>
-            UtilService.isDocument(file.name);
-
-        $scope.checkIfAttacmentIsVideo = file => UtilService.isVideo(file.name);
-
-        $scope.selectAttachment = attachment => {
-            $scope.selectedImageUrl = attachment.name;
-
-            angular
-                .element(document.getElementsByClassName("c-light-box-overlay"))
-                .css("display", "block");
-            angular
-                .element(document.getElementsByClassName("c-light-box"))
-                .css("display", "flex");
-        };
-
-        angular
-            .element(document.getElementsByClassName("c-light-box-overlay"))
-            .on("click", function() {
-                angular
-                    .element(
-                        document.getElementsByClassName("c-light-box-overlay")
-                    )
-                    .css("display", "none");
-                angular
-                    .element(document.getElementsByClassName("c-light-box"))
-                    .css("display", "none");
-                $scope.selectedImageUrl = "";
-            });
-
-        $scope.upload = file => {
-            $scope.progressBarActive = true;
-            Upload.upload({
-                url: `/api/observations/${$scope.observation.id}`,
-                method: "PUT",
-                data: {
-                    attachments: file
-                }
-            }).then(
+        function fetchObservationType() {
+            const id = $scope.observation.observation_type_id;
+            ObservationTypeService.query(
+                { id },
                 res => {
-                    // console.log(res, "res");
-                    $scope.observation.attachments = res.data.data.attachments;
-
-                    $scope.progressBarActive = false;
+                    const observationTypeProperties =
+                        res.data.observation_type_properties;
+                    setObservationTypeProperties(observationTypeProperties);
                 },
                 err => {
-                    console.log(err);
+                    console.error(err);
                 }
             );
-        };
+        }
+        fetchObservationType();
 
-        $scope.deleteObservation = () => {
-            ObservationService.remove(
-                {
-                    id: $scope.observation.id
-                },
-                res => {
-                    UtilService.closeModal("delete-observation-modal");
-                    $state.go("home");
-                }
-            );
-        };
-
-        $scope.editObservation = () => {
-            ObservationService.update(
-                {
-                    id: $scope.observation.id
-                },
-                {
-                    grade_id: $scope.observation.grade.id,
-                    teacher_id: $scope.observation.teacher.id,
-                    subject_id: $scope.observation.subject.id
-                },
-                res => {
-                    UtilService.closeModal("edit-observation-modal");
-                },
-                err => {
-                    UtilService.closeModal("edit-observation-modal");
-                }
-            );
-        };
-
-        function getPropertyData() {
-            return $scope.observationTypeProperties.map(property => {
-                return {
-                    id: property.observationDataId,
-                    observation_type_property_id: property.id,
-                    value: property.value,
-                    observation_id: $scope.observation.id
-                };
+        function deleteObservation(id) {
+            ObservationService.remove({ id }, res => {
+                UtilService.closeModal("delete-observation-modal");
+                $state.go("home");
             });
         }
 
-        $scope.getObservationTypePropertyVal = id => {
-            const property = $scope.observation.observation_type_property_data.filter(
-                property => {
-                    return property[id];
-                }
-            );
-            if (property.length > 0) {
-                return property[0][id];
-            }
-            return "";
-        };
-
-        $scope.submitObservation = status => {
+        function updateObservation(id, data) {
             ObservationService.update(
-                {
-                    id: $scope.observation.id
-                },
-                {
-                    name: $scope.observation.name,
-                    description: $scope.observation.description,
-                    status: status,
-                    observation_type_property_data: getPropertyData()
-                },
+                { id },
+                data,
                 res => {
-                    UtilService.closeModal("submit-observation-modal");
-                    UtilService.openModal("submitted-observation-modal");
-                    $timeout(() => {
-                        UtilService.closeModal("submitted-observation-modal");
-                        let transitionTo = localStorage.getItem(
-                            "observationParentRoute"
-                        );
-                        if (transitionTo == "teacher") {
-                            $state.go(transitionTo, {
-                                teacherId: $scope.observation.teacher_id
-                            });
-                        } else {
-                            $state.go(transitionTo);
-                        }
-                    }, 4000);
+                    openAndCloseSubmittedObservationModals();
+                    transitionRouteAfterSubmittingObservation();
                 },
                 err => {
                     console.log(err, "err");
                 }
             );
+        }
+
+        function setObservationTypeProperties(properties) {
+            $scope.observationTypeProperties = properties;
+        }
+
+        function openAndCloseSubmittedObservationModals() {
+            UtilService.closeModal("submit-observation-modal");
+            UtilService.openModal("submitted-observation-modal");
+        }
+
+        function transitionRouteAfterSubmittingObservation() {
+            const teacherId = $scope.observation.teacher_id;
+            let transitionTo = localStorage.getItem("observationParentRoute");
+            $timeout(() => {
+                UtilService.closeModal("submitted-observation-modal");
+                if (transitionTo == "teacher") {
+                    $state.go(transitionTo, {
+                        teacherId
+                    });
+                } else {
+                    $state.go(transitionTo);
+                }
+            }, 3000);
+        }
+
+        $scope.setObservationStatus = flag => {
+            // 1 sets a published status, whilst 0 sets it as draft === flag is the parameter
+            $scope.observation.status = flag;
+            let { id, name, status } = $scope.observation;
+            updateObservation(id, { name, status });
         };
 
-        $scope.removeAttachment = (obj, file) => {
-            obj.forEach((elem, index) => {
-                if (elem.name === file.name) {
-                    obj.splice(index, 1);
-                }
-            });
+        // $scope.checkIfAttacmentIsImage = file => UtilService.isImage(file.name);
 
-            AttachmentService.delete(
-                {
-                    id: file.id
-                },
-                res => {},
-                err => {
-                    console.error(err, "ERROR");
-                }
-            );
+        // $scope.checkIfAttacmentIsDocument = file =>
+        //     UtilService.isDocument(file.name);
+
+        // $scope.checkIfAttacmentIsVideo = file => UtilService.isVideo(file.name);
+
+        // $scope.selectAttachment = attachment => {
+        //     $scope.selectedImageUrl = attachment.name;
+
+        //     angular
+        //         .element(document.getElementsByClassName("c-light-box-overlay"))
+        //         .css("display", "block");
+        //     angular
+        //         .element(document.getElementsByClassName("c-light-box"))
+        //         .css("display", "flex");
+        // };
+
+        // angular
+        //     .element(document.getElementsByClassName("c-light-box-overlay"))
+        //     .on("click", function() {
+        //         angular
+        //             .element(
+        //                 document.getElementsByClassName("c-light-box-overlay")
+        //             )
+        //             .css("display", "none");
+        //         angular
+        //             .element(document.getElementsByClassName("c-light-box"))
+        //             .css("display", "none");
+        //         $scope.selectedImageUrl = "";
+        //     });
+
+        // $scope.upload = file => {
+        //     $scope.progressBarActive = true;
+        //     Upload.upload({
+        //         url: `/api/observations/${$scope.observation.id}`,
+        //         method: "PUT",
+        //         data: {
+        //             attachments: file
+        //         }
+        //     }).then(
+        //         res => {
+        //             // console.log(res, "res");
+        //             $scope.observation.attachments = res.data.data.attachments;
+
+        //             $scope.progressBarActive = false;
+        //         },
+        //         err => {
+        //             console.log(err);
+        //         }
+        //     );
+        // };
+
+        $scope.deleteObservationHandler = () => {
+            const id = $scope.observation.id;
+            deleteObservation(id);
         };
+
+        $scope.updateObservationHandler = () => {
+            updateObservation();
+        };
+
+        // $scope.editObservation = () => {
+        //     ObservationService.update(
+        //         {
+        //             id: $scope.observation.id
+        //         },
+        //         {
+        //             grade_id: $scope.observation.grade.id,
+        //             teacher_id: $scope.observation.teacher.id,
+        //             subject_id: $scope.observation.subject.id
+        //         },
+        //         res => {
+        //             UtilService.closeModal("edit-observation-modal");
+        //         },
+        //         err => {
+        //             UtilService.closeModal("edit-observation-modal");
+        //         }
+        //     );
+        // };
+
+        // function getPropertyData() {
+        //     return $scope.observationTypeProperties.map(property => {
+        //         return {
+        //             id: property.observationDataId,
+        //             observation_type_property_id: property.id,
+        //             value: property.value,
+        //             observation_id: $scope.observation.id
+        //         };
+        //     });
+        // }
+
+        // $scope.getObservationTypePropertyVal = id => {
+        //     const property = $scope.observation.observation_type_property_data.filter(
+        //         property => {
+        //             return property[id];
+        //         }
+        //     );
+        //     if (property.length > 0) {
+        //         return property[0][id];
+        //     }
+        //     return "";
+        // };
+
+        // $scope.submitObservation = status => {
+
+        // };
+
+        // $scope.removeAttachment = (obj, file) => {
+        //     obj.forEach((elem, index) => {
+        //         if (elem.name === file.name) {
+        //             obj.splice(index, 1);
+        //         }
+        //     });
+
+        //     AttachmentService.delete(
+        //         {
+        //             id: file.id
+        //         },
+        //         res => {},
+        //         err => {
+        //             console.error(err, "ERROR");
+        //         }
+        //     );
+        // };
 
         $scope.openSubmitObservationModal = () => {
             UtilService.openModal("submit-observation-modal");
