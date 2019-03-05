@@ -61,10 +61,9 @@ export default [
         };
 
         function fetchObservation(observation) {
-            ObservationService.get(
-                {
-                    id: observation.id
-                },
+            const { id } = observation;
+            ObservationService.query(
+                { id },
                 res => {
                     transitionToObservationFormView(observation);
                 },
@@ -75,8 +74,9 @@ export default [
         }
 
         function transitionToObservationFormView(observation) {
+            const { id } = observation;
             $state.go("observationForm", {
-                observationId: observation.id
+                observationId: id
             });
         }
 
