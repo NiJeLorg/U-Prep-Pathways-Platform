@@ -101,4 +101,3 @@ md-progress-linear(md-mode='intermediate' ng-if='progressBarActive')
             textarea(name='property_{{observationTypeProperty.id}}' ng-model="observationTypeProperty.value" ng-disabled='observation.status === 1')
     .submit-buttons-holder(ng-hide='observation.status === 1')
         button.submit-button(ng-click='openSubmitObservationModal()') Submit
-
