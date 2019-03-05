@@ -105,7 +105,10 @@ export default [
         // crete resource
         function createResources() {
             $scope.createSchool = newSchool => {
-                SchoolService.createSchool(newSchool).then(
+                const school = {
+                    school: newSchool
+                };
+                SchoolService.createSchool(school).then(
                     res => {
                         UtilService.closeModal(
                             `create-${$scope.resourceType}-modal`

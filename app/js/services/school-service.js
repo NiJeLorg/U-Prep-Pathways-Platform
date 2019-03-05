@@ -6,8 +6,7 @@ export default [
 
         obj.fetchSchools = () => $http.get("/api/schools");
 
-        obj.createSchool = newSchool =>
-            $http.post("/api/schools", { school: newSchool });
+        obj.createSchool = data => $http.post("/api/schools", data);
 
         obj.updateSchool = school =>
             $http.put("/api/schools/" + school.id, {
