@@ -37,7 +37,6 @@ import AttachEvidenceService from "./services/attachEvidence-service";
 import UtilService from "./services/utilities-service";
 import ObservationFactory from "./factories/observation-factory";
 import BreadcrumbFactory from "./factories/breadcrumb-factory";
-import PaginationFactory from "./factories/pagination-factory";
 import ScoreFactory from "./factories/score-factory";
 
 const uprepApp = angular.module("uprepApp", [
@@ -73,7 +72,6 @@ uprepApp
     .factory("ObservationFactory", ObservationFactory)
     .factory("ScoreFactory", ScoreFactory)
     .factory("BreadcrumbFactory", BreadcrumbFactory)
-    .factory("PaginationFactory", PaginationFactory)
     .filter("teacherGradeFilter", function() {
         // In the return function, we must pass in a single parameter which will be the data we will work on.
         // We have the ability to support multiple other parameters that can be passed into the filter optionally
