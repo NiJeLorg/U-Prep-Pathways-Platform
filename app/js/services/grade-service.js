@@ -8,6 +8,8 @@ export default [
 
         obj.fetchGrades = () => $http.get("/api/grades");
 
+        obj.createGrade = data => $http.post("/api/grades", data);
+
         return obj;
     }
 ];

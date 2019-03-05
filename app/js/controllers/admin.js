@@ -119,7 +119,10 @@ export default [
             };
 
             $scope.createGrade = newGrade => {
-                GradeService.createGrade(newGrade).then(
+                const grade = {
+                    grade: newGrade
+                };
+                GradeService.createGrade(grade).then(
                     res => {
                         UtilService.closeModal(
                             `create-${$scope.resourceType}-modal`
