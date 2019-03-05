@@ -46,7 +46,6 @@ export default [
             ObservationTypeService.fetchObservationTypes().then(
                 response => {
                     $scope.observationTypes = response.data.data;
-                    console.log(response);
                 },
                 err => {
                     console.error(err);
