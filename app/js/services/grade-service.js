@@ -2,9 +2,17 @@ export default [
     "$resource",
     "$http",
     function($resource, $http) {
-        let obj = $resource("/api/grades/:id", {
-            id: "@id"
-        });
+        let obj = $resource(
+            "/api/grades/:id",
+            {
+                id: "@id"
+            },
+            {
+                update: {
+                    method: "PUT"
+                }
+            }
+        );
 
         obj.fetchGrades = () => $http.get("/api/grades");
 

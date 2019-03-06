@@ -139,7 +139,10 @@ export default [
             };
 
             $scope.createSubject = newSubject => {
-                SubjectService.createSubject(newSubject).then(
+                const subject = {
+                    subject: newSubject
+                };
+                SubjectService.createSubject(subject).then(
                     res => {
                         UtilService.closeModal(
                             `create-${$scope.resourceType}-modal`
@@ -300,7 +303,8 @@ export default [
             };
 
             $scope.updateSchool = school => {
-                SchoolService.updateSchool(school).then(
+                SchoolService.update(
+                    school,
                     res => {
                         UtilService.closeModal(
                             `update-${$scope.resourceType}-modal`
@@ -313,7 +317,8 @@ export default [
             };
 
             $scope.updateSubject = subject => {
-                SubjectService.updateSubject(subject).then(
+                SubjectService.update(
+                    subject,
                     res => {
                         UtilService.closeModal(
                             `update-${$scope.resourceType}-modal`
@@ -326,7 +331,8 @@ export default [
             };
 
             $scope.updateGrade = grade => {
-                GradeService.updateGrade(grade).then(
+                GradeService.update(
+                    grade,
                     res => {
                         UtilService.closeModal(
                             `update-${$scope.resourceType}-modal`
